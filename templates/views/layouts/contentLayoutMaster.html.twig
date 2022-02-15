@@ -1,0 +1,9 @@
+{# {% if pageConfigs is defined %}
+  {{ Helper::updatePageConfig(pageConfigs) }}
+{% endif %} #}
+
+{% set configData = configData.applClasses %}
+{% extends (configData["mainLayoutType"] == 'horizontal') ? 'views/layouts/horizontalLayoutMaster.html.twig' : 'views/layouts/verticalLayoutMaster.html.twig' %}
+
+
+
