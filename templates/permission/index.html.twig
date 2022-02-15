@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Permission index{% endblock %}
+
+{% block body %}
+    <h1>Permission index</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+                <th>Attribute</th>
+                <th>Subject</th>
+                <th>Enabled</th>
+                <th>Expression</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for permission in permissions %}
+            <tr>
+                <td>{{ permission.id }}</td>
+                <td>{{ permission.description }}</td>
+                <td>{{ permission.attribute }}</td>
+                <td>{{ permission.subject }}</td>
+                <td>{{ permission.enabled ? 'Yes' : 'No' }}</td>
+                <td>{{ permission.expression }}</td>
+                <td>
+                    <a href="{{ path('permission_show', {'id': permission.id}) }}">show</a>
+                    <a href="{{ path('permission_edit', {'id': permission.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path('permission_new') }}">Create new</a>
+{% endblock %}

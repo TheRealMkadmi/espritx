@@ -6,6 +6,7 @@
 parameters:
     twig.config:
         debug: true
+
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -29,3 +30,13 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    user.activity_listener:
+        class: App\EventListener\ActivityListener
+        arguments: [ '@security.helper', '@doctrine.orm.entity_manager' ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
+
+    app.login_listener:
+        class: App\EventListener\LoginListener
+        tags:
+            - { name: 'kernel.event_listener', event: 'security.interactive_login' }

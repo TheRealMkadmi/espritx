@@ -1,0 +1,4 @@
+elao_enum:
+    doctrine:
+        types:
+            App\Enum\UserStatus: userstatus
