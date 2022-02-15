@@ -254,9 +254,9 @@
           </button>
           <button class="btn btn-outline-secondary w-100 btn-download-invoice mb-75">Download</button>
           {# {{path('app/invoice/print')}} #}
-          <a class="btn btn-outline-secondary w-100 mb-75" href="#" target="_blank"> Print </a>
+          <a class="btn btn-outline-secondary w-100 mb-75" href="{{path('app-invoice-print')}}" target="_blank"> Print </a>
           {# {{path('app/invoice/edit')}} #}
-          <a class="btn btn-outline-secondary w-100 mb-75" href="#"> Edit </a>
+          <a class="btn btn-outline-secondary w-100 mb-75" href="{{path('app-invoice-edit')}}"> Edit </a>
           <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#add-payment-sidebar">
             Add Payment
           </button>

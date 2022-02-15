@@ -9,6 +9,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TestController extends AbstractController
 {
+
+    // root
+    /**
+     * @Route("/",name="root")
+     */
+    public function index()
+    {
+        $pageConfigs = ['pageHeader' => false];
+
+        return $this->render('index.html.twig', ['pageConfigs' => $pageConfigs]);
+    }
+
     // invoice list App
     /**
      * @Route("/app/invoice/list",name="app-invoice-list")
@@ -17,7 +29,7 @@ class TestController extends AbstractController
     {
         $pageConfigs = ['pageHeader' => false];
 
-        return $this->render('viewsviews/content/apps/invoice/app-invoice-list.html.twig.html.twig', ['pageConfigs' => $pageConfigs]);
+        return $this->render('views/content/apps/invoice/app-invoice-list.html.twig.html.twig', ['pageConfigs' => $pageConfigs]);
     }
 
     // invoice preview App

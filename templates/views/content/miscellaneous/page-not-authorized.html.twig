@@ -42,7 +42,7 @@
       <h2 class="mb-1">You are not authorized! 🔐</h2>
       <p class="mb-2">The Webtrends Marketing Lab website in IIS uses the default IUSR account credentials to access the web pages it serves.</p>
       {# {{path('auth/login-cover')}} #}
-      <a class="btn btn-primary mb-1 btn-sm-block" href="#">Back to login</a>
+      <a class="btn btn-primary mb-1 btn-sm-block" href="{{path('auth-login-cover')}}">Back to login</a>
       {% if configData['theme'] == 'dark' %}
 
       <img class="img-fluid" src="{{asset('images/pages/not-authorized-dark.svg')}}" alt="Not authorized page" />

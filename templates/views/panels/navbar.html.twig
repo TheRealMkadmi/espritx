@@ -56,19 +56,19 @@
     </ul>
     <ul class="nav navbar-nav bookmark-icons">
       {# {{ path('app/email') }} #}
-      <li class="nav-item d-none d-lg-block"><a class="nav-link" href="#"
+      <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{ path('app-email') }}"
           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Email"><i class="ficon"
             data-feather="mail"></i></a></li>
       {# {{ {{ path('app/chat') }} }} #}
-      <li class="nav-item d-none d-lg-block"><a class="nav-link" href="#"
+      <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{ path('app-chat') }}"
           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Chat"><i class="ficon"
             data-feather="message-square"></i></a></li>
       {# {{ path('app/calendar') }} #}
-      <li class="nav-item d-none d-lg-block"><a class="nav-link" href="#"
+      <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{ path('app-calendar') }}"
           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Calendar"><i class="ficon"
             data-feather="calendar"></i></a></li>
       {# {{ path('app/todo') }} #}
-      <li class="nav-item d-none d-lg-block"><a class="nav-link" href="#"
+      <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{ path('app-todo') }}"
           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Todo"><i class="ficon"
             data-feather="check-square"></i></a></li>
     </ul>
@@ -143,7 +143,7 @@
               <i class="ficon cart-item-remove" data-feather="x"></i>
               <div class="media-heading">
                 {# {{ path('app/ecommerce/details') }} #}
-                <h6 class="cart-item-title"><a class="text-body" href="#">
+                <h6 class="cart-item-title"><a class="text-body" href="{{path('app-ecommerce-details')}}">
                     Apple
                     watch 5</a></h6><small class="cart-item-by">By Apple</small>
               </div>
@@ -162,7 +162,7 @@
               <i class="ficon cart-item-remove" data-feather="x"></i>
               <div class="media-heading">
                 {# {{ path('app/ecommerce/details') }} #}
-                <h6 class="cart-item-title"><a class="text-body" href="#">
+                <h6 class="cart-item-title"><a class="text-body" href="{{path('app-ecommerce-details')}}">
                     Google
                     Home Mini</a></h6><small class="cart-item-by">By Google</small>
               </div>
@@ -181,7 +181,7 @@
               <i class="ficon cart-item-remove" data-feather="x"></i>
               <div class="media-heading">
                 {# {{ path('app/ecommerce/details') }} #}
-                <h6 class="cart-item-title"><a class="text-body" href="#">
+                <h6 class="cart-item-title"><a class="text-body" href="{{path('app-ecommerce-details')}}">
                     iPhone 11 Pro</a></h6><small class="cart-item-by">By Apple</small>
               </div>
               <div class="cart-item-qty">
@@ -199,7 +199,7 @@
               <i class="ficon cart-item-remove" data-feather="x"></i>
               <div class="media-heading">
                 {# {{ path('app/ecommerce/details') }} #}
-                <h6 class="cart-item-title"><a class="text-body" href="#">
+                <h6 class="cart-item-title"><a class="text-body" href="{{path('app-ecommerce-details')}}">
                     iMac
                     Pro</a></h6><small class="cart-item-by">By Apple</small>
               </div>
@@ -218,7 +218,7 @@
               <i class="ficon cart-item-remove" data-feather="x"></i>
               <div class="media-heading">
                 {# {{ path('app/ecommerce/details') }} #}
-                <h6 class="cart-item-title"><a class="text-body" href="#">
+                <h6 class="cart-item-title"><a class="text-body" href="{{path('app-ecommerce-details')}}">
                     MacBook Pro</a></h6><small class="cart-item-by">By Apple</small>
               </div>
               <div class="cart-item-qty">
@@ -236,7 +236,7 @@
             <h6 class="text-primary fw-bolder mb-0">$10,999.00</h6>
           </div>
           {# {{ path('app/ecommerce/checkout') }} #}
-          <a class="btn btn-primary w-100" href="#">Checkout</a>
+          <a class="btn btn-primary w-100" href="{{path('app-ecommerce-checkout')}}">Checkout</a>
         </li>
       </ul>
     </li>
@@ -448,7 +448,7 @@
   </li>
   <li class="auto-suggestion">
     {# {{ path('app/file-manager') }} #}
-    <a class="d-flex align-items-center justify-content-between w-100" href="#">
+    <a class="d-flex align-items-center justify-content-between w-100" href="{{ path('app-file-manage') }}">
       <div class="d-flex">
         <div class="me-75">
           <img src="{{ asset('images/icons/xls.png') }}" alt="png" height="32">
@@ -463,7 +463,7 @@
   </li>
   <li class="auto-suggestion">
     {# {{ path('app/file-manager') }} #}
-    <a class="d-flex align-items-center justify-content-between w-100" href="#">
+    <a class="d-flex align-items-center justify-content-between w-100" href="{{ path('app-file-manage') }}">
       <div class="d-flex">
         <div class="me-75">
           <img src="{{ asset('images/icons/jpg.png') }}" alt="png" height="32">
@@ -478,7 +478,7 @@
   </li>
   <li class="auto-suggestion">
     {# {{ path('app/file-manager') }} #}
-    <a class="d-flex align-items-center justify-content-between w-100" href="#">
+    <a class="d-flex align-items-center justify-content-between w-100" href="{{ path('app-file-manage') }}">
       <div class="d-flex">
         <div class="me-75">
           <img src="{{ asset('images/icons/pdf.png') }}" alt="png" height="32">
@@ -493,7 +493,7 @@
   </li>
   <li class="auto-suggestion">
     {# {{ path('app/file-manager') }} #}
-    <a class="d-flex align-items-center justify-content-between w-100" href="#">
+    <a class="d-flex align-items-center justify-content-between w-100" href="{{ path('app-file-manage') }}">
       <div class="d-flex">
         <div class="me-75">
           <img src="{{ asset('images/icons/doc.png') }}" alt="png" height="32">
@@ -513,7 +513,7 @@
   </li>
   <li class="auto-suggestion">
     {# {{ path('app/user/view') }} #}
-    <a class="d-flex align-items-center justify-content-between py-50 w-100" href="#">
+    <a class="d-flex align-items-center justify-content-between py-50 w-100" href="{{ path('app-user-view-account') }}">
       <div class="d-flex align-items-center">
         <div class="avatar me-75">
           <img src="{{ asset('images/portrait/small/avatar-s-8.jpg') }}" alt="png" height="32">
@@ -527,7 +527,7 @@
   </li>
   <li class="auto-suggestion">
     {# {{ path('app/user/view') }} #}
-    <a class="d-flex align-items-center justify-content-between py-50 w-100" href="#">
+    <a class="d-flex align-items-center justify-content-between py-50 w-100" href="{{ path('app-user-view-account') }}">
       <div class="d-flex align-items-center">
         <div class="avatar me-75">
           <img src="{{ asset('images/portrait/small/avatar-s-1.jpg') }}" alt="png" height="32">
@@ -541,7 +541,7 @@
   </li>
   <li class="auto-suggestion">
     {# {{ path('app/user/view') }} #}
-    <a class="d-flex align-items-center justify-content-between py-50 w-100" href="#">
+    <a class="d-flex align-items-center justify-content-between py-50 w-100" href="{{ path('app-user-view-account') }}">
       <div class="d-flex align-items-center">
         <div class="avatar me-75">
           <img src="{{ asset('images/portrait/small/avatar-s-14.jpg') }}" alt="png" height="32">
@@ -555,7 +555,7 @@
   </li>
   <li class="auto-suggestion">
     {# {{ path('app/user/view') }} #}
-    <a class="d-flex align-items-center justify-content-between py-50 w-100" href="#">
+    <a class="d-flex align-items-center justify-content-between py-50 w-100" href="{{ path('app-user-view-account') }}">
       <div class="d-flex align-items-center">
         <div class="avatar me-75">
           <img src="{{ asset('images/portrait/small/avatar-s-6.jpg') }}" alt="png" height="32">
