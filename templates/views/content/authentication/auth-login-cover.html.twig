@@ -1,5 +1,5 @@
 
-{% extends 'views/layouts/contentLayoutMaster.html.twig' %}
+{% extends 'views/layouts/fullLayoutMaster.html.twig' %}
 
 {% block title %} Login Page {% endblock %}
 
@@ -45,11 +45,11 @@
     <!-- Left Text-->
     <div class="d-none d-lg-flex col-lg-8 align-items-center p-5">
       <div class="w-100 d-lg-flex align-items-center justify-content-center px-5">
-        @if($configData['theme'] === 'dark')
+        {% if(configData['theme'] == 'dark')  %}
           <img class="img-fluid" src="{{asset('images/pages/login-v2-dark.svg')}}" alt="Login V2" />
-          @else
+          {% else %}
           <img class="img-fluid" src="{{asset('images/pages/login-v2.svg')}}" alt="Login V2" />
-          @endif
+        {% endif %}
       </div>
     </div>
     <!-- /Left Text-->
@@ -68,7 +68,7 @@
             <div class="d-flex justify-content-between">
               <label class="form-label" for="login-password">Password</label>
               {# {{path("auth/forgot-password-cover")} #}
-              <a href="#}">
+              <a href="{{ url('app_forgot_password_request') }}">
                 <small>Forgot Password?</small>
               </a>
             </div>
@@ -87,17 +87,13 @@
         </form>
         <p class="text-center mt-2">
           <span>New on our platform?</span>
-          {# {{path('auth/register-cover')}} #}
-          <a href="{{path('auth-register-cover')}}"><span>&nbsp;Create an account</span></a>
+          <a href="{# {{path('auth/register-cover')}} #}"><span>&nbsp;Create an account</span></a>
         </p>
         <div class="divider my-2">
           <div class="divider-text">or</div>
         </div>
         <div class="auth-footer-btn d-flex justify-content-center">
-          <a class="btn btn-facebook" href="#"><i data-feather="facebook"></i></a>
-          <a class="btn btn-twitter white" href="#"><i data-feather="twitter"></i></a>
           <a class="btn btn-google" href="#"><i data-feather="mail"></i></a>
-          <a class="btn btn-github" href="#"><i data-feather="github"></i></a>
         </div>
       </div>
     </div>
