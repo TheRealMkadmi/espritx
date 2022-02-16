@@ -3,26 +3,30 @@
 namespace App\Form;
 
 use App\Entity\Group;
+use App\Entity\Permission;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class GroupType extends AbstractType
+class GroupType extends AbstractBootstrapType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
-        $builder
-            ->add('display_name')
-            ->add('security_title')
-            ->add('members')
-            ->add('permissions')
-        ;
-    }
+  public function buildForm(FormBuilderInterface $builder, array $options): void
+  {
+    $this
+      ->addInputGroup($builder, "security_title", "ROLE_", "Security title internally used by the system. Think about logs.")
+      ->addFloatingLabelTextInput($builder, "display_name", "Display Name", "Short title to describe who's here.")
+      ->addSelect2EntityField($builder, 'members', User::class, "email", 'ajax_autocomplete_users_group_form', "Members of the group")
+      ->addSelect2EntityField($builder, 'permissions', Permission::class, "title", 'ajax_autocomplete_permissions', "Group Permissions")
+      ->addButton($builder, "save")
+      ->addButton($builder, "reset", "btn-outline-secondary", ResetType::class);
+  }
 
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => Group::class,
-        ]);
-    }
+  public function configureOptions(OptionsResolver $resolver): void
+  {
+    $resolver->setDefaults([
+      'data_class' => Group::class,
+    ]);
+  }
 }

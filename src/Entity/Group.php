@@ -22,6 +22,7 @@ class Group
   }
 
   //<editor-fold desc="id">
+
   /**
    * @ORM\Id
    * @ORM\GeneratedValue
@@ -37,40 +38,6 @@ class Group
   public function setId(int $id): self
   {
     $this->id = $id;
-    return $this;
-  }
-  //</editor-fold>
-  //<editor-fold desc="Members">
-  /**
-   * @return Collection|User[]
-   */
-
-  /**
-   * @ORM\ManyToMany(targetEntity=User::class, mappedBy="groups")
-   */
-  private $members;
-
-  public function getMembers(): Collection
-  {
-    return $this->members;
-  }
-
-  public function addMember(User $member): self
-  {
-    if (!$this->members->contains($member)) {
-      $this->members[] = $member;
-      $member->addGroup($this);
-    }
-
-    return $this;
-  }
-
-  public function removeMember(User $member): self
-  {
-    if ($this->members->removeElement($member)) {
-      $member->removeGroup($this);
-    }
-
     return $this;
   }
   //</editor-fold>
@@ -117,7 +84,7 @@ class Group
   //<editor-fold desc="Permissions">
   /**
    * @var Collection<Permission>|Permission[]
-   * @ORM\ManyToMany(targetEntity=Permission::class, mappedBy="groups")
+   * @ORM\ManyToMany(targetEntity=Permission::class, mappedBy="groups", fetch="EAGER")
    */
   private Collection|array $permissions;
 
@@ -134,14 +101,14 @@ class Group
     if (!$this->permissions->contains($permission)) {
       $this->permissions[] = $permission;
     }
-
+    $permission->addGroup($this);
     return $this;
   }
 
   public function removePermission(Permission $permission): self
   {
     $this->permissions->removeElement($permission);
-
+    $permission->removeGroup($this);
     return $this;
   }
 
@@ -153,55 +120,87 @@ class Group
   }
 
   //</editor-fold>
-    //<editor-fold desc="Services Enjoyed By Group">
-    /**
-     * @ORM\ManyToMany(targetEntity=Service::class, mappedBy="Recipient")
-     */
-    private $enjoyable_services;
+  //<editor-fold desc="Members">
+  /**
+   * @ORM\ManyToMany(targetEntity=User::class, mappedBy="groups", fetch="EAGER")
+   */
+  private $members;
 
-    /**
-     * @return mixed
-     */
-    public function getEnjoyableServices()
-    {
-        return $this->enjoyable_services;
+  /**
+   * @return Collection|User[]
+   */
+  public function getMembers(): Collection
+  {
+    return $this->members;
+  }
+
+  public function addMember(User $member): self
+  {
+    if (!$this->members->contains($member)) {
+      $this->members[] = $member;
+      $member->addGroup($this);
     }
+    $member->addGroup($this);
+    return $this;
+  }
 
-    /**
-     * @param mixed $enjoyable_services
-     * @return Group
-     */
-    public function setEnjoyableServices($enjoyable_services)
-    {
-        $this->enjoyable_services = $enjoyable_services;
-        return $this;
+  public function removeMember(User $member): self
+  {
+    if ($this->members->removeElement($member)) {
+      $member->removeGroup($this);
     }
-    //</editor-fold>
+    $member->removeGroup($this);
+    return $this;
+  }
+  //</editor-fold>
+  //<editor-fold desc="Services Enjoyed By Group">
+  /**
+   * @ORM\ManyToMany(targetEntity=Service::class, mappedBy="Recipient")
+   */
+  private $enjoyable_services;
 
+  /**
+   * @return mixed
+   */
+  public function getEnjoyableServices()
+  {
+    return $this->enjoyable_services;
+  }
 
-    //<editor-fold desc="Services Provided By Group">
-    /**
-     * @ORM\OneToMany(targetEntity=Service::class, mappedBy="Responsible")
-     */
-    private $provided_services;
-    /**
-     * @return mixed
-     */
-    public function getProvidedServices()
-    {
-        return $this->provided_services;
-    }
+  /**
+   * @param mixed $enjoyable_services
+   * @return Group
+   */
+  public function setEnjoyableServices($enjoyable_services)
+  {
+    $this->enjoyable_services = $enjoyable_services;
+    return $this;
+  }
+  //</editor-fold>
+  //<editor-fold desc="Services Provided By Group">
+  /**
+   * @ORM\OneToMany(targetEntity=Service::class, mappedBy="Responsible")
+   */
+  private $provided_services;
 
-    /**
-     * @param mixed $provided_services
-     * @return Group
-     */
-    public function setProvidedServices($provided_services)
-    {
-        $this->provided_services = $provided_services;
-        return $this;
-    }
-    //</editor-fold>
+  /**
+   * @return mixed
+   */
+  public function getProvidedServices()
+  {
+    return $this->provided_services;
+  }
+
+  /**
+   * @param mixed $provided_services
+   * @return Group
+   */
+  public function setProvidedServices($provided_services)
+  {
+    $this->provided_services = $provided_services;
+    return $this;
+  }
+  //</editor-fold>
 
 
   // public function notifyAllMembers(){}
