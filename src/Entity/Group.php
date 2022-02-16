@@ -153,6 +153,56 @@ class Group
   }
 
   //</editor-fold>
+    //<editor-fold desc="Services Enjoyed By Group">
+    /**
+     * @ORM\ManyToMany(targetEntity=Service::class, mappedBy="Recipient")
+     */
+    private $enjoyable_services;
+
+    /**
+     * @return mixed
+     */
+    public function getEnjoyableServices()
+    {
+        return $this->enjoyable_services;
+    }
+
+    /**
+     * @param mixed $enjoyable_services
+     * @return Group
+     */
+    public function setEnjoyableServices($enjoyable_services)
+    {
+        $this->enjoyable_services = $enjoyable_services;
+        return $this;
+    }
+    //</editor-fold>
+
+
+    //<editor-fold desc="Services Provided By Group">
+    /**
+     * @ORM\OneToMany(targetEntity=Service::class, mappedBy="Responsible")
+     */
+    private $provided_services;
+    /**
+     * @return mixed
+     */
+    public function getProvidedServices()
+    {
+        return $this->provided_services;
+    }
+
+    /**
+     * @param mixed $provided_services
+     * @return Group
+     */
+    public function setProvidedServices($provided_services)
+    {
+        $this->provided_services = $provided_services;
+        return $this;
+    }
+    //</editor-fold>
+
 
   // public function notifyAllMembers(){}
   public function __toString(): string

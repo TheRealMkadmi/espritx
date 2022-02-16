@@ -9,7 +9,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
-class GroupFixtures extends AbstractFixtureEx implements DependentFixtureInterface
+class ServiceFixtures extends AbstractFixtureEx implements DependentFixtureInterface
 {
     public const LOADED_ROLE_FIXTURES = "loaded-role-fixtures";
 
@@ -26,7 +26,7 @@ class GroupFixtures extends AbstractFixtureEx implements DependentFixtureInterfa
         foreach ($chunked_perms as $permission_chunk) {
             $role = new Group();
             $role->setSecurityTitle("ROLE_TEST_" . strtoupper($generator->unique()->randomNumber(5)));
-            $role->setDisplayName("Service " . str_replace("'", "", implode(" ", $generator->words(2))));
+            $role->setDisplayName(str_replace("'", "", implode(" ", $generator->words(2))));
             $role->setPermissions($permission_chunk);
             $manager->persist($role);
             $testing_groups->add($role);
@@ -38,6 +38,6 @@ class GroupFixtures extends AbstractFixtureEx implements DependentFixtureInterfa
 
     public function getDependencies()
     {
-        return [PermissionFixtures::class];
+        return [GroupFixtures::class];
     }
 }
