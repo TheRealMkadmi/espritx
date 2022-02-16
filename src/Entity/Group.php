@@ -114,7 +114,6 @@ class Group
     return $this;
   }
   //</editor-fold>
-
   //<editor-fold desc="Permissions">
   /**
    * @var Collection<Permission>|Permission[]
@@ -156,8 +155,8 @@ class Group
   //</editor-fold>
 
   // public function notifyAllMembers(){}
-  #[Pure] public function __toString(): string
+  public function __toString(): string
   {
-    return $this->getSecurityTitle();
+    return $this->display_name;
   }
 }

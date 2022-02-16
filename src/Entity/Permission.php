@@ -107,7 +107,6 @@ class Permission
     return $this;
   }
   //</editor-fold>
-
   //<editor-fold desc="Groups">
   /**
    * @var Collection<Group>|Group[]

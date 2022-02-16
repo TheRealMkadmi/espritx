@@ -3,20 +3,25 @@
 namespace App\Form;
 
 use App\Entity\Permission;
-use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PermissionType extends AbstractType
+class PermissionType extends AbstractBootstrapType
 {
   public function buildForm(FormBuilderInterface $builder, array $options): void
   {
-    $builder->add('description');
-    $builder->add('attribute');
-    $builder->add('subject');
-    $builder->add('title');
-    $builder->add('enabled');
-    $builder->add('expression');
+    $this
+      ->addFeatherIconInputGroup($builder, "title", "airplay", "Title")
+      ->addFloatingLabelTextInput($builder, "description", "Description")
+      ->addFloatingLabelTextInput($builder, 'subject', 'Subject Entity')
+      ->addFloatingLabelTextInput($builder, 'attribute', 'Controlled operation')
+      ->addFloatingLabelTextInput($builder, 'expression', 'Control expression (if needed)')
+      ->addSwitchInput($builder, "enabled")
+      ->addButton($builder, "save")
+      ->addButton($builder, "reset", "btn-outline-secondary", ResetType::class);
+
     $builder->add('groups');
     $builder->add('users');
   }
