@@ -3,13 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\PermissionType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Tetranz\Select2EntityBundle\Service\AutocompleteService;
 
 /** @Route("/user") */
 class UserController extends AbstractController
@@ -24,7 +27,20 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
+  /**
+   * @param Request $request
+   * @param AutocompleteService $autocompleteService
+   * @return JsonResponse
+   * @Route("/autocomplete", name="ajax_autocomplete_users")
+   */
+  public function autocompleteAction(Request $request, AutocompleteService $autocompleteService): JsonResponse
+  {
+    $result = $autocompleteService->getAutocompleteResults($request, PermissionType::class);
+    return new JsonResponse($result);
+  }
+
+
+  /**
      * @Route("/new", name="user_new", methods={"GET", "POST"})
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response

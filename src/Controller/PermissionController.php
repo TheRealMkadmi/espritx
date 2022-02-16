@@ -22,6 +22,10 @@ class PermissionController extends AbstractController
   public function index(PermissionRepository $permissionRepository): Response
   {
     return $this->render('views/content/apps/rolesPermission/permission/app-access-permission.html.twig', [
+      'breadcrumbs' => [
+        ["name" => "Management"],
+        ["name" => "Permissions", "link" => "permission_index"],
+      ],
       'permissions' => $permissionRepository->findAll(),
     ]);
   }
@@ -46,7 +50,7 @@ class PermissionController extends AbstractController
       'form' => $form->createView(),
       'breadcrumbs' => [
         ["name" => "Management"],
-        ["name" => "Permissions"],
+        ["name" => "Permissions", "link" => "permission_index"],
         ["name" => "Create"],
       ]
     ]);
@@ -75,8 +79,7 @@ class PermissionController extends AbstractController
 
       return $this->redirectToRoute('permission_index', [], Response::HTTP_SEE_OTHER);
     }
-
-    return $this->render('permission/edit.html.twig', [
+    return $this->render('views/content/apps/rolesPermission/permission/app-access-permission-form.html.twig', [
       'permission' => $permission,
       'form' => $form->createView(),
     ]);
