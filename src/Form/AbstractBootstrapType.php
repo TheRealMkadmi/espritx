@@ -17,14 +17,24 @@ abstract class AbstractBootstrapType extends AbstractType
                                                string               $placeholder = " ",
                                                array                $options = [])
   {
+    $floating_attrs = ["row_attr" => [
+      'class' => 'form-floating'
+    ]];
+    return $this->addSimpleTextInput($builder, $child, $label, $placeholder, array_merge_recursive($floating_attrs, $options));
+  }
+
+  protected function addSimpleTextInput(FormBuilderInterface $builder,
+                                        string               $child,
+                                        string               $label,
+                                        string               $placeholder = " ",
+                                        array                $options = [])
+  {
     $options1 = [
       'label' => $label,
       'attr' => [
         'placeholder' => $placeholder
-      ],
-      "row_attr" => [
-        'class' => 'form-floating'
-      ]];
+      ]
+    ];
 
     $builder->add($child, TextType::class, array_merge_recursive($options, $options1));
     return $this;
@@ -62,7 +72,7 @@ abstract class AbstractBootstrapType extends AbstractType
   {
     $builder->add($child, CheckboxType::class, [
       'label_attr' => [
-        'class' => ($inline ? "checkbox-inline " : "") . ' checkbox-switch',
+        'class' => ($inline ? "checkbox-inline " : "") . ' checkbox-switch switch-icon-left switch-icon-right',
       ],
     ]);
     return $this;

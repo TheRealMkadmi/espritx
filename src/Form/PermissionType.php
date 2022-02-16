@@ -16,10 +16,10 @@ class PermissionType extends AbstractBootstrapType
   {
     $this
       ->addFeatherIconInputGroup ($builder, "title", "airplay", "Title")
-      ->addFloatingLabelTextInput($builder, "description", "Description")
-      ->addFloatingLabelTextInput($builder, 'subject', 'Subject Entity')
-      ->addFloatingLabelTextInput($builder, 'attribute', 'Controlled operation')
-      ->addFloatingLabelTextInput($builder, 'expression', 'Control expression (if needed)')
+      ->addSimpleTextInput($builder, "description", "Description", "Describes the intent behind the permission.")
+      ->addFloatingLabelTextInput($builder, 'subject', 'Subject', "The entity that will invoke the permission check.")
+      ->addFloatingLabelTextInput($builder, 'attribute', 'Attribute', "Operation put on guard.")
+      ->addFloatingLabelTextInput($builder, 'expression', 'Control expression (if needed)', "Uses Symfony Expression Language.")
       ->addSelect2EntityField($builder, 'groups', Group::class, "display_name", 'ajax_autocomplete_groups')
       ->addSelect2EntityField($builder, 'users', User::class, "email", 'ajax_autocomplete_users')
       ->addSwitchInput($builder, "enabled")

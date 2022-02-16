@@ -6,6 +6,7 @@ use App\Entity\Permission;
 use App\Form\PermissionType;
 use App\Repository\PermissionRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,14 +20,25 @@ class PermissionController extends AbstractController
   /**
    * @Route("/", name="permission_index", methods={"GET"})
    */
-  public function index(PermissionRepository $permissionRepository): Response
+  public function index(EntityManagerInterface $em, PaginatorInterface $paginator, Request $request): Response
   {
+    $dql = <<<DQL
+    select p from App\Entity\Permission p 
+    DQL;
+    $query = $em->createQuery($dql);
+
+    $pagination = $paginator->paginate(
+      $query,
+      $request->query->getInt('page', 1),
+      10
+    );
+
     return $this->render('views/content/apps/rolesPermission/permission/app-access-permission.html.twig', [
       'breadcrumbs' => [
         ["name" => "Management"],
         ["name" => "Permissions", "link" => "permission_index"],
       ],
-      'permissions' => $permissionRepository->findAll(),
+      'pagination' => $pagination,
     ]);
   }
 
