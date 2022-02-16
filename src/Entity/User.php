@@ -24,14 +24,13 @@ class User implements UserInterface, EquatableInterface
 
   public function __construct()
   {
-    $this->individualPermissions = new \Doctrine\Common\Collections\ArrayCollection();
-    $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
-    $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+    $this->individualPermissions = new ArrayCollection();
+    $this->posts = new ArrayCollection();
+    $this->groups = new ArrayCollection();
     $this->userStatus = UserStatus::get(UserStatus::PENDING);
   }
 
   //<editor-fold desc="id">
-
   /**
    * @ORM\Id
    * @ORM\GeneratedValue
@@ -61,7 +60,6 @@ class User implements UserInterface, EquatableInterface
     return $this;
   }
   //</editor-fold>
-
   //<editor-fold desc="Last Name">
   /**
    * @ORM\Column(type="string", length=25)
@@ -97,7 +95,6 @@ class User implements UserInterface, EquatableInterface
     return $this;
   }
   //</editor-fold>
-
   //<editor-fold desc="PlainPassword">
   protected ?string $plainTextPassword;
 
@@ -113,7 +110,6 @@ class User implements UserInterface, EquatableInterface
     return $this->plainTextPassword;
   }
   //</editor-fold>
-
   //<editor-fold desc="Password">
   /**
    * @var string The hashed password
@@ -215,7 +211,6 @@ class User implements UserInterface, EquatableInterface
     return $this->passwordRequestedAt;
   }
   //</editor-fold>
-
   //<editor-fold desc="UserStatus">
   /**
    * @ORM\Column(type="userstatus")
@@ -233,7 +228,6 @@ class User implements UserInterface, EquatableInterface
     return $this;
   }
   //</editor-fold>
-
   //<editor-fold desc="Groups">
   /**
    * @ORM\ManyToMany(targetEntity=Group::class, inversedBy="members")
@@ -311,7 +305,6 @@ class User implements UserInterface, EquatableInterface
     return array_unique($perms);
   }
   //</editor-fold>
-
   //<editor-fold desc="Posts">
 
   /**

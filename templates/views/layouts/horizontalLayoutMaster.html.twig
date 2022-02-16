@@ -89,8 +89,6 @@ data-textdirection="{{ env('MIX_CONTENT_DIRECTION') === 'rtl' ? 'rtl' : 'ltr' }}
 
 {% if configData['blankPage'] == false and configData['blankPage'] is defined %}
     {% include 'views/content/pages/customizer.html.twig' %}
-
-    {% include 'views/content/pages/buy-now.html.twig' %}
 {% endif %}
 <div class="sidenav-overlay"></div>
 <div class="drag-target"></div>

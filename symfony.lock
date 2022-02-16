@@ -606,6 +606,9 @@
             "config/packages/reset_password.yaml"
         ]
     },
+    "tetranz/select2entity-bundle": {
+        "version": "v3.1.0"
+    },
     "theofidry/psysh-bundle": {
         "version": "4.4.0"
     },

@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Group;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\ButtonTypeInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -9,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\SubmitButtonTypeInterface;
+use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 
 abstract class AbstractBootstrapType extends AbstractType
 {
@@ -77,6 +79,29 @@ abstract class AbstractBootstrapType extends AbstractType
     $builder->add($child, $buttonType, [
       "attr" => ["class" => $class]
     ]);
+    return $this;
+  }
+
+  protected function addSelect2EntityField(FormBuilderInterface $builder,
+                                           string               $child,
+                                           string               $class,
+                                           string               $property,
+                                           string               $remoteRoute,
+                                           array                $options = [])
+  {
+    $options1 = [
+      'class' => $class,
+      'property' => $property,
+      'remote_route' => $remoteRoute,
+      "multiple" => true,
+      'minimum_input_length' => 2,
+      'allow_clear' => true,
+      'scroll' => true,
+      'cache' => true,
+      'cache_timeout' => true,
+    ];
+    $opt = array_merge_recursive($options1, $options);
+    $builder->add($child, Select2EntityType::class, $opt);
     return $this;
   }
 }

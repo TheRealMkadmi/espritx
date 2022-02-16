@@ -2,11 +2,13 @@
 
 namespace App\Form;
 
+use App\Entity\Group;
 use App\Entity\Permission;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 
 class PermissionType extends AbstractBootstrapType
 {
@@ -19,10 +21,11 @@ class PermissionType extends AbstractBootstrapType
       ->addFloatingLabelTextInput($builder, 'attribute', 'Controlled operation')
       ->addFloatingLabelTextInput($builder, 'expression', 'Control expression (if needed)')
       ->addSwitchInput($builder, "enabled")
+      ->addSelect2EntityField($builder, 'groups', Group::class, "display_name", 'ajax_autocomplete_groups')
       ->addButton($builder, "save")
       ->addButton($builder, "reset", "btn-outline-secondary", ResetType::class);
 
-    $builder->add('groups');
+
     $builder->add('users');
   }
 
