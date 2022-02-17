@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Enum\DocumentIdentityTypeEnum;
 use App\Enum\UserStatus;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -30,7 +29,6 @@ class User implements UserInterface, EquatableInterface
     $this->groups = new ArrayCollection();
     $this->userStatus = UserStatus::get(UserStatus::PENDING);
     $this->commentaires = new ArrayCollection();
-    $this->likes = new ArrayCollection();
   }
 
   //<editor-fold desc="id">
@@ -85,7 +83,7 @@ class User implements UserInterface, EquatableInterface
    * @var string
    * @ORM\Column(type="string", unique=true)
    */
-  protected string $email;
+  protected $email;
 
   public function getEmail(): ?string
   {
@@ -95,41 +93,6 @@ class User implements UserInterface, EquatableInterface
   public function setEmail($email): static
   {
     $this->email = $email;
-    return $this;
-  }
-  //</editor-fold>
-  //<editor-fold desc="Phone Number">
-  /**
-   * @ORM\Column(type="string", length=255, nullable=true)
-   */
-  private $phonenumber;
-  public function getPhonenumber(): ?string
-  {
-    return $this->phonenumber;
-  }
-
-  public function setPhonenumber(?string $phonenumber): self
-  {
-    $this->phonenumber = $phonenumber;
-
-    return $this;
-  }
-  //</editor-fold>
-  //<editor-fold desc="Class">
-  /**
-   * @ORM\Column(type="string", length=255, nullable=true)
-   */
-  private $class;
-
-  public function getClass(): ?string
-  {
-    return $this->class;
-  }
-
-  public function setClass(?string $class): self
-  {
-    $this->class = $class;
-
     return $this;
   }
   //</editor-fold>
@@ -284,15 +247,15 @@ class User implements UserInterface, EquatableInterface
   {
     if (!$this->groups->contains($group)) {
       $this->groups[] = $group;
-      $group->addMember($this);
     }
+
     return $this;
   }
 
   public function removeGroup(Group $group): self
   {
     $this->groups->removeElement($group);
-    $group->removeMember($this);
+
     return $this;
   }
   //</editor-fold>
@@ -350,8 +313,6 @@ class User implements UserInterface, EquatableInterface
    */
   private Collection $posts;
 
-
-
   /**
    * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="user")
    */
@@ -369,7 +330,7 @@ class User implements UserInterface, EquatableInterface
   {
     if (!$this->posts->contains($post)) {
       $this->posts[] = $post;
-      $post->setUser($this);
+      $post->setAuthor($this);
     }
 
     return $this;
@@ -379,49 +340,10 @@ class User implements UserInterface, EquatableInterface
   {
     if ($this->posts->removeElement($post)) {
       // set the owning side to null (unless already changed)
-      if ($post->getUser() === $this) {
-        $post->setUser(null);
+      if ($post->getAuthor() === $this) {
+        $post->setAuthor(null);
       }
     }
-    return $this;
-  }
-  //</editor-fold>
-  //<editor-fold desc="DocIdentityType">
-  /**
-   * @ORM\Column(type="identitydoctype")
-   */
-  protected DocumentIdentityTypeEnum $identityType;
-
-  public function getIdentityType(): DocumentIdentityTypeEnum
-  {
-    return $this->identityType;
-  }
-
-  public function setIdentityType(DocumentIdentityTypeEnum $identityType): self
-  {
-    $this->identityType = $identityType;
-    return $this;
-  }
-  //</editor-fold>
-  //<editor-fold desc="Identity Document Number">
-  /**
-   * @ORM\Column(type="string", length=8, nullable=true)
-   */
-  private $identityDocumentNumber;
-
-  /**
-   * @ORM\OneToMany(targetEntity=PostLike::class, mappedBy="user")
-   */
-  private $likes;
-
-  public function getIdentityDocumentNumber(): ?string
-  {
-    return $this->identityDocumentNumber;
-  }
-
-  public function setIdentityDocumentNumber(?string $identityDocumentNumber): self
-  {
-    $this->identityDocumentNumber = $identityDocumentNumber;
     return $this;
   }
   //</editor-fold>
@@ -457,8 +379,6 @@ class User implements UserInterface, EquatableInterface
     return $this->email;
   }
 
-
-
   /**
    * @return Collection|Commentaire[]
    */
@@ -488,35 +408,4 @@ class User implements UserInterface, EquatableInterface
 
       return $this;
   }
-
-  /**
-   * @return Collection|PostLike[]
-   */
-  public function getLikes(): Collection
-  {
-      return $this->likes;
-  }
-
-  public function addLike(PostLike $like): self
-  {
-      if (!$this->likes->contains($like)) {
-          $this->likes[] = $like;
-          $like->setUser($this);
-      }
-
-      return $this;
-  }
-
-  public function removeLike(PostLike $like): self
-  {
-      if ($this->likes->removeElement($like)) {
-          // set the owning side to null (unless already changed)
-          if ($like->getUser() === $this) {
-              $like->setUser(null);
-          }
-      }
-
-      return $this;
-  }
-
 }
