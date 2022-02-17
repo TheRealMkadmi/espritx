@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
+use App\Enum\GroupType;
 use App\Repository\GroupRepository;
 use Doctrine\Common\Collections\{ArrayCollection, Collection};
 use Doctrine\ORM\Mapping as ORM;
-use JetBrains\PhpStorm\Pure;
 
 /**
  * @ORM\Entity(repositoryClass=GroupRepository::class)
@@ -118,8 +118,26 @@ class Group
     $this->permissions = $permissions;
     return $this;
   }
-
   //</editor-fold>
+
+  //<editor-fold desc="Group Type">
+  /**
+   * @ORM\Column(type="grouptype", nullable=true)
+   */
+  protected $groupType;
+
+  public function getGroupType(): GroupType
+  {
+    return $this->groupType;
+  }
+
+  public function setGroupType(GroupType $groupType): self
+  {
+    $this->groupType = $groupType;
+    return $this;
+  }
+  //</editor-fold>
+
   //<editor-fold desc="Members">
   /**
    * @ORM\ManyToMany(targetEntity=User::class, mappedBy="groups", fetch="EAGER")
@@ -140,7 +158,6 @@ class Group
       $this->members[] = $member;
       $member->addGroup($this);
     }
-    $member->addGroup($this);
     return $this;
   }
 

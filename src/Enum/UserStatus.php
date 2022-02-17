@@ -3,6 +3,7 @@
 namespace App\Enum;
 
 use Elao\Enum\SimpleChoiceEnum;
+use ReflectionClass;
 
 /**
  * @extends ReadableEnum<string>
@@ -12,7 +13,7 @@ use Elao\Enum\SimpleChoiceEnum;
  * @method static RESTRICTED
  * @method static ALUMNUS
  */
-final class UserStatus extends SimpleChoiceEnum
+final class UserStatus extends AbstractSimpleChoiceEnumEx
 {
   public const ACTIVE = 'active';
   public const PENDING = 'pending';

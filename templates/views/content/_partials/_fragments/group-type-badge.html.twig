@@ -1,0 +1,16 @@
+{% if grouptype | lower == constant('App\\Enum\\GroupType::STUDENT') %}
+  {% set feather_icon = 'user' %}
+{% elseif grouptype | lower == constant('App\\Enum\\GroupType::SITE_STAFF') %}
+  {% set feather_icon = 'database' %}
+{% elseif grouptype | lower == constant('App\\Enum\\GroupType::FACULTY_STAFF') %}
+  {% set feather_icon = 'sliders' %}
+{% elseif grouptype | lower == constant('App\\Enum\\GroupType::TEACHERS') %}
+  {% set feather_icon = 'briefcase' %}
+{% else %}
+  {% set feather_icon = 'circle' %}
+{% endif %}
+
+<span class="text-truncate align-middle">
+  <i data-feather='{{ feather_icon }}'></i>
+  {{ displayname|capitalize }}
+</span>

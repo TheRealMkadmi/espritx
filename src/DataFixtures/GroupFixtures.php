@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Group;
+use App\Enum\GroupType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -21,15 +22,18 @@ class GroupFixtures extends AbstractFixtureEx implements DependentFixtureInterfa
         /** @var Collection $loaded_perms */
         $loaded_perms = $this->getReferenceArray(PermissionFixtures::LOADED_PERMISSION_FIXTURES);
 
-        // using sqrt to get a reasonable amount of permissions per role.
+        // using sqrt to get a reasonable amount of permissions per group.
         $chunked_perms = array_chunk($loaded_perms->toArray(), (int)sqrt($loaded_perms->count()));
         foreach ($chunked_perms as $permission_chunk) {
-            $role = new Group();
-            $role->setSecurityTitle("ROLE_TEST_" . strtoupper($generator->unique()->randomNumber(5)));
-            $role->setDisplayName("Service " . str_replace("'", "", implode(" ", $generator->words(2))));
-            $role->setPermissions($permission_chunk);
-            $manager->persist($role);
-            $testing_groups->add($role);
+            $group = new Group();
+            $group->setSecurityTitle("ROLE_TEST_" . strtoupper($generator->unique()->randomNumber(5)));
+            $group->setDisplayName("Service " . str_replace("'", "", implode(" ", $generator->words(2))));
+            $group->setGroupType(GroupType::Random());
+            foreach ($permission_chunk as $permission){
+              $group->addPermission($permission);
+            }
+            $manager->persist($group);
+            $testing_groups->add($group);
         }
         $manager->flush();
 

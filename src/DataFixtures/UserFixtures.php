@@ -30,12 +30,12 @@ class UserFixtures extends AbstractFixtureEx implements DependentFixtureInterfac
       $user = new User();
       $user->setFirstName($generator->firstName);
       $user->setLastName($generator->lastName);
-      $user->setUserStatus(UserStatus::ACTIVE());
+      $user->setUserStatus(UserStatus::Random());
       $user->setEmail("test_user_" . $generator->unique()->randomNumber(5) . "@esprit.tn");
       $user->setPassword($this->passwordEncoder->encodePassword(
         $user,'12345'
       ));
-      foreach ($this->sampleSubArray($groups, 1, count($groups)) as $group){
+      foreach ($this->sampleSubArray($groups, 1, 2) as $group){
         $user->addGroup($group);
       }
       foreach ($this->sampleSubArray($permissions, 1, sqrt(count($permissions))) as $group){

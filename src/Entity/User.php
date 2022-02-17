@@ -246,15 +246,15 @@ class User implements UserInterface, EquatableInterface
   {
     if (!$this->groups->contains($group)) {
       $this->groups[] = $group;
+      $group->addMember($this);
     }
-
     return $this;
   }
 
   public function removeGroup(Group $group): self
   {
     $this->groups->removeElement($group);
-
+    $group->removeMember($this);
     return $this;
   }
   //</editor-fold>
