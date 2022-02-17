@@ -47,4 +47,25 @@ class PostRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function changeValidite(Post $post){
+        $em=$this->getEntityManager();
+        if ($post->isValid())
+            $post->setIsValid(false);
+        else
+            $post->setIsValid(true);
+        $em->persist($post);
+        $em->flush();
+        return $post;
+    }
+    public function changeDelete(Post $post){
+        $em=$this->getEntityManager();
+        if ($post->getIsDeleted())
+            $post->setIsDeleted(false);
+        else
+            $post->setIsDeleted(true);
+        $em->persist($post);
+        $em->flush();
+        return $post;
+    }
+
 }

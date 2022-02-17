@@ -32,6 +32,22 @@
     "doctrine/deprecations": {
         "version": "v0.5.3"
     },
+    "doctrine/doctrine-bundle": {
+        "version": "2.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.3",
+            "ref": "52eabf77a390fe5a12a589d74d8f2a31f60ad013"
+        },
+        "files": [
+            "./config/packages/doctrine.yaml",
+            "./config/packages/prod/doctrine.yaml",
+            "./config/packages/test/doctrine.yaml",
+            "./src/Entity/.gitignore",
+            "./src/Repository/.gitignore"
+        ]
+    },
     "doctrine/doctrine-fixtures-bundle": {
         "version": "3.4",
         "recipe": {
@@ -426,6 +442,21 @@
     "symfony/monolog-bridge": {
         "version": "v5.1.11"
     },
+    "symfony/monolog-bundle": {
+        "version": "3.7",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "2120e71a370db3a494b8afcc42d7cfb2cff6f910"
+        },
+        "files": [
+            "./config/packages/dev/monolog.yaml",
+            "./config/packages/prod/deprecations.yaml",
+            "./config/packages/prod/monolog.yaml",
+            "./config/packages/test/monolog.yaml"
+        ]
+    },
     "symfony/options-resolver": {
         "version": "v5.4.3"
     },
@@ -443,9 +474,6 @@
             "phpunit.xml.dist",
             "tests/bootstrap.php"
         ]
-    },
-    "symfony/polyfill-intl-grapheme": {
-        "version": "v1.24.0"
     },
     "symfony/polyfill-intl-icu": {
         "version": "v1.24.0"
@@ -483,6 +511,20 @@
     "symfony/proxy-manager-bridge": {
         "version": "v4.4.37"
     },
+    "symfony/routing": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.2",
+            "ref": "683dcb08707ba8d41b7e34adb0344bfd68d248a7"
+        },
+        "files": [
+            "./config/packages/prod/routing.yaml",
+            "./config/packages/routing.yaml",
+            "./config/routes.yaml"
+        ]
+    },
     "symfony/security-bundle": {
         "version": "4.4",
         "recipe": {
@@ -515,9 +557,6 @@
     },
     "symfony/stopwatch": {
         "version": "v4.4.37"
-    },
-    "symfony/string": {
-        "version": "v6.0.3"
     },
     "symfony/translation": {
         "version": "4.4",
