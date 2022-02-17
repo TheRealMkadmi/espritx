@@ -1,0 +1,1525 @@
+<?php
+
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Extension\SandboxExtension;
+use Twig\Markup;
+use Twig\Sandbox\SecurityError;
+use Twig\Sandbox\SecurityNotAllowedTagError;
+use Twig\Sandbox\SecurityNotAllowedFilterError;
+use Twig\Sandbox\SecurityNotAllowedFunctionError;
+use Twig\Source;
+use Twig\Template;
+
+/* views/content/apps/todo/app-todo.html.twig */
+class __TwigTemplate_596624e770c4d0ae8d1576bd5d603fbbcaf24bf1c2a465185f77c382fd242be6 extends Template
+{
+    private $source;
+    private $macros = [];
+
+    public function __construct(Environment $env)
+    {
+        parent::__construct($env);
+
+        $this->source = $this->getSourceContext();
+
+        $this->blocks = [
+            'title' => [$this, 'block_title'],
+            'vendor_style' => [$this, 'block_vendor_style'],
+            'page_style' => [$this, 'block_page_style'],
+            'content_sidebar' => [$this, 'block_content_sidebar'],
+            'content' => [$this, 'block_content'],
+            'vendor_script' => [$this, 'block_vendor_script'],
+            'page_script' => [$this, 'block_page_script'],
+        ];
+    }
+
+    protected function doGetParent(array $context)
+    {
+        // line 1
+        return "views/layouts/contentLayoutMaster.html.twig";
+    }
+
+    protected function doDisplay(array $context, array $blocks = [])
+    {
+        $macros = $this->macros;
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e = $this->extensions["Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension"];
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e->enter($__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "template", "views/content/apps/todo/app-todo.html.twig"));
+
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "template", "views/content/apps/todo/app-todo.html.twig"));
+
+        $this->parent = $this->loadTemplate("views/layouts/contentLayoutMaster.html.twig", "views/content/apps/todo/app-todo.html.twig", 1);
+        $this->parent->display($context, array_merge($this->blocks, $blocks));
+        
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e->leave($__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e_prof);
+
+        
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
+
+    }
+
+    // line 3
+    public function block_title($context, array $blocks = [])
+    {
+        $macros = $this->macros;
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e = $this->extensions["Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension"];
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e->enter($__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "title"));
+
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "title"));
+
+        echo "To-Do";
+        
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
+
+        
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e->leave($__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e_prof);
+
+    }
+
+    // line 6
+    public function block_vendor_style($context, array $blocks = [])
+    {
+        $macros = $this->macros;
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e = $this->extensions["Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension"];
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e->enter($__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "vendor_style"));
+
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "vendor_style"));
+
+        // line 7
+        echo "
+  <link rel=\"stylesheet\" href=\"";
+        // line 8
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/css/editors/quill/katex.min.css"), "html", null, true);
+        echo "\">
+  <link rel=\"stylesheet\" href=\"";
+        // line 9
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/css/editors/quill/monokai-sublime.min.css"), "html", null, true);
+        echo "\">
+  <link rel=\"stylesheet\" href=\"";
+        // line 10
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/css/editors/quill/quill.snow.css"), "html", null, true);
+        echo "\">
+  <link rel=\"stylesheet\" href=\"";
+        // line 11
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/css/forms/select/select2.min.css"), "html", null, true);
+        echo "\">
+  <link rel=\"stylesheet\" href=\"";
+        // line 12
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/css/pickers/flatpickr/flatpickr.min.css"), "html", null, true);
+        echo "\">
+  <link rel=\"stylesheet\" href=\"";
+        // line 13
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/css/extensions/dragula.min.css"), "html", null, true);
+        echo "\">
+  <link rel=\"stylesheet\" href=\"";
+        // line 14
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/css/extensions/toastr.min.css"), "html", null, true);
+        echo "\">
+";
+        
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
+
+        
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e->leave($__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e_prof);
+
+    }
+
+    // line 18
+    public function block_page_style($context, array $blocks = [])
+    {
+        $macros = $this->macros;
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e = $this->extensions["Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension"];
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e->enter($__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "page_style"));
+
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "page_style"));
+
+        // line 19
+        echo "
+  <link rel=\"stylesheet\" href=\"";
+        // line 20
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("css/base/plugins/forms/form-quill-editor.css"), "html", null, true);
+        echo "\">
+  <link rel=\"stylesheet\" href=\"";
+        // line 21
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("css/base/plugins/forms/pickers/form-flat-pickr.css"), "html", null, true);
+        echo "\">
+  <link rel=\"stylesheet\" href=\"";
+        // line 22
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("css/base/plugins/extensions/ext-component-toastr.css"), "html", null, true);
+        echo "\">
+  <link rel=\"stylesheet\" href=\"";
+        // line 23
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("css/base/plugins/forms/form-validation.css"), "html", null, true);
+        echo "\">
+  <link rel=\"stylesheet\" href=\"";
+        // line 24
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("css/base/pages/app-todo.css"), "html", null, true);
+        echo "\">
+";
+        
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
+
+        
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e->leave($__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e_prof);
+
+    }
+
+    // line 27
+    public function block_content_sidebar($context, array $blocks = [])
+    {
+        $macros = $this->macros;
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e = $this->extensions["Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension"];
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e->enter($__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "content_sidebar"));
+
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "content_sidebar"));
+
+        // line 28
+        echo "  ";
+        $this->loadTemplate("views/content/apps/todo/app-todo-sidebar.html.twig", "views/content/apps/todo/app-todo.html.twig", 28)->display($context);
+        
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
+
+        
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e->leave($__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e_prof);
+
+    }
+
+    // line 31
+    public function block_content($context, array $blocks = [])
+    {
+        $macros = $this->macros;
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e = $this->extensions["Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension"];
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e->enter($__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "content"));
+
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "content"));
+
+        // line 32
+        echo "<div class=\"body-content-overlay\"></div>
+<div class=\"todo-app-list\">
+
+  <div class=\"app-fixed-search d-flex align-items-center\">
+    <div class=\"sidebar-toggle d-block d-lg-none ms-1\">
+      <i data-feather=\"menu\" class=\"font-medium-5\"></i>
+    </div>
+    <div class=\"d-flex align-content-center justify-content-between w-100\">
+      <div class=\"input-group input-group-merge\">
+        <span class=\"input-group-text\"><i data-feather=\"search\" class=\"text-muted\"></i></span>
+        <input
+          type=\"text\"
+          class=\"form-control\"
+          id=\"todo-search\"
+          placeholder=\"Search task\"
+          aria-label=\"Search...\"
+          aria-describedby=\"todo-search\"
+        />
+      </div>
+    </div>
+    <div class=\"dropdown\">
+      <a
+        href=\"#\"
+        class=\"dropdown-toggle hide-arrow me-1\"
+        id=\"todoActions\"
+        data-bs-toggle=\"dropdown\"
+        aria-haspopup=\"true\"
+        aria-expanded=\"false\"
+      >
+        <i data-feather=\"more-vertical\" class=\"font-medium-2 text-body\"></i>
+      </a>
+      <div class=\"dropdown-menu dropdown-menu-end\" aria-labelledby=\"todoActions\">
+        <a class=\"dropdown-item sort-asc\" href=\"#\">Sort A - Z</a>
+        <a class=\"dropdown-item sort-desc\" href=\"#\">Sort Z - A</a>
+        <a class=\"dropdown-item\" href=\"#\">Sort Assignee</a>
+        <a class=\"dropdown-item\" href=\"#\">Sort Due Date</a>
+        <a class=\"dropdown-item\" href=\"#\">Sort Today</a>
+        <a class=\"dropdown-item\" href=\"#\">Sort 1 Week</a>
+        <a class=\"dropdown-item\" href=\"#\">Sort 1 Month</a>
+      </div>
+    </div>
+  </div>
+
+  <div class=\"todo-task-list-wrapper list-group\">
+    <ul class=\"todo-task-list media-list\" id=\"todo-task-list\">
+      <li class=\"todo-item\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck1\" />
+                <label class=\"form-check-label\" for=\"customCheck1\"></label>
+              </div>
+              <span class=\"todo-title\">Fix Responsiveness for new structure 💻</span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-primary\">Team</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Aug 08</small>
+            <div class=\"avatar\">
+              <img
+                src=\"";
+        // line 96
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-4.jpg"), "html", null, true);
+        echo "\"
+                alt=\"user-avatar\"
+                height=\"32\"
+                width=\"32\"
+              />
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck2\" />
+                <label class=\"form-check-label\" for=\"customCheck2\"></label>
+              </div>
+              <span class=\"todo-title\">Plan a party for development team 🎁</span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-primary\">Team</span>
+              <span class=\"badge rounded-pill badge-light-danger\">High</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Aug 30</small>
+            <div class=\"avatar bg-light-warning\">
+              <div class=\"avatar-content\">MB</div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck3\" />
+                <label class=\"form-check-label\" for=\"customCheck3\"></label>
+              </div>
+              <span class=\"todo-title\">Hire 5 new Fresher or Experienced, frontend and backend developers </span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-info\">Update</span>
+              <span class=\"badge rounded-pill badge-light-warning\">Medium</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Aug 28</small>
+            <div class=\"avatar\">
+              <img
+                src=\"";
+        // line 149
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-5.jpg"), "html", null, true);
+        echo "\"
+                alt=\"user-avatar\"
+                height=\"32\"
+                width=\"32\"
+              />
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item completed\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck4\" checked />
+                <label class=\"form-check-label\" for=\"customCheck4\"></label>
+              </div>
+              <span class=\"todo-title\">Skype Tommy for project status & report</span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-danger\">High</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Aug 18</small>
+            <div class=\"avatar\">
+              <img
+                src=\"";
+        // line 177
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-8.jpg"), "html", null, true);
+        echo "\"
+                alt=\"user-avatar\"
+                height=\"32\"
+                width=\"32\"
+              />
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck5\" />
+                <label class=\"form-check-label\" for=\"customCheck5\"></label>
+              </div>
+              <span class=\"todo-title\">Send PPT with real-time reports</span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-warning\">Medium</span>
+              <span class=\"badge rounded-pill badge-light-success\">Low</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Aug 22</small>
+            <div class=\"avatar bg-light-danger\">
+              <div class=\"avatar-content\">LM</div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck6\" />
+                <label class=\"form-check-label\" for=\"customCheck6\"></label>
+              </div>
+              <span class=\"todo-title\">Submit quotation for Abid's ecommerce website and admin project </span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-primary\">Team</span>
+              <span class=\"badge rounded-pill badge-light-success\">Low</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Aug 24</small>
+            <div class=\"avatar\">
+              <img
+                src=\"";
+        // line 230
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-11.jpg"), "html", null, true);
+        echo "\"
+                alt=\"user-avatar\"
+                height=\"32\"
+                width=\"32\"
+              />
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item completed\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck7\" checked />
+                <label class=\"form-check-label\" for=\"customCheck7\"></label>
+              </div>
+              <span class=\"todo-title\">Reminder to mail clients for holidays</span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-primary\">Team</span>
+              <span class=\"badge rounded-pill badge-light-warning\">Medium</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Aug 27</small>
+            <div class=\"avatar\">
+              <img
+                src=\"";
+        // line 259
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-4.jpg"), "html", null, true);
+        echo "\"
+                alt=\"user-avatar\"
+                height=\"32\"
+                width=\"32\"
+              />
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck8\" />
+                <label class=\"form-check-label\" for=\"customCheck8\"></label>
+              </div>
+              <span class=\"todo-title\">Refactor Code and fix the bugs and test it on server </span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-success\">Low</span>
+              <span class=\"badge rounded-pill badge-light-warning\">Medium</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Aug 27</small>
+            <div class=\"avatar bg-light-success\">
+              <div class=\"avatar-content\">KL</div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck9\" />
+                <label class=\"form-check-label\" for=\"customCheck9\"></label>
+              </div>
+              <span class=\"todo-title\">List out all the SEO resources and send it to new SEO team. </span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <small class=\"text-nowrap text-muted me-1\">Sept 15</small>
+            <div class=\"avatar\">
+              <img
+                src=\"";
+        // line 308
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-11.jpg"), "html", null, true);
+        echo "\"
+                alt=\"user-avatar\"
+                height=\"32\"
+                width=\"32\"
+              />
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck10\" />
+                <label class=\"form-check-label\" for=\"customCheck10\"></label>
+              </div>
+              <span class=\"todo-title\">Finish documentation and make it live</span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-success\">Low</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Aug 28</small>
+            <div class=\"avatar\">
+              <img
+                src=\"";
+        // line 336
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-7.jpg"), "html", null, true);
+        echo "\"
+                alt=\"user-avatar\"
+                height=\"32\"
+                width=\"32\"
+              />
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item completed\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck11\" checked />
+                <label class=\"form-check-label\" for=\"customCheck11\"></label>
+              </div>
+              <span class=\"todo-title\">Pick up Nats from her school and drop at dance class😁 </span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <small class=\"text-nowrap text-muted me-1\">Aug 17</small>
+            <div class=\"avatar bg-light-primary\">
+              <div class=\"avatar-content\">PK</div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck12\" />
+                <label class=\"form-check-label\" for=\"customCheck12\"></label>
+              </div>
+              <span class=\"todo-title\">Plan new dashboard design with design team for Google app store. </span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-info\">Update</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Sept 02</small>
+            <div class=\"avatar bg-light-danger\">
+              <div class=\"avatar-content\">LO</div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck13\" />
+                <label class=\"form-check-label\" for=\"customCheck13\"></label>
+              </div>
+              <span class=\"todo-title\">Conduct a mini awareness meeting regarding health care. </span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <small class=\"text-nowrap text-muted me-1\">Sept 05</small>
+            <div class=\"avatar\">
+              <img
+                src=\"";
+        // line 404
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-17.jpg"), "html", null, true);
+        echo "\"
+                alt=\"user-avatar\"
+                height=\"32\"
+                width=\"32\"
+              />
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item completed\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck14\" checked />
+                <label class=\"form-check-label\" for=\"customCheck14\"></label>
+              </div>
+              <span class=\"todo-title\">Test functionality of apps developed by dev team for enhancements. </span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-danger\">High</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Sept 07</small>
+            <div class=\"avatar bg-light-info\">
+              <div class=\"avatar-content\">VB</div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck15\" />
+                <label class=\"form-check-label\" for=\"customCheck15\"></label>
+              </div>
+              <span class=\"todo-title\">Answer the support tickets and close completed tickets. </span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-primary\">Frontend</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Sept 12</small>
+            <div class=\"avatar bg-light-success\">
+              <div class=\"avatar-content\">SW</div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck16\" />
+                <label class=\"form-check-label\" for=\"customCheck16\"></label>
+              </div>
+              <span class=\"todo-title\">Meet Jane and ask for coffee ❤️</span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-info\">Update</span>
+              <span class=\"badge rounded-pill badge-light-warning\">Medium</span>
+              <span class=\"badge rounded-pill badge-light-success\">Low</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Aug 10</small>
+            <div class=\"avatar\">
+              <img
+                src=\"";
+        // line 480
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-2.jpg"), "html", null, true);
+        echo "\" alt=\"user-avatar\"
+                height=\"32\"
+                width=\"32\"
+              />
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div class=\"no-results\">
+      <h5>No Items Found</h5>
+    </div>
+  </div>
+
+</div>
+
+
+<div class=\"modal modal-slide-in sidebar-todo-modal fade\" id=\"new-task-modal\">
+  <div class=\"modal-dialog sidebar-lg\">
+    <div class=\"modal-content p-0\">
+      <form id=\"form-modal-todo\" class=\"todo-modal needs-validation\" novalidate onsubmit=\"return false\">
+        <div class=\"modal-header align-items-center mb-1\">
+          <h5 class=\"modal-title\">Add Task</h5>
+          <div class=\"todo-item-action d-flex align-items-center justify-content-between ms-auto\">
+            <span class=\"todo-item-favorite cursor-pointer me-75\"
+              ><i data-feather=\"star\" class=\"font-medium-2\"></i
+            ></span>
+            <i data-feather=\"x\" class=\"cursor-pointer\" data-bs-dismiss=\"modal\" stroke-width=\"3\"></i>
+          </div>
+        </div>
+        <div class=\"modal-body flex-grow-1 pb-sm-0 pb-3\">
+          <div class=\"action-tags\">
+            <div class=\"mb-1\">
+              <label for=\"todoTitleAdd\" class=\"form-label\">Title</label>
+              <input
+                type=\"text\"
+                id=\"todoTitleAdd\"
+                name=\"todoTitleAdd\"
+                class=\"new-todo-item-title form-control\"
+                placeholder=\"Title\"
+              />
+            </div>
+            <div class=\"mb-1 position-relative\">
+              <label for=\"task-assigned\" class=\"form-label d-block\">Assignee</label>
+              <select class=\"select2 form-select\" id=\"task-assigned\" name=\"task-assigned\">
+                <option
+                  data-img=\"";
+        // line 526
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-3.jpg"), "html", null, true);
+        echo "\"
+                  value=\"Phill Buffer\"
+                  selected
+                >
+                  Phill Buffer
+                </option>
+                <option data-img=\"";
+        // line 532
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-1.jpg"), "html", null, true);
+        echo "\" value=\"Chandler Bing\">
+                  Chandler Bing
+                </option>
+                <option data-img=\"";
+        // line 535
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-4.jpg"), "html", null, true);
+        echo "\" value=\"Ross Geller\">
+                  Ross Geller
+                </option>
+                <option data-img=\"";
+        // line 538
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-6.jpg"), "html", null, true);
+        echo "\" value=\"Monica Geller\">
+                  Monica Geller
+                </option>
+                <option data-img=\"";
+        // line 541
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-2.jpg"), "html", null, true);
+        echo "\" value=\"Joey Tribbiani\">
+                  Joey Tribbiani
+                </option>
+                <option data-img=\"";
+        // line 544
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-11.jpg"), "html", null, true);
+        echo "\" value=\"Rachel Green\">
+                  Rachel Green
+                </option>
+              </select>
+            </div>
+            <div class=\"mb-1\">
+              <label for=\"task-due-date\" class=\"form-label\">Due Date</label>
+              <input type=\"text\" class=\"form-control task-due-date\" id=\"task-due-date\" name=\"task-due-date\" />
+            </div>
+            <div class=\"mb-1\">
+              <label for=\"task-tag\" class=\"form-label d-block\">Tag</label>
+              <select class=\"form-select task-tag\" id=\"task-tag\" name=\"task-tag\" multiple=\"multiple\">
+                <option value=\"Team\">Team</option>
+                <option value=\"Low\">Low</option>
+                <option value=\"Medium\">Medium</option>
+                <option value=\"High\">High</option>
+                <option value=\"Update\">Update</option>
+              </select>
+            </div>
+            <div class=\"mb-1\">
+              <label class=\"form-label\">Description</label>
+              <div id=\"task-desc\" class=\"border-bottom-0\" data-placeholder=\"Write Your Description\"></div>
+              <div class=\"d-flex justify-content-end desc-toolbar border-top-0\">
+                <span class=\"ql-formats me-0\">
+                  <button class=\"ql-bold\"></button>
+                  <button class=\"ql-italic\"></button>
+                  <button class=\"ql-underline\"></button>
+                  <button class=\"ql-align\"></button>
+                  <button class=\"ql-link\"></button>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class=\"my-1\">
+            <button type=\"submit\" class=\"btn btn-primary d-none add-todo-item me-1\">Add</button>
+            <button type=\"button\" class=\"btn btn-outline-secondary add-todo-item d-none\" data-bs-dismiss=\"modal\">
+              Cancel
+            </button>
+            <button type=\"button\" class=\"btn btn-primary d-none update-btn update-todo-item me-1\">Update</button>
+            <button type=\"button\" class=\"btn btn-outline-danger update-btn d-none\" data-bs-dismiss=\"modal\">
+              Delete
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Right Sidebar ends -->
+";
+        
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
+
+        
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e->leave($__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e_prof);
+
+    }
+
+    // line 595
+    public function block_vendor_script($context, array $blocks = [])
+    {
+        $macros = $this->macros;
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e = $this->extensions["Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension"];
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e->enter($__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "vendor_script"));
+
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "vendor_script"));
+
+        // line 596
+        echo "
+  <script src=\"";
+        // line 597
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/js/editors/quill/katex.min.js"), "html", null, true);
+        echo "\"></script>
+  <script src=\"";
+        // line 598
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/js/editors/quill/highlight.min.js"), "html", null, true);
+        echo "\"></script>
+  <script src=\"";
+        // line 599
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/js/editors/quill/quill.min.js"), "html", null, true);
+        echo "\"></script>
+  <script src=\"";
+        // line 600
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/js/forms/select/select2.full.min.js"), "html", null, true);
+        echo "\"></script>
+  <script src=\"";
+        // line 601
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/js/pickers/flatpickr/flatpickr.min.js"), "html", null, true);
+        echo "\"></script>
+  <script src=\"";
+        // line 602
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/js/extensions/dragula.min.js"), "html", null, true);
+        echo "\"></script>
+  <script src=\"";
+        // line 603
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/js/forms/validation/jquery.validate.min.js"), "html", null, true);
+        echo "\"></script>
+  <script src=\"";
+        // line 604
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/js/extensions/toastr.min.js"), "html", null, true);
+        echo "\"></script>
+";
+        
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
+
+        
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e->leave($__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e_prof);
+
+    }
+
+    // line 606
+    public function block_page_script($context, array $blocks = [])
+    {
+        $macros = $this->macros;
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e = $this->extensions["Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension"];
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e->enter($__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "page_script"));
+
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "page_script"));
+
+        // line 607
+        echo "  <!-- Page js files -->
+  <script src=\"";
+        // line 608
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("js/scripts/pages/app-todo.js"), "html", null, true);
+        echo "\"></script>
+";
+        
+        $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
+
+        
+        $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e->leave($__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e_prof);
+
+    }
+
+    public function getTemplateName()
+    {
+        return "views/content/apps/todo/app-todo.html.twig";
+    }
+
+    public function isTraitable()
+    {
+        return false;
+    }
+
+    public function getDebugInfo()
+    {
+        return array (  886 => 608,  883 => 607,  873 => 606,  861 => 604,  857 => 603,  853 => 602,  849 => 601,  845 => 600,  841 => 599,  837 => 598,  833 => 597,  830 => 596,  820 => 595,  760 => 544,  754 => 541,  748 => 538,  742 => 535,  736 => 532,  727 => 526,  678 => 480,  599 => 404,  528 => 336,  497 => 308,  445 => 259,  413 => 230,  357 => 177,  326 => 149,  270 => 96,  204 => 32,  194 => 31,  183 => 28,  173 => 27,  161 => 24,  157 => 23,  153 => 22,  149 => 21,  145 => 20,  142 => 19,  132 => 18,  120 => 14,  116 => 13,  112 => 12,  108 => 11,  104 => 10,  100 => 9,  96 => 8,  93 => 7,  83 => 6,  64 => 3,  41 => 1,);
+    }
+
+    public function getSourceContext()
+    {
+        return new Source("{% extends 'views/layouts/contentLayoutMaster.html.twig' %}
+
+{% block title%}{{ \"To-Do\" }}{% endblock %}
+
+
+{% block vendor_style %}
+
+  <link rel=\"stylesheet\" href=\"{{ asset('vendors/css/editors/quill/katex.min.css') }}\">
+  <link rel=\"stylesheet\" href=\"{{ asset('vendors/css/editors/quill/monokai-sublime.min.css') }}\">
+  <link rel=\"stylesheet\" href=\"{{ asset('vendors/css/editors/quill/quill.snow.css') }}\">
+  <link rel=\"stylesheet\" href=\"{{ asset('vendors/css/forms/select/select2.min.css') }}\">
+  <link rel=\"stylesheet\" href=\"{{ asset('vendors/css/pickers/flatpickr/flatpickr.min.css') }}\">
+  <link rel=\"stylesheet\" href=\"{{ asset('vendors/css/extensions/dragula.min.css') }}\">
+  <link rel=\"stylesheet\" href=\"{{ asset('vendors/css/extensions/toastr.min.css') }}\">
+{%endblock%}
+
+
+{% block page_style%}
+
+  <link rel=\"stylesheet\" href=\"{{ asset('css/base/plugins/forms/form-quill-editor.css') }}\">
+  <link rel=\"stylesheet\" href=\"{{ asset('css/base/plugins/forms/pickers/form-flat-pickr.css') }}\">
+  <link rel=\"stylesheet\" href=\"{{ asset('css/base/plugins/extensions/ext-component-toastr.css') }}\">
+  <link rel=\"stylesheet\" href=\"{{ asset('css/base/plugins/forms/form-validation.css') }}\">
+  <link rel=\"stylesheet\" href=\"{{ asset('css/base/pages/app-todo.css') }}\">
+{%endblock%}
+
+{% block content_sidebar%}
+  {% include 'views/content/apps/todo/app-todo-sidebar.html.twig'%}
+{%endblock%}
+
+{% block content%}
+<div class=\"body-content-overlay\"></div>
+<div class=\"todo-app-list\">
+
+  <div class=\"app-fixed-search d-flex align-items-center\">
+    <div class=\"sidebar-toggle d-block d-lg-none ms-1\">
+      <i data-feather=\"menu\" class=\"font-medium-5\"></i>
+    </div>
+    <div class=\"d-flex align-content-center justify-content-between w-100\">
+      <div class=\"input-group input-group-merge\">
+        <span class=\"input-group-text\"><i data-feather=\"search\" class=\"text-muted\"></i></span>
+        <input
+          type=\"text\"
+          class=\"form-control\"
+          id=\"todo-search\"
+          placeholder=\"Search task\"
+          aria-label=\"Search...\"
+          aria-describedby=\"todo-search\"
+        />
+      </div>
+    </div>
+    <div class=\"dropdown\">
+      <a
+        href=\"#\"
+        class=\"dropdown-toggle hide-arrow me-1\"
+        id=\"todoActions\"
+        data-bs-toggle=\"dropdown\"
+        aria-haspopup=\"true\"
+        aria-expanded=\"false\"
+      >
+        <i data-feather=\"more-vertical\" class=\"font-medium-2 text-body\"></i>
+      </a>
+      <div class=\"dropdown-menu dropdown-menu-end\" aria-labelledby=\"todoActions\">
+        <a class=\"dropdown-item sort-asc\" href=\"#\">Sort A - Z</a>
+        <a class=\"dropdown-item sort-desc\" href=\"#\">Sort Z - A</a>
+        <a class=\"dropdown-item\" href=\"#\">Sort Assignee</a>
+        <a class=\"dropdown-item\" href=\"#\">Sort Due Date</a>
+        <a class=\"dropdown-item\" href=\"#\">Sort Today</a>
+        <a class=\"dropdown-item\" href=\"#\">Sort 1 Week</a>
+        <a class=\"dropdown-item\" href=\"#\">Sort 1 Month</a>
+      </div>
+    </div>
+  </div>
+
+  <div class=\"todo-task-list-wrapper list-group\">
+    <ul class=\"todo-task-list media-list\" id=\"todo-task-list\">
+      <li class=\"todo-item\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck1\" />
+                <label class=\"form-check-label\" for=\"customCheck1\"></label>
+              </div>
+              <span class=\"todo-title\">Fix Responsiveness for new structure 💻</span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-primary\">Team</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Aug 08</small>
+            <div class=\"avatar\">
+              <img
+                src=\"{{asset('images/portrait/small/avatar-s-4.jpg')}}\"
+                alt=\"user-avatar\"
+                height=\"32\"
+                width=\"32\"
+              />
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck2\" />
+                <label class=\"form-check-label\" for=\"customCheck2\"></label>
+              </div>
+              <span class=\"todo-title\">Plan a party for development team 🎁</span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-primary\">Team</span>
+              <span class=\"badge rounded-pill badge-light-danger\">High</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Aug 30</small>
+            <div class=\"avatar bg-light-warning\">
+              <div class=\"avatar-content\">MB</div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck3\" />
+                <label class=\"form-check-label\" for=\"customCheck3\"></label>
+              </div>
+              <span class=\"todo-title\">Hire 5 new Fresher or Experienced, frontend and backend developers </span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-info\">Update</span>
+              <span class=\"badge rounded-pill badge-light-warning\">Medium</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Aug 28</small>
+            <div class=\"avatar\">
+              <img
+                src=\"{{asset('images/portrait/small/avatar-s-5.jpg')}}\"
+                alt=\"user-avatar\"
+                height=\"32\"
+                width=\"32\"
+              />
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item completed\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck4\" checked />
+                <label class=\"form-check-label\" for=\"customCheck4\"></label>
+              </div>
+              <span class=\"todo-title\">Skype Tommy for project status & report</span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-danger\">High</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Aug 18</small>
+            <div class=\"avatar\">
+              <img
+                src=\"{{asset('images/portrait/small/avatar-s-8.jpg')}}\"
+                alt=\"user-avatar\"
+                height=\"32\"
+                width=\"32\"
+              />
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck5\" />
+                <label class=\"form-check-label\" for=\"customCheck5\"></label>
+              </div>
+              <span class=\"todo-title\">Send PPT with real-time reports</span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-warning\">Medium</span>
+              <span class=\"badge rounded-pill badge-light-success\">Low</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Aug 22</small>
+            <div class=\"avatar bg-light-danger\">
+              <div class=\"avatar-content\">LM</div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck6\" />
+                <label class=\"form-check-label\" for=\"customCheck6\"></label>
+              </div>
+              <span class=\"todo-title\">Submit quotation for Abid's ecommerce website and admin project </span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-primary\">Team</span>
+              <span class=\"badge rounded-pill badge-light-success\">Low</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Aug 24</small>
+            <div class=\"avatar\">
+              <img
+                src=\"{{asset('images/portrait/small/avatar-s-11.jpg')}}\"
+                alt=\"user-avatar\"
+                height=\"32\"
+                width=\"32\"
+              />
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item completed\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck7\" checked />
+                <label class=\"form-check-label\" for=\"customCheck7\"></label>
+              </div>
+              <span class=\"todo-title\">Reminder to mail clients for holidays</span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-primary\">Team</span>
+              <span class=\"badge rounded-pill badge-light-warning\">Medium</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Aug 27</small>
+            <div class=\"avatar\">
+              <img
+                src=\"{{asset('images/portrait/small/avatar-s-4.jpg')}}\"
+                alt=\"user-avatar\"
+                height=\"32\"
+                width=\"32\"
+              />
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck8\" />
+                <label class=\"form-check-label\" for=\"customCheck8\"></label>
+              </div>
+              <span class=\"todo-title\">Refactor Code and fix the bugs and test it on server </span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-success\">Low</span>
+              <span class=\"badge rounded-pill badge-light-warning\">Medium</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Aug 27</small>
+            <div class=\"avatar bg-light-success\">
+              <div class=\"avatar-content\">KL</div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck9\" />
+                <label class=\"form-check-label\" for=\"customCheck9\"></label>
+              </div>
+              <span class=\"todo-title\">List out all the SEO resources and send it to new SEO team. </span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <small class=\"text-nowrap text-muted me-1\">Sept 15</small>
+            <div class=\"avatar\">
+              <img
+                src=\"{{asset('images/portrait/small/avatar-s-11.jpg')}}\"
+                alt=\"user-avatar\"
+                height=\"32\"
+                width=\"32\"
+              />
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck10\" />
+                <label class=\"form-check-label\" for=\"customCheck10\"></label>
+              </div>
+              <span class=\"todo-title\">Finish documentation and make it live</span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-success\">Low</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Aug 28</small>
+            <div class=\"avatar\">
+              <img
+                src=\"{{asset('images/portrait/small/avatar-s-7.jpg')}}\"
+                alt=\"user-avatar\"
+                height=\"32\"
+                width=\"32\"
+              />
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item completed\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck11\" checked />
+                <label class=\"form-check-label\" for=\"customCheck11\"></label>
+              </div>
+              <span class=\"todo-title\">Pick up Nats from her school and drop at dance class😁 </span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <small class=\"text-nowrap text-muted me-1\">Aug 17</small>
+            <div class=\"avatar bg-light-primary\">
+              <div class=\"avatar-content\">PK</div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck12\" />
+                <label class=\"form-check-label\" for=\"customCheck12\"></label>
+              </div>
+              <span class=\"todo-title\">Plan new dashboard design with design team for Google app store. </span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-info\">Update</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Sept 02</small>
+            <div class=\"avatar bg-light-danger\">
+              <div class=\"avatar-content\">LO</div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck13\" />
+                <label class=\"form-check-label\" for=\"customCheck13\"></label>
+              </div>
+              <span class=\"todo-title\">Conduct a mini awareness meeting regarding health care. </span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <small class=\"text-nowrap text-muted me-1\">Sept 05</small>
+            <div class=\"avatar\">
+              <img
+                src=\"{{asset('images/portrait/small/avatar-s-17.jpg')}}\"
+                alt=\"user-avatar\"
+                height=\"32\"
+                width=\"32\"
+              />
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item completed\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck14\" checked />
+                <label class=\"form-check-label\" for=\"customCheck14\"></label>
+              </div>
+              <span class=\"todo-title\">Test functionality of apps developed by dev team for enhancements. </span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-danger\">High</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Sept 07</small>
+            <div class=\"avatar bg-light-info\">
+              <div class=\"avatar-content\">VB</div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck15\" />
+                <label class=\"form-check-label\" for=\"customCheck15\"></label>
+              </div>
+              <span class=\"todo-title\">Answer the support tickets and close completed tickets. </span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-primary\">Frontend</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Sept 12</small>
+            <div class=\"avatar bg-light-success\">
+              <div class=\"avatar-content\">SW</div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class=\"todo-item\">
+        <div class=\"todo-title-wrapper\">
+          <div class=\"todo-title-area\">
+            <i data-feather=\"more-vertical\" class=\"drag-icon\"></i>
+            <div class=\"title-wrapper\">
+              <div class=\"form-check\">
+                <input type=\"checkbox\" class=\"form-check-input\" id=\"customCheck16\" />
+                <label class=\"form-check-label\" for=\"customCheck16\"></label>
+              </div>
+              <span class=\"todo-title\">Meet Jane and ask for coffee ❤️</span>
+            </div>
+          </div>
+          <div class=\"todo-item-action\">
+            <div class=\"badge-wrapper me-1\">
+              <span class=\"badge rounded-pill badge-light-info\">Update</span>
+              <span class=\"badge rounded-pill badge-light-warning\">Medium</span>
+              <span class=\"badge rounded-pill badge-light-success\">Low</span>
+            </div>
+            <small class=\"text-nowrap text-muted me-1\">Aug 10</small>
+            <div class=\"avatar\">
+              <img
+                src=\"{{asset('images/portrait/small/avatar-s-2.jpg')}}\" alt=\"user-avatar\"
+                height=\"32\"
+                width=\"32\"
+              />
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div class=\"no-results\">
+      <h5>No Items Found</h5>
+    </div>
+  </div>
+
+</div>
+
+
+<div class=\"modal modal-slide-in sidebar-todo-modal fade\" id=\"new-task-modal\">
+  <div class=\"modal-dialog sidebar-lg\">
+    <div class=\"modal-content p-0\">
+      <form id=\"form-modal-todo\" class=\"todo-modal needs-validation\" novalidate onsubmit=\"return false\">
+        <div class=\"modal-header align-items-center mb-1\">
+          <h5 class=\"modal-title\">Add Task</h5>
+          <div class=\"todo-item-action d-flex align-items-center justify-content-between ms-auto\">
+            <span class=\"todo-item-favorite cursor-pointer me-75\"
+              ><i data-feather=\"star\" class=\"font-medium-2\"></i
+            ></span>
+            <i data-feather=\"x\" class=\"cursor-pointer\" data-bs-dismiss=\"modal\" stroke-width=\"3\"></i>
+          </div>
+        </div>
+        <div class=\"modal-body flex-grow-1 pb-sm-0 pb-3\">
+          <div class=\"action-tags\">
+            <div class=\"mb-1\">
+              <label for=\"todoTitleAdd\" class=\"form-label\">Title</label>
+              <input
+                type=\"text\"
+                id=\"todoTitleAdd\"
+                name=\"todoTitleAdd\"
+                class=\"new-todo-item-title form-control\"
+                placeholder=\"Title\"
+              />
+            </div>
+            <div class=\"mb-1 position-relative\">
+              <label for=\"task-assigned\" class=\"form-label d-block\">Assignee</label>
+              <select class=\"select2 form-select\" id=\"task-assigned\" name=\"task-assigned\">
+                <option
+                  data-img=\"{{asset('images/portrait/small/avatar-s-3.jpg')}}\"
+                  value=\"Phill Buffer\"
+                  selected
+                >
+                  Phill Buffer
+                </option>
+                <option data-img=\"{{asset('images/portrait/small/avatar-s-1.jpg')}}\" value=\"Chandler Bing\">
+                  Chandler Bing
+                </option>
+                <option data-img=\"{{asset('images/portrait/small/avatar-s-4.jpg')}}\" value=\"Ross Geller\">
+                  Ross Geller
+                </option>
+                <option data-img=\"{{asset('images/portrait/small/avatar-s-6.jpg')}}\" value=\"Monica Geller\">
+                  Monica Geller
+                </option>
+                <option data-img=\"{{asset('images/portrait/small/avatar-s-2.jpg')}}\" value=\"Joey Tribbiani\">
+                  Joey Tribbiani
+                </option>
+                <option data-img=\"{{asset('images/portrait/small/avatar-s-11.jpg')}}\" value=\"Rachel Green\">
+                  Rachel Green
+                </option>
+              </select>
+            </div>
+            <div class=\"mb-1\">
+              <label for=\"task-due-date\" class=\"form-label\">Due Date</label>
+              <input type=\"text\" class=\"form-control task-due-date\" id=\"task-due-date\" name=\"task-due-date\" />
+            </div>
+            <div class=\"mb-1\">
+              <label for=\"task-tag\" class=\"form-label d-block\">Tag</label>
+              <select class=\"form-select task-tag\" id=\"task-tag\" name=\"task-tag\" multiple=\"multiple\">
+                <option value=\"Team\">Team</option>
+                <option value=\"Low\">Low</option>
+                <option value=\"Medium\">Medium</option>
+                <option value=\"High\">High</option>
+                <option value=\"Update\">Update</option>
+              </select>
+            </div>
+            <div class=\"mb-1\">
+              <label class=\"form-label\">Description</label>
+              <div id=\"task-desc\" class=\"border-bottom-0\" data-placeholder=\"Write Your Description\"></div>
+              <div class=\"d-flex justify-content-end desc-toolbar border-top-0\">
+                <span class=\"ql-formats me-0\">
+                  <button class=\"ql-bold\"></button>
+                  <button class=\"ql-italic\"></button>
+                  <button class=\"ql-underline\"></button>
+                  <button class=\"ql-align\"></button>
+                  <button class=\"ql-link\"></button>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class=\"my-1\">
+            <button type=\"submit\" class=\"btn btn-primary d-none add-todo-item me-1\">Add</button>
+            <button type=\"button\" class=\"btn btn-outline-secondary add-todo-item d-none\" data-bs-dismiss=\"modal\">
+              Cancel
+            </button>
+            <button type=\"button\" class=\"btn btn-primary d-none update-btn update-todo-item me-1\">Update</button>
+            <button type=\"button\" class=\"btn btn-outline-danger update-btn d-none\" data-bs-dismiss=\"modal\">
+              Delete
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Right Sidebar ends -->
+{% endblock%}
+
+{% block vendor_script%}
+
+  <script src=\"{{ asset('vendors/js/editors/quill/katex.min.js') }}\"></script>
+  <script src=\"{{ asset('vendors/js/editors/quill/highlight.min.js') }}\"></script>
+  <script src=\"{{ asset('vendors/js/editors/quill/quill.min.js') }}\"></script>
+  <script src=\"{{ asset('vendors/js/forms/select/select2.full.min.js') }}\"></script>
+  <script src=\"{{ asset('vendors/js/pickers/flatpickr/flatpickr.min.js') }}\"></script>
+  <script src=\"{{ asset('vendors/js/extensions/dragula.min.js') }}\"></script>
+  <script src=\"{{ asset('vendors/js/forms/validation/jquery.validate.min.js') }}\"></script>
+  <script src=\"{{ asset('vendors/js/extensions/toastr.min.js') }}\"></script>
+{% endblock%}
+{% block page_script%}
+  <!-- Page js files -->
+  <script src=\"{{ asset('js/scripts/pages/app-todo.js') }}\"></script>
+{% endblock%}
+", "views/content/apps/todo/app-todo.html.twig", "C:\\Users\\mouna\\OneDrive\\Bureau\\test\\espritx\\templates\\views\\content\\apps\\todo\\app-todo.html.twig");
+    }
+}

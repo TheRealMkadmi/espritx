@@ -1,0 +1,22 @@
+<?php //App%255CController%255CTestController%2523layout_collapsed_menu
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Symfony\\Component\\Routing\\Annotation\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Annotation\\Route')),
+    ],
+    null,
+    [
+        'Symfony\\Component\\Routing\\Annotation\\Route' => [
+            'path' => [
+                'page-layouts/collapsed-menu',
+            ],
+            'name' => [
+                'page-layouts-collapsed-menu',
+            ],
+        ],
+    ],
+    [
+        $o[0],
+    ],
+    []
+); }];

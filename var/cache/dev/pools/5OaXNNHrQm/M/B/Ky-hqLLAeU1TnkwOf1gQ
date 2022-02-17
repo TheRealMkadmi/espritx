@@ -1,0 +1,35 @@
+<?php //App%255CEntity%255CService%2524Recipient
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Doctrine\\ORM\\Mapping\\ManyToMany'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\ManyToMany')),
+        clone ($p['Symfony\\Component\\Validator\\Constraints\\Count'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Validator\\Constraints\\Count')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'targetEntity' => [
+                'App\\Entity\\Group',
+            ],
+            'inversedBy' => [
+                'enjoyable_services',
+            ],
+            'minMessage' => [
+                1 => 'Sélectionnez au moins un bénéficaire de ce service!',
+            ],
+            'min' => [
+                1 => '1',
+            ],
+            'groups' => [
+                1 => [
+                    'Default',
+                ],
+            ],
+        ],
+    ],
+    [
+        $o[0],
+        $o[1],
+    ],
+    []
+); }];

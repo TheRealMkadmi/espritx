@@ -1,0 +1,43 @@
+{
+    "name": "stof/doctrine-extensions-bundle",
+    "type": "symfony-bundle",
+    "description": "Integration of the gedmo/doctrine-extensions with Symfony",
+    "keywords": ["tree", "behaviors", "doctrine2", "extensions", "gedmo", "sluggable","loggable", "translatable", "nestedset", "sortable", "timestampable"],
+    "homepage": "https://github.com/stof/StofDoctrineExtensionsBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Christophe Coevoet",
+            "email": "stof@notk.org"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3 || ^8.0",
+        "symfony/config": "^4.4 || ^5.2 || ^6.0",
+        "symfony/dependency-injection": "^4.4 || ^5.2 || ^6.0",
+        "symfony/event-dispatcher": "^4.4 || ^5.2 || ^6.0",
+        "symfony/http-kernel": "^4.4 || ^5.2 || ^6.0",
+        "gedmo/doctrine-extensions": "^2.3.4 || ^3.0.0"
+    },
+    "require-dev": {
+        "symfony/mime": "^4.4 || ^5.2 || ^6.0",
+        "symfony/phpunit-bridge": "^v5.2.4 || ^6.0",
+        "symfony/security-core": "^4.4 || ^5.2 || ^6.0"
+    },
+    "suggest": {
+        "doctrine/doctrine-bundle": "to use the ORM extensions",
+        "doctrine/mongodb-odm-bundle": "to use the MongoDB ODM extensions",
+        "symfony/mime": "To use the Mime component integration for Uploadable"
+    },
+    "autoload": {
+        "psr-4": { "Stof\\DoctrineExtensionsBundle\\": "src" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Stof\\DoctrineExtensionsBundle\\Tests\\": "tests" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.x-dev"
+        }
+    }
+}

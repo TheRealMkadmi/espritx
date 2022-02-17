@@ -1,0 +1,12 @@
+vendor
+composer.lock
+tests/Functional/cache
+tests/Functional/logs
+phpunit.xml
+dist
+coverage.xml
+bin
+!bin/console
+.phpunit.result.cache
+var
+.idea
