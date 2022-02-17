@@ -41,9 +41,15 @@ class Service
      */
     private $Recipient;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ServiceRequest::class, mappedBy="Type")
+     */
+    private $serviceRequests;
+
     public function __construct()
     {
         $this->Recipient = new ArrayCollection();
+        $this->serviceRequests = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -95,6 +101,36 @@ class Service
     public function removeRecipient(Group $recipient): self
     {
         $this->Recipient->removeElement($recipient);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ServiceRequest[]
+     */
+    public function getServiceRequests(): Collection
+    {
+        return $this->serviceRequests;
+    }
+
+    public function addServiceRequest(ServiceRequest $serviceRequest): self
+    {
+        if (!$this->serviceRequests->contains($serviceRequest)) {
+            $this->serviceRequests[] = $serviceRequest;
+            $serviceRequest->setType($this);
+        }
+
+        return $this;
+    }
+
+    public function removeServiceRequest(ServiceRequest $serviceRequest): self
+    {
+        if ($this->serviceRequests->removeElement($serviceRequest)) {
+            // set the owning side to null (unless already changed)
+            if ($serviceRequest->getType() === $this) {
+                $serviceRequest->setType(null);
+            }
+        }
 
         return $this;
     }
