@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Service;
 use App\Repository\ServiceRepository;
 use App\Form\ServiceType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,28 +15,69 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route ("/service")
  */
- class ServiceController extends AbstractController
+class ServiceController extends AbstractController
 {
     /**
      * @Route("/", name="service")
      */
-    public function index(): Response
+    public function Services(ServiceRepository $Repo): Response
     {
-        return $this->render('service/index.html.twig', [
-            'controller_name' => 'ServiceController',
+
+        return $this->render('views/content/apps/administrativeService/serviceAffiche.html.twig', [
+            'breadcrumbs' => [
+                ["name" => "Management"],
+            ],
+            'Services' => $Repo->findAll(),
         ]);
     }
 
     /**
-     * @Route("/add", name="serivceAdd")
+     * @Route("/add", name="Serivce_Add")
      */
-    public function addService(Request $request):Response
+    public function addService(Request $request, EntityManagerInterface $em): Response
     {
         $ser = new Service();
-        $f = $this->createForm(ServiceType::class,$ser);
+        $f = $this->createForm(ServiceType::class, $ser);
         $f->handleRequest($request);
-        return $this->render('service/AddService.html.twig', [
-            'form'=>$f->createView(),
+        if ($f->isSubmitted() && $f->isValid()) {
+            $em->persist($ser);
+            $em->flush();
+            return $this->redirectToRoute('service', [], Response::HTTP_SEE_OTHER);
+        }
+        return $this->render('views/content/apps/administrativeService/app-service-form.html.twig', [
+            'form' => $f->createView(),
         ]);
+    }
+
+    /**
+     * @param EntityManagerInterface $em
+     * @return Response
+     * @Route ("/{id}/edit", name="Service_Edit")
+     */
+    public function ModifServices(EntityManagerInterface $em,Request $request, Service $ser): Response
+    {
+        $form=$this->createForm(ServiceType::class,$ser);
+        $form->handleRequest($request);
+        if($form->isSubmitted()&&$form->isValid())
+        {
+            $em->flush();
+            return $this->redirectToRoute('service', [], Response::HTTP_SEE_OTHER);
+        }
+        return $this->render('views/content/apps/administrativeService/app-service-form.html.twig', [
+            'ser'=>$ser,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @param EntityManagerInterface $em
+     * @return Response
+     * @Route ("/{id}/delete", name="Service_Del")
+     */
+    public function SuppServices(EntityManagerInterface $em, Service $ser): Response
+    {
+        $em->remove($ser);
+        $em->flush();
+        return $this->redirectToRoute('service', [], Response::HTTP_SEE_OTHER);
     }
 }

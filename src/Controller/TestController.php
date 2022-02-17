@@ -233,7 +233,7 @@ class TestController extends AbstractController
     {
         $pageConfigs = ['pageHeader' => false,];
 
-        return $this->render('views/content/apps/rolesPermission/app-access-permission.html.twig', ['pageConfigs' => $pageConfigs]);
+        return $this->render('views/content/apps/rolesPermission/app-service-form.html.twig', ['pageConfigs' => $pageConfigs]);
     }
 
     // Kanban App
@@ -1248,7 +1248,9 @@ class TestController extends AbstractController
     public function form_repeater()
     {
         $breadcrumbs = [
-            ['link' => "/", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Forms"], ['name' => "Form Repeater"]
+            ['name' => "Home"],
+            ['name' => "Forms"],
+            ['name' => "Form Repeater"]
         ];
         return $this->render('views/content/forms/form-repeater.html.twig', [
             'breadcrumbs' => $breadcrumbs
@@ -1260,7 +1262,7 @@ class TestController extends AbstractController
      */
     public function table()
     {
-        $breadcrumbs = [['link' => "/", 'name' => "Home"], ['name' => "Table Bootstrap"]];
+        $breadcrumbs = [['name' => "Home"], ['name' => "Table Bootstrap"]];
         return $this->render('views/content/table/table-bootstrap/table-bootstrap.html.twig', [
             'breadcrumbs' => $breadcrumbs
         ]);

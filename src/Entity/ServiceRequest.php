@@ -27,6 +27,22 @@ class ServiceRequest
      */
     private $RespondedAt;
 
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     */
+    private $Title;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Description;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Service::class, inversedBy="serviceRequests")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $Type;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +68,42 @@ class ServiceRequest
     public function setRespondedAt(?\DateTimeImmutable $RespondedAt): self
     {
         $this->RespondedAt = $RespondedAt;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->Title;
+    }
+
+    public function setTitle(string $Title): self
+    {
+        $this->Title = $Title;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->Description;
+    }
+
+    public function setDescription(string $Description): self
+    {
+        $this->Description = $Description;
+
+        return $this;
+    }
+
+    public function getType(): ?Service
+    {
+        return $this->Type;
+    }
+
+    public function setType(?Service $Type): self
+    {
+        $this->Type = $Type;
 
         return $this;
     }
