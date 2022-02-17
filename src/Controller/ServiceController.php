@@ -20,17 +20,19 @@ class ServiceController extends AbstractController
     /**
      * @Route("/", name="service")
      */
-    public function Services(EntityManagerInterface $em): Response
+    public function Services(ServiceRepository $Repo): Response
     {
 
-        $services = $em->getRepository(Service::class)->findAll();
-        return $this->render('views/content/apps/administrativeService/serviceAffiche.html.twig',[
-            'pagination'=>$services
+        return $this->render('views/content/apps/administrativeService/serviceAffiche.html.twig', [
+            'breadcrumbs' => [
+                ["name" => "Management"],
+            ],
+            'Services' => $Repo->findAll(),
         ]);
     }
 
     /**
-     * @Route("/add", name="serivceAdd")
+     * @Route("/add", name="Serivce_Add")
      */
     public function addService(Request $request, EntityManagerInterface $em): Response
     {
@@ -50,10 +52,32 @@ class ServiceController extends AbstractController
     /**
      * @param EntityManagerInterface $em
      * @return Response
-     * @Route ("/aff", name="AffAll")
+     * @Route ("/{id}/edit", name="Service_Edit")
      */
-    public function affServices(EntityManagerInterface $em): Response
+    public function ModifServices(EntityManagerInterface $em,Request $request, Service $ser): Response
     {
+        $form=$this->createForm(ServiceType::class,$ser);
+        $form->handleRequest($request);
+        if($form->isSubmitted()&&$form->isValid())
+        {
+            $em->flush();
+            return $this->redirectToRoute('service', [], Response::HTTP_SEE_OTHER);
+        }
+        return $this->render('views/content/apps/administrativeService/app-service-form.html.twig', [
+            'ser'=>$ser,
+            'form' => $form->createView(),
+        ]);
+    }
 
+    /**
+     * @param EntityManagerInterface $em
+     * @return Response
+     * @Route ("/{id}/delete", name="Service_Del")
+     */
+    public function SuppServices(EntityManagerInterface $em, Service $ser): Response
+    {
+        $em->remove($ser);
+        $em->flush();
+        return $this->redirectToRoute('service', [], Response::HTTP_SEE_OTHER);
     }
 }

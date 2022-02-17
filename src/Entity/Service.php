@@ -23,7 +23,7 @@ class Service
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotBlank(message="Veuillez ajouter un nom de service!")
      */
     private $Name;
