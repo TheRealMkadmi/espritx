@@ -23,7 +23,7 @@ class Post
      *@Assert\Length(
      *      min = 3,
      *      max = 15,
-     *      minMessage = "le titre de votre post doit avoir au mois {{ limit }} caracteres ",
+     *      minMessage = "le titre de votre post doit avoir au moins {{ limit }} caracteres ",
      *      maxMessage = "le titre de votre post ne doit pas depasser  {{ limit }} caracteres"
      * )
 
@@ -42,7 +42,7 @@ class Post
      *@Assert\Length(
      *      min = 5,
      *      max = 2000,
-     *      minMessage = "le contenu de votre post doit avoir au mois {{ limit }} caracteres ",
+     *      minMessage = "le contenu de votre post doit avoir au moins {{ limit }} caracteres ",
      *      maxMessage = "le contenue de votre post ne doit pas depasser  {{ limit }} caracteres"
      * )
      * @ORM\Column(type="text")
