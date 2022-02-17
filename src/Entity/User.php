@@ -29,6 +29,7 @@ class User implements UserInterface, EquatableInterface
     $this->posts = new ArrayCollection();
     $this->groups = new ArrayCollection();
     $this->userStatus = UserStatus::get(UserStatus::PENDING);
+    $this->commentaires = new ArrayCollection();
   }
 
   //<editor-fold desc="id">
@@ -351,6 +352,11 @@ class User implements UserInterface, EquatableInterface
 
 
   /**
+   * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="user")
+   */
+  private $commentaires;
+
+  /**
    * @return Collection|Post[]
    */
   public function getPosts(): Collection|array
@@ -445,5 +451,37 @@ class User implements UserInterface, EquatableInterface
     return $this->email;
   }
 
+<<<<<<< HEAD
 
+=======
+  /**
+   * @return Collection|Commentaire[]
+   */
+  public function getCommentaires(): Collection
+  {
+      return $this->commentaires;
+  }
+
+  public function addCommentaire(Commentaire $commentaire): self
+  {
+      if (!$this->commentaires->contains($commentaire)) {
+          $this->commentaires[] = $commentaire;
+          $commentaire->setUser($this);
+      }
+
+      return $this;
+  }
+
+  public function removeCommentaire(Commentaire $commentaire): self
+  {
+      if ($this->commentaires->removeElement($commentaire)) {
+          // set the owning side to null (unless already changed)
+          if ($commentaire->getUser() === $this) {
+              $commentaire->setUser(null);
+          }
+      }
+
+      return $this;
+  }
+>>>>>>> 7d11d36 (comments)
 }

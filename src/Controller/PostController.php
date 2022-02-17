@@ -2,19 +2,34 @@
 
 namespace App\Controller;
 
+use App\Entity\Commentaire;
 use App\Entity\Post;
+use App\Form\CommentaireType;
 use App\Form\PostType;
+use App\Repository\CommentaireRepository;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use function Doctrine\Common\Annotations\AnnotationException;
 
 class PostController extends AbstractController
 {
+
+    private $postRepository;
+    private $entityManager;
+
+    public function __construct(PostRepository $postRepository,EntityManagerInterface $entityManager)
+    {   $this->entityManager = $entityManager;
+        $this->postRepository=$postRepository;
+    }
+
     /**
      * @Route("/post", name="post")
      */
@@ -26,9 +41,10 @@ class PostController extends AbstractController
     }
 
     ///////////////////// Afficher tous les posts /////////////////////////
+    /// en tant qu'administrateur je veux gerer les commentaires
 
     /**
-     * @Route("/post/all", name="post")
+     * @Route("admin/post/all", name="postall")
      * @param PostRepository$repository
      * @param Request $request
      * @return Response
@@ -40,7 +56,7 @@ class PostController extends AbstractController
         $posts = $repository->findAll();
 
 
-        return $this->render('views/content/posts/Admin/allposts.html.twig', [ 'posts' => $posts]);
+        return $this->render('views/content/posts/Admin/allpost.html.twig', [ 'posts' => $posts]);
     }
 
 
@@ -112,10 +128,9 @@ class PostController extends AbstractController
             $em->persist($post);
 
             $em->flush();
-            $this->addFlash('notice', 'Publication modifier avec succée !');
-            return $this->redirectToRoute("post");
+            $this->addFlash('notice', 'Publication modifiée avec succée !');
+            return $this->redirectToRoute("acceuil_user_posts");
         }
-//        return $this->render('publicationsU/editpublication.html.twig', ['pub1' => $pub1, 'form' => $form->createView(), 'form1' => $form1->createView()]);
        return $this->render('views/content/posts/User/editPost.html.twig', ['form' => $form1->createView()]);
 
     }
@@ -124,7 +139,7 @@ class PostController extends AbstractController
     /// En tant qu'utilisateur, je veux supprimer une publication.
 
     /**
-     * @Route("/admin/post/changedelete/{id}",name="changedelete_post")
+     * @Route("/user/post/changedelete/{id}",name="changedelete_post")
      */
     public function supprimer_Post_user(Post $post,PostRepository $postRepository){
         $post = $postRepository->changeDelete($post);
@@ -154,8 +169,8 @@ class PostController extends AbstractController
 
         $entityManager = $this->getDoctrine()->getManager();
 
-        $op = $entityManager->getRepository(Post::class)->find($id);
-        $entityManager->remove($op);
+        $post = $entityManager->getRepository(Post::class)->find($id);
+        $entityManager->remove($post);
         $this->addFlash('success', 'Publication bien été supprimée.');
 
 
@@ -164,6 +179,182 @@ class PostController extends AbstractController
 
 
     }
+////////////////////////////// Acceuil posts ////////////////////////////
+/// Entant qu'utilisateur je veux consulter les postes
+    /**
+     * @Route("/acceuil/user/post",name="acceuil_user_posts")
+     */
+    public function afficher_posts(PostRepository $repository, Request $request)
+    {
+        $commentaire = new Commentaire();
+        $form = $this->createForm(CommentaireType::class, $commentaire);
+        $posts = $repository->findAll();
+
+
+        return $this->render('views/content/posts/User/acceuilposts.html.twig', [ 'posts' => $posts,'form' => $form->createView()]);
+
+
+
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////// Commentaires /////////////////////////////////
+///
+
+
+
+
+
+
+
+
+    /**
+     * @Route("/post/{id}/addcomment", name="newcomment")
+     * @param $id
+     * @param Request $request
+     * @param PostRepository $repository
+     * @param UserRepository $rep
+     * @return Response
+     */
+    public function addcomment($id, Request $request, PostRepository $repository, UserRepository $rep): Response
+    {
+        $pub = $repository->find($id);
+        $now = new \DateTimeImmutable('now');
+        $commentaire = new Commentaire();
+//        $comment = $_POST['aa'];
+$form=$this->createForm(CommentaireType::class,$commentaire);
+        $form->handleRequest($request);
+
+       // $data = $request->request->get('aa');
+//        dd($data);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $commentaire->setCreatedAt($now);
+            $commentaire->setUser($rep->find($this->getUser()->getId()));
+            $commentaire->setPost($pub);
+
+            $em->persist($commentaire);
+            $em->flush();
+            return $this->json(['code' => 200, 'nbrcomments' => $pub->getCommentaires()->count(),
+                'dateajout' => $commentaire->getCreatedAt()->format('H:i')], 200);
+        }
+        return $this->json(['code' => 200, 'nbrcomments' => $pub->getCommentaires()->count(),
+            ], 200);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * @Route("/comment/neww/{id}", name="comment_new")
+     * @param Request $request
+     * @param UserRepository $repository
+     * @return Response
+     * @throws Exception
+     */
+    public function ajouterComment($id,Request $request, UserRepository $repository,PostRepository $postRepository): Response
+    {
+        $commentaire = new Commentaire();
+        $form = $this->createForm(CommentaireType::class, $commentaire);
+
+            $now = new \DateTimeImmutable('now');
+
+$post=$postRepository->find($id);
+            $form->handleRequest($request);
+
+            $em = $this->getDoctrine()->getManager();
+            if (($form->isSubmitted() && $form->isValid())) {
+            $commentaire->setPost($post);
+
+            $commentaire->setCreatedAt($now);
+
+
+            $commentaire->setUser($repository->find($this->getUser()->getId()));
+                $em->persist($commentaire);
+                $em->flush();
+
+
+                $this->addFlash("success", "Publication ajoutée ");
+                return $this->redirectToRoute("acceuil_user_posts");
+
+
+            }
+
+
+
+        return $this->render('views/content/posts/User/newComment.html.twig', ['form' => $form->createView()]);
+    }
+
+//////////////////////////////////////////////////Comment Modif////////////////////////////
+/// en tant qu'utilisateur je veux editer mon commentaire
+    /**
+     * @Route("/comment/edit/{id}", name="editcomment")
+     * @param Request $request
+     * @param UserRepository $repository
+     * @return Response
+     * @throws Exception
+     */
+    public function editcommentaire($id, Request $request, UserRepository $repository, CommentaireRepository $rep): Response
+    {
+
+        $comm = $rep->find($id);
+
+        $form1 = $this->createForm(CommentaireType::class, $comm);
+        $form1->handleRequest($request);
+
+        // dd($post);
+        $em = $this->getDoctrine()->getManager();
+        if (($form1->isSubmitted() && $form1->isValid())) {
+
+
+            $comm->setUser($repository->find($this->getUser()->getId()));
+            $em->persist($comm);
+
+            $em->flush();
+            $this->addFlash('notice', 'Commentaire modifiée avec succée !');
+            return $this->redirectToRoute("acceuil_user_posts");
+        }
+        return $this->render('views/content/posts/User/editComment.html.twig', ['form' => $form1->createView()]);
+
+    }
+
+/////////////////////////////////////Delete comment//////////////////////////////
+/// En tant qu'utilisateur je veux supprimer mes commentaires////////////////////
+    /**
+     * @Route("/user/delete/post/{id}",name="delete_commnt_user")
+     */
+    public function supprimerComment($id)
+    {
+
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $post = $entityManager->getRepository(Commentaire::class)->find($id);
+        $entityManager->remove($post);
+        $this->addFlash('success', 'commentaire bien été supprimée.');
+
+
+        $entityManager->flush();
+        return $this->redirectToRoute('acceuil_user_posts');
+
+
+    }
+
+
+
 
 
 }
