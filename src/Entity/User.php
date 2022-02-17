@@ -82,7 +82,7 @@ class User implements UserInterface, EquatableInterface
    * @var string
    * @ORM\Column(type="string", unique=true)
    */
-  protected $email;
+  protected string $email;
 
   public function getEmail(): ?string
   {

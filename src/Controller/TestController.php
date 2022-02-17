@@ -29,7 +29,7 @@ class TestController extends AbstractController
     {
         $pageConfigs = ['pageHeader' => false];
 
-        return $this->render('views/content/apps/invoice/app-invoice-list.html.twig.html.twig', ['pageConfigs' => $pageConfigs]);
+        return $this->render('views/content/apps/invoice/app-invoice-list.html.twig', ['pageConfigs' => $pageConfigs]);
     }
 
     // invoice preview App

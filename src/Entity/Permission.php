@@ -110,7 +110,7 @@ class Permission
   //<editor-fold desc="Groups">
   /**
    * @var Collection<Group>|Group[]
-   * @ORM\ManyToMany(targetEntity=Group::class, inversedBy="permissions")
+   * @ORM\ManyToMany(targetEntity=Group::class, inversedBy="permissions", cascade={"persist"})
    */
   private Collection|array $groups;
 
@@ -126,9 +126,7 @@ class Permission
   {
     if (!$this->groups->contains($role)) {
       $this->groups[] = $role;
-      $role->addPermission($this);
     }
-
     return $this;
   }
 

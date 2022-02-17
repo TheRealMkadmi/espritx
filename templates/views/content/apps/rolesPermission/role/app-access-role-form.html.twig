@@ -1,7 +1,7 @@
 {% extends 'views/layouts/contentLayoutMaster.html.twig' %}
 
 {% block title %}
-  {{ 'Permission' }}
+  {{ 'Create a Group' }}
 {% endblock %}
 
 {% block vendor_style %}
@@ -12,43 +12,32 @@
 {% endblock %}
 
 {% block content %}
-  <h3>Add Permission</h3>
-  <p>Add a new unit of case-by-case access</p>
+  <h3>Add Group</h3>
+  <p>Groups encapsulate a set of users and permissions for fast and easy management.</p>
 
   <div class="card">
     <div class="card-header">
-      <h4 class="card-title">Permission Details</h4>
+      <h4 class="card-title">Group Details</h4>
     </div>
     <div class="card-body">
       {{ form_start(form, {'method': 'POST'}) }}
       <div class="row">
-        <div class="col-12 d-flex justify-content-end">
-          {{ form_widget(form.enabled, {attr: {"class" : ""}}) }}
+        <div class="col-md-6 col-12">
+          {{ form_row(form.security_title) }}
         </div>
         <div class="col-md-6 col-12">
-          {{ form_row(form.title) }}
+          {{ form_row(form.display_name) }}
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col-md-6 col-12">
+          {{ form_row(form.members) }}
         </div>
         <div class="col-md-6 col-12">
-          {{ form_row(form.description) }}
+          {{ form_row(form.permissions) }}
         </div>
-        <div class="col-md-6 col-12">
-          {{ form_row(form.subject) }}
-        </div>
-        <div class="col-md-6 col-12">
-          {{ form_row(form.attribute) }}
-        </div>
-
-        <div class="col-md-6 col-12">
-          {{ form_row(form.groups) }}
-        </div>
-        <div class="col-md-6 col-12">
-          {{ form_row(form.users) }}
-        </div>
-
-        <div class="col-12">
-          {{ form_row(form.expression) }}
-        </div>
-
+      </div>
+      <div class="row">
         <div class="d-flex justify-content-end gap-1 mt-1">
           {{ form_widget(form.reset) }}
           {{ form_widget(form.save) }}
@@ -56,7 +45,6 @@
       </div>
       {{ form_end(form) }}
     </div>
-
   </div>
 
 {% endblock %}

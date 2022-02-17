@@ -3,14 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Permission;
+use App\Form\GroupType;
 use App\Form\PermissionType;
 use App\Repository\PermissionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Tetranz\Select2EntityBundle\Service\AutocompleteService;
 
 /**
  * @Route("/permission")
@@ -40,6 +43,18 @@ class PermissionController extends AbstractController
       ],
       'pagination' => $pagination,
     ]);
+  }
+
+  /**
+   * @param Request $request
+   * @param AutocompleteService $autocompleteService
+   * @return JsonResponse
+   * @Route("/autocomplete/group_form", name="ajax_autocomplete_permissions")
+   */
+  public function autocompleteAction(Request $request, AutocompleteService $autocompleteService): JsonResponse
+  {
+    $result = $autocompleteService->getAutocompleteResults($request, GroupType::class);
+    return new JsonResponse($result);
   }
 
   /**
@@ -87,8 +102,8 @@ class PermissionController extends AbstractController
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+      $entityManager->persist($permission);
       $entityManager->flush();
-
       return $this->redirectToRoute('permission_index', [], Response::HTTP_SEE_OTHER);
     }
     return $this->render('views/content/apps/rolesPermission/permission/app-access-permission-form.html.twig', [

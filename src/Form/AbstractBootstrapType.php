@@ -33,10 +33,13 @@ abstract class AbstractBootstrapType extends AbstractType
       'label' => $label,
       'attr' => [
         'placeholder' => $placeholder
+      ],
+      "row_attr" => [
+        'class' => ''
       ]
     ];
 
-    $builder->add($child, TextType::class, array_merge_recursive($options, $options1));
+    $builder->add($child, TextType::class, array_merge($options1, $options));
     return $this;
   }
 
@@ -62,9 +65,10 @@ abstract class AbstractBootstrapType extends AbstractType
       ],
       "row_attr" => [
         'class' => 'input-group'
-      ]];
+      ]
+    ];
 
-    $builder->add($child, TextType::class, array_merge_recursive($options, $options1));
+    $builder->add($child, TextType::class, array_merge($options1, $options));
     return $this;
   }
 
@@ -94,6 +98,7 @@ abstract class AbstractBootstrapType extends AbstractType
                                            string               $class,
                                            string               $property,
                                            string               $remoteRoute,
+                                           string               $placeholder = "",
                                            array                $options = [])
   {
     $options1 = [
@@ -103,11 +108,12 @@ abstract class AbstractBootstrapType extends AbstractType
       "multiple" => true,
       'minimum_input_length' => 2,
       'allow_clear' => true,
+      'placeholder' => $placeholder,
       'scroll' => true,
       'cache' => true,
       'cache_timeout' => true,
     ];
-    $opt = array_merge_recursive($options1, $options);
+    $opt = array_merge($options1, $options);
     $builder->add($child, Select2EntityType::class, $opt);
     return $this;
   }

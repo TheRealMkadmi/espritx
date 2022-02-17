@@ -2,7 +2,12 @@
   {{ Helper::updatePageConfig(pageConfigs) }}
 {% endif %} #}
 
-{% set configData = configData.applClasses %}
+{% if(pageConfigs is defined) %}
+    {% set configData = configData.applClasses|merge(pageConfigs) %}
+{% else %}
+    {% set configData = configData.applClasses %}
+{% endif %}
+
 {% extends (configData["mainLayoutType"] == 'horizontal') ? 'views/layouts/horizontalLayoutMaster.html.twig' : 'views/layouts/verticalLayoutMaster.html.twig' %}
 
 

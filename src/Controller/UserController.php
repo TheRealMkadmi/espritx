@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\GroupType;
 use App\Form\PermissionType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
@@ -26,19 +27,6 @@ class UserController extends AbstractController
             'users' => $userRepository->findAll(),
         ]);
     }
-
-  /**
-   * @param Request $request
-   * @param AutocompleteService $autocompleteService
-   * @return JsonResponse
-   * @Route("/autocomplete", name="ajax_autocomplete_users")
-   */
-  public function autocompleteAction(Request $request, AutocompleteService $autocompleteService): JsonResponse
-  {
-    $result = $autocompleteService->getAutocompleteResults($request, PermissionType::class);
-    return new JsonResponse($result);
-  }
-
 
   /**
      * @Route("/new", name="user_new", methods={"GET", "POST"})
@@ -104,4 +92,29 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+  /**
+   * @param Request $request
+   * @param AutocompleteService $autocompleteService
+   * @return JsonResponse
+   * @Route("/autocomplete/permission_form", name="ajax_autocomplete_users_permission_form")
+   */
+  public function ajax_autocomplete_users_permission_form(Request $request, AutocompleteService $autocompleteService): JsonResponse
+  {
+    $result = $autocompleteService->getAutocompleteResults($request, PermissionType::class);
+    return new JsonResponse($result);
+  }
+
+  /**
+   * @param Request $request
+   * @param AutocompleteService $autocompleteService
+   * @return JsonResponse
+   * @Route("/autocomplete/group_form", name="ajax_autocomplete_users_group_form")
+   */
+  public function ajax_autocomplete_users_group_form(Request $request, AutocompleteService $autocompleteService): JsonResponse
+  {
+    $result = $autocompleteService->getAutocompleteResults($request, GroupType::class);
+    return new JsonResponse($result);
+  }
 }
