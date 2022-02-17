@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Permission;
 use App\Form\GroupType;
 use App\Form\PermissionType;
+use App\Form\UserType;
 use App\Repository\PermissionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -54,6 +55,17 @@ class PermissionController extends AbstractController
   public function autocompleteAction(Request $request, AutocompleteService $autocompleteService): JsonResponse
   {
     $result = $autocompleteService->getAutocompleteResults($request, GroupType::class);
+    return new JsonResponse($result);
+  }
+  /**
+   * @param Request $request
+   * @param AutocompleteService $autocompleteService
+   * @return JsonResponse
+   * @Route("/autocomplete/user_form", name="ajax_autocomplete_permissions_user_form")
+   */
+  public function ajax_autocomplete_permissions_user_form(Request $request, AutocompleteService $autocompleteService): JsonResponse
+  {
+    $result = $autocompleteService->getAutocompleteResults($request, UserType::class);
     return new JsonResponse($result);
   }
 

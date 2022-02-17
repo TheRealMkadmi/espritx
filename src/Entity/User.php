@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\DocumentIdentityTypeEnum;
 use App\Enum\UserStatus;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -92,6 +93,41 @@ class User implements UserInterface, EquatableInterface
   public function setEmail($email): static
   {
     $this->email = $email;
+    return $this;
+  }
+  //</editor-fold>
+  //<editor-fold desc="Phone Number">
+  /**
+   * @ORM\Column(type="string", length=255, nullable=true)
+   */
+  private $phonenumber;
+  public function getPhonenumber(): ?string
+  {
+    return $this->phonenumber;
+  }
+
+  public function setPhonenumber(?string $phonenumber): self
+  {
+    $this->phonenumber = $phonenumber;
+
+    return $this;
+  }
+  //</editor-fold>
+  //<editor-fold desc="Class">
+  /**
+   * @ORM\Column(type="string", length=255, nullable=true)
+   */
+  private $class;
+
+  public function getClass(): ?string
+  {
+    return $this->class;
+  }
+
+  public function setClass(?string $class): self
+  {
+    $this->class = $class;
+
     return $this;
   }
   //</editor-fold>
@@ -312,6 +348,8 @@ class User implements UserInterface, EquatableInterface
    */
   private Collection $posts;
 
+
+
   /**
    * @return Collection|Post[]
    */
@@ -338,6 +376,40 @@ class User implements UserInterface, EquatableInterface
         $post->setAuthor(null);
       }
     }
+    return $this;
+  }
+  //</editor-fold>
+  //<editor-fold desc="DocIdentityType">
+  /**
+   * @ORM\Column(type="identitydoctype")
+   */
+  protected DocumentIdentityTypeEnum $identityType;
+
+  public function getIdentityType(): DocumentIdentityTypeEnum
+  {
+    return $this->identityType;
+  }
+
+  public function setIdentityType(DocumentIdentityTypeEnum $identityType): self
+  {
+    $this->identityType = $identityType;
+    return $this;
+  }
+  //</editor-fold>
+  //<editor-fold desc="Identity Document Number">
+  /**
+   * @ORM\Column(type="string", length=8, nullable=true)
+   */
+  private $identityDocumentNumber;
+
+  public function getIdentityDocumentNumber(): ?string
+  {
+    return $this->identityDocumentNumber;
+  }
+
+  public function setIdentityDocumentNumber(?string $identityDocumentNumber): self
+  {
+    $this->identityDocumentNumber = $identityDocumentNumber;
     return $this;
   }
   //</editor-fold>
@@ -372,4 +444,6 @@ class User implements UserInterface, EquatableInterface
   {
     return $this->email;
   }
+
+
 }

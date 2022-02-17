@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Group;
 use App\Form\GroupType;
 use App\Form\PermissionType;
+use App\Form\UserType;
 use App\Repository\GroupRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -50,11 +51,21 @@ class GroupController extends AbstractController
    * @param Request $request
    * @param AutocompleteService $autocompleteService
    * @return JsonResponse
-   * @Route("/autocomplete", name="ajax_autocomplete_groups")
+   * @Route("/autocomplete/group_form", name="ajax_autocomplete_groups")
    */
   public function autocompleteAction(Request $request, AutocompleteService $autocompleteService): JsonResponse
   {
     $result = $autocompleteService->getAutocompleteResults($request, PermissionType::class);
+    return new JsonResponse($result);
+  }  /**
+   * @param Request $request
+   * @param AutocompleteService $autocompleteService
+   * @return JsonResponse
+   * @Route("/autocomplete/user_form", name="ajax_autocomplete_groups_user_form")
+   */
+  public function ajax_autocomplete_groups_user_form(Request $request, AutocompleteService $autocompleteService): JsonResponse
+  {
+    $result = $autocompleteService->getAutocompleteResults($request, UserType::class);
     return new JsonResponse($result);
   }
 

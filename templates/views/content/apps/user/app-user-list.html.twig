@@ -98,8 +98,8 @@
                 {{ knp_pagination_sortable(pagination, 'Name', 'u.email') }}
               </th>
 
-              <th{% if pagination.isSorted('u.userstatus') %} class="sorted"{% endif %}>
-                {{ knp_pagination_sortable(pagination, 'User Status', 'u.userstatus') }}
+              <th{% if pagination.isSorted('u.userStatus') %} class="sorted"{% endif %}>
+                {{ knp_pagination_sortable(pagination, 'User Status', 'u.userStatus') }}
               </th>
 
               <th>
@@ -139,11 +139,12 @@
                 </td>
                 <td>
                   <!-- BEGIN: UserGroups -->
-                  {% for group in user.groups %}
-                    {{ include('views/content/_partials/_fragments/group-type-badge.html.twig',
-                      {'grouptype': group.groupType, 'displayname': group.displayName})
-                    }}
-                  {% endfor %}
+                  <div class="d-flex flex-column">
+                    {% for group in user.groups %}
+                      {{ include('views/content/_partials/_fragments/group-type-badge.html.twig',
+                        {'grouptype': group.groupType, 'displayname': group.displayName}) }}
+                    {% endfor %}
+                  </div>
                   <!-- END: UserGroups -->
                 </td>
                 <td>

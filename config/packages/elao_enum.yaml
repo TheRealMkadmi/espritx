@@ -3,3 +3,4 @@ elao_enum:
         types:
             App\Enum\UserStatus: userstatus
             App\Enum\GroupType: grouptype
+            App\Enum\DocumentIdentityTypeEnum: identitydoctype
