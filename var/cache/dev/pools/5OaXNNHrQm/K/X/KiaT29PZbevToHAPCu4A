@@ -20,6 +20,9 @@ return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\
             'scale' => [
                 null,
             ],
+            'unique' => [
+                true,
+            ],
             'message' => [
                 1 => 'Veuillez ajouter un nom de service!',
             ],

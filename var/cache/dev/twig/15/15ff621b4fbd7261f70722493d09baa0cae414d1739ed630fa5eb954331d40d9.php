@@ -505,12 +505,41 @@ class __TwigTemplate_c62352153682957a21e83f238d6ed98a7bc03a2c00361b57f57d63b7c6d
                                 <li><a><em class=\"mr-3\">03</em></a></li>
                             </ul>
                             <ul>
-                                <li><a><i class=\"fa fa-thumbs-up\"></i></a></li>
+
+                                ";
+                // line 351
+                echo "
+                                    <a href=\"";
+                // line 352
+                echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("post_like", ["id" => twig_get_attribute($this->env, $this->source, $context["post"], "id", [], "any", false, false, false, 352)]), "html", null, true);
+                echo "\" class=\"btn btn-link js-like\">
+
+                                        ";
+                // line 354
+                if ((twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 354, $this->source); })()), "user", [], "any", false, false, false, 354) && twig_get_attribute($this->env, $this->source, $context["post"], "isLikedByUser", [0 => twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 354, $this->source); })()), "user", [], "any", false, false, false, 354)], "method", false, false, false, 354))) {
+                    // line 355
+                    echo "                                            <i class=\"fa fa-thumbs-up\"></i>
+                                         ";
+                } else {
+                    // line 357
+                    echo "                                        <i class=\"fa fa-thumbs-o-up\"></i>
+                                         ";
+                }
+                // line 359
+                echo "                                <span class=\"js-likes\">";
+                echo twig_escape_filter($this->env, twig_length_filter($this->env, twig_get_attribute($this->env, $this->source, $context["post"], "likes", [], "any", false, false, false, 359)), "html", null, true);
+                echo "</span>
+
+                                 <span class=\"js-label\">j'aime</span>
+                                ";
+                // line 363
+                echo "                                    </a>
+
                                 <li><a href=\"#\"><img src=\"http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/3.jpeg\" class=\"img-fluid rounded-circle\" alt=\"User\"></a></li>
                                 <li><a href=\"#\"><img src=\"http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/1.jpg\" class=\"img-fluid rounded-circle\" alt=\"User\"></a></li>
                                 <li><a href=\"#\"><img src=\"http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/5.jpg\" class=\"img-fluid rounded-circle\" alt=\"User\"></a></li>
                                 <li><a href=\"#\"><img src=\"http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/2.jpg\" class=\"img-fluid rounded-circle\" alt=\"User\"></a></li>
-                                <li><a><span>242 Likes</span></a></li>
+                               
                             </ul>
                         </div>
                         <!--/ cardbox-base -->
@@ -521,16 +550,16 @@ class __TwigTemplate_c62352153682957a21e83f238d6ed98a7bc03a2c00361b57f57d63b7c6d
 \t\t\t  <span class=\"comment-avatar float-left\">
 \t\t        <a class=\"btn btn-primary\"
                    href=\"";
-                // line 364
-                echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("comment_new", ["id" => twig_get_attribute($this->env, $this->source, $context["post"], "id", [], "any", false, false, false, 364)]), "html", null, true);
+                // line 379
+                echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("comment_new", ["id" => twig_get_attribute($this->env, $this->source, $context["post"], "id", [], "any", false, false, false, 379)]), "html", null, true);
                 echo "\"><i
                             class=\"fa fa-edit\"></i></a>
 
 
 
                    <img class=\"rounded-circle\" src=\"http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/6.jpg\" alt=\"...\">";
-                // line 369
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 369, $this->source); })()), "user", [], "any", false, false, false, 369), "html", null, true);
+                // line 384
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 384, $this->source); })()), "user", [], "any", false, false, false, 384), "html", null, true);
                 echo "</a>
 \t\t\t  </span>
 
@@ -547,11 +576,11 @@ class __TwigTemplate_c62352153682957a21e83f238d6ed98a7bc03a2c00361b57f57d63b7c6d
                         <!--/ cardbox-like -->
 
                         ";
-                // line 384
+                // line 399
                 $context['_parent'] = $context;
-                $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, $context["post"], "commentaires", [], "any", false, false, false, 384));
+                $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, $context["post"], "commentaires", [], "any", false, false, false, 399));
                 foreach ($context['_seq'] as $context["_key"] => $context["comm"]) {
-                    // line 385
+                    // line 400
                     echo "
                             <div style=\"background-color: #F8F9F9;padding: 1px;border-radius: 20px\" id=\"add\" class=\"add\">
                                 <p>
@@ -559,31 +588,31 @@ class __TwigTemplate_c62352153682957a21e83f238d6ed98a7bc03a2c00361b57f57d63b7c6d
 
 
                                 <p id=\"part2\" style=\"font-size: small\">Ajouté par <span style=\"font-weight: bold\" >";
-                    // line 391
-                    echo twig_escape_filter($this->env, twig_upper_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, $context["comm"], "user", [], "any", false, false, false, 391), "firstName", [], "any", false, false, false, 391)), "html", null, true);
+                    // line 406
+                    echo twig_escape_filter($this->env, twig_upper_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, $context["comm"], "user", [], "any", false, false, false, 406), "firstName", [], "any", false, false, false, 406)), "html", null, true);
                     echo "  </span>le ";
-                    echo twig_escape_filter($this->env, twig_date_format_filter($this->env, twig_get_attribute($this->env, $this->source, $context["comm"], "createdAt", [], "any", false, false, false, 391), "d/m/Y H:i"), "html", null, true);
+                    echo twig_escape_filter($this->env, twig_date_format_filter($this->env, twig_get_attribute($this->env, $this->source, $context["comm"], "createdAt", [], "any", false, false, false, 406), "d/m/Y H:i"), "html", null, true);
                     echo "</p>
 
                                     <span>";
-                    // line 393
-                    echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["comm"], "content", [], "any", false, false, false, 393), "html", null, true);
+                    // line 408
+                    echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["comm"], "content", [], "any", false, false, false, 408), "html", null, true);
                     echo "</span>
                                 ";
-                    // line 394
-                    if ((twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 394, $this->source); })()), "user", [], "any", false, false, false, 394) == twig_get_attribute($this->env, $this->source, $context["comm"], "user", [], "any", false, false, false, 394))) {
-                        // line 395
+                    // line 409
+                    if ((twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 409, $this->source); })()), "user", [], "any", false, false, false, 409) == twig_get_attribute($this->env, $this->source, $context["comm"], "user", [], "any", false, false, false, 409))) {
+                        // line 410
                         echo "                                    <a href=\"";
-                        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("editcomment", ["id" => twig_get_attribute($this->env, $this->source, $context["comm"], "id", [], "any", false, false, false, 395)]), "html", null, true);
+                        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("editcomment", ["id" => twig_get_attribute($this->env, $this->source, $context["comm"], "id", [], "any", false, false, false, 410)]), "html", null, true);
                         echo "\">modifier</a>
                                     <a href=\"";
-                        // line 396
-                        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("delete_commnt_user", ["id" => twig_get_attribute($this->env, $this->source, $context["comm"], "id", [], "any", false, false, false, 396)]), "html", null, true);
+                        // line 411
+                        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("delete_commnt_user", ["id" => twig_get_attribute($this->env, $this->source, $context["comm"], "id", [], "any", false, false, false, 411)]), "html", null, true);
                         echo "\">supprimer</a>
 
                                 ";
                     }
-                    // line 399
+                    // line 414
                     echo "
 
                             </div>
@@ -593,7 +622,7 @@ class __TwigTemplate_c62352153682957a21e83f238d6ed98a7bc03a2c00361b57f57d63b7c6d
                 $_parent = $context['_parent'];
                 unset($context['_seq'], $context['_iterated'], $context['_key'], $context['comm'], $context['_parent'], $context['loop']);
                 $context = array_intersect_key($context, $_parent) + $_parent;
-                // line 404
+                // line 419
                 echo "
                     </div>
                     <!--/ cardbox -->
@@ -605,9 +634,13 @@ class __TwigTemplate_c62352153682957a21e83f238d6ed98a7bc03a2c00361b57f57d63b7c6d
                 <div class=\"col-lg-3\">
                     <div class=\"shadow-lg p-4 mb-2 bg-white author\">
                         <a href=\"#\">Contacter l'annonceur</a>
+                        <p>Numero de telephone: ";
+                // line 430
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, $context["post"], "user", [], "any", false, false, false, 430), "phonenumber", [], "any", false, false, false, 430), "html", null, true);
+                echo " </p>
                         <p>Email: ";
-                // line 415
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, $context["post"], "user", [], "any", false, false, false, 415), "email", [], "any", false, false, false, 415), "html", null, true);
+                // line 431
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, $context["post"], "user", [], "any", false, false, false, 431), "email", [], "any", false, false, false, 431), "html", null, true);
                 echo "</p>
                     </div>
                 </div><!--/ col-lg-3 -->
@@ -617,7 +650,7 @@ class __TwigTemplate_c62352153682957a21e83f238d6ed98a7bc03a2c00361b57f57d63b7c6d
     </section>
         ";
             }
-            // line 423
+            // line 439
             echo "                                ";
         }
         $_parent = $context['_parent'];
@@ -631,7 +664,7 @@ class __TwigTemplate_c62352153682957a21e83f238d6ed98a7bc03a2c00361b57f57d63b7c6d
 
     }
 
-    // line 427
+    // line 443
     public function block_page_script($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -641,8 +674,55 @@ class __TwigTemplate_c62352153682957a21e83f238d6ed98a7bc03a2c00361b57f57d63b7c6d
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "page_script"));
 
-        // line 428
+        // line 444
         echo "    <!-- Page js files -->
+    <script src=\"https://unpkg.com/axios/dist/axios.min.js\"></script>
+    ";
+        // line 447
+        echo "    <script>
+
+        // fonction
+        function onClickBtnLike(event){
+            event.preventDefault();
+
+            // nheb na7i lien mte3 like bech ki nekliki meyodhherlich lien
+            // this hiya l \"a mte3 l href ili 9a3da nekliki aaliha \"
+            const url=this.href;
+            const spanCount=this.querySelector('span.js-likes');
+
+            // nbadel l'icone
+            const icone =this.querySelector('i');
+            axios.get(url).then(function (response){
+               //  console.log(response);
+
+            spanCount.textContent = response.data.likess;
+               // console.log(likess);
+
+           if(icone.classList.contains('fa')) {
+               icone.classList.replace('fa','fas');
+           }
+           else {
+               icone.classList.replace('fas', 'fa');
+           }
+
+           // si il'ya une erreur
+           }).catch(function (error){
+               if(error.response.status===403){
+                   window.alert('pardon!! vous ne pouvez pas liker un article si vous n\\'etes pas connecté! ');
+               }
+            })
+
+
+        }
+
+        //recupere tous les lien de \"a\" qui contiennent la classe js-like
+        // forEach(function) ==> f kol a.js-like bch naamel fonction
+        document.querySelectorAll('a.js-like').forEach(function(link){
+            link.addEventListener('click',onClickBtnLike)
+        })
+
+    </script>
+
 
 ";
         
@@ -665,7 +745,7 @@ class __TwigTemplate_c62352153682957a21e83f238d6ed98a7bc03a2c00361b57f57d63b7c6d
 
     public function getDebugInfo()
     {
-        return array (  645 => 428,  635 => 427,  621 => 423,  610 => 415,  597 => 404,  587 => 399,  581 => 396,  576 => 395,  574 => 394,  570 => 393,  563 => 391,  555 => 385,  551 => 384,  533 => 369,  525 => 364,  502 => 344,  492 => 337,  477 => 327,  473 => 326,  468 => 324,  457 => 315,  451 => 313,  447 => 312,  439 => 306,  437 => 305,  424 => 294,  422 => 293,  409 => 282,  405 => 281,  401 => 279,  391 => 278,  380 => 274,  370 => 273,  358 => 269,  354 => 268,  91 => 7,  81 => 6,  62 => 4,  39 => 2,);
+        return array (  682 => 447,  678 => 444,  668 => 443,  654 => 439,  643 => 431,  639 => 430,  626 => 419,  616 => 414,  610 => 411,  605 => 410,  603 => 409,  599 => 408,  592 => 406,  584 => 400,  580 => 399,  562 => 384,  554 => 379,  536 => 363,  529 => 359,  525 => 357,  521 => 355,  519 => 354,  514 => 352,  511 => 351,  502 => 344,  492 => 337,  477 => 327,  473 => 326,  468 => 324,  457 => 315,  451 => 313,  447 => 312,  439 => 306,  437 => 305,  424 => 294,  422 => 293,  409 => 282,  405 => 281,  401 => 279,  391 => 278,  380 => 274,  370 => 273,  358 => 269,  354 => 268,  91 => 7,  81 => 6,  62 => 4,  39 => 2,);
     }
 
     public function getSourceContext()
@@ -1018,12 +1098,27 @@ class __TwigTemplate_c62352153682957a21e83f238d6ed98a7bc03a2c00361b57f57d63b7c6d
                                 <li><a><em class=\"mr-3\">03</em></a></li>
                             </ul>
                             <ul>
-                                <li><a><i class=\"fa fa-thumbs-up\"></i></a></li>
+
+                                {# /////////////////************************ like code **************** /////////////// #}
+
+                                    <a href=\"{{ path('post_like',{'id':post.id}) }}\" class=\"btn btn-link js-like\">
+
+                                        {% if app.user and post.isLikedByUser(app.user) %}
+                                            <i class=\"fa fa-thumbs-up\"></i>
+                                         {% else%}
+                                        <i class=\"fa fa-thumbs-o-up\"></i>
+                                         {% endif %}
+                                <span class=\"js-likes\">{{ post.likes | length }}</span>
+
+                                 <span class=\"js-label\">j'aime</span>
+                                {# /////////////////************************ like code **************** /////////////// #}
+                                    </a>
+
                                 <li><a href=\"#\"><img src=\"http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/3.jpeg\" class=\"img-fluid rounded-circle\" alt=\"User\"></a></li>
                                 <li><a href=\"#\"><img src=\"http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/1.jpg\" class=\"img-fluid rounded-circle\" alt=\"User\"></a></li>
                                 <li><a href=\"#\"><img src=\"http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/5.jpg\" class=\"img-fluid rounded-circle\" alt=\"User\"></a></li>
                                 <li><a href=\"#\"><img src=\"http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/2.jpg\" class=\"img-fluid rounded-circle\" alt=\"User\"></a></li>
-                                <li><a><span>242 Likes</span></a></li>
+                               
                             </ul>
                         </div>
                         <!--/ cardbox-base -->
@@ -1084,6 +1179,7 @@ class __TwigTemplate_c62352153682957a21e83f238d6ed98a7bc03a2c00361b57f57d63b7c6d
                 <div class=\"col-lg-3\">
                     <div class=\"shadow-lg p-4 mb-2 bg-white author\">
                         <a href=\"#\">Contacter l'annonceur</a>
+                        <p>Numero de telephone: {{ post.user.phonenumber}} </p>
                         <p>Email: {{ post.user.email }}</p>
                     </div>
                 </div><!--/ col-lg-3 -->
@@ -1098,6 +1194,52 @@ class __TwigTemplate_c62352153682957a21e83f238d6ed98a7bc03a2c00361b57f57d63b7c6d
 
 {% block page_script %}
     <!-- Page js files -->
+    <script src=\"https://unpkg.com/axios/dist/axios.min.js\"></script>
+    {# bloc java script pour ajax #}
+    <script>
+
+        // fonction
+        function onClickBtnLike(event){
+            event.preventDefault();
+
+            // nheb na7i lien mte3 like bech ki nekliki meyodhherlich lien
+            // this hiya l \"a mte3 l href ili 9a3da nekliki aaliha \"
+            const url=this.href;
+            const spanCount=this.querySelector('span.js-likes');
+
+            // nbadel l'icone
+            const icone =this.querySelector('i');
+            axios.get(url).then(function (response){
+               //  console.log(response);
+
+            spanCount.textContent = response.data.likess;
+               // console.log(likess);
+
+           if(icone.classList.contains('fa')) {
+               icone.classList.replace('fa','fas');
+           }
+           else {
+               icone.classList.replace('fas', 'fa');
+           }
+
+           // si il'ya une erreur
+           }).catch(function (error){
+               if(error.response.status===403){
+                   window.alert('pardon!! vous ne pouvez pas liker un article si vous n\\'etes pas connecté! ');
+               }
+            })
+
+
+        }
+
+        //recupere tous les lien de \"a\" qui contiennent la classe js-like
+        // forEach(function) ==> f kol a.js-like bch naamel fonction
+        document.querySelectorAll('a.js-like').forEach(function(link){
+            link.addEventListener('click',onClickBtnLike)
+        })
+
+    </script>
+
 
 {% endblock %}
 

@@ -30,6 +30,7 @@ class User implements UserInterface, EquatableInterface
     $this->groups = new ArrayCollection();
     $this->userStatus = UserStatus::get(UserStatus::PENDING);
     $this->commentaires = new ArrayCollection();
+    $this->likes = new ArrayCollection();
   }
 
   //<editor-fold desc="id">
@@ -368,7 +369,7 @@ class User implements UserInterface, EquatableInterface
   {
     if (!$this->posts->contains($post)) {
       $this->posts[] = $post;
-      $post->setAuthor($this);
+      $post->setUser($this);
     }
 
     return $this;
@@ -378,8 +379,8 @@ class User implements UserInterface, EquatableInterface
   {
     if ($this->posts->removeElement($post)) {
       // set the owning side to null (unless already changed)
-      if ($post->getAuthor() === $this) {
-        $post->setAuthor(null);
+      if ($post->getUser() === $this) {
+        $post->setUser(null);
       }
     }
     return $this;
@@ -407,6 +408,11 @@ class User implements UserInterface, EquatableInterface
    * @ORM\Column(type="string", length=8, nullable=true)
    */
   private $identityDocumentNumber;
+
+  /**
+   * @ORM\OneToMany(targetEntity=PostLike::class, mappedBy="user")
+   */
+  private $likes;
 
   public function getIdentityDocumentNumber(): ?string
   {
@@ -451,9 +457,8 @@ class User implements UserInterface, EquatableInterface
     return $this->email;
   }
 
-<<<<<<< HEAD
 
-=======
+
   /**
    * @return Collection|Commentaire[]
    */
@@ -483,5 +488,35 @@ class User implements UserInterface, EquatableInterface
 
       return $this;
   }
->>>>>>> 7d11d36 (comments)
+
+  /**
+   * @return Collection|PostLike[]
+   */
+  public function getLikes(): Collection
+  {
+      return $this->likes;
+  }
+
+  public function addLike(PostLike $like): self
+  {
+      if (!$this->likes->contains($like)) {
+          $this->likes[] = $like;
+          $like->setUser($this);
+      }
+
+      return $this;
+  }
+
+  public function removeLike(PostLike $like): self
+  {
+      if ($this->likes->removeElement($like)) {
+          // set the owning side to null (unless already changed)
+          if ($like->getUser() === $this) {
+              $like->setUser(null);
+          }
+      }
+
+      return $this;
+  }
+
 }

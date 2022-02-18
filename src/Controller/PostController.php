@@ -4,12 +4,16 @@ namespace App\Controller;
 
 use App\Entity\Commentaire;
 use App\Entity\Post;
+use App\Entity\PostLike;
 use App\Form\CommentaireType;
 use App\Form\PostType;
 use App\Repository\CommentaireRepository;
+use App\Repository\PostLikeRepository;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectManager;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
@@ -288,7 +292,8 @@ $post=$postRepository->find($id);
 
 
                 $this->addFlash("success", "Publication ajoutée ");
-                return $this->redirectToRoute("acceuil_user_posts");
+                return $this->json(['code' => 200, 'nbrcomments' => $post->getCommentaires()->count(),
+                    'dateajout' => $commentaire->getCreatedAt()->format('H:i')], 200);
 
 
             }
@@ -353,7 +358,53 @@ $post=$postRepository->find($id);
 
     }
 
+///////////////////////// Likes ////////////////////////////
+/// cette fonction permet de liker ou unliker un post
+    /**
+     * @param Post $post
+     * @param PostLikeRepository $likeRepository
+     * @return Response
+     * @Route ("/post/{id}/like", name="post_like")
+     */
+public function like(Post $post, PostLikeRepository $likeRepository):Response{
+    $em = $this->getDoctrine()->getManager();
+    $user=$this->getUser();
+    // savoir si le user est connecté ou nn
+    if(!$user)return $this->json([
+        'code'=>403,
+        'message'=>'il faut etre connecté'
+        ],403);
+    // savoir si ce post est liké par user ou non
+    if($post->isLikedByUser($user)){
+        // retrouver le j'aime
+        $like=$likeRepository->findOneBy([
+            'post'=>$post,
+            'user'=>$user
+        ]);
+        $em->remove($like);
+        $em->flush();
 
+        return $this->json([
+            'code'=>200,
+            'message'=>'like bien supprimé',
+            'likess'=>$likeRepository->count(['post'=>$post])
+        ],200);
+
+    }
+
+    $like=new PostLike();
+    $like->setPost($post)
+        ->setUser($user);
+    $em->persist($like);
+    $em->flush();
+        return $this->json([
+            'code'=>200,
+            'message'=>'like bien ajouté',
+            'likess'=>$likeRepository->count(['post'=>$post])
+            ],200);
+
+
+}
 
 
 

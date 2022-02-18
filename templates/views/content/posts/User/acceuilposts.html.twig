@@ -346,12 +346,27 @@
                                 <li><a><em class="mr-3">03</em></a></li>
                             </ul>
                             <ul>
-                                <li><a><i class="fa fa-thumbs-up"></i></a></li>
+
+                                {# /////////////////************************ like code **************** /////////////// #}
+
+                                    <a href="{{ path('post_like',{'id':post.id}) }}" class="btn btn-link js-like">
+
+                                        {% if app.user and post.isLikedByUser(app.user) %}
+                                            <i class="fa fa-thumbs-up"></i>
+                                         {% else%}
+                                        <i class="fa fa-thumbs-o-up"></i>
+                                         {% endif %}
+                                <span class="js-likes">{{ post.likes | length }}</span>
+
+                                 <span class="js-label">j'aime</span>
+                                {# /////////////////************************ like code **************** /////////////// #}
+                                    </a>
+
                                 <li><a href="#"><img src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/3.jpeg" class="img-fluid rounded-circle" alt="User"></a></li>
                                 <li><a href="#"><img src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/1.jpg" class="img-fluid rounded-circle" alt="User"></a></li>
                                 <li><a href="#"><img src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/5.jpg" class="img-fluid rounded-circle" alt="User"></a></li>
                                 <li><a href="#"><img src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/2.jpg" class="img-fluid rounded-circle" alt="User"></a></li>
-                                <li><a><span>242 Likes</span></a></li>
+                               
                             </ul>
                         </div>
                         <!--/ cardbox-base -->
@@ -412,6 +427,7 @@
                 <div class="col-lg-3">
                     <div class="shadow-lg p-4 mb-2 bg-white author">
                         <a href="#">Contacter l'annonceur</a>
+                        <p>Numero de telephone: {{ post.user.phonenumber}} </p>
                         <p>Email: {{ post.user.email }}</p>
                     </div>
                 </div><!--/ col-lg-3 -->
@@ -426,6 +442,52 @@
 
 {% block page_script %}
     <!-- Page js files -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    {# bloc java script pour ajax #}
+    <script>
+
+        // fonction
+        function onClickBtnLike(event){
+            event.preventDefault();
+
+            // nheb na7i lien mte3 like bech ki nekliki meyodhherlich lien
+            // this hiya l "a mte3 l href ili 9a3da nekliki aaliha "
+            const url=this.href;
+            const spanCount=this.querySelector('span.js-likes');
+
+            // nbadel l'icone
+            const icone =this.querySelector('i');
+            axios.get(url).then(function (response){
+               //  console.log(response);
+
+            spanCount.textContent = response.data.likess;
+               // console.log(likess);
+
+           if(icone.classList.contains('fa')) {
+               icone.classList.replace('fa','fas');
+           }
+           else {
+               icone.classList.replace('fas', 'fa');
+           }
+
+           // si il'ya une erreur
+           }).catch(function (error){
+               if(error.response.status===403){
+                   window.alert('pardon!! vous ne pouvez pas liker un article si vous n\'etes pas connecté! ');
+               }
+            })
+
+
+        }
+
+        //recupere tous les lien de "a" qui contiennent la classe js-like
+        // forEach(function) ==> f kol a.js-like bch naamel fonction
+        document.querySelectorAll('a.js-like').forEach(function(link){
+            link.addEventListener('click',onClickBtnLike)
+        })
+
+    </script>
+
 
 {% endblock %}
 

@@ -67,10 +67,10 @@ class Group extends \App\Entity\Group implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'members', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'display_name', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'security_title', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'permissions', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'enjoyable_services', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'provided_services'];
+            return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'display_name', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'security_title', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'permissions', 'groupType', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'members', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'enjoyable_services', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'provided_services'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'members', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'display_name', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'security_title', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'permissions', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'enjoyable_services', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'provided_services'];
+        return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'display_name', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'security_title', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'permissions', 'groupType', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'members', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'enjoyable_services', '' . "\0" . 'App\\Entity\\Group' . "\0" . 'provided_services'];
     }
 
     /**
@@ -206,39 +206,6 @@ class Group extends \App\Entity\Group implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getMembers(): \Doctrine\Common\Collections\Collection
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getMembers', []);
-
-        return parent::getMembers();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function addMember(\App\Entity\User $member): \App\Entity\Group
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addMember', [$member]);
-
-        return parent::addMember($member);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function removeMember(\App\Entity\User $member): \App\Entity\Group
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeMember', [$member]);
-
-        return parent::removeMember($member);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getDisplayName(): ?string
     {
 
@@ -322,6 +289,61 @@ class Group extends \App\Entity\Group implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPermissions', [$permissions]);
 
         return parent::setPermissions($permissions);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getGroupType(): \App\Enum\GroupType
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getGroupType', []);
+
+        return parent::getGroupType();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setGroupType(\App\Enum\GroupType $groupType): \App\Entity\Group
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setGroupType', [$groupType]);
+
+        return parent::setGroupType($groupType);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getMembers(): \Doctrine\Common\Collections\Collection
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getMembers', []);
+
+        return parent::getMembers();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addMember(\App\Entity\User $member): \App\Entity\Group
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addMember', [$member]);
+
+        return parent::addMember($member);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removeMember(\App\Entity\User $member): \App\Entity\Group
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeMember', [$member]);
+
+        return parent::removeMember($member);
     }
 
     /**

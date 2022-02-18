@@ -13,11 +13,16 @@ return [
         '/_profiler/search_bar' => [[['_route' => '_profiler_search_bar', '_controller' => 'web_profiler.controller.profiler::searchBarAction'], null, null, null, false, false, null]],
         '/_profiler/phpinfo' => [[['_route' => '_profiler_phpinfo', '_controller' => 'web_profiler.controller.profiler::phpinfoAction'], null, null, null, false, false, null]],
         '/_profiler/open' => [[['_route' => '_profiler_open_file', '_controller' => 'web_profiler.controller.profiler::openAction'], null, null, null, false, false, null]],
-        '/group/new' => [[['_route' => 'group_new', '_controller' => 'App\\Controller\\GroupController::new'], null, ['GET' => 0, 'POST' => 1], null, false, false, null]],
-        '/group/autocomplete' => [[['_route' => 'ajax_autocomplete_groups', '_controller' => 'App\\Controller\\GroupController::autocompleteAction'], null, null, null, false, false, null]],
+        '/group/create' => [[['_route' => 'group_new', '_controller' => 'App\\Controller\\GroupController::create'], null, ['GET' => 0, 'POST' => 1], null, false, false, null]],
+        '/group/autocomplete/group_form' => [[['_route' => 'ajax_autocomplete_groups', '_controller' => 'App\\Controller\\GroupController::autocompleteAction'], null, null, null, false, false, null]],
+        '/group/autocomplete/user_form' => [[['_route' => 'ajax_autocomplete_groups_user_form', '_controller' => 'App\\Controller\\GroupController::ajax_autocomplete_groups_user_form'], null, null, null, false, false, null]],
         '/group' => [[['_route' => 'group_index', '_controller' => 'App\\Controller\\GroupController::index'], null, ['GET' => 0], null, true, false, null]],
         '/home' => [[['_route' => 'app_home', '_controller' => 'App\\Controller\\HomeController::show'], null, ['GET' => 0], null, false, false, null]],
+        '/messages' => [[['_route' => 'messages', '_controller' => 'App\\Controller\\MessagesController::index'], null, null, null, false, false, null]],
+        '/messages/new' => [[['_route' => 'messages_new', '_controller' => 'App\\Controller\\MessagesController::new'], null, ['GET' => 0, 'POST' => 1], null, false, false, null]],
         '/permission' => [[['_route' => 'permission_index', '_controller' => 'App\\Controller\\PermissionController::index'], null, ['GET' => 0], null, true, false, null]],
+        '/permission/autocomplete/group_form' => [[['_route' => 'ajax_autocomplete_permissions', '_controller' => 'App\\Controller\\PermissionController::autocompleteAction'], null, null, null, false, false, null]],
+        '/permission/autocomplete/user_form' => [[['_route' => 'ajax_autocomplete_permissions_user_form', '_controller' => 'App\\Controller\\PermissionController::ajax_autocomplete_permissions_user_form'], null, null, null, false, false, null]],
         '/permission/create' => [[['_route' => 'permission_create', '_controller' => 'App\\Controller\\PermissionController::create'], null, ['GET' => 0, 'POST' => 1], null, false, false, null]],
         '/post' => [[['_route' => 'post', '_controller' => 'App\\Controller\\PostController::index'], null, null, null, false, false, null]],
         '/admin/post/all' => [[['_route' => 'postall', '_controller' => 'App\\Controller\\PostController::afficher_tous_les_Post'], null, null, null, false, false, null]],
@@ -27,8 +32,8 @@ return [
         '/reset-password/check-email' => [[['_route' => 'app_check_email', '_controller' => 'App\\Controller\\ResetPasswordController::checkEmail'], null, null, null, false, false, null]],
         '/login' => [[['_route' => 'login', '_controller' => 'App\\Controller\\SecurityController::login'], null, null, null, false, false, null]],
         '/logout' => [[['_route' => 'app_logout', '_controller' => 'App\\Controller\\SecurityController::logout'], null, null, null, false, false, null]],
-        '/service' => [[['_route' => 'service', '_controller' => 'App\\Controller\\ServiceController::index'], null, null, null, true, false, null]],
-        '/service/add' => [[['_route' => 'serivceAdd', '_controller' => 'App\\Controller\\ServiceController::addService'], null, null, null, false, false, null]],
+        '/service' => [[['_route' => 'service', '_controller' => 'App\\Controller\\ServiceController::Services'], null, null, null, true, false, null]],
+        '/service/add' => [[['_route' => 'Serivce_Add', '_controller' => 'App\\Controller\\ServiceController::addService'], null, null, null, false, false, null]],
         '/' => [[['_route' => 'root', '_controller' => 'App\\Controller\\TestController::index'], null, null, null, false, false, null]],
         '/app/invoice/list' => [[['_route' => 'app-invoice-list', '_controller' => 'App\\Controller\\TestController::invoice_list'], null, null, null, false, false, null]],
         '/app/invoice/preview' => [[['_route' => 'app-invoice-preview', '_controller' => 'App\\Controller\\TestController::invoice_preview'], null, null, null, false, false, null]],
@@ -143,8 +148,9 @@ return [
         '/page/not-authorized' => [[['_route' => 'not-authorized', '_controller' => 'App\\Controller\\TestController::not_authorized'], null, null, null, false, false, null]],
         '/page/maintenance' => [[['_route' => 'maintenance', '_controller' => 'App\\Controller\\TestController::maintenance'], null, null, null, false, false, null]],
         '/user' => [[['_route' => 'user_index', '_controller' => 'App\\Controller\\UserController::index'], null, ['GET' => 0], null, true, false, null]],
-        '/user/autocomplete' => [[['_route' => 'ajax_autocomplete_users', '_controller' => 'App\\Controller\\UserController::autocompleteAction'], null, null, null, false, false, null]],
-        '/user/new' => [[['_route' => 'user_new', '_controller' => 'App\\Controller\\UserController::new'], null, ['GET' => 0, 'POST' => 1], null, false, false, null]],
+        '/user/create' => [[['_route' => 'user_create', '_controller' => 'App\\Controller\\UserController::create'], null, ['GET' => 0, 'POST' => 1], null, false, false, null]],
+        '/user/autocomplete/permission_form' => [[['_route' => 'ajax_autocomplete_users_permission_form', '_controller' => 'App\\Controller\\UserController::ajax_autocomplete_users_permission_form'], null, null, null, false, false, null]],
+        '/user/autocomplete/group_form' => [[['_route' => 'ajax_autocomplete_users_group_form', '_controller' => 'App\\Controller\\UserController::ajax_autocomplete_users_group_form'], null, null, null, false, false, null]],
     ],
     [ // $regexpList
         0 => '{^(?'
@@ -163,40 +169,50 @@ return [
                         .'|(*:159)'
                     .')'
                 .')'
-                .'|/group/([^/]++)(?'
-                    .'|(*:187)'
-                    .'|/edit(*:200)'
-                    .'|(*:208)'
+                .'|/group/([^/]++)/(?'
+                    .'|edit(*:192)'
+                    .'|delete(*:206)'
+                .')'
+                .'|/messages/([^/]++)(?'
+                    .'|/edit(*:241)'
+                    .'|(*:249)'
                 .')'
                 .'|/p(?'
                     .'|ermission/([^/]++)(?'
-                        .'|(*:243)'
-                        .'|/edit(*:256)'
-                        .'|(*:264)'
+                        .'|(*:284)'
+                        .'|/edit(*:297)'
+                        .'|(*:305)'
                     .')'
                     .'|ost/(?'
-                        .'|edit/([^/]++)(*:293)'
-                        .'|([^/]++)/addcomment(*:320)'
+                        .'|edit/([^/]++)(*:334)'
+                        .'|([^/]++)/(?'
+                            .'|addcomment(*:364)'
+                            .'|like(*:376)'
+                        .')'
                     .')'
                 .')'
                 .'|/user/(?'
-                    .'|post/changedelete/([^/]++)(*:365)'
-                    .'|delete/post/([^/]++)(*:393)'
+                    .'|post/changedelete/([^/]++)(*:422)'
+                    .'|delete/post/([^/]++)(*:450)'
                     .'|([^/]++)(?'
-                        .'|(*:412)'
-                        .'|/edit(*:425)'
-                        .'|(*:433)'
+                        .'|(*:469)'
+                        .'|/edit(*:482)'
+                        .'|(*:490)'
                     .')'
                 .')'
                 .'|/admin/(?'
-                    .'|post/changevalidite/([^/]++)(*:481)'
-                    .'|delete/post/([^/]++)(*:509)'
+                    .'|post/changevalidite/([^/]++)(*:538)'
+                    .'|delete/post/([^/]++)(*:566)'
                 .')'
                 .'|/comment/(?'
-                    .'|neww/([^/]++)(*:543)'
-                    .'|edit/([^/]++)(*:564)'
+                    .'|neww/([^/]++)(*:600)'
+                    .'|edit/([^/]++)(*:621)'
                 .')'
-                .'|/reset\\-password/reset(?:/([^/]++))?(*:609)'
+                .'|/reset\\-password/reset(?:/([^/]++))?(*:666)'
+                .'|/service/([^/]++)/(?'
+                    .'|edit(*:699)'
+                    .'|delete(*:713)'
+                .')'
             .')/?$}sD',
     ],
     [ // $dynamicRoutes
@@ -207,25 +223,29 @@ return [
         136 => [[['_route' => '_profiler_exception', '_controller' => 'web_profiler.controller.exception_panel::body'], ['token'], null, null, false, false, null]],
         149 => [[['_route' => '_profiler_exception_css', '_controller' => 'web_profiler.controller.exception_panel::stylesheet'], ['token'], null, null, false, false, null]],
         159 => [[['_route' => '_profiler', '_controller' => 'web_profiler.controller.profiler::panelAction'], ['token'], null, null, false, true, null]],
-        187 => [[['_route' => 'group_show', '_controller' => 'App\\Controller\\GroupController::show'], ['id'], ['GET' => 0], null, false, true, null]],
-        200 => [[['_route' => 'group_edit', '_controller' => 'App\\Controller\\GroupController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, false, null]],
-        208 => [[['_route' => 'group_delete', '_controller' => 'App\\Controller\\GroupController::delete'], ['id'], ['POST' => 0], null, false, true, null]],
-        243 => [[['_route' => 'permission_show', '_controller' => 'App\\Controller\\PermissionController::show'], ['id'], ['GET' => 0], null, false, true, null]],
-        256 => [[['_route' => 'permission_edit', '_controller' => 'App\\Controller\\PermissionController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, false, null]],
-        264 => [[['_route' => 'permission_delete', '_controller' => 'App\\Controller\\PermissionController::delete'], ['id'], ['POST' => 0], null, false, true, null]],
-        293 => [[['_route' => 'editpost', '_controller' => 'App\\Controller\\PostController::editpublication'], ['id'], null, null, false, true, null]],
-        320 => [[['_route' => 'newcomment', '_controller' => 'App\\Controller\\PostController::addcomment'], ['id'], null, null, false, false, null]],
-        365 => [[['_route' => 'changedelete_post', '_controller' => 'App\\Controller\\PostController::supprimer_Post_user'], ['id'], null, null, false, true, null]],
-        393 => [[['_route' => 'delete_commnt_user', '_controller' => 'App\\Controller\\PostController::supprimerComment'], ['id'], null, null, false, true, null]],
-        412 => [[['_route' => 'user_show', '_controller' => 'App\\Controller\\UserController::show'], ['id'], ['GET' => 0], null, false, true, null]],
-        425 => [[['_route' => 'user_edit', '_controller' => 'App\\Controller\\UserController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, false, null]],
-        433 => [[['_route' => 'user_delete', '_controller' => 'App\\Controller\\UserController::delete'], ['id'], ['POST' => 0], null, false, true, null]],
-        481 => [[['_route' => 'changevalidite_post', '_controller' => 'App\\Controller\\PostController::approuverPost'], ['id'], null, null, false, true, null]],
-        509 => [[['_route' => 'deletepost_admin', '_controller' => 'App\\Controller\\PostController::supprimer_Post_admin'], ['id'], null, null, false, true, null]],
-        543 => [[['_route' => 'comment_new', '_controller' => 'App\\Controller\\PostController::ajouterComment'], ['id'], null, null, false, true, null]],
-        564 => [[['_route' => 'editcomment', '_controller' => 'App\\Controller\\PostController::editcommentaire'], ['id'], null, null, false, true, null]],
-        609 => [
-            [['_route' => 'app_reset_password', 'token' => null, '_controller' => 'App\\Controller\\ResetPasswordController::reset'], ['token'], null, null, false, true, null],
+        192 => [[['_route' => 'group_edit', '_controller' => 'App\\Controller\\GroupController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, false, null]],
+        206 => [[['_route' => 'group_delete', '_controller' => 'App\\Controller\\GroupController::delete'], ['id'], ['GET' => 0], null, false, false, null]],
+        241 => [[['_route' => 'messages_edit', '_controller' => 'App\\Controller\\MessagesController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, false, null]],
+        249 => [[['_route' => 'messages_delete', '_controller' => 'App\\Controller\\MessagesController::delete'], ['id'], ['POST' => 0], null, false, true, null]],
+        284 => [[['_route' => 'permission_show', '_controller' => 'App\\Controller\\PermissionController::show'], ['id'], ['GET' => 0], null, false, true, null]],
+        297 => [[['_route' => 'permission_edit', '_controller' => 'App\\Controller\\PermissionController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, false, null]],
+        305 => [[['_route' => 'permission_delete', '_controller' => 'App\\Controller\\PermissionController::delete'], ['id'], ['POST' => 0], null, false, true, null]],
+        334 => [[['_route' => 'editpost', '_controller' => 'App\\Controller\\PostController::editpublication'], ['id'], null, null, false, true, null]],
+        364 => [[['_route' => 'newcomment', '_controller' => 'App\\Controller\\PostController::addcomment'], ['id'], null, null, false, false, null]],
+        376 => [[['_route' => 'post_like', '_controller' => 'App\\Controller\\PostController::like'], ['id'], null, null, false, false, null]],
+        422 => [[['_route' => 'changedelete_post', '_controller' => 'App\\Controller\\PostController::supprimer_Post_user'], ['id'], null, null, false, true, null]],
+        450 => [[['_route' => 'delete_commnt_user', '_controller' => 'App\\Controller\\PostController::supprimerComment'], ['id'], null, null, false, true, null]],
+        469 => [[['_route' => 'user_show', '_controller' => 'App\\Controller\\UserController::show'], ['id'], ['GET' => 0], null, false, true, null]],
+        482 => [[['_route' => 'user_edit', '_controller' => 'App\\Controller\\UserController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, false, null]],
+        490 => [[['_route' => 'user_delete', '_controller' => 'App\\Controller\\UserController::delete'], ['id'], ['POST' => 0], null, false, true, null]],
+        538 => [[['_route' => 'changevalidite_post', '_controller' => 'App\\Controller\\PostController::approuverPost'], ['id'], null, null, false, true, null]],
+        566 => [[['_route' => 'deletepost_admin', '_controller' => 'App\\Controller\\PostController::supprimer_Post_admin'], ['id'], null, null, false, true, null]],
+        600 => [[['_route' => 'comment_new', '_controller' => 'App\\Controller\\PostController::ajouterComment'], ['id'], null, null, false, true, null]],
+        621 => [[['_route' => 'editcomment', '_controller' => 'App\\Controller\\PostController::editcommentaire'], ['id'], null, null, false, true, null]],
+        666 => [[['_route' => 'app_reset_password', 'token' => null, '_controller' => 'App\\Controller\\ResetPasswordController::reset'], ['token'], null, null, false, true, null]],
+        699 => [[['_route' => 'Service_Edit', '_controller' => 'App\\Controller\\ServiceController::ModifServices'], ['id'], null, null, false, false, null]],
+        713 => [
+            [['_route' => 'Service_Del', '_controller' => 'App\\Controller\\ServiceController::SuppServices'], ['id'], null, null, false, false, null],
             [null, null, null, null, false, false, 0],
         ],
     ],

@@ -35,7 +35,7 @@ class __TwigTemplate_ded04817e44d99cdfb7b22f4f7b6e25a68774cfcadb25c7cb0b0d616194
 
     protected function doGetParent(array $context)
     {
-        // line 2
+        // line 1
         return "views/layouts/contentLayoutMaster.html.twig";
     }
 
@@ -48,7 +48,7 @@ class __TwigTemplate_ded04817e44d99cdfb7b22f4f7b6e25a68774cfcadb25c7cb0b0d616194
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "template", "views/content/apps/chat/app-chat.html.twig"));
 
-        $this->parent = $this->loadTemplate("views/layouts/contentLayoutMaster.html.twig", "views/content/apps/chat/app-chat.html.twig", 2);
+        $this->parent = $this->loadTemplate("views/layouts/contentLayoutMaster.html.twig", "views/content/apps/chat/app-chat.html.twig", 1);
         $this->parent->display($context, array_merge($this->blocks, $blocks));
         
         $__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e->leave($__internal_085b0142806202599c7fe3b329164a92397d8978207a37e79d70b8c52599e33e_prof);
@@ -58,7 +58,7 @@ class __TwigTemplate_ded04817e44d99cdfb7b22f4f7b6e25a68774cfcadb25c7cb0b0d616194
 
     }
 
-    // line 4
+    // line 3
     public function block_title($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -77,7 +77,7 @@ class __TwigTemplate_ded04817e44d99cdfb7b22f4f7b6e25a68774cfcadb25c7cb0b0d616194
 
     }
 
-    // line 6
+    // line 5
     public function block_page_style($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -87,16 +87,19 @@ class __TwigTemplate_ded04817e44d99cdfb7b22f4f7b6e25a68774cfcadb25c7cb0b0d616194
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "page_style"));
 
-        // line 7
-        echo "  <!-- Page css files -->
-  <link rel=\"stylesheet\" href=\"";
-        // line 8
+        // line 6
+        echo "    <link rel=\"stylesheet\" href=\"";
         echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("css/base/pages/app-chat.css"), "html", null, true);
         echo "\">
-  <link rel=\"stylesheet\" href=\"";
-        // line 9
+    <link rel=\"stylesheet\" href=\"";
+        // line 7
         echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("css/base/pages/app-chat-list.css"), "html", null, true);
         echo "\">
+    <style>
+        .default-sidebar {
+            flex: 1 1 auto !important;
+        }
+    </style>
 ";
         
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
@@ -106,7 +109,7 @@ class __TwigTemplate_ded04817e44d99cdfb7b22f4f7b6e25a68774cfcadb25c7cb0b0d616194
 
     }
 
-    // line 13
+    // line 16
     public function block_content_sidebar($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -116,8 +119,9 @@ class __TwigTemplate_ded04817e44d99cdfb7b22f4f7b6e25a68774cfcadb25c7cb0b0d616194
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "content_sidebar"));
 
-        // line 14
-        $this->loadTemplate("views/content/apps/chat/app-chat-sidebar.html.twig", "views/content/apps/chat/app-chat.html.twig", 14)->display($context);
+        // line 17
+        echo "    ";
+        $this->loadTemplate("views/content/apps/chat/app-chat-sidebar.html.twig", "views/content/apps/chat/app-chat.html.twig", 17)->display($context);
         
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
 
@@ -126,7 +130,7 @@ class __TwigTemplate_ded04817e44d99cdfb7b22f4f7b6e25a68774cfcadb25c7cb0b0d616194
 
     }
 
-    // line 18
+    // line 21
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -136,315 +140,320 @@ class __TwigTemplate_ded04817e44d99cdfb7b22f4f7b6e25a68774cfcadb25c7cb0b0d616194
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "content"));
 
-        // line 19
-        echo "<div class=\"body-content-overlay\"></div>
-<!-- Main chat area -->
-<section class=\"chat-app-window\">
-  <!-- To load Conversation -->
-  <div class=\"start-chat-area\">
-    <div class=\"mb-1 start-chat-icon\">
-      <i data-feather=\"message-square\"></i>
-    </div>
-    <h4 class=\"sidebar-toggle start-chat-text\">Start Conversation</h4>
-  </div>
-  <!--/ To load Conversation -->
-
-  <!-- Active Chat -->
-  <div class=\"active-chat d-none\">
-    <!-- Chat Header -->
-    <div class=\"chat-navbar\">
-      <header class=\"chat-header\">
-        <div class=\"d-flex align-items-center\">
-          <div class=\"sidebar-toggle d-block d-lg-none me-1\">
-            <i data-feather=\"menu\" class=\"font-medium-5\"></i>
-          </div>
-          <div class=\"avatar avatar-border user-profile-toggle m-0 me-1\">
-            <img src=\"";
-        // line 41
-        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-7.jpg"), "html", null, true);
-        echo "\" alt=\"avatar\" height=\"36\" width=\"36\" />
-            <span class=\"avatar-status-busy\"></span>
-          </div>
-          <h6 class=\"mb-0\">Kristopher Candy</h6>
-        </div>
-        <div class=\"d-flex align-items-center\">
-          <i data-feather=\"phone-call\" class=\"cursor-pointer d-sm-block d-none font-medium-2 me-1\"></i>
-          <i data-feather=\"video\" class=\"cursor-pointer d-sm-block d-none font-medium-2 me-1\"></i>
-          <i data-feather=\"search\" class=\"cursor-pointer d-sm-block d-none font-medium-2\"></i>
-          <div class=\"dropdown\">
-            <button
-              class=\"btn-icon btn btn-transparent hide-arrow btn-sm dropdown-toggle\"
-              type=\"button\"
-              data-bs-toggle=\"dropdown\"
-              aria-haspopup=\"true\"
-              aria-expanded=\"false\"
-            >
-              <i data-feather=\"more-vertical\" id=\"chat-header-actions\" class=\"font-medium-2\"></i>
-            </button>
-            <div class=\"dropdown-menu dropdown-menu-end\" aria-labelledby=\"chat-header-actions\">
-              <a class=\"dropdown-item\" href=\"#\">View Contact</a>
-              <a class=\"dropdown-item\" href=\"#\">Mute Notifications</a>
-              <a class=\"dropdown-item\" href=\"#\">Block Contact</a>
-              <a class=\"dropdown-item\" href=\"#\">Clear Chat</a>
-              <a class=\"dropdown-item\" href=\"#\">Report</a>
+        // line 22
+        echo "    <div class=\"body-content-overlay\"></div>
+    <!-- Main chat area -->
+    <section class=\"chat-app-window\">
+        <!-- To load Conversation -->
+        <div class=\"start-chat-area\">
+            <div class=\"mb-1 start-chat-icon\">
+                <i data-feather=\"message-square\"></i>
             </div>
-          </div>
+            <h4 class=\"sidebar-toggle start-chat-text\">Start Conversation</h4>
         </div>
-      </header>
-    </div>
-    <!--/ Chat Header -->
+        <!--/ To load Conversation -->
 
-    <!-- User Chat messages -->
-    <div class=\"user-chats\">
-      <div class=\"chats\">
-        <div class=\"chat\">
-          <div class=\"chat-avatar\">
+        <!-- Active Chat -->
+        <div class=\"active-chat d-none\">
+            <!-- Chat Header -->
+            <div class=\"chat-navbar\">
+                <header class=\"chat-header\">
+                    <div class=\"d-flex align-items-center\">
+                        <div class=\"sidebar-toggle d-block d-lg-none me-1\">
+                            <i data-feather=\"menu\" class=\"font-medium-5\"></i>
+                        </div>
+                        <div class=\"avatar avatar-border user-profile-toggle m-0 me-1\">
+                            <img src=\"";
+        // line 44
+        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-7.jpg"), "html", null, true);
+        echo "\" alt=\"avatar\" height=\"36\"
+                                 width=\"36\"/>
+                            <span class=\"avatar-status-busy\"></span>
+                        </div>
+                        <h6 class=\"mb-0\">Kristopher Candy</h6>
+                    </div>
+                    <div class=\"d-flex align-items-center\">
+                        <i data-feather=\"phone-call\"
+                           class=\"cursor-pointer d-sm-block d-none font-medium-2 me-1\"></i>
+                        <i data-feather=\"video\" class=\"cursor-pointer d-sm-block d-none font-medium-2 me-1\"></i>
+                        <i data-feather=\"search\" class=\"cursor-pointer d-sm-block d-none font-medium-2\"></i>
+                        <div class=\"dropdown\">
+                            <button
+                                    class=\"btn-icon btn btn-transparent hide-arrow btn-sm dropdown-toggle\"
+                                    type=\"button\"
+                                    data-bs-toggle=\"dropdown\"
+                                    aria-haspopup=\"true\"
+                                    aria-expanded=\"false\"
+                            >
+                                <i data-feather=\"more-vertical\" id=\"chat-header-actions\" class=\"font-medium-2\"></i>
+                            </button>
+                            <div class=\"dropdown-menu dropdown-menu-end\" aria-labelledby=\"chat-header-actions\">
+                                <a class=\"dropdown-item\" href=\"#\">View Contact</a>
+                                <a class=\"dropdown-item\" href=\"#\">Mute Notifications</a>
+                                <a class=\"dropdown-item\" href=\"#\">Block Contact</a>
+                                <a class=\"dropdown-item\" href=\"#\">Clear Chat</a>
+                                <a class=\"dropdown-item\" href=\"#\">Report</a>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+            </div>
+            <!--/ Chat Header -->
+
+            <!-- User Chat messages -->
+            <div class=\"user-chats\">
+                <div class=\"chats\">
+                    <div class=\"chat\">
+                        <div class=\"chat-avatar\">
             <span class=\"avatar box-shadow-1 cursor-pointer\">
               <img
-                src=\"";
-        // line 80
+                      src=\"";
+        // line 85
         echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-11.jpg"), "html", null, true);
         echo "\"
-                alt=\"avatar\"
-                height=\"36\"
-                width=\"36\"
+                      alt=\"avatar\"
+                      height=\"36\"
+                      width=\"36\"
               />
             </span>
-          </div>
-          <div class=\"chat-body\">
-            <div class=\"chat-content\">
-              <p>How can we help? We're here for you! 😄</p>
-            </div>
-          </div>
-        </div>
-        <div class=\"chat chat-left\">
-          <div class=\"chat-avatar\">
+                        </div>
+                        <div class=\"chat-body\">
+                            <div class=\"chat-content\">
+                                <p>How can we help? We're here for you! 😄</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=\"chat chat-left\">
+                        <div class=\"chat-avatar\">
             <span class=\"avatar box-shadow-1 cursor-pointer\">
               <img src=\"";
-        // line 96
+        // line 101
         echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-7.jpg"), "html", null, true);
-        echo "\" alt=\"avatar\" height=\"36\" width=\"36\" />
+        echo "\" alt=\"avatar\" height=\"36\" width=\"36\"/>
             </span>
-          </div>
-          <div class=\"chat-body\">
-            <div class=\"chat-content\">
-              <p>Hey John, I am looking for the best admin template.</p>
-              <p>Could you please help me to find it out? 🤔</p>
-            </div>
-            <div class=\"chat-content\">
-              <p>It should be Bootstrap 4 compatible.</p>
-            </div>
-          </div>
-        </div>
-        <div class=\"divider\">
-          <div class=\"divider-text\">Yesterday</div>
-        </div>
-        <div class=\"chat\">
-          <div class=\"chat-avatar\">
+                        </div>
+                        <div class=\"chat-body\">
+                            <div class=\"chat-content\">
+                                <p>Hey John, I am looking for the best admin template.</p>
+                                <p>Could you please help me to find it out? 🤔</p>
+                            </div>
+                            <div class=\"chat-content\">
+                                <p>It should be Bootstrap 4 compatible.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=\"divider\">
+                        <div class=\"divider-text\">Yesterday</div>
+                    </div>
+                    <div class=\"chat\">
+                        <div class=\"chat-avatar\">
             <span class=\"avatar box-shadow-1 cursor-pointer\">
               <img
-                src=\"";
-        // line 116
+                      src=\"";
+        // line 121
         echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-11.jpg"), "html", null, true);
         echo "\"
-                alt=\"avatar\"
-                height=\"36\"
-                width=\"36\"
+                      alt=\"avatar\"
+                      height=\"36\"
+                      width=\"36\"
               />
             </span>
-          </div>
-          <div class=\"chat-body\">
-            <div class=\"chat-content\">
-              <p>Absolutely!</p>
-            </div>
-            <div class=\"chat-content\">
-              <p>Vuexy admin is the responsive bootstrap 4 admin template.</p>
-            </div>
-          </div>
-        </div>
-        <div class=\"chat chat-left\">
-          <div class=\"chat-avatar\">
+                        </div>
+                        <div class=\"chat-body\">
+                            <div class=\"chat-content\">
+                                <p>Absolutely!</p>
+                            </div>
+                            <div class=\"chat-content\">
+                                <p>Vuexy admin is the responsive bootstrap 4 admin template.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=\"chat chat-left\">
+                        <div class=\"chat-avatar\">
             <span class=\"avatar box-shadow-1 cursor-pointer\">
               <img src=\"";
-        // line 135
+        // line 140
         echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-7.jpg"), "html", null, true);
-        echo "\" alt=\"avatar\" height=\"36\" width=\"36\" />
+        echo "\" alt=\"avatar\" height=\"36\" width=\"36\"/>
             </span>
-          </div>
-          <div class=\"chat-body\">
-            <div class=\"chat-content\">
-              <p>Looks clean and fresh UI. 😃</p>
-            </div>
-            <div class=\"chat-content\">
-              <p>It's perfect for my next project.</p>
-            </div>
-            <div class=\"chat-content\">
-              <p>How can I purchase it?</p>
-            </div>
-          </div>
-        </div>
-        <div class=\"chat\">
-          <div class=\"chat-avatar\">
+                        </div>
+                        <div class=\"chat-body\">
+                            <div class=\"chat-content\">
+                                <p>Looks clean and fresh UI. 😃</p>
+                            </div>
+                            <div class=\"chat-content\">
+                                <p>It's perfect for my next project.</p>
+                            </div>
+                            <div class=\"chat-content\">
+                                <p>How can I purchase it?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=\"chat\">
+                        <div class=\"chat-avatar\">
             <span class=\"avatar box-shadow-1 cursor-pointer\">
               <img
-                src=\"";
-        // line 154
+                      src=\"";
+        // line 159
         echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-11.jpg"), "html", null, true);
         echo "\"
-                alt=\"avatar\"
-                height=\"36\"
-                width=\"36\"
+                      alt=\"avatar\"
+                      height=\"36\"
+                      width=\"36\"
               />
             </span>
-          </div>
-          <div class=\"chat-body\">
-            <div class=\"chat-content\">
-              <p>Thanks, from ThemeForest.</p>
-            </div>
-          </div>
-        </div>
-        <div class=\"chat chat-left\">
-          <div class=\"chat-avatar\">
+                        </div>
+                        <div class=\"chat-body\">
+                            <div class=\"chat-content\">
+                                <p>Thanks, from ThemeForest.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=\"chat chat-left\">
+                        <div class=\"chat-avatar\">
             <span class=\"avatar box-shadow-1 cursor-pointer\">
               <img src=\"";
-        // line 170
+        // line 175
         echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-7.jpg"), "html", null, true);
-        echo "\" alt=\"avatar\" height=\"36\" width=\"36\" />
+        echo "\" alt=\"avatar\" height=\"36\" width=\"36\"/>
             </span>
-          </div>
-          <div class=\"chat-body\">
-            <div class=\"chat-content\">
-              <p>I will purchase it for sure. 👍</p>
-            </div>
-            <div class=\"chat-content\">
-              <p>Thanks.</p>
-            </div>
-          </div>
-        </div>
-        <div class=\"chat\">
-          <div class=\"chat-avatar\">
+                        </div>
+                        <div class=\"chat-body\">
+                            <div class=\"chat-content\">
+                                <p>I will purchase it for sure. 👍</p>
+                            </div>
+                            <div class=\"chat-content\">
+                                <p>Thanks.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=\"chat\">
+                        <div class=\"chat-avatar\">
             <span class=\"avatar box-shadow-1 cursor-pointer\">
               <img
-                src=\"";
-        // line 186
+                      src=\"";
+        // line 191
         echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-11.jpg"), "html", null, true);
         echo "\"
-                alt=\"avatar\"
-                height=\"36\"
-                width=\"36\"
+                      alt=\"avatar\"
+                      height=\"36\"
+                      width=\"36\"
               />
             </span>
-          </div>
-          <div class=\"chat-body\">
-            <div class=\"chat-content\">
-              <p>Great, Feel free to get in touch on</p>
+                        </div>
+                        <div class=\"chat-body\">
+                            <div class=\"chat-content\">
+                                <p>Great, Feel free to get in touch on</p>
+                            </div>
+                            <div class=\"chat-content\">
+                                <p>https://pixinvent.ticksy.com/</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class=\"chat-content\">
-              <p>https://pixinvent.ticksy.com/</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- User Chat messages -->
+            <!-- User Chat messages -->
 
-    <!-- Submit Chat form -->
-    <form class=\"chat-app-form\" action=\"javascript:void(0);\" onsubmit=\"enterChat();\">
-      <div class=\"input-group input-group-merge me-1 form-send-message\">
-        <span class=\"speech-to-text input-group-text\"><i data-feather=\"mic\" class=\"cursor-pointer\"></i></span>
-        <input type=\"text\" class=\"form-control message\" placeholder=\"Type your message or use speech to text\" />
-        <span class=\"input-group-text\">
+            <!-- Submit Chat form -->
+            <form class=\"chat-app-form\" action=\"javascript:void(0);\" onsubmit=\"enterChat();\">
+                <div class=\"input-group input-group-merge me-1 form-send-message\">
+                    <span class=\"speech-to-text input-group-text\"><i data-feather=\"mic\"
+                                                                     class=\"cursor-pointer\"></i></span>
+                    <input type=\"text\" class=\"form-control message\"
+                           placeholder=\"Type your message or use speech to text\"/>
+                    <span class=\"input-group-text\">
           <label for=\"attach-doc\" class=\"attachment-icon form-label mb-0\">
             <i data-feather=\"image\" class=\"cursor-pointer text-secondary\"></i>
-            <input type=\"file\" id=\"attach-doc\" hidden /> </label
-        ></span>
-      </div>
-      <button type=\"button\" class=\"btn btn-primary send\" onclick=\"enterChat();\">
-        <i data-feather=\"send\" class=\"d-lg-none\"></i>
-        <span class=\"d-none d-lg-block\">Send</span>
-      </button>
-    </form>
-    <!--/ Submit Chat form -->
-  </div>
-  <!--/ Active Chat -->
-</section>
-<!--/ Main chat area -->
+            <input type=\"file\" id=\"attach-doc\" hidden/> </label
+          ></span>
+                </div>
+                <button type=\"button\" class=\"btn btn-primary send\" onclick=\"enterChat();\">
+                    <i data-feather=\"send\" class=\"d-lg-none\"></i>
+                    <span class=\"d-none d-lg-block\">Send</span>
+                </button>
+            </form>
+            <!--/ Submit Chat form -->
+        </div>
+        <!--/ Active Chat -->
+    </section>
+    <!--/ Main chat area -->
 
-<!-- User Chat profile right area -->
-<div class=\"user-profile-sidebar\">
-  <header class=\"user-profile-header\">
+    <!-- User Chat profile right area -->
+    <div class=\"user-profile-sidebar\">
+        <header class=\"user-profile-header\">
     <span class=\"close-icon\">
       <i data-feather=\"x\"></i>
     </span>
-    <!-- User Profile image with name -->
-    <div class=\"header-profile-sidebar\">
-      <div class=\"avatar box-shadow-1 avatar-border avatar-xl\">
-        <img src=\"";
-        // line 237
+            <!-- User Profile image with name -->
+            <div class=\"header-profile-sidebar\">
+                <div class=\"avatar box-shadow-1 avatar-border avatar-xl\">
+                    <img src=\"";
+        // line 244
         echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/portrait/small/avatar-s-7.jpg"), "html", null, true);
-        echo "\" alt=\"user_avatar\" height=\"70\" width=\"70\" />
-        <span class=\"avatar-status-busy avatar-status-lg\"></span>
-      </div>
-      <h4 class=\"chat-user-name\">Kristopher Candy</h4>
-      <span class=\"user-post\">UI/UX Designer 👩🏻‍💻</span>
-    </div>
-    <!--/ User Profile image with name -->
-  </header>
-  <div class=\"user-profile-sidebar-area\">
-    <!-- About User -->
-    <h6 class=\"section-label mb-1\">About</h6>
-    <p>Toffee caramels jelly-o tart gummi bears cake I love ice cream lollipop.</p>
-    <!-- About User -->
-    <!-- User's personal information -->
-    <div class=\"personal-info\">
-      <h6 class=\"section-label mb-1 mt-3\">Personal Information</h6>
-      <ul class=\"list-unstyled\">
-        <li class=\"mb-1\">
-          <i data-feather=\"mail\" class=\"font-medium-2 me-50\"></i>
-          <span class=\"align-middle\">kristycandy@email.com</span>
-        </li>
-        <li class=\"mb-1\">
-          <i data-feather=\"phone-call\" class=\"font-medium-2 me-50\"></i>
-          <span class=\"align-middle\">+1(123) 456 - 7890</span>
-        </li>
-        <li>
-          <i data-feather=\"clock\" class=\"font-medium-2 me-50\"></i>
-          <span class=\"align-middle\">Mon - Fri 10AM - 8PM</span>
-        </li>
-      </ul>
-    </div>
-    <!--/ User's personal information -->
+        echo "\" alt=\"user_avatar\" height=\"70\"
+                         width=\"70\"/>
+                    <span class=\"avatar-status-busy avatar-status-lg\"></span>
+                </div>
+                <h4 class=\"chat-user-name\">Kristopher Candy</h4>
+                <span class=\"user-post\">UI/UX Designer 👩🏻‍💻</span>
+            </div>
+            <!--/ User Profile image with name -->
+        </header>
+        <div class=\"user-profile-sidebar-area\">
+            <!-- About User -->
+            <h6 class=\"section-label mb-1\">About</h6>
+            <p>Toffee caramels jelly-o tart gummi bears cake I love ice cream lollipop.</p>
+            <!-- About User -->
+            <!-- User's personal information -->
+            <div class=\"personal-info\">
+                <h6 class=\"section-label mb-1 mt-3\">Personal Information</h6>
+                <ul class=\"list-unstyled\">
+                    <li class=\"mb-1\">
+                        <i data-feather=\"mail\" class=\"font-medium-2 me-50\"></i>
+                        <span class=\"align-middle\">kristycandy@email.com</span>
+                    </li>
+                    <li class=\"mb-1\">
+                        <i data-feather=\"phone-call\" class=\"font-medium-2 me-50\"></i>
+                        <span class=\"align-middle\">+1(123) 456 - 7890</span>
+                    </li>
+                    <li>
+                        <i data-feather=\"clock\" class=\"font-medium-2 me-50\"></i>
+                        <span class=\"align-middle\">Mon - Fri 10AM - 8PM</span>
+                    </li>
+                </ul>
+            </div>
+            <!--/ User's personal information -->
 
-    <!-- User's Links -->
-    <div class=\"more-options\">
-      <h6 class=\"section-label mb-1 mt-3\">Options</h6>
-      <ul class=\"list-unstyled\">
-        <li class=\"cursor-pointer mb-1\">
-          <i data-feather=\"tag\" class=\"font-medium-2 me-50\"></i>
-          <span class=\"align-middle\">Add Tag</span>
-        </li>
-        <li class=\"cursor-pointer mb-1\">
-          <i data-feather=\"star\" class=\"font-medium-2 me-50\"></i>
-          <span class=\"align-middle\">Important Contact</span>
-        </li>
-        <li class=\"cursor-pointer mb-1\">
-          <i data-feather=\"image\" class=\"font-medium-2 me-50\"></i>
-          <span class=\"align-middle\">Shared Media</span>
-        </li>
-        <li class=\"cursor-pointer mb-1\">
-          <i data-feather=\"trash\" class=\"font-medium-2 me-50\"></i>
-          <span class=\"align-middle\">Delete Contact</span>
-        </li>
-        <li class=\"cursor-pointer\">
-          <i data-feather=\"slash\" class=\"font-medium-2 me-50\"></i>
-          <span class=\"align-middle\">Block Contact</span>
-        </li>
-      </ul>
+            <!-- User's Links -->
+            <div class=\"more-options\">
+                <h6 class=\"section-label mb-1 mt-3\">Options</h6>
+                <ul class=\"list-unstyled\">
+                    <li class=\"cursor-pointer mb-1\">
+                        <i data-feather=\"tag\" class=\"font-medium-2 me-50\"></i>
+                        <span class=\"align-middle\">Add Tag</span>
+                    </li>
+                    <li class=\"cursor-pointer mb-1\">
+                        <i data-feather=\"star\" class=\"font-medium-2 me-50\"></i>
+                        <span class=\"align-middle\">Important Contact</span>
+                    </li>
+                    <li class=\"cursor-pointer mb-1\">
+                        <i data-feather=\"image\" class=\"font-medium-2 me-50\"></i>
+                        <span class=\"align-middle\">Shared Media</span>
+                    </li>
+                    <li class=\"cursor-pointer mb-1\">
+                        <i data-feather=\"trash\" class=\"font-medium-2 me-50\"></i>
+                        <span class=\"align-middle\">Delete Contact</span>
+                    </li>
+                    <li class=\"cursor-pointer\">
+                        <i data-feather=\"slash\" class=\"font-medium-2 me-50\"></i>
+                        <span class=\"align-middle\">Block Contact</span>
+                    </li>
+                </ul>
+            </div>
+            <!--/ User's Links -->
+        </div>
     </div>
-    <!--/ User's Links -->
-  </div>
-</div>
-<!--/ User Chat profile right area -->
+    <!--/ User Chat profile right area -->
 ";
         
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
@@ -454,7 +463,7 @@ class __TwigTemplate_ded04817e44d99cdfb7b22f4f7b6e25a68774cfcadb25c7cb0b0d616194
 
     }
 
-    // line 303
+    // line 311
     public function block_page_script($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -464,10 +473,10 @@ class __TwigTemplate_ded04817e44d99cdfb7b22f4f7b6e25a68774cfcadb25c7cb0b0d616194
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "page_script"));
 
-        // line 304
-        echo "<!-- Page js files -->
-<script src=\"";
-        // line 305
+        // line 312
+        echo "    <!-- Page js files -->
+    <script src=\"";
+        // line 313
         echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("js/scripts/pages/app-chat.js"), "html", null, true);
         echo "\"></script>
 ";
@@ -491,316 +500,324 @@ class __TwigTemplate_ded04817e44d99cdfb7b22f4f7b6e25a68774cfcadb25c7cb0b0d616194
 
     public function getDebugInfo()
     {
-        return array (  471 => 305,  468 => 304,  458 => 303,  384 => 237,  330 => 186,  311 => 170,  292 => 154,  270 => 135,  248 => 116,  225 => 96,  206 => 80,  164 => 41,  140 => 19,  130 => 18,  120 => 14,  110 => 13,  98 => 9,  94 => 8,  91 => 7,  81 => 6,  62 => 4,  39 => 2,);
+        return array (  480 => 313,  477 => 312,  467 => 311,  392 => 244,  336 => 191,  317 => 175,  298 => 159,  276 => 140,  254 => 121,  231 => 101,  212 => 85,  168 => 44,  144 => 22,  134 => 21,  123 => 17,  113 => 16,  96 => 7,  91 => 6,  81 => 5,  62 => 3,  39 => 1,);
     }
 
     public function getSourceContext()
     {
-        return new Source("
-{% extends 'views/layouts/contentLayoutMaster.html.twig' %}
+        return new Source("{% extends 'views/layouts/contentLayoutMaster.html.twig' %}
 
 {% block title %} Chat Application {% endblock %}
 
 {% block page_style %}
-  <!-- Page css files -->
-  <link rel=\"stylesheet\" href=\"{{ asset('css/base/pages/app-chat.css') }}\">
-  <link rel=\"stylesheet\" href=\"{{ asset('css/base/pages/app-chat-list.css') }}\">
+    <link rel=\"stylesheet\" href=\"{{ asset('css/base/pages/app-chat.css') }}\">
+    <link rel=\"stylesheet\" href=\"{{ asset('css/base/pages/app-chat-list.css') }}\">
+    <style>
+        .default-sidebar {
+            flex: 1 1 auto !important;
+        }
+    </style>
 {% endblock %}
 
 
 {% block content_sidebar %}
-{% include 'views/content/apps/chat/app-chat-sidebar.html.twig' %}
+    {% include 'views/content/apps/chat/app-chat-sidebar.html.twig' %}
 {% endblock %}
 
 
 {% block content %}
-<div class=\"body-content-overlay\"></div>
-<!-- Main chat area -->
-<section class=\"chat-app-window\">
-  <!-- To load Conversation -->
-  <div class=\"start-chat-area\">
-    <div class=\"mb-1 start-chat-icon\">
-      <i data-feather=\"message-square\"></i>
-    </div>
-    <h4 class=\"sidebar-toggle start-chat-text\">Start Conversation</h4>
-  </div>
-  <!--/ To load Conversation -->
+    <div class=\"body-content-overlay\"></div>
+    <!-- Main chat area -->
+    <section class=\"chat-app-window\">
+        <!-- To load Conversation -->
+        <div class=\"start-chat-area\">
+            <div class=\"mb-1 start-chat-icon\">
+                <i data-feather=\"message-square\"></i>
+            </div>
+            <h4 class=\"sidebar-toggle start-chat-text\">Start Conversation</h4>
+        </div>
+        <!--/ To load Conversation -->
 
-  <!-- Active Chat -->
-  <div class=\"active-chat d-none\">
-    <!-- Chat Header -->
-    <div class=\"chat-navbar\">
-      <header class=\"chat-header\">
-        <div class=\"d-flex align-items-center\">
-          <div class=\"sidebar-toggle d-block d-lg-none me-1\">
-            <i data-feather=\"menu\" class=\"font-medium-5\"></i>
-          </div>
-          <div class=\"avatar avatar-border user-profile-toggle m-0 me-1\">
-            <img src=\"{{asset('images/portrait/small/avatar-s-7.jpg')}}\" alt=\"avatar\" height=\"36\" width=\"36\" />
-            <span class=\"avatar-status-busy\"></span>
-          </div>
-          <h6 class=\"mb-0\">Kristopher Candy</h6>
-        </div>
-        <div class=\"d-flex align-items-center\">
-          <i data-feather=\"phone-call\" class=\"cursor-pointer d-sm-block d-none font-medium-2 me-1\"></i>
-          <i data-feather=\"video\" class=\"cursor-pointer d-sm-block d-none font-medium-2 me-1\"></i>
-          <i data-feather=\"search\" class=\"cursor-pointer d-sm-block d-none font-medium-2\"></i>
-          <div class=\"dropdown\">
-            <button
-              class=\"btn-icon btn btn-transparent hide-arrow btn-sm dropdown-toggle\"
-              type=\"button\"
-              data-bs-toggle=\"dropdown\"
-              aria-haspopup=\"true\"
-              aria-expanded=\"false\"
-            >
-              <i data-feather=\"more-vertical\" id=\"chat-header-actions\" class=\"font-medium-2\"></i>
-            </button>
-            <div class=\"dropdown-menu dropdown-menu-end\" aria-labelledby=\"chat-header-actions\">
-              <a class=\"dropdown-item\" href=\"#\">View Contact</a>
-              <a class=\"dropdown-item\" href=\"#\">Mute Notifications</a>
-              <a class=\"dropdown-item\" href=\"#\">Block Contact</a>
-              <a class=\"dropdown-item\" href=\"#\">Clear Chat</a>
-              <a class=\"dropdown-item\" href=\"#\">Report</a>
+        <!-- Active Chat -->
+        <div class=\"active-chat d-none\">
+            <!-- Chat Header -->
+            <div class=\"chat-navbar\">
+                <header class=\"chat-header\">
+                    <div class=\"d-flex align-items-center\">
+                        <div class=\"sidebar-toggle d-block d-lg-none me-1\">
+                            <i data-feather=\"menu\" class=\"font-medium-5\"></i>
+                        </div>
+                        <div class=\"avatar avatar-border user-profile-toggle m-0 me-1\">
+                            <img src=\"{{ asset('images/portrait/small/avatar-s-7.jpg') }}\" alt=\"avatar\" height=\"36\"
+                                 width=\"36\"/>
+                            <span class=\"avatar-status-busy\"></span>
+                        </div>
+                        <h6 class=\"mb-0\">Kristopher Candy</h6>
+                    </div>
+                    <div class=\"d-flex align-items-center\">
+                        <i data-feather=\"phone-call\"
+                           class=\"cursor-pointer d-sm-block d-none font-medium-2 me-1\"></i>
+                        <i data-feather=\"video\" class=\"cursor-pointer d-sm-block d-none font-medium-2 me-1\"></i>
+                        <i data-feather=\"search\" class=\"cursor-pointer d-sm-block d-none font-medium-2\"></i>
+                        <div class=\"dropdown\">
+                            <button
+                                    class=\"btn-icon btn btn-transparent hide-arrow btn-sm dropdown-toggle\"
+                                    type=\"button\"
+                                    data-bs-toggle=\"dropdown\"
+                                    aria-haspopup=\"true\"
+                                    aria-expanded=\"false\"
+                            >
+                                <i data-feather=\"more-vertical\" id=\"chat-header-actions\" class=\"font-medium-2\"></i>
+                            </button>
+                            <div class=\"dropdown-menu dropdown-menu-end\" aria-labelledby=\"chat-header-actions\">
+                                <a class=\"dropdown-item\" href=\"#\">View Contact</a>
+                                <a class=\"dropdown-item\" href=\"#\">Mute Notifications</a>
+                                <a class=\"dropdown-item\" href=\"#\">Block Contact</a>
+                                <a class=\"dropdown-item\" href=\"#\">Clear Chat</a>
+                                <a class=\"dropdown-item\" href=\"#\">Report</a>
+                            </div>
+                        </div>
+                    </div>
+                </header>
             </div>
-          </div>
-        </div>
-      </header>
-    </div>
-    <!--/ Chat Header -->
+            <!--/ Chat Header -->
 
-    <!-- User Chat messages -->
-    <div class=\"user-chats\">
-      <div class=\"chats\">
-        <div class=\"chat\">
-          <div class=\"chat-avatar\">
+            <!-- User Chat messages -->
+            <div class=\"user-chats\">
+                <div class=\"chats\">
+                    <div class=\"chat\">
+                        <div class=\"chat-avatar\">
             <span class=\"avatar box-shadow-1 cursor-pointer\">
               <img
-                src=\"{{asset('images/portrait/small/avatar-s-11.jpg')}}\"
-                alt=\"avatar\"
-                height=\"36\"
-                width=\"36\"
+                      src=\"{{ asset('images/portrait/small/avatar-s-11.jpg') }}\"
+                      alt=\"avatar\"
+                      height=\"36\"
+                      width=\"36\"
               />
             </span>
-          </div>
-          <div class=\"chat-body\">
-            <div class=\"chat-content\">
-              <p>How can we help? We're here for you! 😄</p>
-            </div>
-          </div>
-        </div>
-        <div class=\"chat chat-left\">
-          <div class=\"chat-avatar\">
+                        </div>
+                        <div class=\"chat-body\">
+                            <div class=\"chat-content\">
+                                <p>How can we help? We're here for you! 😄</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=\"chat chat-left\">
+                        <div class=\"chat-avatar\">
             <span class=\"avatar box-shadow-1 cursor-pointer\">
-              <img src=\"{{asset('images/portrait/small/avatar-s-7.jpg')}}\" alt=\"avatar\" height=\"36\" width=\"36\" />
+              <img src=\"{{ asset('images/portrait/small/avatar-s-7.jpg') }}\" alt=\"avatar\" height=\"36\" width=\"36\"/>
             </span>
-          </div>
-          <div class=\"chat-body\">
-            <div class=\"chat-content\">
-              <p>Hey John, I am looking for the best admin template.</p>
-              <p>Could you please help me to find it out? 🤔</p>
-            </div>
-            <div class=\"chat-content\">
-              <p>It should be Bootstrap 4 compatible.</p>
-            </div>
-          </div>
-        </div>
-        <div class=\"divider\">
-          <div class=\"divider-text\">Yesterday</div>
-        </div>
-        <div class=\"chat\">
-          <div class=\"chat-avatar\">
+                        </div>
+                        <div class=\"chat-body\">
+                            <div class=\"chat-content\">
+                                <p>Hey John, I am looking for the best admin template.</p>
+                                <p>Could you please help me to find it out? 🤔</p>
+                            </div>
+                            <div class=\"chat-content\">
+                                <p>It should be Bootstrap 4 compatible.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=\"divider\">
+                        <div class=\"divider-text\">Yesterday</div>
+                    </div>
+                    <div class=\"chat\">
+                        <div class=\"chat-avatar\">
             <span class=\"avatar box-shadow-1 cursor-pointer\">
               <img
-                src=\"{{asset('images/portrait/small/avatar-s-11.jpg')}}\"
-                alt=\"avatar\"
-                height=\"36\"
-                width=\"36\"
+                      src=\"{{ asset('images/portrait/small/avatar-s-11.jpg') }}\"
+                      alt=\"avatar\"
+                      height=\"36\"
+                      width=\"36\"
               />
             </span>
-          </div>
-          <div class=\"chat-body\">
-            <div class=\"chat-content\">
-              <p>Absolutely!</p>
-            </div>
-            <div class=\"chat-content\">
-              <p>Vuexy admin is the responsive bootstrap 4 admin template.</p>
-            </div>
-          </div>
-        </div>
-        <div class=\"chat chat-left\">
-          <div class=\"chat-avatar\">
+                        </div>
+                        <div class=\"chat-body\">
+                            <div class=\"chat-content\">
+                                <p>Absolutely!</p>
+                            </div>
+                            <div class=\"chat-content\">
+                                <p>Vuexy admin is the responsive bootstrap 4 admin template.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=\"chat chat-left\">
+                        <div class=\"chat-avatar\">
             <span class=\"avatar box-shadow-1 cursor-pointer\">
-              <img src=\"{{asset('images/portrait/small/avatar-s-7.jpg')}}\" alt=\"avatar\" height=\"36\" width=\"36\" />
+              <img src=\"{{ asset('images/portrait/small/avatar-s-7.jpg') }}\" alt=\"avatar\" height=\"36\" width=\"36\"/>
             </span>
-          </div>
-          <div class=\"chat-body\">
-            <div class=\"chat-content\">
-              <p>Looks clean and fresh UI. 😃</p>
-            </div>
-            <div class=\"chat-content\">
-              <p>It's perfect for my next project.</p>
-            </div>
-            <div class=\"chat-content\">
-              <p>How can I purchase it?</p>
-            </div>
-          </div>
-        </div>
-        <div class=\"chat\">
-          <div class=\"chat-avatar\">
+                        </div>
+                        <div class=\"chat-body\">
+                            <div class=\"chat-content\">
+                                <p>Looks clean and fresh UI. 😃</p>
+                            </div>
+                            <div class=\"chat-content\">
+                                <p>It's perfect for my next project.</p>
+                            </div>
+                            <div class=\"chat-content\">
+                                <p>How can I purchase it?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=\"chat\">
+                        <div class=\"chat-avatar\">
             <span class=\"avatar box-shadow-1 cursor-pointer\">
               <img
-                src=\"{{asset('images/portrait/small/avatar-s-11.jpg')}}\"
-                alt=\"avatar\"
-                height=\"36\"
-                width=\"36\"
+                      src=\"{{ asset('images/portrait/small/avatar-s-11.jpg') }}\"
+                      alt=\"avatar\"
+                      height=\"36\"
+                      width=\"36\"
               />
             </span>
-          </div>
-          <div class=\"chat-body\">
-            <div class=\"chat-content\">
-              <p>Thanks, from ThemeForest.</p>
-            </div>
-          </div>
-        </div>
-        <div class=\"chat chat-left\">
-          <div class=\"chat-avatar\">
+                        </div>
+                        <div class=\"chat-body\">
+                            <div class=\"chat-content\">
+                                <p>Thanks, from ThemeForest.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=\"chat chat-left\">
+                        <div class=\"chat-avatar\">
             <span class=\"avatar box-shadow-1 cursor-pointer\">
-              <img src=\"{{asset('images/portrait/small/avatar-s-7.jpg')}}\" alt=\"avatar\" height=\"36\" width=\"36\" />
+              <img src=\"{{ asset('images/portrait/small/avatar-s-7.jpg') }}\" alt=\"avatar\" height=\"36\" width=\"36\"/>
             </span>
-          </div>
-          <div class=\"chat-body\">
-            <div class=\"chat-content\">
-              <p>I will purchase it for sure. 👍</p>
-            </div>
-            <div class=\"chat-content\">
-              <p>Thanks.</p>
-            </div>
-          </div>
-        </div>
-        <div class=\"chat\">
-          <div class=\"chat-avatar\">
+                        </div>
+                        <div class=\"chat-body\">
+                            <div class=\"chat-content\">
+                                <p>I will purchase it for sure. 👍</p>
+                            </div>
+                            <div class=\"chat-content\">
+                                <p>Thanks.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=\"chat\">
+                        <div class=\"chat-avatar\">
             <span class=\"avatar box-shadow-1 cursor-pointer\">
               <img
-                src=\"{{asset('images/portrait/small/avatar-s-11.jpg')}}\"
-                alt=\"avatar\"
-                height=\"36\"
-                width=\"36\"
+                      src=\"{{ asset('images/portrait/small/avatar-s-11.jpg') }}\"
+                      alt=\"avatar\"
+                      height=\"36\"
+                      width=\"36\"
               />
             </span>
-          </div>
-          <div class=\"chat-body\">
-            <div class=\"chat-content\">
-              <p>Great, Feel free to get in touch on</p>
+                        </div>
+                        <div class=\"chat-body\">
+                            <div class=\"chat-content\">
+                                <p>Great, Feel free to get in touch on</p>
+                            </div>
+                            <div class=\"chat-content\">
+                                <p>https://pixinvent.ticksy.com/</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class=\"chat-content\">
-              <p>https://pixinvent.ticksy.com/</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- User Chat messages -->
+            <!-- User Chat messages -->
 
-    <!-- Submit Chat form -->
-    <form class=\"chat-app-form\" action=\"javascript:void(0);\" onsubmit=\"enterChat();\">
-      <div class=\"input-group input-group-merge me-1 form-send-message\">
-        <span class=\"speech-to-text input-group-text\"><i data-feather=\"mic\" class=\"cursor-pointer\"></i></span>
-        <input type=\"text\" class=\"form-control message\" placeholder=\"Type your message or use speech to text\" />
-        <span class=\"input-group-text\">
+            <!-- Submit Chat form -->
+            <form class=\"chat-app-form\" action=\"javascript:void(0);\" onsubmit=\"enterChat();\">
+                <div class=\"input-group input-group-merge me-1 form-send-message\">
+                    <span class=\"speech-to-text input-group-text\"><i data-feather=\"mic\"
+                                                                     class=\"cursor-pointer\"></i></span>
+                    <input type=\"text\" class=\"form-control message\"
+                           placeholder=\"Type your message or use speech to text\"/>
+                    <span class=\"input-group-text\">
           <label for=\"attach-doc\" class=\"attachment-icon form-label mb-0\">
             <i data-feather=\"image\" class=\"cursor-pointer text-secondary\"></i>
-            <input type=\"file\" id=\"attach-doc\" hidden /> </label
-        ></span>
-      </div>
-      <button type=\"button\" class=\"btn btn-primary send\" onclick=\"enterChat();\">
-        <i data-feather=\"send\" class=\"d-lg-none\"></i>
-        <span class=\"d-none d-lg-block\">Send</span>
-      </button>
-    </form>
-    <!--/ Submit Chat form -->
-  </div>
-  <!--/ Active Chat -->
-</section>
-<!--/ Main chat area -->
+            <input type=\"file\" id=\"attach-doc\" hidden/> </label
+          ></span>
+                </div>
+                <button type=\"button\" class=\"btn btn-primary send\" onclick=\"enterChat();\">
+                    <i data-feather=\"send\" class=\"d-lg-none\"></i>
+                    <span class=\"d-none d-lg-block\">Send</span>
+                </button>
+            </form>
+            <!--/ Submit Chat form -->
+        </div>
+        <!--/ Active Chat -->
+    </section>
+    <!--/ Main chat area -->
 
-<!-- User Chat profile right area -->
-<div class=\"user-profile-sidebar\">
-  <header class=\"user-profile-header\">
+    <!-- User Chat profile right area -->
+    <div class=\"user-profile-sidebar\">
+        <header class=\"user-profile-header\">
     <span class=\"close-icon\">
       <i data-feather=\"x\"></i>
     </span>
-    <!-- User Profile image with name -->
-    <div class=\"header-profile-sidebar\">
-      <div class=\"avatar box-shadow-1 avatar-border avatar-xl\">
-        <img src=\"{{asset('images/portrait/small/avatar-s-7.jpg')}}\" alt=\"user_avatar\" height=\"70\" width=\"70\" />
-        <span class=\"avatar-status-busy avatar-status-lg\"></span>
-      </div>
-      <h4 class=\"chat-user-name\">Kristopher Candy</h4>
-      <span class=\"user-post\">UI/UX Designer 👩🏻‍💻</span>
-    </div>
-    <!--/ User Profile image with name -->
-  </header>
-  <div class=\"user-profile-sidebar-area\">
-    <!-- About User -->
-    <h6 class=\"section-label mb-1\">About</h6>
-    <p>Toffee caramels jelly-o tart gummi bears cake I love ice cream lollipop.</p>
-    <!-- About User -->
-    <!-- User's personal information -->
-    <div class=\"personal-info\">
-      <h6 class=\"section-label mb-1 mt-3\">Personal Information</h6>
-      <ul class=\"list-unstyled\">
-        <li class=\"mb-1\">
-          <i data-feather=\"mail\" class=\"font-medium-2 me-50\"></i>
-          <span class=\"align-middle\">kristycandy@email.com</span>
-        </li>
-        <li class=\"mb-1\">
-          <i data-feather=\"phone-call\" class=\"font-medium-2 me-50\"></i>
-          <span class=\"align-middle\">+1(123) 456 - 7890</span>
-        </li>
-        <li>
-          <i data-feather=\"clock\" class=\"font-medium-2 me-50\"></i>
-          <span class=\"align-middle\">Mon - Fri 10AM - 8PM</span>
-        </li>
-      </ul>
-    </div>
-    <!--/ User's personal information -->
+            <!-- User Profile image with name -->
+            <div class=\"header-profile-sidebar\">
+                <div class=\"avatar box-shadow-1 avatar-border avatar-xl\">
+                    <img src=\"{{ asset('images/portrait/small/avatar-s-7.jpg') }}\" alt=\"user_avatar\" height=\"70\"
+                         width=\"70\"/>
+                    <span class=\"avatar-status-busy avatar-status-lg\"></span>
+                </div>
+                <h4 class=\"chat-user-name\">Kristopher Candy</h4>
+                <span class=\"user-post\">UI/UX Designer 👩🏻‍💻</span>
+            </div>
+            <!--/ User Profile image with name -->
+        </header>
+        <div class=\"user-profile-sidebar-area\">
+            <!-- About User -->
+            <h6 class=\"section-label mb-1\">About</h6>
+            <p>Toffee caramels jelly-o tart gummi bears cake I love ice cream lollipop.</p>
+            <!-- About User -->
+            <!-- User's personal information -->
+            <div class=\"personal-info\">
+                <h6 class=\"section-label mb-1 mt-3\">Personal Information</h6>
+                <ul class=\"list-unstyled\">
+                    <li class=\"mb-1\">
+                        <i data-feather=\"mail\" class=\"font-medium-2 me-50\"></i>
+                        <span class=\"align-middle\">kristycandy@email.com</span>
+                    </li>
+                    <li class=\"mb-1\">
+                        <i data-feather=\"phone-call\" class=\"font-medium-2 me-50\"></i>
+                        <span class=\"align-middle\">+1(123) 456 - 7890</span>
+                    </li>
+                    <li>
+                        <i data-feather=\"clock\" class=\"font-medium-2 me-50\"></i>
+                        <span class=\"align-middle\">Mon - Fri 10AM - 8PM</span>
+                    </li>
+                </ul>
+            </div>
+            <!--/ User's personal information -->
 
-    <!-- User's Links -->
-    <div class=\"more-options\">
-      <h6 class=\"section-label mb-1 mt-3\">Options</h6>
-      <ul class=\"list-unstyled\">
-        <li class=\"cursor-pointer mb-1\">
-          <i data-feather=\"tag\" class=\"font-medium-2 me-50\"></i>
-          <span class=\"align-middle\">Add Tag</span>
-        </li>
-        <li class=\"cursor-pointer mb-1\">
-          <i data-feather=\"star\" class=\"font-medium-2 me-50\"></i>
-          <span class=\"align-middle\">Important Contact</span>
-        </li>
-        <li class=\"cursor-pointer mb-1\">
-          <i data-feather=\"image\" class=\"font-medium-2 me-50\"></i>
-          <span class=\"align-middle\">Shared Media</span>
-        </li>
-        <li class=\"cursor-pointer mb-1\">
-          <i data-feather=\"trash\" class=\"font-medium-2 me-50\"></i>
-          <span class=\"align-middle\">Delete Contact</span>
-        </li>
-        <li class=\"cursor-pointer\">
-          <i data-feather=\"slash\" class=\"font-medium-2 me-50\"></i>
-          <span class=\"align-middle\">Block Contact</span>
-        </li>
-      </ul>
+            <!-- User's Links -->
+            <div class=\"more-options\">
+                <h6 class=\"section-label mb-1 mt-3\">Options</h6>
+                <ul class=\"list-unstyled\">
+                    <li class=\"cursor-pointer mb-1\">
+                        <i data-feather=\"tag\" class=\"font-medium-2 me-50\"></i>
+                        <span class=\"align-middle\">Add Tag</span>
+                    </li>
+                    <li class=\"cursor-pointer mb-1\">
+                        <i data-feather=\"star\" class=\"font-medium-2 me-50\"></i>
+                        <span class=\"align-middle\">Important Contact</span>
+                    </li>
+                    <li class=\"cursor-pointer mb-1\">
+                        <i data-feather=\"image\" class=\"font-medium-2 me-50\"></i>
+                        <span class=\"align-middle\">Shared Media</span>
+                    </li>
+                    <li class=\"cursor-pointer mb-1\">
+                        <i data-feather=\"trash\" class=\"font-medium-2 me-50\"></i>
+                        <span class=\"align-middle\">Delete Contact</span>
+                    </li>
+                    <li class=\"cursor-pointer\">
+                        <i data-feather=\"slash\" class=\"font-medium-2 me-50\"></i>
+                        <span class=\"align-middle\">Block Contact</span>
+                    </li>
+                </ul>
+            </div>
+            <!--/ User's Links -->
+        </div>
     </div>
-    <!--/ User's Links -->
-  </div>
-</div>
-<!--/ User Chat profile right area -->
+    <!--/ User Chat profile right area -->
 {% endblock %}
 
 
 {% block page_script %}
-<!-- Page js files -->
-<script src=\"{{ asset('js/scripts/pages/app-chat.js') }}\"></script>
+    <!-- Page js files -->
+    <script src=\"{{ asset('js/scripts/pages/app-chat.js') }}\"></script>
 {% endblock %}
 
 ", "views/content/apps/chat/app-chat.html.twig", "C:\\Users\\mouna\\OneDrive\\Bureau\\test\\espritx\\templates\\views\\content\\apps\\chat\\app-chat.html.twig");

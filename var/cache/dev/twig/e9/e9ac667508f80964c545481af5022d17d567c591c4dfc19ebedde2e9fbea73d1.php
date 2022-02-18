@@ -996,7 +996,7 @@ array_key_exists("type", $context)) ? (_twig_default_filter((isset($context["typ
             $context["widget_attr"] = ["attr" => ["aria-describedby" => ((isset($context["id"]) || array_key_exists("id", $context) ? $context["id"] : (function () { throw new RuntimeError('Variable "id" does not exist.', 319, $this->source); })()) . "_help")]];
         }
         // line 321
-        $context["row_class"] = ((array_key_exists("row_class", $context)) ? (_twig_default_filter((isset($context["row_class"]) || array_key_exists("row_class", $context) ? $context["row_class"] : (function () { throw new RuntimeError('Variable "row_class" does not exist.', 321, $this->source); })()), twig_trim_filter(((twig_get_attribute($this->env, $this->source, ($context["row_attr"] ?? null), "class", [], "any", true, true, false, 321)) ? (_twig_default_filter(twig_get_attribute($this->env, $this->source, ($context["row_attr"] ?? null), "class", [], "any", false, false, false, 321), "mb-3")) : ("mb-3"))))) : (twig_trim_filter(((twig_get_attribute($this->env, $this->source, ($context["row_attr"] ?? null), "class", [], "any", true, true, false, 321)) ? (_twig_default_filter(twig_get_attribute($this->env, $this->source, ($context["row_attr"] ?? null), "class", [], "any", false, false, false, 321), "mb-3")) : ("mb-3")))));
+        $context["row_class"] = ((array_key_exists("row_class", $context)) ? (_twig_default_filter((isset($context["row_class"]) || array_key_exists("row_class", $context) ? $context["row_class"] : (function () { throw new RuntimeError('Variable "row_class" does not exist.', 321, $this->source); })()), twig_trim_filter(((twig_get_attribute($this->env, $this->source, ($context["row_attr"] ?? null), "class", [], "any", true, true, false, 321)) ? (_twig_default_filter(twig_get_attribute($this->env, $this->source, ($context["row_attr"] ?? null), "class", [], "any", false, false, false, 321), "mb-2")) : ("mb-2"))))) : (twig_trim_filter(((twig_get_attribute($this->env, $this->source, ($context["row_attr"] ?? null), "class", [], "any", true, true, false, 321)) ? (_twig_default_filter(twig_get_attribute($this->env, $this->source, ($context["row_attr"] ?? null), "class", [], "any", false, false, false, 321), "mb-2")) : ("mb-2")))));
         // line 322
         echo "<";
         echo twig_escape_filter($this->env, ((array_key_exists("element", $context)) ? (_twig_default_filter((isset($context["element"]) || array_key_exists("element", $context) ? $context["element"] : (function () { throw new RuntimeError('Variable "element" does not exist.', 322, $this->source); })()), "div")) : ("div")), "html", null, true);
@@ -1051,7 +1051,7 @@ array_key_exists("type", $context)) ? (_twig_default_filter((isset($context["typ
         // line 336
         echo "<div";
         $__internal_compile_8 = $context;
-        $__internal_compile_9 = ["attr" => twig_array_merge((isset($context["row_attr"]) || array_key_exists("row_attr", $context) ? $context["row_attr"] : (function () { throw new RuntimeError('Variable "row_attr" does not exist.', 336, $this->source); })()), ["class" => twig_trim_filter(((twig_get_attribute($this->env, $this->source, ($context["row_attr"] ?? null), "class", [], "any", true, true, false, 336)) ? (_twig_default_filter(twig_get_attribute($this->env, $this->source, ($context["row_attr"] ?? null), "class", [], "any", false, false, false, 336), "mb-3")) : ("mb-3")))])];
+        $__internal_compile_9 = ["attr" => twig_array_merge((isset($context["row_attr"]) || array_key_exists("row_attr", $context) ? $context["row_attr"] : (function () { throw new RuntimeError('Variable "row_attr" does not exist.', 336, $this->source); })()), ["class" => twig_trim_filter(((twig_get_attribute($this->env, $this->source, ($context["row_attr"] ?? null), "class", [], "any", true, true, false, 336)) ? (_twig_default_filter(twig_get_attribute($this->env, $this->source, ($context["row_attr"] ?? null), "class", [], "any", false, false, false, 336), "mb-2")) : ("mb-2")))])];
         if (!twig_test_iterable($__internal_compile_9)) {
             throw new RuntimeError('Variables passed to the "with" tag must be a hash.', 336, $this->getSourceContext());
         }
@@ -1475,7 +1475,7 @@ array_key_exists("type", $context)) ? (_twig_default_filter((isset($context["typ
     {%- if help is not empty -%}
         {%- set widget_attr = {attr: {'aria-describedby': id ~\"_help\"}} -%}
     {%- endif -%}
-    {%- set row_class = row_class|default(row_attr.class|default('mb-3')|trim) -%}
+    {%- set row_class = row_class|default(row_attr.class|default('mb-2')|trim) -%}
     <{{ element|default('div') }}{% with {attr: row_attr|merge({class: row_class})} %}{{ block('attributes') }}{% endwith %}>
         {%- if 'form-floating' in row_class -%}
             {{- form_widget(form, widget_attr) -}}
@@ -1490,7 +1490,7 @@ array_key_exists("type", $context)) ? (_twig_default_filter((isset($context["typ
 {%- endblock form_row %}
 
 {%- block button_row -%}
-    <div{% with {attr: row_attr|merge({class: row_attr.class|default('mb-3')|trim})} %}{{ block('attributes') }}{% endwith %}>
+    <div{% with {attr: row_attr|merge({class: row_attr.class|default('mb-2')|trim})} %}{{ block('attributes') }}{% endwith %}>
         {{- form_widget(form) -}}
     </div>
 {%- endblock button_row %}

@@ -230,32 +230,29 @@ class __TwigTemplate_848dfe8905f63d15aaf4a232e34ab77013a83d64b5459a129d8b4b53b7f
             $this->loadTemplate("views/content/pages/customizer.html.twig", "views/layouts/verticalLayoutMaster.html.twig", 88)->display($context);
             // line 89
             echo "    <!-- End: Customizer-->
-    <!-- Buynow Button-->
-    ";
-            // line 91
-            $this->loadTemplate("views/content/pages/buy-now.html.twig", "views/layouts/verticalLayoutMaster.html.twig", 91)->display($context);
+";
         }
-        // line 93
+        // line 91
         echo "
 <div class=\"sidenav-overlay\"></div>
 <div class=\"drag-target\"></div>
 
 ";
-        // line 98
-        $this->loadTemplate("views/panels/footer.html.twig", "views/layouts/verticalLayoutMaster.html.twig", 98)->display($context);
+        // line 96
+        $this->loadTemplate("views/panels/footer.html.twig", "views/layouts/verticalLayoutMaster.html.twig", 96)->display($context);
+        // line 97
+        echo "
+";
         // line 99
+        $this->loadTemplate("views/panels/scripts.html.twig", "views/layouts/verticalLayoutMaster.html.twig", 99)->display($context);
+        // line 100
         echo "
 ";
         // line 101
-        $this->loadTemplate("views/panels/scripts.html.twig", "views/layouts/verticalLayoutMaster.html.twig", 101)->display($context);
-        // line 102
-        echo "
-";
-        // line 103
         $this->displayBlock('vendor_script', $context, $blocks);
-        // line 104
+        // line 102
         $this->displayBlock('page_script', $context, $blocks);
-        // line 105
+        // line 103
         echo "
 <script type=\"text/javascript\">
     \$(window).on('load', function () {
@@ -367,7 +364,7 @@ class __TwigTemplate_848dfe8905f63d15aaf4a232e34ab77013a83d64b5459a129d8b4b53b7f
 
     }
 
-    // line 103
+    // line 101
     public function block_vendor_script($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -385,7 +382,7 @@ class __TwigTemplate_848dfe8905f63d15aaf4a232e34ab77013a83d64b5459a129d8b4b53b7f
 
     }
 
-    // line 104
+    // line 102
     public function block_page_script($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -415,7 +412,7 @@ class __TwigTemplate_848dfe8905f63d15aaf4a232e34ab77013a83d64b5459a129d8b4b53b7f
 
     public function getDebugInfo()
     {
-        return array (  389 => 104,  371 => 103,  353 => 71,  335 => 60,  317 => 27,  299 => 26,  281 => 20,  259 => 105,  257 => 104,  255 => 103,  252 => 102,  250 => 101,  247 => 99,  245 => 98,  239 => 93,  236 => 91,  232 => 89,  230 => 88,  227 => 87,  225 => 86,  219 => 82,  214 => 79,  207 => 74,  205 => 73,  202 => 72,  200 => 71,  197 => 70,  194 => 69,  191 => 68,  188 => 67,  185 => 66,  179 => 63,  175 => 61,  172 => 60,  167 => 57,  162 => 56,  160 => 55,  152 => 50,  147 => 47,  143 => 45,  141 => 44,  136 => 41,  134 => 40,  129 => 38,  124 => 36,  108 => 33,  103 => 30,  100 => 29,  98 => 28,  95 => 27,  93 => 26,  86 => 22,  82 => 21,  78 => 20,  71 => 15,  60 => 5,  57 => 4,  53 => 2,  50 => 1,);
+        return array (  386 => 102,  368 => 101,  350 => 71,  332 => 60,  314 => 27,  296 => 26,  278 => 20,  256 => 103,  254 => 102,  252 => 101,  249 => 100,  247 => 99,  244 => 97,  242 => 96,  236 => 91,  232 => 89,  230 => 88,  227 => 87,  225 => 86,  219 => 82,  214 => 79,  207 => 74,  205 => 73,  202 => 72,  200 => 71,  197 => 70,  194 => 69,  191 => 68,  188 => 67,  185 => 66,  179 => 63,  175 => 61,  172 => 60,  167 => 57,  162 => 56,  160 => 55,  152 => 50,  147 => 47,  143 => 45,  141 => 44,  136 => 41,  134 => 40,  129 => 38,  124 => 36,  108 => 33,  103 => 30,  100 => 29,  98 => 28,  95 => 27,  93 => 26,  86 => 22,  82 => 21,  78 => 20,  71 => 15,  60 => 5,  57 => 4,  53 => 2,  50 => 1,);
     }
 
     public function getSourceContext()
@@ -509,8 +506,6 @@ class __TwigTemplate_848dfe8905f63d15aaf4a232e34ab77013a83d64b5459a129d8b4b53b7f
     <!-- BEGIN: Customizer-->
     {% include 'views/content/pages/customizer.html.twig' %}
     <!-- End: Customizer-->
-    <!-- Buynow Button-->
-    {% include 'views/content/pages/buy-now.html.twig' %}
 {% endif %}
 
 <div class=\"sidenav-overlay\"></div>

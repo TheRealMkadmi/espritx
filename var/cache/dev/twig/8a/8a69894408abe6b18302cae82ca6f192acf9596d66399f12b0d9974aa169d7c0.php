@@ -533,7 +533,7 @@ class __TwigTemplate_932a501d8a96a1f95145ae1bad97b092d7df5341b3b840cd3472373d951
                     echo " selected=\"selected\"";
                 }
                 echo ">";
-                echo twig_escape_filter($this->env, ((((isset($context["choice_translation_domain"]) || array_key_exists("choice_translation_domain", $context) ? $context["choice_translation_domain"] : (function () { throw new RuntimeError('Variable "choice_translation_domain" does not exist.', 88, $this->source); })()) === false)) ? (twig_get_attribute($this->env, $this->source, $context["choice"], "label", [], "any", false, false, false, 88)) : ($this->extensions['Symfony\Bridge\Twig\Extension\TranslationExtension']->trans(twig_get_attribute($this->env, $this->source, $context["choice"], "label", [], "any", false, false, false, 88), twig_get_attribute($this->env, $this->source, $context["choice"], "labelTranslationParameters", [], "any", false, false, false, 88), (isset($context["choice_translation_domain"]) || array_key_exists("choice_translation_domain", $context) ? $context["choice_translation_domain"] : (function () { throw new RuntimeError('Variable "choice_translation_domain" does not exist.', 88, $this->source); })())))), "html", null, true);
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["choice"], "label", [], "any", false, false, false, 88), "html", null, true);
                 echo "</option>";
             }
             ++$context['loop']['index0'];
@@ -1993,7 +1993,7 @@ $context["attrvalue"] === false)) {
                 {{- block('choice_widget_options') -}}
             </optgroup>
         {%- else -%}
-            <option value=\"{{ choice.value }}\"{% if choice.attr %}{% with { attr: choice.attr } %}{{ block('attributes') }}{% endwith %}{% endif %}{% if not render_preferred_choices|default(false) and choice is selectedchoice(value) %} selected=\"selected\"{% endif %}>{{ choice_translation_domain is same as(false) ? choice.label : choice.label|trans(choice.labelTranslationParameters, choice_translation_domain) }}</option>
+            <option value=\"{{ choice.value }}\"{% if choice.attr %}{% with { attr: choice.attr } %}{{ block('attributes') }}{% endwith %}{% endif %}{% if not render_preferred_choices|default(false) and choice is selectedchoice(value) %} selected=\"selected\"{% endif %}>{{ choice.label }}</option>
         {%- endif -%}
     {% endfor %}
 {%- endblock choice_widget_options -%}

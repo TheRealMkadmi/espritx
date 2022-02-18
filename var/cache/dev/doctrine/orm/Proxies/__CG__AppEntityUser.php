@@ -67,10 +67,10 @@ class User extends \App\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'App\\Entity\\User' . "\0" . 'id', '' . "\0" . 'App\\Entity\\User' . "\0" . 'first_name', '' . "\0" . 'App\\Entity\\User' . "\0" . 'last_name', 'email', 'plainTextPassword', '' . "\0" . 'App\\Entity\\User' . "\0" . 'password', 'last_login', 'lastActivityAt', 'confirmationToken', 'passwordRequestedAt', 'userStatus', '' . "\0" . 'App\\Entity\\User' . "\0" . 'groups', '' . "\0" . 'App\\Entity\\User' . "\0" . 'individualPermissions', '' . "\0" . 'App\\Entity\\User' . "\0" . 'posts', '' . "\0" . 'App\\Entity\\User' . "\0" . 'commentaires', 'createdAt', 'updatedAt'];
+            return ['__isInitialized__', '' . "\0" . 'App\\Entity\\User' . "\0" . 'id', '' . "\0" . 'App\\Entity\\User' . "\0" . 'first_name', '' . "\0" . 'App\\Entity\\User' . "\0" . 'last_name', 'email', '' . "\0" . 'App\\Entity\\User' . "\0" . 'phonenumber', '' . "\0" . 'App\\Entity\\User' . "\0" . 'class', 'plainTextPassword', '' . "\0" . 'App\\Entity\\User' . "\0" . 'password', 'last_login', 'lastActivityAt', 'confirmationToken', 'passwordRequestedAt', 'userStatus', '' . "\0" . 'App\\Entity\\User' . "\0" . 'groups', '' . "\0" . 'App\\Entity\\User' . "\0" . 'individualPermissions', '' . "\0" . 'App\\Entity\\User' . "\0" . 'posts', '' . "\0" . 'App\\Entity\\User' . "\0" . 'commentaires', 'identityType', '' . "\0" . 'App\\Entity\\User' . "\0" . 'identityDocumentNumber', '' . "\0" . 'App\\Entity\\User' . "\0" . 'likes', 'createdAt', 'updatedAt'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'App\\Entity\\User' . "\0" . 'id', '' . "\0" . 'App\\Entity\\User' . "\0" . 'first_name', '' . "\0" . 'App\\Entity\\User' . "\0" . 'last_name', 'email', 'plainTextPassword', '' . "\0" . 'App\\Entity\\User' . "\0" . 'password', 'last_login', 'lastActivityAt', 'confirmationToken', 'passwordRequestedAt', 'userStatus', '' . "\0" . 'App\\Entity\\User' . "\0" . 'groups', '' . "\0" . 'App\\Entity\\User' . "\0" . 'individualPermissions', '' . "\0" . 'App\\Entity\\User' . "\0" . 'posts', '' . "\0" . 'App\\Entity\\User' . "\0" . 'commentaires', 'createdAt', 'updatedAt'];
+        return ['__isInitialized__', '' . "\0" . 'App\\Entity\\User' . "\0" . 'id', '' . "\0" . 'App\\Entity\\User' . "\0" . 'first_name', '' . "\0" . 'App\\Entity\\User' . "\0" . 'last_name', 'email', '' . "\0" . 'App\\Entity\\User' . "\0" . 'phonenumber', '' . "\0" . 'App\\Entity\\User' . "\0" . 'class', 'plainTextPassword', '' . "\0" . 'App\\Entity\\User' . "\0" . 'password', 'last_login', 'lastActivityAt', 'confirmationToken', 'passwordRequestedAt', 'userStatus', '' . "\0" . 'App\\Entity\\User' . "\0" . 'groups', '' . "\0" . 'App\\Entity\\User' . "\0" . 'individualPermissions', '' . "\0" . 'App\\Entity\\User' . "\0" . 'posts', '' . "\0" . 'App\\Entity\\User' . "\0" . 'commentaires', 'identityType', '' . "\0" . 'App\\Entity\\User' . "\0" . 'identityDocumentNumber', '' . "\0" . 'App\\Entity\\User' . "\0" . 'likes', 'createdAt', 'updatedAt'];
     }
 
     /**
@@ -256,6 +256,50 @@ class User extends \App\Entity\User implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setEmail', [$email]);
 
         return parent::setEmail($email);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getPhonenumber(): ?string
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPhonenumber', []);
+
+        return parent::getPhonenumber();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setPhonenumber(?string $phonenumber): \App\Entity\User
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPhonenumber', [$phonenumber]);
+
+        return parent::setPhonenumber($phonenumber);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getClass(): ?string
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getClass', []);
+
+        return parent::getClass();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setClass(?string $class): \App\Entity\User
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setClass', [$class]);
+
+        return parent::setClass($class);
     }
 
     /**
@@ -547,6 +591,50 @@ class User extends \App\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
+    public function getIdentityType(): \App\Enum\DocumentIdentityTypeEnum
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIdentityType', []);
+
+        return parent::getIdentityType();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setIdentityType(\App\Enum\DocumentIdentityTypeEnum $identityType): \App\Entity\User
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIdentityType', [$identityType]);
+
+        return parent::setIdentityType($identityType);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getIdentityDocumentNumber(): ?string
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIdentityDocumentNumber', []);
+
+        return parent::getIdentityDocumentNumber();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setIdentityDocumentNumber(?string $identityDocumentNumber): \App\Entity\User
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIdentityDocumentNumber', [$identityDocumentNumber]);
+
+        return parent::setIdentityDocumentNumber($identityDocumentNumber);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function eraseCredentials()
     {
 
@@ -630,6 +718,39 @@ class User extends \App\Entity\User implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeCommentaire', [$commentaire]);
 
         return parent::removeCommentaire($commentaire);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getLikes(): \Doctrine\Common\Collections\Collection
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getLikes', []);
+
+        return parent::getLikes();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addLike(\App\Entity\PostLike $like): \App\Entity\User
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addLike', [$like]);
+
+        return parent::addLike($like);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removeLike(\App\Entity\PostLike $like): \App\Entity\User
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeLike', [$like]);
+
+        return parent::removeLike($like);
     }
 
     /**

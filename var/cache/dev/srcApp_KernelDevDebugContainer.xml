@@ -194,7 +194,22 @@
     <parameter key="web_profiler.debug_toolbar.mode">2</parameter>
     <parameter key="monolog.use_microseconds">true</parameter>
     <parameter key="monolog.swift_mailer.handlers" type="collection"/>
-    <parameter key="monolog.handlers_to_channels" type="collection"/>
+    <parameter key="monolog.handlers_to_channels" type="collection">
+      <parameter key="monolog.handler.console" type="collection">
+        <parameter key="type">exclusive</parameter>
+        <parameter key="elements" type="collection">
+          <parameter>event</parameter>
+          <parameter>doctrine</parameter>
+          <parameter>console</parameter>
+        </parameter>
+      </parameter>
+      <parameter key="monolog.handler.main" type="collection">
+        <parameter key="type">exclusive</parameter>
+        <parameter key="elements" type="collection">
+          <parameter>event</parameter>
+        </parameter>
+      </parameter>
+    </parameter>
     <parameter key="env(VAR_DUMPER_SERVER)">127.0.0.1:9912</parameter>
     <parameter key="doctrine.dbal.logger.chain.class">Doctrine\DBAL\Logging\LoggerChain</parameter>
     <parameter key="doctrine.dbal.logger.profiling.class">Doctrine\DBAL\Logging\DebugStack</parameter>
@@ -213,6 +228,12 @@
     <parameter key="doctrine.dbal.connection_factory.types" type="collection">
       <parameter key="userstatus" type="collection">
         <parameter key="class">ELAO_ENUM_DT_DBAL\App\Enum\UserStatusType</parameter>
+      </parameter>
+      <parameter key="grouptype" type="collection">
+        <parameter key="class">ELAO_ENUM_DT_DBAL\App\Enum\GroupTypeType</parameter>
+      </parameter>
+      <parameter key="identitydoctype" type="collection">
+        <parameter key="class">ELAO_ENUM_DT_DBAL\App\Enum\DocumentIdentityTypeEnumType</parameter>
       </parameter>
     </parameter>
     <parameter key="doctrine.connections" type="collection">
@@ -297,6 +318,18 @@
         <parameter>App\Enum\UserStatus</parameter>
         <parameter>string</parameter>
         <parameter>userstatus</parameter>
+        <parameter>null</parameter>
+      </parameter>
+      <parameter type="collection">
+        <parameter>App\Enum\GroupType</parameter>
+        <parameter>string</parameter>
+        <parameter>grouptype</parameter>
+        <parameter>null</parameter>
+      </parameter>
+      <parameter type="collection">
+        <parameter>App\Enum\DocumentIdentityTypeEnum</parameter>
+        <parameter>string</parameter>
+        <parameter>identitydoctype</parameter>
         <parameter>null</parameter>
       </parameter>
     </parameter>
@@ -429,6 +462,13 @@
         <argument type="service" id=".service_locator.vdmMuyE.App\Controller\HomeController"/>
       </call>
     </service>
+    <service id="App\Controller\MessagesController" class="App\Controller\MessagesController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.vdmMuyE.App\Controller\MessagesController"/>
+      </call>
+    </service>
     <service id="App\Controller\PermissionController" class="App\Controller\PermissionController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
@@ -491,9 +531,6 @@
     <service id="App\DataFixtures\PermissionFixtures" class="App\DataFixtures\PermissionFixtures" autowire="true" autoconfigure="true">
       <tag name="doctrine.fixture.orm"/>
     </service>
-    <service id="App\DataFixtures\ServiceFixtures" class="App\DataFixtures\ServiceFixtures" autowire="true" autoconfigure="true">
-      <tag name="doctrine.fixture.orm"/>
-    </service>
     <service id="App\DataFixtures\UserFixtures" class="App\DataFixtures\UserFixtures" autowire="true" autoconfigure="true">
       <tag name="doctrine.fixture.orm"/>
       <argument type="service" id="security.user_password_encoder.generic"/>
@@ -509,6 +546,9 @@
       <tag name="form.type"/>
     </service>
     <service id="App\Form\GroupType" class="App\Form\GroupType" autowire="true" autoconfigure="true">
+      <tag name="form.type"/>
+    </service>
+    <service id="App\Form\MessagesType" class="App\Form\MessagesType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>
     <service id="App\Form\PermissionType" class="App\Form\PermissionType" autowire="true" autoconfigure="true">
@@ -530,6 +570,10 @@
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
+    <service id="App\Repository\ConversationThreadRepository" class="App\Repository\ConversationThreadRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
     <service id="App\Repository\FormFieldsRepository" class="App\Repository\FormFieldsRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
@@ -538,7 +582,15 @@
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
+    <service id="App\Repository\MessagesRepository" class="App\Repository\MessagesRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
     <service id="App\Repository\PermissionRepository" class="App\Repository\PermissionRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="App\Repository\PostLikeRepository" class="App\Repository\PostLikeRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
@@ -702,6 +754,8 @@
         <argument key="debug.validator" type="service" id="debug.validator" on-invalid="ignore_uninitialized"/>
         <argument key="debug.stopwatch" type="service" id="debug.stopwatch" on-invalid="ignore_uninitialized"/>
         <argument key="debug.event_dispatcher" type="service" id="debug.event_dispatcher" on-invalid="ignore_uninitialized"/>
+        <argument key="monolog.handler.main" type="service" id="monolog.handler.main" on-invalid="ignore_uninitialized"/>
+        <argument key="monolog.handler.console" type="service" id="monolog.handler.console" on-invalid="ignore_uninitialized"/>
         <argument key="doctrine" type="service" id="doctrine" on-invalid="ignore_uninitialized"/>
         <argument key="form.type.entity" type="service" id="form.type.entity" on-invalid="ignore_uninitialized"/>
         <argument key="security.token_storage" type="service" id="security.token_storage" on-invalid="ignore_uninitialized"/>
@@ -743,6 +797,12 @@
           <argument>reset</argument>
         </argument>
         <argument key="debug.event_dispatcher" type="collection">
+          <argument>reset</argument>
+        </argument>
+        <argument key="monolog.handler.main" type="collection">
+          <argument>reset</argument>
+        </argument>
+        <argument key="monolog.handler.console" type="collection">
           <argument>reset</argument>
         </argument>
         <argument key="doctrine" type="collection">
@@ -1006,6 +1066,7 @@
         <argument>App\Form\ChangePasswordFormType</argument>
         <argument>App\Form\CommentaireType</argument>
         <argument>App\Form\GroupType</argument>
+        <argument>App\Form\MessagesType</argument>
         <argument>App\Form\PermissionType</argument>
         <argument>App\Form\PostType</argument>
         <argument>App\Form\ResetPasswordRequestFormType</argument>
@@ -1345,7 +1406,7 @@
       <argument type="service" id="form.registry"/>
     </service>
     <service id="form.extension" class="Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension" public="false">
-      <argument type="service" id=".service_locator.r7wsHw2"/>
+      <argument type="service" id=".service_locator.8mdW30h"/>
       <argument type="collection">
         <argument key="Symfony\Component\Form\Extension\Core\Type\FormType" type="iterator">
           <argument type="service" id="form.type_extension.form.transformation_failure_handling"/>
@@ -2861,6 +2922,22 @@
       <call method="addListener">
         <argument>console.command</argument>
         <argument type="collection">
+          <argument type="service_closure" id="monolog.handler.console"/>
+          <argument>onCommand</argument>
+        </argument>
+        <argument>255</argument>
+      </call>
+      <call method="addListener">
+        <argument>console.terminate</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="monolog.handler.console"/>
+          <argument>onTerminate</argument>
+        </argument>
+        <argument>-255</argument>
+      </call>
+      <call method="addListener">
+        <argument>console.command</argument>
+        <argument type="collection">
           <argument type="service_closure" id="debug.dump_listener"/>
           <argument>configure</argument>
         </argument>
@@ -3844,7 +3921,10 @@
         <argument>true</argument>
       </call>
       <call method="pushHandler">
-        <argument type="service" id="monolog.handler.null_internal"/>
+        <argument type="service" id="monolog.handler.console"/>
+      </call>
+      <call method="pushHandler">
+        <argument type="service" id="monolog.handler.main"/>
       </call>
       <configurator class="Symfony\Bundle\FrameworkBundle\DependencyInjection\Compiler\AddDebugLogProcessorPass" method="configureLogger"/>
     </service>
@@ -3871,6 +3951,26 @@
     </service>
     <service id="monolog.http_client" class="Symfony\Contracts\HttpClient\HttpClientInterface" public="false">
       <factory class="Symfony\Component\HttpClient\HttpClient" method="create"/>
+    </service>
+    <service id="monolog.processor.psr_log_message" class="Monolog\Processor\PsrLogMessageProcessor" public="false"/>
+    <service id="monolog.handler.main" class="Monolog\Handler\StreamHandler">
+      <tag name="kernel.reset" method="reset"/>
+      <argument>C:\Users\mouna\OneDrive\Bureau\test\espritx\var\log/dev.log</argument>
+      <argument>100</argument>
+      <argument>true</argument>
+      <argument>null</argument>
+      <argument>false</argument>
+      <call method="pushProcessor">
+        <argument type="service" id="monolog.processor.psr_log_message"/>
+      </call>
+    </service>
+    <service id="monolog.handler.console" class="Symfony\Bridge\Monolog\Handler\ConsoleHandler">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="kernel.reset" method="reset"/>
+      <argument>null</argument>
+      <argument>true</argument>
+      <argument type="collection"/>
+      <argument type="collection"/>
     </service>
     <service id=".6_HtmlDescriptor~0jfkLP4" class="Symfony\Component\VarDumper\Command\Descriptor\HtmlDescriptor" public="false">
       <argument type="service" id="var_dumper.html_dumper"/>
@@ -4032,6 +4132,9 @@
     <service id="maker.renderer.form_type_renderer" class="Symfony\Bundle\MakerBundle\Renderer\FormTypeRenderer" public="false">
       <argument type="service" id="maker.generator"/>
     </service>
+    <service id="maker.security_controller_builder" class="Symfony\Bundle\MakerBundle\Security\SecurityControllerBuilder" public="false">
+      <argument type="service" id="maker.php_compat_util"/>
+    </service>
     <service id="maker.php_compat_util" class="Symfony\Bundle\MakerBundle\Util\PhpCompatUtil" public="false">
       <argument type="service" id="maker.file_manager"/>
     </service>
@@ -4044,6 +4147,7 @@
       <argument type="service" id="maker.security_config_updater"/>
       <argument type="service" id="maker.generator"/>
       <argument type="service" id="maker.doctrine_helper"/>
+      <argument type="service" id="maker.security_controller_builder"/>
     </service>
     <service id="maker.maker.make_command" class="Symfony\Bundle\MakerBundle\Maker\MakeCommand" public="false">
       <tag name="maker.command"/>
@@ -4291,7 +4395,7 @@
       <factory class="Doctrine\ORM\EntityManager" method="create"/>
     </service>
     <service id="doctrine.orm.container_repository_factory" class="Doctrine\Bundle\DoctrineBundle\Repository\ContainerRepositoryFactory" public="false">
-      <argument type="service" id=".service_locator.K.mMeON"/>
+      <argument type="service" id=".service_locator.Jt5uAsB"/>
     </service>
     <service id="doctrine.orm.manager_configurator.abstract" class="Doctrine\Bundle\DoctrineBundle\ManagerConfigurator" abstract="true">
       <argument type="collection"/>
@@ -5383,10 +5487,6 @@
             <argument key="groups" type="collection"/>
           </argument>
           <argument type="collection">
-            <argument key="fixture" type="service" id="App\DataFixtures\ServiceFixtures"/>
-            <argument key="groups" type="collection"/>
-          </argument>
-          <argument type="collection">
             <argument key="fixture" type="service" id="App\DataFixtures\UserFixtures"/>
             <argument key="groups" type="collection"/>
           </argument>
@@ -5481,21 +5581,24 @@
         <argument key="App\DataFixtures\AppFixtures" type="service_closure" id="App\DataFixtures\AppFixtures" on-invalid="ignore_uninitialized"/>
         <argument key="App\DataFixtures\GroupFixtures" type="service_closure" id="App\DataFixtures\GroupFixtures" on-invalid="ignore_uninitialized"/>
         <argument key="App\DataFixtures\PermissionFixtures" type="service_closure" id="App\DataFixtures\PermissionFixtures" on-invalid="ignore_uninitialized"/>
-        <argument key="App\DataFixtures\ServiceFixtures" type="service_closure" id="App\DataFixtures\ServiceFixtures" on-invalid="ignore_uninitialized"/>
         <argument key="App\DataFixtures\UserFixtures" type="service_closure" id="App\DataFixtures\UserFixtures" on-invalid="ignore_uninitialized"/>
         <argument key="App\EventListener\LoginListener" type="service_closure" id="App\EventListener\LoginListener" on-invalid="ignore_uninitialized"/>
         <argument key="App\Form\ChangePasswordFormType" type="service_closure" id="App\Form\ChangePasswordFormType" on-invalid="ignore_uninitialized"/>
         <argument key="App\Form\CommentaireType" type="service_closure" id="App\Form\CommentaireType" on-invalid="ignore_uninitialized"/>
         <argument key="App\Form\GroupType" type="service_closure" id="App\Form\GroupType" on-invalid="ignore_uninitialized"/>
+        <argument key="App\Form\MessagesType" type="service_closure" id="App\Form\MessagesType" on-invalid="ignore_uninitialized"/>
         <argument key="App\Form\PermissionType" type="service_closure" id="App\Form\PermissionType" on-invalid="ignore_uninitialized"/>
         <argument key="App\Form\PostType" type="service_closure" id="App\Form\PostType" on-invalid="ignore_uninitialized"/>
         <argument key="App\Form\ResetPasswordRequestFormType" type="service_closure" id="App\Form\ResetPasswordRequestFormType" on-invalid="ignore_uninitialized"/>
         <argument key="App\Form\ServiceType" type="service_closure" id="App\Form\ServiceType" on-invalid="ignore_uninitialized"/>
         <argument key="App\Form\UserType" type="service_closure" id="App\Form\UserType" on-invalid="ignore_uninitialized"/>
         <argument key="App\Repository\CommentaireRepository" type="service_closure" id="App\Repository\CommentaireRepository" on-invalid="ignore_uninitialized"/>
+        <argument key="App\Repository\ConversationThreadRepository" type="service_closure" id="App\Repository\ConversationThreadRepository" on-invalid="ignore_uninitialized"/>
         <argument key="App\Repository\FormFieldsRepository" type="service_closure" id="App\Repository\FormFieldsRepository" on-invalid="ignore_uninitialized"/>
         <argument key="App\Repository\GroupRepository" type="service_closure" id="App\Repository\GroupRepository" on-invalid="ignore_uninitialized"/>
+        <argument key="App\Repository\MessagesRepository" type="service_closure" id="App\Repository\MessagesRepository" on-invalid="ignore_uninitialized"/>
         <argument key="App\Repository\PermissionRepository" type="service_closure" id="App\Repository\PermissionRepository" on-invalid="ignore_uninitialized"/>
+        <argument key="App\Repository\PostLikeRepository" type="service_closure" id="App\Repository\PostLikeRepository" on-invalid="ignore_uninitialized"/>
         <argument key="App\Repository\PostRepository" type="service_closure" id="App\Repository\PostRepository" on-invalid="ignore_uninitialized"/>
         <argument key="App\Repository\ResetPasswordRequestRepository" type="service_closure" id="App\Repository\ResetPasswordRequestRepository" on-invalid="ignore_uninitialized"/>
         <argument key="App\Repository\ServiceRepository" type="service_closure" id="App\Repository\ServiceRepository" on-invalid="ignore_uninitialized"/>
@@ -5629,7 +5732,7 @@
         <argument key="app.login_listener" type="service_closure" id="app.login_listener" on-invalid="ignore_uninitialized"/>
         <argument key="argument_metadata_factory" type="service_closure" id="argument_metadata_factory" on-invalid="ignore_uninitialized"/>
         <argument key="argument_resolver" type="service_closure" id="debug.argument_resolver" on-invalid="ignore_uninitialized"/>
-        <argument key="argument_resolver.controller_locator" type="service_closure" id=".service_locator.E0BWPM8" on-invalid="ignore_uninitialized"/>
+        <argument key="argument_resolver.controller_locator" type="service_closure" id=".service_locator..PNJ35L" on-invalid="ignore_uninitialized"/>
         <argument key="argument_resolver.default" type="service_closure" id="debug.argument_resolver.default" on-invalid="ignore_uninitialized"/>
         <argument key="argument_resolver.not_tagged_controller" type="service_closure" id="debug.argument_resolver.not_tagged_controller" on-invalid="ignore_uninitialized"/>
         <argument key="argument_resolver.request" type="service_closure" id="debug.argument_resolver.request" on-invalid="ignore_uninitialized"/>
@@ -5958,6 +6061,7 @@
         <argument key="maker.php_compat_util" type="service_closure" id="maker.php_compat_util" on-invalid="ignore_uninitialized"/>
         <argument key="maker.renderer.form_type_renderer" type="service_closure" id="maker.renderer.form_type_renderer" on-invalid="ignore_uninitialized"/>
         <argument key="maker.security_config_updater" type="service_closure" id="maker.security_config_updater" on-invalid="ignore_uninitialized"/>
+        <argument key="maker.security_controller_builder" type="service_closure" id="maker.security_controller_builder" on-invalid="ignore_uninitialized"/>
         <argument key="maker.template_component_generator" type="service_closure" id="maker.template_component_generator" on-invalid="ignore_uninitialized"/>
         <argument key="maker.user_class_builder" type="service_closure" id="maker.user_class_builder" on-invalid="ignore_uninitialized"/>
         <argument key="mime_types" type="service_closure" id="mime_types" on-invalid="ignore_uninitialized"/>
@@ -5972,6 +6076,8 @@
         <argument key="monolog.formatter.normalizer" type="service_closure" id="monolog.formatter.normalizer" on-invalid="ignore_uninitialized"/>
         <argument key="monolog.formatter.scalar" type="service_closure" id="monolog.formatter.scalar" on-invalid="ignore_uninitialized"/>
         <argument key="monolog.formatter.wildfire" type="service_closure" id="monolog.formatter.wildfire" on-invalid="ignore_uninitialized"/>
+        <argument key="monolog.handler.console" type="service_closure" id="monolog.handler.console" on-invalid="ignore_uninitialized"/>
+        <argument key="monolog.handler.main" type="service_closure" id="monolog.handler.main" on-invalid="ignore_uninitialized"/>
         <argument key="monolog.handler.null_internal" type="service_closure" id="monolog.handler.null_internal" on-invalid="ignore_uninitialized"/>
         <argument key="monolog.http_client" type="service_closure" id="monolog.http_client" on-invalid="ignore_uninitialized"/>
         <argument key="monolog.logger" type="service_closure" id="monolog.logger" on-invalid="ignore_uninitialized"/>
@@ -5987,6 +6093,7 @@
         <argument key="monolog.logger.router" type="service_closure" id="monolog.logger.router" on-invalid="ignore_uninitialized"/>
         <argument key="monolog.logger.security" type="service_closure" id="monolog.logger.security" on-invalid="ignore_uninitialized"/>
         <argument key="monolog.logger.translation" type="service_closure" id="monolog.logger.translation" on-invalid="ignore_uninitialized"/>
+        <argument key="monolog.processor.psr_log_message" type="service_closure" id="monolog.processor.psr_log_message" on-invalid="ignore_uninitialized"/>
         <argument key="parameter_bag" type="service_closure" id="parameter_bag" on-invalid="ignore_uninitialized"/>
         <argument key="profiler.storage" type="service_closure" id="profiler.storage" on-invalid="ignore_uninitialized"/>
         <argument key="profiler_listener" type="service_closure" id="profiler_listener" on-invalid="ignore_uninitialized"/>
@@ -6333,6 +6440,9 @@
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\HomeController" class="App\Controller\HomeController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\HomeController" class="App\Controller\HomeController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\HomeController" class="App\Controller\HomeController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\MessagesController" class="App\Controller\MessagesController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\MessagesController" class="App\Controller\MessagesController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\MessagesController" class="App\Controller\MessagesController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\PermissionController" class="App\Controller\PermissionController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\PermissionController" class="App\Controller\PermissionController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\PermissionController" class="App\Controller\PermissionController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -6360,8 +6470,6 @@
     <service id=".abstract.instanceof.App\DataFixtures\GroupFixtures" class="App\DataFixtures\GroupFixtures" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\FixturesBundle\ORMFixtureInterface.0.App\DataFixtures\PermissionFixtures" class="App\DataFixtures\PermissionFixtures" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\DataFixtures\PermissionFixtures" class="App\DataFixtures\PermissionFixtures" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Doctrine\Bundle\FixturesBundle\ORMFixtureInterface.0.App\DataFixtures\ServiceFixtures" class="App\DataFixtures\ServiceFixtures" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\DataFixtures\ServiceFixtures" class="App\DataFixtures\ServiceFixtures" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\FixturesBundle\ORMFixtureInterface.0.App\DataFixtures\UserFixtures" class="App\DataFixtures\UserFixtures" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\DataFixtures\UserFixtures" class="App\DataFixtures\UserFixtures" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\ChangePasswordFormType" class="App\Form\ChangePasswordFormType" autowire="true" abstract="true"/>
@@ -6370,6 +6478,8 @@
     <service id=".abstract.instanceof.App\Form\CommentaireType" class="App\Form\CommentaireType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\GroupType" class="App\Form\GroupType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\GroupType" class="App\Form\GroupType" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\MessagesType" class="App\Form\MessagesType" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Form\MessagesType" class="App\Form\MessagesType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\PermissionType" class="App\Form\PermissionType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\PermissionType" class="App\Form\PermissionType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\PostType" class="App\Form\PostType" autowire="true" abstract="true"/>
@@ -6382,12 +6492,18 @@
     <service id=".abstract.instanceof.App\Form\UserType" class="App\Form\UserType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\CommentaireRepository" class="App\Repository\CommentaireRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\CommentaireRepository" class="App\Repository\CommentaireRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\ConversationThreadRepository" class="App\Repository\ConversationThreadRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\ConversationThreadRepository" class="App\Repository\ConversationThreadRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\FormFieldsRepository" class="App\Repository\FormFieldsRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\FormFieldsRepository" class="App\Repository\FormFieldsRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\GroupRepository" class="App\Repository\GroupRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\GroupRepository" class="App\Repository\GroupRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\MessagesRepository" class="App\Repository\MessagesRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\MessagesRepository" class="App\Repository\MessagesRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\PermissionRepository" class="App\Repository\PermissionRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\PermissionRepository" class="App\Repository\PermissionRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\PostLikeRepository" class="App\Repository\PostLikeRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\PostLikeRepository" class="App\Repository\PostLikeRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\PostRepository" class="App\Repository\PostRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\PostRepository" class="App\Repository\PostRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\ResetPasswordRequestRepository" class="App\Repository\ResetPasswordRequestRepository" autowire="true" abstract="true"/>
@@ -6703,17 +6819,18 @@
         <argument key="groupRepository" type="service_closure" id="App\Repository\GroupRepository"/>
       </argument>
     </service>
-    <service id=".service_locator.9QE18h9" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="group" type="service_closure" id=".errored..service_locator.9QE18h9.App\Entity\Group"/>
-      </argument>
-    </service>
     <service id=".service_locator.2YjlTdc" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="entityManager" type="service_closure" id="doctrine.orm.default_entity_manager"/>
         <argument key="group" type="service_closure" id=".errored..service_locator.2YjlTdc.App\Entity\Group"/>
+      </argument>
+    </service>
+    <service id=".service_locator.MdJVq9u" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="entityManager" type="service_closure" id="doctrine.orm.default_entity_manager"/>
+        <argument key="messages" type="service_closure" id=".errored..service_locator.MdJVq9u.App\Entity\Messages"/>
       </argument>
     </service>
     <service id=".service_locator.aAog8bY" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
@@ -6783,6 +6900,13 @@
         <argument key="repository" type="service_closure" id="App\Repository\UserRepository"/>
       </argument>
     </service>
+    <service id=".service_locator.ojbwG54" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="likeRepository" type="service_closure" id="App\Repository\PostLikeRepository"/>
+        <argument key="post" type="service_closure" id=".errored..service_locator.ojbwG54.App\Entity\Post"/>
+      </argument>
+    </service>
     <service id=".service_locator.iP8eVIx" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -6801,10 +6925,23 @@
         <argument key="authenticationUtils" type="service_closure" id="security.authentication_utils"/>
       </argument>
     </service>
-    <service id=".service_locator.1UuH9tO" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.U7FSXvv" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
-        <argument key="userRepository" type="service_closure" id="App\Repository\UserRepository"/>
+        <argument key="Repo" type="service_closure" id="App\Repository\ServiceRepository"/>
+      </argument>
+    </service>
+    <service id=".service_locator.ipjTSUc" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="em" type="service_closure" id="doctrine.orm.default_entity_manager"/>
+      </argument>
+    </service>
+    <service id=".service_locator.uDmBrIO" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="em" type="service_closure" id="doctrine.orm.default_entity_manager"/>
+        <argument key="ser" type="service_closure" id=".errored..service_locator.uDmBrIO.App\Entity\Service"/>
       </argument>
     </service>
     <service id=".service_locator.tIQ5Q0N" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
@@ -6820,15 +6957,20 @@
         <argument key="user" type="service_closure" id=".errored..service_locator.0iUl0Wo.App\Entity\User"/>
       </argument>
     </service>
-    <service id=".service_locator.E0BWPM8" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator..PNJ35L" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
+        <argument key="App\Controller\GroupController::ajax_autocomplete_groups_user_form" type="service_closure" id=".service_locator.UCzeqIJ"/>
         <argument key="App\Controller\GroupController::autocompleteAction" type="service_closure" id=".service_locator.UCzeqIJ"/>
+        <argument key="App\Controller\GroupController::create" type="service_closure" id=".service_locator.x8FmIZ0"/>
         <argument key="App\Controller\GroupController::delete" type="service_closure" id=".service_locator.2YjlTdc"/>
         <argument key="App\Controller\GroupController::edit" type="service_closure" id=".service_locator.2YjlTdc"/>
         <argument key="App\Controller\GroupController::index" type="service_closure" id=".service_locator._xpqOR5"/>
-        <argument key="App\Controller\GroupController::new" type="service_closure" id=".service_locator.x8FmIZ0"/>
-        <argument key="App\Controller\GroupController::show" type="service_closure" id=".service_locator.9QE18h9"/>
+        <argument key="App\Controller\MessagesController::delete" type="service_closure" id=".service_locator.MdJVq9u"/>
+        <argument key="App\Controller\MessagesController::edit" type="service_closure" id=".service_locator.MdJVq9u"/>
+        <argument key="App\Controller\MessagesController::new" type="service_closure" id=".service_locator.x8FmIZ0"/>
+        <argument key="App\Controller\PermissionController::ajax_autocomplete_permissions_user_form" type="service_closure" id=".service_locator.UCzeqIJ"/>
+        <argument key="App\Controller\PermissionController::autocompleteAction" type="service_closure" id=".service_locator.UCzeqIJ"/>
         <argument key="App\Controller\PermissionController::create" type="service_closure" id=".service_locator.x8FmIZ0"/>
         <argument key="App\Controller\PermissionController::delete" type="service_closure" id=".service_locator.OdUWLsw"/>
         <argument key="App\Controller\PermissionController::edit" type="service_closure" id=".service_locator.OdUWLsw"/>
@@ -6842,22 +6984,33 @@
         <argument key="App\Controller\PostController::approuverPost" type="service_closure" id=".service_locator.6EuxJXx"/>
         <argument key="App\Controller\PostController::editcommentaire" type="service_closure" id=".service_locator.RH1NS0S"/>
         <argument key="App\Controller\PostController::editpublication" type="service_closure" id=".service_locator.ZOKRmS4"/>
+        <argument key="App\Controller\PostController::like" type="service_closure" id=".service_locator.ojbwG54"/>
         <argument key="App\Controller\PostController::supprimer_Post_user" type="service_closure" id=".service_locator.6EuxJXx"/>
         <argument key="App\Controller\ResetPasswordController::request" type="service_closure" id=".service_locator.iP8eVIx"/>
         <argument key="App\Controller\ResetPasswordController::reset" type="service_closure" id=".service_locator.qZ_VNPK"/>
         <argument key="App\Controller\SecurityController::login" type="service_closure" id=".service_locator.g.xob4v"/>
-        <argument key="App\Controller\UserController::autocompleteAction" type="service_closure" id=".service_locator.UCzeqIJ"/>
+        <argument key="App\Controller\ServiceController::ModifServices" type="service_closure" id=".service_locator.uDmBrIO"/>
+        <argument key="App\Controller\ServiceController::Services" type="service_closure" id=".service_locator.U7FSXvv"/>
+        <argument key="App\Controller\ServiceController::SuppServices" type="service_closure" id=".service_locator.uDmBrIO"/>
+        <argument key="App\Controller\ServiceController::addService" type="service_closure" id=".service_locator.ipjTSUc"/>
+        <argument key="App\Controller\UserController::ajax_autocomplete_users_group_form" type="service_closure" id=".service_locator.UCzeqIJ"/>
+        <argument key="App\Controller\UserController::ajax_autocomplete_users_permission_form" type="service_closure" id=".service_locator.UCzeqIJ"/>
+        <argument key="App\Controller\UserController::create" type="service_closure" id=".service_locator.x8FmIZ0"/>
         <argument key="App\Controller\UserController::delete" type="service_closure" id=".service_locator.0iUl0Wo"/>
         <argument key="App\Controller\UserController::edit" type="service_closure" id=".service_locator.0iUl0Wo"/>
-        <argument key="App\Controller\UserController::index" type="service_closure" id=".service_locator.1UuH9tO"/>
-        <argument key="App\Controller\UserController::new" type="service_closure" id=".service_locator.x8FmIZ0"/>
+        <argument key="App\Controller\UserController::index" type="service_closure" id=".service_locator.aAog8bY"/>
         <argument key="App\Controller\UserController::show" type="service_closure" id=".service_locator.tIQ5Q0N"/>
+        <argument key="App\Controller\GroupController:ajax_autocomplete_groups_user_form" type="service_closure" id=".service_locator.UCzeqIJ"/>
         <argument key="App\Controller\GroupController:autocompleteAction" type="service_closure" id=".service_locator.UCzeqIJ"/>
+        <argument key="App\Controller\GroupController:create" type="service_closure" id=".service_locator.x8FmIZ0"/>
         <argument key="App\Controller\GroupController:delete" type="service_closure" id=".service_locator.2YjlTdc"/>
         <argument key="App\Controller\GroupController:edit" type="service_closure" id=".service_locator.2YjlTdc"/>
         <argument key="App\Controller\GroupController:index" type="service_closure" id=".service_locator._xpqOR5"/>
-        <argument key="App\Controller\GroupController:new" type="service_closure" id=".service_locator.x8FmIZ0"/>
-        <argument key="App\Controller\GroupController:show" type="service_closure" id=".service_locator.9QE18h9"/>
+        <argument key="App\Controller\MessagesController:delete" type="service_closure" id=".service_locator.MdJVq9u"/>
+        <argument key="App\Controller\MessagesController:edit" type="service_closure" id=".service_locator.MdJVq9u"/>
+        <argument key="App\Controller\MessagesController:new" type="service_closure" id=".service_locator.x8FmIZ0"/>
+        <argument key="App\Controller\PermissionController:ajax_autocomplete_permissions_user_form" type="service_closure" id=".service_locator.UCzeqIJ"/>
+        <argument key="App\Controller\PermissionController:autocompleteAction" type="service_closure" id=".service_locator.UCzeqIJ"/>
         <argument key="App\Controller\PermissionController:create" type="service_closure" id=".service_locator.x8FmIZ0"/>
         <argument key="App\Controller\PermissionController:delete" type="service_closure" id=".service_locator.OdUWLsw"/>
         <argument key="App\Controller\PermissionController:edit" type="service_closure" id=".service_locator.OdUWLsw"/>
@@ -6871,15 +7024,21 @@
         <argument key="App\Controller\PostController:approuverPost" type="service_closure" id=".service_locator.6EuxJXx"/>
         <argument key="App\Controller\PostController:editcommentaire" type="service_closure" id=".service_locator.RH1NS0S"/>
         <argument key="App\Controller\PostController:editpublication" type="service_closure" id=".service_locator.ZOKRmS4"/>
+        <argument key="App\Controller\PostController:like" type="service_closure" id=".service_locator.ojbwG54"/>
         <argument key="App\Controller\PostController:supprimer_Post_user" type="service_closure" id=".service_locator.6EuxJXx"/>
         <argument key="App\Controller\ResetPasswordController:request" type="service_closure" id=".service_locator.iP8eVIx"/>
         <argument key="App\Controller\ResetPasswordController:reset" type="service_closure" id=".service_locator.qZ_VNPK"/>
         <argument key="App\Controller\SecurityController:login" type="service_closure" id=".service_locator.g.xob4v"/>
-        <argument key="App\Controller\UserController:autocompleteAction" type="service_closure" id=".service_locator.UCzeqIJ"/>
+        <argument key="App\Controller\ServiceController:ModifServices" type="service_closure" id=".service_locator.uDmBrIO"/>
+        <argument key="App\Controller\ServiceController:Services" type="service_closure" id=".service_locator.U7FSXvv"/>
+        <argument key="App\Controller\ServiceController:SuppServices" type="service_closure" id=".service_locator.uDmBrIO"/>
+        <argument key="App\Controller\ServiceController:addService" type="service_closure" id=".service_locator.ipjTSUc"/>
+        <argument key="App\Controller\UserController:ajax_autocomplete_users_group_form" type="service_closure" id=".service_locator.UCzeqIJ"/>
+        <argument key="App\Controller\UserController:ajax_autocomplete_users_permission_form" type="service_closure" id=".service_locator.UCzeqIJ"/>
+        <argument key="App\Controller\UserController:create" type="service_closure" id=".service_locator.x8FmIZ0"/>
         <argument key="App\Controller\UserController:delete" type="service_closure" id=".service_locator.0iUl0Wo"/>
         <argument key="App\Controller\UserController:edit" type="service_closure" id=".service_locator.0iUl0Wo"/>
-        <argument key="App\Controller\UserController:index" type="service_closure" id=".service_locator.1UuH9tO"/>
-        <argument key="App\Controller\UserController:new" type="service_closure" id=".service_locator.x8FmIZ0"/>
+        <argument key="App\Controller\UserController:index" type="service_closure" id=".service_locator.aAog8bY"/>
         <argument key="App\Controller\UserController:show" type="service_closure" id=".service_locator.tIQ5Q0N"/>
       </argument>
     </service>
@@ -6947,12 +7106,13 @@
       <argument type="service" id="debug.argument_resolver.not_tagged_controller.inner"/>
       <argument type="service" id="debug.stopwatch"/>
     </service>
-    <service id=".service_locator.r7wsHw2" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.8mdW30h" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Form\ChangePasswordFormType" type="service_closure" id="App\Form\ChangePasswordFormType"/>
         <argument key="App\Form\CommentaireType" type="service_closure" id="App\Form\CommentaireType"/>
         <argument key="App\Form\GroupType" type="service_closure" id="App\Form\GroupType"/>
+        <argument key="App\Form\MessagesType" type="service_closure" id="App\Form\MessagesType"/>
         <argument key="App\Form\PermissionType" type="service_closure" id="App\Form\PermissionType"/>
         <argument key="App\Form\PostType" type="service_closure" id="App\Form\PostType"/>
         <argument key="App\Form\ResetPasswordRequestFormType" type="service_closure" id="App\Form\ResetPasswordRequestFormType"/>
@@ -6977,7 +7137,10 @@
         <argument type="service" id="debug.log_processor"/>
       </call>
       <call method="pushHandler">
-        <argument type="service" id="monolog.handler.null_internal"/>
+        <argument type="service" id="monolog.handler.console"/>
+      </call>
+      <call method="pushHandler">
+        <argument type="service" id="monolog.handler.main"/>
       </call>
       <configurator class="Symfony\Bundle\FrameworkBundle\DependencyInjection\Compiler\AddDebugLogProcessorPass" method="configureLogger"/>
     </service>
@@ -6987,7 +7150,7 @@
         <argument type="service" id="debug.log_processor"/>
       </call>
       <call method="pushHandler">
-        <argument type="service" id="monolog.handler.null_internal"/>
+        <argument type="service" id="monolog.handler.main"/>
       </call>
       <configurator class="Symfony\Bundle\FrameworkBundle\DependencyInjection\Compiler\AddDebugLogProcessorPass" method="configureLogger"/>
     </service>
@@ -6997,7 +7160,10 @@
         <argument type="service" id="debug.log_processor"/>
       </call>
       <call method="pushHandler">
-        <argument type="service" id="monolog.handler.null_internal"/>
+        <argument type="service" id="monolog.handler.console"/>
+      </call>
+      <call method="pushHandler">
+        <argument type="service" id="monolog.handler.main"/>
       </call>
       <configurator class="Symfony\Bundle\FrameworkBundle\DependencyInjection\Compiler\AddDebugLogProcessorPass" method="configureLogger"/>
     </service>
@@ -7007,7 +7173,10 @@
         <argument type="service" id="debug.log_processor"/>
       </call>
       <call method="pushHandler">
-        <argument type="service" id="monolog.handler.null_internal"/>
+        <argument type="service" id="monolog.handler.console"/>
+      </call>
+      <call method="pushHandler">
+        <argument type="service" id="monolog.handler.main"/>
       </call>
       <configurator class="Symfony\Bundle\FrameworkBundle\DependencyInjection\Compiler\AddDebugLogProcessorPass" method="configureLogger"/>
     </service>
@@ -7017,7 +7186,10 @@
         <argument type="service" id="debug.log_processor"/>
       </call>
       <call method="pushHandler">
-        <argument type="service" id="monolog.handler.null_internal"/>
+        <argument type="service" id="monolog.handler.console"/>
+      </call>
+      <call method="pushHandler">
+        <argument type="service" id="monolog.handler.main"/>
       </call>
       <configurator class="Symfony\Bundle\FrameworkBundle\DependencyInjection\Compiler\AddDebugLogProcessorPass" method="configureLogger"/>
     </service>
@@ -7027,7 +7199,10 @@
         <argument type="service" id="debug.log_processor"/>
       </call>
       <call method="pushHandler">
-        <argument type="service" id="monolog.handler.null_internal"/>
+        <argument type="service" id="monolog.handler.console"/>
+      </call>
+      <call method="pushHandler">
+        <argument type="service" id="monolog.handler.main"/>
       </call>
       <configurator class="Symfony\Bundle\FrameworkBundle\DependencyInjection\Compiler\AddDebugLogProcessorPass" method="configureLogger"/>
     </service>
@@ -7037,7 +7212,10 @@
         <argument type="service" id="debug.log_processor"/>
       </call>
       <call method="pushHandler">
-        <argument type="service" id="monolog.handler.null_internal"/>
+        <argument type="service" id="monolog.handler.console"/>
+      </call>
+      <call method="pushHandler">
+        <argument type="service" id="monolog.handler.main"/>
       </call>
       <configurator class="Symfony\Bundle\FrameworkBundle\DependencyInjection\Compiler\AddDebugLogProcessorPass" method="configureLogger"/>
     </service>
@@ -7057,7 +7235,10 @@
         <argument type="service" id="debug.log_processor"/>
       </call>
       <call method="pushHandler">
-        <argument type="service" id="monolog.handler.null_internal"/>
+        <argument type="service" id="monolog.handler.console"/>
+      </call>
+      <call method="pushHandler">
+        <argument type="service" id="monolog.handler.main"/>
       </call>
       <configurator class="Symfony\Bundle\FrameworkBundle\DependencyInjection\Compiler\AddDebugLogProcessorPass" method="configureLogger"/>
     </service>
@@ -7067,7 +7248,10 @@
         <argument type="service" id="debug.log_processor"/>
       </call>
       <call method="pushHandler">
-        <argument type="service" id="monolog.handler.null_internal"/>
+        <argument type="service" id="monolog.handler.console"/>
+      </call>
+      <call method="pushHandler">
+        <argument type="service" id="monolog.handler.main"/>
       </call>
       <configurator class="Symfony\Bundle\FrameworkBundle\DependencyInjection\Compiler\AddDebugLogProcessorPass" method="configureLogger"/>
     </service>
@@ -7077,7 +7261,7 @@
         <argument type="service" id="debug.log_processor"/>
       </call>
       <call method="pushHandler">
-        <argument type="service" id="monolog.handler.null_internal"/>
+        <argument type="service" id="monolog.handler.main"/>
       </call>
       <configurator class="Symfony\Bundle\FrameworkBundle\DependencyInjection\Compiler\AddDebugLogProcessorPass" method="configureLogger"/>
     </service>
@@ -7087,7 +7271,10 @@
         <argument type="service" id="debug.log_processor"/>
       </call>
       <call method="pushHandler">
-        <argument type="service" id="monolog.handler.null_internal"/>
+        <argument type="service" id="monolog.handler.console"/>
+      </call>
+      <call method="pushHandler">
+        <argument type="service" id="monolog.handler.main"/>
       </call>
       <configurator class="Symfony\Bundle\FrameworkBundle\DependencyInjection\Compiler\AddDebugLogProcessorPass" method="configureLogger"/>
     </service>
@@ -7108,13 +7295,16 @@
       <argument type="service" id="cache.doctrine.orm.default.result"/>
       <factory class="Doctrine\Common\Cache\Psr6\DoctrineProvider" method="wrap"/>
     </service>
-    <service id=".service_locator.K.mMeON" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.Jt5uAsB" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Repository\CommentaireRepository" type="service_closure" id="App\Repository\CommentaireRepository"/>
+        <argument key="App\Repository\ConversationThreadRepository" type="service_closure" id="App\Repository\ConversationThreadRepository"/>
         <argument key="App\Repository\FormFieldsRepository" type="service_closure" id="App\Repository\FormFieldsRepository"/>
         <argument key="App\Repository\GroupRepository" type="service_closure" id="App\Repository\GroupRepository"/>
+        <argument key="App\Repository\MessagesRepository" type="service_closure" id="App\Repository\MessagesRepository"/>
         <argument key="App\Repository\PermissionRepository" type="service_closure" id="App\Repository\PermissionRepository"/>
+        <argument key="App\Repository\PostLikeRepository" type="service_closure" id="App\Repository\PostLikeRepository"/>
         <argument key="App\Repository\PostRepository" type="service_closure" id="App\Repository\PostRepository"/>
         <argument key="App\Repository\ResetPasswordRequestRepository" type="service_closure" id="App\Repository\ResetPasswordRequestRepository"/>
         <argument key="App\Repository\ServiceRepository" type="service_closure" id="App\Repository\ServiceRepository"/>
@@ -7183,6 +7373,12 @@
     <service id=".service_locator.vdmMuyE.App\Controller\HomeController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator_context" id="App\Controller\HomeController"/>
       <argument>App\Controller\HomeController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.vdmMuyE" method="withContext"/>
+    </service>
+    <service id=".service_locator.vdmMuyE.App\Controller\MessagesController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator_context" id="App\Controller\MessagesController"/>
+      <argument>App\Controller\MessagesController</argument>
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.vdmMuyE" method="withContext"/>
     </service>
@@ -7377,12 +7573,12 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" public="false">
-      <argument type="service" id=".service_locator.E0BWPM8"/>
+      <argument type="service" id=".service_locator..PNJ35L"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" public="false"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" public="false"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver" public="false">
-      <argument type="service" id=".service_locator.E0BWPM8"/>
+      <argument type="service" id=".service_locator..PNJ35L"/>
     </service>
     <service id=".debug.http_client.inner" class="Symfony\Contracts\HttpClient\HttpClientInterface" public="false">
       <argument type="collection"/>
@@ -7392,11 +7588,13 @@
       </call>
       <factory class="Symfony\Component\HttpClient\HttpClient" method="create"/>
     </service>
-    <service id=".errored..service_locator.9QE18h9.App\Entity\Group" class="App\Entity\Group"/>
     <service id=".errored..service_locator.2YjlTdc.App\Entity\Group" class="App\Entity\Group"/>
+    <service id=".errored..service_locator.MdJVq9u.App\Entity\Messages" class="App\Entity\Messages"/>
     <service id=".errored..service_locator.qjP3g4v.App\Entity\Permission" class="App\Entity\Permission"/>
     <service id=".errored..service_locator.OdUWLsw.App\Entity\Permission" class="App\Entity\Permission"/>
     <service id=".errored..service_locator.6EuxJXx.App\Entity\Post" class="App\Entity\Post"/>
+    <service id=".errored..service_locator.ojbwG54.App\Entity\Post" class="App\Entity\Post"/>
+    <service id=".errored..service_locator.uDmBrIO.App\Entity\Service" class="App\Entity\Service"/>
     <service id=".errored..service_locator.tIQ5Q0N.App\Entity\User" class="App\Entity\User"/>
     <service id=".errored..service_locator.0iUl0Wo.App\Entity\User" class="App\Entity\User"/>
     <service id="console.command_loader" class="Symfony\Component\Console\CommandLoader\ContainerCommandLoader" public="true">
@@ -7800,7 +7998,7 @@
     <service id="Knp\Component\Pager\PaginatorInterface" alias="knp_paginator"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.CmORmuK" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem" public="false"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.E0BWPM8"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator..PNJ35L"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="Psr\Log\LoggerInterface $requestLogger" alias="monolog.logger.request"/>
     <service id="Psr\Log\LoggerInterface $consoleLogger" alias="monolog.logger.console"/>

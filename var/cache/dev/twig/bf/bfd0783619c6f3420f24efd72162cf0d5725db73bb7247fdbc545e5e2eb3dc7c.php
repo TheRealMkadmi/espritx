@@ -92,22 +92,6 @@ class __TwigTemplate_d4a64466ad16cdc8462adead013a8053338118ac305c98486e6f769f095
         echo "  <link rel=\"stylesheet\" href=\"";
         echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/css/forms/select/select2.min.css"), "html", null, true);
         echo "\">
-  <link rel=\"stylesheet\" href=\"";
-        // line 7
-        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/css/tables/datatable/dataTables.bootstrap5.min.css"), "html", null, true);
-        echo "\">
-  <link rel=\"stylesheet\" href=\"";
-        // line 8
-        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/css/tables/datatable/responsive.bootstrap5.min.css"), "html", null, true);
-        echo "\">
-  <link rel=\"stylesheet\" href=\"";
-        // line 9
-        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/css/tables/datatable/buttons.bootstrap5.min.css"), "html", null, true);
-        echo "\">
-  <link rel=\"stylesheet\" href=\"";
-        // line 10
-        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/css/tables/datatable/rowGroup.bootstrap5.min.css"), "html", null, true);
-        echo "\">
 ";
         
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
@@ -117,7 +101,7 @@ class __TwigTemplate_d4a64466ad16cdc8462adead013a8053338118ac305c98486e6f769f095
 
     }
 
-    // line 14
+    // line 10
     public function block_page_style($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -127,7 +111,7 @@ class __TwigTemplate_d4a64466ad16cdc8462adead013a8053338118ac305c98486e6f769f095
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "page_style"));
 
-        // line 15
+        // line 11
         echo "  <link rel=\"stylesheet\" href=\"";
         echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("css/base/plugins/forms/form-validation.css"), "html", null, true);
         echo "\">
@@ -140,7 +124,7 @@ class __TwigTemplate_d4a64466ad16cdc8462adead013a8053338118ac305c98486e6f769f095
 
     }
 
-    // line 19
+    // line 15
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -150,214 +134,282 @@ class __TwigTemplate_d4a64466ad16cdc8462adead013a8053338118ac305c98486e6f769f095
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "content"));
 
-        // line 20
-        echo "<!-- users list start -->
-<section class=\"app-user-list\">
-  <div class=\"row\">
-    <div class=\"col-lg-3 col-sm-6\">
-      <div class=\"card\">
-        <div class=\"card-body d-flex align-items-center justify-content-between\">
-          <div>
-            <h3 class=\"fw-bolder mb-75\">21,459</h3>
-            <span>Total Users</span>
-          </div>
-          <div class=\"avatar bg-light-primary p-50\">
+        // line 16
+        echo "  <!-- users list start -->
+  <section class=\"app-user-list\">
+    <div class=\"row\">
+      <div class=\"col-lg-3 col-sm-6\">
+        <div class=\"card\">
+          <div class=\"card-body d-flex align-items-center justify-content-between\">
+            <div>
+              <h3 class=\"fw-bolder mb-75\">21,459</h3>
+              <span>Total Users</span>
+            </div>
+            <div class=\"avatar bg-light-primary p-50\">
             <span class=\"avatar-content\">
               <i data-feather=\"user\" class=\"font-medium-4\"></i>
             </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class=\"col-lg-3 col-sm-6\">
-      <div class=\"card\">
-        <div class=\"card-body d-flex align-items-center justify-content-between\">
-          <div>
-            <h3 class=\"fw-bolder mb-75\">4,567</h3>
-            <span>Paid Users</span>
-          </div>
-          <div class=\"avatar bg-light-danger p-50\">
+      <div class=\"col-lg-3 col-sm-6\">
+        <div class=\"card\">
+          <div class=\"card-body d-flex align-items-center justify-content-between\">
+            <div>
+              <h3 class=\"fw-bolder mb-75\">4,567</h3>
+              <span>Restricted Users</span>
+            </div>
+            <div class=\"avatar bg-light-danger p-50\">
             <span class=\"avatar-content\">
               <i data-feather=\"user-plus\" class=\"font-medium-4\"></i>
             </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class=\"col-lg-3 col-sm-6\">
-      <div class=\"card\">
-        <div class=\"card-body d-flex align-items-center justify-content-between\">
-          <div>
-            <h3 class=\"fw-bolder mb-75\">19,860</h3>
-            <span>Active Users</span>
-          </div>
-          <div class=\"avatar bg-light-success p-50\">
+      <div class=\"col-lg-3 col-sm-6\">
+        <div class=\"card\">
+          <div class=\"card-body d-flex align-items-center justify-content-between\">
+            <div>
+              <h3 class=\"fw-bolder mb-75\">19,860</h3>
+              <span>Active Users</span>
+            </div>
+            <div class=\"avatar bg-light-success p-50\">
             <span class=\"avatar-content\">
               <i data-feather=\"user-check\" class=\"font-medium-4\"></i>
             </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class=\"col-lg-3 col-sm-6\">
-      <div class=\"card\">
-        <div class=\"card-body d-flex align-items-center justify-content-between\">
-          <div>
-            <h3 class=\"fw-bolder mb-75\">237</h3>
-            <span>Pending Users</span>
-          </div>
-          <div class=\"avatar bg-light-warning p-50\">
+      <div class=\"col-lg-3 col-sm-6\">
+        <div class=\"card\">
+          <div class=\"card-body d-flex align-items-center justify-content-between\">
+            <div>
+              <h3 class=\"fw-bolder mb-75\">237</h3>
+              <span>Pending Users</span>
+            </div>
+            <div class=\"avatar bg-light-warning p-50\">
             <span class=\"avatar-content\">
               <i data-feather=\"user-x\" class=\"font-medium-4\"></i>
             </span>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- list and filter start -->
-  <div class=\"card\">
-    <div class=\"card-body border-bottom\">
-      <h4 class=\"card-title\">Search & Filter</h4>
-      <div class=\"row\">
-        <div class=\"col-md-4 user_role\"></div>
-        <div class=\"col-md-4 user_plan\"></div>
-        <div class=\"col-md-4 user_status\"></div>
+
+    <!-- list and filter start -->
+    <div class=\"card\">
+      <div class=\"card-header\">
+        <h4 class=\"card-title\">Manage users</h4>
+      </div>
+      <div class=\"card-body\">
+        <div class=\"d-flex justify-content-between align-items-center mb-1\">
+        <span class=\"card-text\">
+          You can view, create or update users in the table below.
+        </span>
+          <a class=\"btn btn-primary waves-effect waves-float waves-light\" href=\"";
+        // line 91
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("user_create");
+        echo "\">Add</a>
+        </div>
+        <div class=\"table-responsive row\">
+          <table class=\"table table-hover\">
+            <thead>
+            <tr>
+              <th";
+        // line 97
+        if (twig_get_attribute($this->env, $this->source, (isset($context["pagination"]) || array_key_exists("pagination", $context) ? $context["pagination"] : (function () { throw new RuntimeError('Variable "pagination" does not exist.', 97, $this->source); })()), "isSorted", [0 => "u.email"], "method", false, false, false, 97)) {
+            echo " class=\"sorted\"";
+        }
+        echo ">
+                ";
+        // line 98
+        echo $this->extensions['Knp\Bundle\PaginatorBundle\Twig\Extension\PaginationExtension']->sortable($this->env, (isset($context["pagination"]) || array_key_exists("pagination", $context) ? $context["pagination"] : (function () { throw new RuntimeError('Variable "pagination" does not exist.', 98, $this->source); })()), "Name", "u.email");
+        echo "
+              </th>
+
+              <th";
+        // line 101
+        if (twig_get_attribute($this->env, $this->source, (isset($context["pagination"]) || array_key_exists("pagination", $context) ? $context["pagination"] : (function () { throw new RuntimeError('Variable "pagination" does not exist.', 101, $this->source); })()), "isSorted", [0 => "u.userStatus"], "method", false, false, false, 101)) {
+            echo " class=\"sorted\"";
+        }
+        echo ">
+                ";
+        // line 102
+        echo $this->extensions['Knp\Bundle\PaginatorBundle\Twig\Extension\PaginationExtension']->sortable($this->env, (isset($context["pagination"]) || array_key_exists("pagination", $context) ? $context["pagination"] : (function () { throw new RuntimeError('Variable "pagination" does not exist.', 102, $this->source); })()), "User Status", "u.userStatus");
+        echo "
+              </th>
+
+              <th>
+                Groups
+              </th>
+
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            ";
+        // line 113
+        $context['_parent'] = $context;
+        $context['_seq'] = twig_ensure_traversable((isset($context["pagination"]) || array_key_exists("pagination", $context) ? $context["pagination"] : (function () { throw new RuntimeError('Variable "pagination" does not exist.', 113, $this->source); })()));
+        $context['loop'] = [
+          'parent' => $context['_parent'],
+          'index0' => 0,
+          'index'  => 1,
+          'first'  => true,
+        ];
+        if (is_array($context['_seq']) || (is_object($context['_seq']) && $context['_seq'] instanceof \Countable)) {
+            $length = count($context['_seq']);
+            $context['loop']['revindex0'] = $length - 1;
+            $context['loop']['revindex'] = $length;
+            $context['loop']['length'] = $length;
+            $context['loop']['last'] = 1 === $length;
+        }
+        foreach ($context['_seq'] as $context["_key"] => $context["user"]) {
+            // line 114
+            echo "              <tr>
+                <td>
+                  <!-- BEGIN: Avatar, email & name -->
+                  <div class=\"d-flex justify-content-left align-items-center\">
+                    <div class=\"avatar-wrapper\">
+                      <div class=\"avatar me-1\">
+                        <img
+                            src=\"https://pixinvent.com/demo/vuexy-bootstrap-laravel-admin-template/demo-1/images/avatars/2.png\"
+                            alt=\"Avatar\" height=\"32\" width=\"32\">
+                      </div>
+                    </div>
+                    <div class=\"d-flex flex-column\">
+                      <a href=\"https://pixinvent.com/demo/vuexy-bootstrap-laravel-admin-template/demo-1/app/user/view/account\"
+                         class=\"user_name text-truncate text-body\">
+                        <span class=\"fw-bolder fs-6\">";
+            // line 128
+            echo twig_escape_filter($this->env, ((twig_get_attribute($this->env, $this->source, $context["user"], "firstName", [], "any", false, false, false, 128) . " ") . twig_get_attribute($this->env, $this->source, $context["user"], "lastName", [], "any", false, false, false, 128)), "html", null, true);
+            echo "</span>
+                      </a>
+                      <small class=\"emp_post text-muted\">";
+            // line 130
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["user"], "email", [], "any", false, false, false, 130), "html", null, true);
+            echo "</small>
+                    </div>
+                  </div>
+                  <!-- END: Avatar, email & name -->
+                </td>
+                <td>
+                  <!-- BEGIN: UserStatus -->
+                  ";
+            // line 137
+            echo twig_include($this->env, $context, "views/content/_partials/_fragments/user-status-pill.html.twig", ["userstatus" => twig_get_attribute($this->env, $this->source, $context["user"], "userstatus", [], "any", false, false, false, 137)]);
+            echo "
+                  <!-- END: UserStatus -->
+                </td>
+                <td>
+                  <!-- BEGIN: UserGroups -->
+                  <div class=\"d-flex flex-column\">
+                    ";
+            // line 143
+            $context['_parent'] = $context;
+            $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, $context["user"], "groups", [], "any", false, false, false, 143));
+            $context['loop'] = [
+              'parent' => $context['_parent'],
+              'index0' => 0,
+              'index'  => 1,
+              'first'  => true,
+            ];
+            if (is_array($context['_seq']) || (is_object($context['_seq']) && $context['_seq'] instanceof \Countable)) {
+                $length = count($context['_seq']);
+                $context['loop']['revindex0'] = $length - 1;
+                $context['loop']['revindex'] = $length;
+                $context['loop']['length'] = $length;
+                $context['loop']['last'] = 1 === $length;
+            }
+            foreach ($context['_seq'] as $context["_key"] => $context["group"]) {
+                // line 144
+                echo "                      ";
+                echo twig_include($this->env, $context, "views/content/_partials/_fragments/group-type-badge.html.twig", ["grouptype" => twig_get_attribute($this->env, $this->source,                 // line 145
+$context["group"], "groupType", [], "any", false, false, false, 145), "displayname" => twig_get_attribute($this->env, $this->source, $context["group"], "displayName", [], "any", false, false, false, 145)]);
+                echo "
+                    ";
+                ++$context['loop']['index0'];
+                ++$context['loop']['index'];
+                $context['loop']['first'] = false;
+                if (isset($context['loop']['length'])) {
+                    --$context['loop']['revindex0'];
+                    --$context['loop']['revindex'];
+                    $context['loop']['last'] = 0 === $context['loop']['revindex0'];
+                }
+            }
+            $_parent = $context['_parent'];
+            unset($context['_seq'], $context['_iterated'], $context['_key'], $context['group'], $context['_parent'], $context['loop']);
+            $context = array_intersect_key($context, $_parent) + $_parent;
+            // line 147
+            echo "                  </div>
+                  <!-- END: UserGroups -->
+                </td>
+                <td>
+                  <div class=\"d-flex\">
+                    <a href=\"";
+            // line 152
+            echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("user_edit", ["id" => twig_get_attribute($this->env, $this->source, $context["user"], "id", [], "any", false, false, false, 152)]), "html", null, true);
+            echo "\">
+                      <i data-feather=\"edit-2\" class=\"me-50\"></i>
+                    </a>
+                    <a href=\"";
+            // line 155
+            echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("user_delete", ["id" => twig_get_attribute($this->env, $this->source, $context["user"], "id", [], "any", false, false, false, 155)]), "html", null, true);
+            echo "\">
+                      <i data-feather=\"trash\" class=\"me-50\"></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            ";
+            ++$context['loop']['index0'];
+            ++$context['loop']['index'];
+            $context['loop']['first'] = false;
+            if (isset($context['loop']['length'])) {
+                --$context['loop']['revindex0'];
+                --$context['loop']['revindex'];
+                $context['loop']['last'] = 0 === $context['loop']['revindex0'];
+            }
+        }
+        $_parent = $context['_parent'];
+        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['user'], $context['_parent'], $context['loop']);
+        $context = array_intersect_key($context, $_parent) + $_parent;
+        // line 162
+        echo "            </tbody>
+          </table>
+        </div>
+
+        <div class=\"d-flex justify-content-between my-2\">
+          <div class=\"col-sm-12 col-md-6 text-muted\">
+            Showing ";
+        // line 168
+        echo twig_escape_filter($this->env, (((twig_get_attribute($this->env, $this->source, (isset($context["pagination"]) || array_key_exists("pagination", $context) ? $context["pagination"] : (function () { throw new RuntimeError('Variable "pagination" does not exist.', 168, $this->source); })()), "currentPageNumber", [], "any", false, false, false, 168) - 1) * twig_get_attribute($this->env, $this->source, (isset($context["pagination"]) || array_key_exists("pagination", $context) ? $context["pagination"] : (function () { throw new RuntimeError('Variable "pagination" does not exist.', 168, $this->source); })()), "itemNumberPerPage", [], "any", false, false, false, 168)) + 1), "html", null, true);
+        echo "
+            to ";
+        // line 169
+        echo twig_escape_filter($this->env, min((twig_get_attribute($this->env, $this->source, (isset($context["pagination"]) || array_key_exists("pagination", $context) ? $context["pagination"] : (function () { throw new RuntimeError('Variable "pagination" does not exist.', 169, $this->source); })()), "currentPageNumber", [], "any", false, false, false, 169) * twig_get_attribute($this->env, $this->source, (isset($context["pagination"]) || array_key_exists("pagination", $context) ? $context["pagination"] : (function () { throw new RuntimeError('Variable "pagination" does not exist.', 169, $this->source); })()), "itemNumberPerPage", [], "any", false, false, false, 169)), twig_get_attribute($this->env, $this->source, (isset($context["pagination"]) || array_key_exists("pagination", $context) ? $context["pagination"] : (function () { throw new RuntimeError('Variable "pagination" does not exist.', 169, $this->source); })()), "getTotalItemCount", [], "any", false, false, false, 169)), "html", null, true);
+        echo "
+            of ";
+        // line 170
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (isset($context["pagination"]) || array_key_exists("pagination", $context) ? $context["pagination"] : (function () { throw new RuntimeError('Variable "pagination" does not exist.', 170, $this->source); })()), "getTotalItemCount", [], "any", false, false, false, 170), "html", null, true);
+        echo " entries
+          </div>
+          <div class=\"col-sm-12 col-md-6 navigation\">
+            ";
+        // line 173
+        echo $this->extensions['Knp\Bundle\PaginatorBundle\Twig\Extension\PaginationExtension']->render($this->env, (isset($context["pagination"]) || array_key_exists("pagination", $context) ? $context["pagination"] : (function () { throw new RuntimeError('Variable "pagination" does not exist.', 173, $this->source); })()));
+        echo "
+          </div>
+        </div>
       </div>
     </div>
-    <div class=\"card-datatable table-responsive pt-0\">
-      <table class=\"user-list-table table\">
-        <thead class=\"table-light\">
-          <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Role</th>
-            <th>Pl an</th>
-            <th>Billing</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-      </table>
-    </div>
-    <!-- Modal to add new user starts-->
-    <div class=\"modal modal-slide-in new-user-modal fade\" id=\"modals-slide-in\">
-      <div class=\"modal-dialog\">
-        <form class=\"add-new-user modal-content pt-0\">
-          <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\">×</button>
-          <div class=\"modal-header mb-1\">
-            <h5 class=\"modal-title\" id=\"exampleModalLabel\">Add User</h5>
-          </div>
-          <div class=\"modal-body flex-grow-1\">
-            <div class=\"mb-1\">
-              <label class=\"form-label\" for=\"basic-icon-default-fullname\">Full Name</label>
-              <input
-                type=\"text\"
-                class=\"form-control dt-full-name\"
-                id=\"basic-icon-default-fullname\"
-                placeholder=\"John Doe\"
-                name=\"user-fullname\"
-              />
-            </div>
-            <div class=\"mb-1\">
-              <label class=\"form-label\" for=\"basic-icon-default-uname\">Username</label>
-              <input
-                type=\"text\"
-                id=\"basic-icon-default-uname\"
-                class=\"form-control dt-uname\"
-                placeholder=\"Web Developer\"
-                name=\"user-name\"
-              />
-            </div>
-            <div class=\"mb-1\">
-              <label class=\"form-label\" for=\"basic-icon-default-email\">Email</label>
-              <input
-                type=\"text\"
-                id=\"basic-icon-default-email\"
-                class=\"form-control dt-email\"
-                placeholder=\"john.doe@example.com\"
-                name=\"user-email\"
-              />
-            </div>
-            <div class=\"mb-1\">
-              <label class=\"form-label\" for=\"basic-icon-default-contact\">Contact</label>
-              <input
-                type=\"text\"
-                id=\"basic-icon-default-contact\"
-                class=\"form-control dt-contact\"
-                placeholder=\"+1 (609) 933-44-22\"
-                name=\"user-contact\"
-              />
-            </div>
-            <div class=\"mb-1\">
-              <label class=\"form-label\" for=\"basic-icon-default-company\">Company</label>
-              <input
-                type=\"text\"
-                id=\"basic-icon-default-company\"
-                class=\"form-control dt-contact\"
-                placeholder=\"PIXINVENT\"
-                name=\"user-company\"
-              />
-            </div>
-            <div class=\"mb-1\">
-              <label class=\"form-label\" for=\"country\">Country</label>
-              <select id=\"country\" class=\"select2 form-select\">
-                <option value=\"Australia\">USA</option>
-                <option value=\"Bangladesh\">Bangladesh</option>
-                <option value=\"Belarus\">Belarus</option>
-                <option value=\"Brazil\">Brazil</option>
-                <option value=\"Canada\">Canada</option>
-                <option value=\"China\">China</option>
-                <option value=\"France\">France</option>
-                <option value=\"Germany\">Germany</option>
-                <option value=\"India\">India</option>
-                <option value=\"Indonesia\">Indonesia</option>
-                <option value=\"Israel\">Israel</option>
-                <option value=\"Italy\">Italy</option>
-                <option value=\"Japan\">Japan</option>
-                <option value=\"Korea\">Korea, Republic of</option>
-                <option value=\"Mexico\">Mexico</option>
-                <option value=\"Philippines\">Philippines</option>
-                <option value=\"Russia\">Russian Federation</option>
-                <option value=\"South Africa\">South Africa</option>
-                <option value=\"Thailand\">Thailand</option>
-                <option value=\"Turkey\">Turkey</option>
-                <option value=\"Ukraine\">Ukraine</option>
-                <option value=\"United Arab Emirates\">United Arab Emirates</option>
-                <option value=\"United Kingdom\">United Kingdom</option>
-                <option value=\"United States\">United States</option>
-              </select>
-            </div>
-            <div class=\"mb-1\">
-              <label class=\"form-label\" for=\"user-role\">User Role</label>
-              <select id=\"user-role\" class=\"select2 form-select\">
-                <option value=\"subscriber\">Subscriber</option>
-                <option value=\"editor\">Editor</option>
-                <option value=\"maintainer\">Maintainer</option>
-                <option value=\"author\">Author</option>
-                <option value=\"admin\">Admin</option>
-              </select>
-            </div>
-            <div class=\"mb-2\">
-              <label class=\"form-label\" for=\"user-plan\">Select Plan</label>
-              <select id=\"user-plan\" class=\"select2 form-select\">
-                <option value=\"basic\">Basic</option>
-                <option value=\"enterprise\">Enterprise</option>
-                <option value=\"company\">Company</option>
-                <option value=\"team\">Team</option>
-              </select>
-            </div>
-            <button type=\"submit\" class=\"btn btn-primary me-1 data-submit\">Submit</button>
-            <button type=\"reset\" class=\"btn btn-outline-secondary\" data-bs-dismiss=\"modal\">Cancel</button>
-          </div>
-        </form>
-      </div>
-    </div>
-    <!-- Modal to add new user Ends-->
-  </div>
-  <!-- list and filter end -->
-</section>
-<!-- users list ends -->
+    <!-- list and filter end -->
+  </section>
+  <!-- users list ends -->
 ";
         
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
@@ -367,7 +419,7 @@ class __TwigTemplate_d4a64466ad16cdc8462adead013a8053338118ac305c98486e6f769f095
 
     }
 
-    // line 230
+    // line 184
     public function block_vendor_script($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -377,64 +429,36 @@ class __TwigTemplate_d4a64466ad16cdc8462adead013a8053338118ac305c98486e6f769f095
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "vendor_script"));
 
-        // line 231
+        // line 185
         echo "  <script src=\"";
         echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/js/forms/select/select2.full.min.js"), "html", null, true);
         echo "\"></script>
   <script src=\"";
-        // line 232
-        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/js/tables/datatable/jquery.dataTables.min.js"), "html", null, true);
-        echo "\"></script>
-  <script src=\"";
-        // line 233
-        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/js/tables/datatable/dataTables.bootstrap5.min.js"), "html", null, true);
-        echo "\"></script>
-  <script src=\"";
-        // line 234
-        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/js/tables/datatable/dataTables.responsive.min.js"), "html", null, true);
-        echo "\"></script>
-  <script src=\"";
-        // line 235
-        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/js/tables/datatable/responsive.bootstrap5.js"), "html", null, true);
-        echo "\"></script>
-  <script src=\"";
-        // line 236
-        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/js/tables/datatable/datatables.buttons.min.js"), "html", null, true);
-        echo "\"></script>
-  <script src=\"";
-        // line 237
+        // line 186
         echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/js/tables/datatable/jszip.min.js"), "html", null, true);
         echo "\"></script>
   <script src=\"";
-        // line 238
-        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/js/tables/datatable/pdfmake.min.js"), "html", null, true);
-        echo "\"></script>
-  <script src=\"";
-        // line 239
+        // line 187
         echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/js/tables/datatable/vfs_fonts.js"), "html", null, true);
         echo "\"></script>
   <script src=\"";
-        // line 240
+        // line 188
         echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/js/tables/datatable/buttons.html5.min.js"), "html", null, true);
         echo "\"></script>
   <script src=\"";
-        // line 241
+        // line 189
         echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/js/tables/datatable/buttons.print.min.js"), "html", null, true);
         echo "\"></script>
   <script src=\"";
-        // line 242
-        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/js/tables/datatable/dataTables.rowGroup.min.js"), "html", null, true);
-        echo "\"></script>
-  <script src=\"";
-        // line 243
+        // line 190
         echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/js/forms/validation/jquery.validate.min.js"), "html", null, true);
         echo "\"></script>
   <script src=\"";
-        // line 244
+        // line 191
         echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/js/forms/cleave/cleave.min.js"), "html", null, true);
         echo "\"></script>
   <script src=\"";
-        // line 245
+        // line 192
         echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("vendors/js/forms/cleave/addons/cleave-phone.us.js"), "html", null, true);
         echo "\"></script>
 ";
@@ -446,7 +470,7 @@ class __TwigTemplate_d4a64466ad16cdc8462adead013a8053338118ac305c98486e6f769f095
 
     }
 
-    // line 249
+    // line 196
     public function block_page_script($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -456,7 +480,7 @@ class __TwigTemplate_d4a64466ad16cdc8462adead013a8053338118ac305c98486e6f769f095
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "page_script"));
 
-        // line 250
+        // line 197
         echo "  <script src=\"";
         echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("js/scripts/pages/app-user-list.js"), "html", null, true);
         echo "\"></script>
@@ -481,7 +505,7 @@ class __TwigTemplate_d4a64466ad16cdc8462adead013a8053338118ac305c98486e6f769f095
 
     public function getDebugInfo()
     {
-        return array (  460 => 250,  450 => 249,  438 => 245,  434 => 244,  430 => 243,  426 => 242,  422 => 241,  418 => 240,  414 => 239,  410 => 238,  406 => 237,  402 => 236,  398 => 235,  394 => 234,  390 => 233,  386 => 232,  381 => 231,  371 => 230,  154 => 20,  144 => 19,  131 => 15,  121 => 14,  109 => 10,  105 => 9,  101 => 8,  97 => 7,  92 => 6,  82 => 5,  63 => 3,  40 => 1,);
+        return array (  484 => 197,  474 => 196,  462 => 192,  458 => 191,  454 => 190,  450 => 189,  446 => 188,  442 => 187,  438 => 186,  433 => 185,  423 => 184,  404 => 173,  398 => 170,  394 => 169,  390 => 168,  382 => 162,  361 => 155,  355 => 152,  348 => 147,  332 => 145,  330 => 144,  313 => 143,  304 => 137,  294 => 130,  289 => 128,  273 => 114,  256 => 113,  242 => 102,  236 => 101,  230 => 98,  224 => 97,  215 => 91,  138 => 16,  128 => 15,  115 => 11,  105 => 10,  92 => 6,  82 => 5,  63 => 3,  40 => 1,);
     }
 
     public function getSourceContext()
@@ -492,10 +516,6 @@ class __TwigTemplate_d4a64466ad16cdc8462adead013a8053338118ac305c98486e6f769f095
 
 {% block vendor_style %}
   <link rel=\"stylesheet\" href=\"{{ asset('vendors/css/forms/select/select2.min.css') }}\">
-  <link rel=\"stylesheet\" href=\"{{ asset('vendors/css/tables/datatable/dataTables.bootstrap5.min.css') }}\">
-  <link rel=\"stylesheet\" href=\"{{ asset('vendors/css/tables/datatable/responsive.bootstrap5.min.css') }}\">
-  <link rel=\"stylesheet\" href=\"{{ asset('vendors/css/tables/datatable/buttons.bootstrap5.min.css') }}\">
-  <link rel=\"stylesheet\" href=\"{{ asset('vendors/css/tables/datatable/rowGroup.bootstrap5.min.css') }}\">
 {% endblock %}
 
 
@@ -505,229 +525,180 @@ class __TwigTemplate_d4a64466ad16cdc8462adead013a8053338118ac305c98486e6f769f095
 
 
 {% block content %}
-<!-- users list start -->
-<section class=\"app-user-list\">
-  <div class=\"row\">
-    <div class=\"col-lg-3 col-sm-6\">
-      <div class=\"card\">
-        <div class=\"card-body d-flex align-items-center justify-content-between\">
-          <div>
-            <h3 class=\"fw-bolder mb-75\">21,459</h3>
-            <span>Total Users</span>
-          </div>
-          <div class=\"avatar bg-light-primary p-50\">
+  <!-- users list start -->
+  <section class=\"app-user-list\">
+    <div class=\"row\">
+      <div class=\"col-lg-3 col-sm-6\">
+        <div class=\"card\">
+          <div class=\"card-body d-flex align-items-center justify-content-between\">
+            <div>
+              <h3 class=\"fw-bolder mb-75\">21,459</h3>
+              <span>Total Users</span>
+            </div>
+            <div class=\"avatar bg-light-primary p-50\">
             <span class=\"avatar-content\">
               <i data-feather=\"user\" class=\"font-medium-4\"></i>
             </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class=\"col-lg-3 col-sm-6\">
-      <div class=\"card\">
-        <div class=\"card-body d-flex align-items-center justify-content-between\">
-          <div>
-            <h3 class=\"fw-bolder mb-75\">4,567</h3>
-            <span>Paid Users</span>
-          </div>
-          <div class=\"avatar bg-light-danger p-50\">
+      <div class=\"col-lg-3 col-sm-6\">
+        <div class=\"card\">
+          <div class=\"card-body d-flex align-items-center justify-content-between\">
+            <div>
+              <h3 class=\"fw-bolder mb-75\">4,567</h3>
+              <span>Restricted Users</span>
+            </div>
+            <div class=\"avatar bg-light-danger p-50\">
             <span class=\"avatar-content\">
               <i data-feather=\"user-plus\" class=\"font-medium-4\"></i>
             </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class=\"col-lg-3 col-sm-6\">
-      <div class=\"card\">
-        <div class=\"card-body d-flex align-items-center justify-content-between\">
-          <div>
-            <h3 class=\"fw-bolder mb-75\">19,860</h3>
-            <span>Active Users</span>
-          </div>
-          <div class=\"avatar bg-light-success p-50\">
+      <div class=\"col-lg-3 col-sm-6\">
+        <div class=\"card\">
+          <div class=\"card-body d-flex align-items-center justify-content-between\">
+            <div>
+              <h3 class=\"fw-bolder mb-75\">19,860</h3>
+              <span>Active Users</span>
+            </div>
+            <div class=\"avatar bg-light-success p-50\">
             <span class=\"avatar-content\">
               <i data-feather=\"user-check\" class=\"font-medium-4\"></i>
             </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class=\"col-lg-3 col-sm-6\">
-      <div class=\"card\">
-        <div class=\"card-body d-flex align-items-center justify-content-between\">
-          <div>
-            <h3 class=\"fw-bolder mb-75\">237</h3>
-            <span>Pending Users</span>
-          </div>
-          <div class=\"avatar bg-light-warning p-50\">
+      <div class=\"col-lg-3 col-sm-6\">
+        <div class=\"card\">
+          <div class=\"card-body d-flex align-items-center justify-content-between\">
+            <div>
+              <h3 class=\"fw-bolder mb-75\">237</h3>
+              <span>Pending Users</span>
+            </div>
+            <div class=\"avatar bg-light-warning p-50\">
             <span class=\"avatar-content\">
               <i data-feather=\"user-x\" class=\"font-medium-4\"></i>
             </span>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- list and filter start -->
-  <div class=\"card\">
-    <div class=\"card-body border-bottom\">
-      <h4 class=\"card-title\">Search & Filter</h4>
-      <div class=\"row\">
-        <div class=\"col-md-4 user_role\"></div>
-        <div class=\"col-md-4 user_plan\"></div>
-        <div class=\"col-md-4 user_status\"></div>
+
+    <!-- list and filter start -->
+    <div class=\"card\">
+      <div class=\"card-header\">
+        <h4 class=\"card-title\">Manage users</h4>
+      </div>
+      <div class=\"card-body\">
+        <div class=\"d-flex justify-content-between align-items-center mb-1\">
+        <span class=\"card-text\">
+          You can view, create or update users in the table below.
+        </span>
+          <a class=\"btn btn-primary waves-effect waves-float waves-light\" href=\"{{ url('user_create') }}\">Add</a>
+        </div>
+        <div class=\"table-responsive row\">
+          <table class=\"table table-hover\">
+            <thead>
+            <tr>
+              <th{% if pagination.isSorted('u.email') %} class=\"sorted\"{% endif %}>
+                {{ knp_pagination_sortable(pagination, 'Name', 'u.email') }}
+              </th>
+
+              <th{% if pagination.isSorted('u.userStatus') %} class=\"sorted\"{% endif %}>
+                {{ knp_pagination_sortable(pagination, 'User Status', 'u.userStatus') }}
+              </th>
+
+              <th>
+                Groups
+              </th>
+
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in pagination %}
+              <tr>
+                <td>
+                  <!-- BEGIN: Avatar, email & name -->
+                  <div class=\"d-flex justify-content-left align-items-center\">
+                    <div class=\"avatar-wrapper\">
+                      <div class=\"avatar me-1\">
+                        <img
+                            src=\"https://pixinvent.com/demo/vuexy-bootstrap-laravel-admin-template/demo-1/images/avatars/2.png\"
+                            alt=\"Avatar\" height=\"32\" width=\"32\">
+                      </div>
+                    </div>
+                    <div class=\"d-flex flex-column\">
+                      <a href=\"https://pixinvent.com/demo/vuexy-bootstrap-laravel-admin-template/demo-1/app/user/view/account\"
+                         class=\"user_name text-truncate text-body\">
+                        <span class=\"fw-bolder fs-6\">{{ user.firstName ~ \" \" ~ user.lastName }}</span>
+                      </a>
+                      <small class=\"emp_post text-muted\">{{ user.email }}</small>
+                    </div>
+                  </div>
+                  <!-- END: Avatar, email & name -->
+                </td>
+                <td>
+                  <!-- BEGIN: UserStatus -->
+                  {{ include('views/content/_partials/_fragments/user-status-pill.html.twig', {'userstatus': user.userstatus}) }}
+                  <!-- END: UserStatus -->
+                </td>
+                <td>
+                  <!-- BEGIN: UserGroups -->
+                  <div class=\"d-flex flex-column\">
+                    {% for group in user.groups %}
+                      {{ include('views/content/_partials/_fragments/group-type-badge.html.twig',
+                        {'grouptype': group.groupType, 'displayname': group.displayName}) }}
+                    {% endfor %}
+                  </div>
+                  <!-- END: UserGroups -->
+                </td>
+                <td>
+                  <div class=\"d-flex\">
+                    <a href=\"{{ url(\"user_edit\", {id: user.id}) }}\">
+                      <i data-feather=\"edit-2\" class=\"me-50\"></i>
+                    </a>
+                    <a href=\"{{ url(\"user_delete\", {id: user.id}) }}\">
+                      <i data-feather=\"trash\" class=\"me-50\"></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <div class=\"d-flex justify-content-between my-2\">
+          <div class=\"col-sm-12 col-md-6 text-muted\">
+            Showing {{ ((pagination.currentPageNumber - 1) * pagination.itemNumberPerPage) + 1 }}
+            to {{ min(pagination.currentPageNumber * pagination.itemNumberPerPage, pagination.getTotalItemCount) }}
+            of {{ pagination.getTotalItemCount }} entries
+          </div>
+          <div class=\"col-sm-12 col-md-6 navigation\">
+            {{ knp_pagination_render(pagination) }}
+          </div>
+        </div>
       </div>
     </div>
-    <div class=\"card-datatable table-responsive pt-0\">
-      <table class=\"user-list-table table\">
-        <thead class=\"table-light\">
-          <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Role</th>
-            <th>Pl an</th>
-            <th>Billing</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-      </table>
-    </div>
-    <!-- Modal to add new user starts-->
-    <div class=\"modal modal-slide-in new-user-modal fade\" id=\"modals-slide-in\">
-      <div class=\"modal-dialog\">
-        <form class=\"add-new-user modal-content pt-0\">
-          <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\">×</button>
-          <div class=\"modal-header mb-1\">
-            <h5 class=\"modal-title\" id=\"exampleModalLabel\">Add User</h5>
-          </div>
-          <div class=\"modal-body flex-grow-1\">
-            <div class=\"mb-1\">
-              <label class=\"form-label\" for=\"basic-icon-default-fullname\">Full Name</label>
-              <input
-                type=\"text\"
-                class=\"form-control dt-full-name\"
-                id=\"basic-icon-default-fullname\"
-                placeholder=\"John Doe\"
-                name=\"user-fullname\"
-              />
-            </div>
-            <div class=\"mb-1\">
-              <label class=\"form-label\" for=\"basic-icon-default-uname\">Username</label>
-              <input
-                type=\"text\"
-                id=\"basic-icon-default-uname\"
-                class=\"form-control dt-uname\"
-                placeholder=\"Web Developer\"
-                name=\"user-name\"
-              />
-            </div>
-            <div class=\"mb-1\">
-              <label class=\"form-label\" for=\"basic-icon-default-email\">Email</label>
-              <input
-                type=\"text\"
-                id=\"basic-icon-default-email\"
-                class=\"form-control dt-email\"
-                placeholder=\"john.doe@example.com\"
-                name=\"user-email\"
-              />
-            </div>
-            <div class=\"mb-1\">
-              <label class=\"form-label\" for=\"basic-icon-default-contact\">Contact</label>
-              <input
-                type=\"text\"
-                id=\"basic-icon-default-contact\"
-                class=\"form-control dt-contact\"
-                placeholder=\"+1 (609) 933-44-22\"
-                name=\"user-contact\"
-              />
-            </div>
-            <div class=\"mb-1\">
-              <label class=\"form-label\" for=\"basic-icon-default-company\">Company</label>
-              <input
-                type=\"text\"
-                id=\"basic-icon-default-company\"
-                class=\"form-control dt-contact\"
-                placeholder=\"PIXINVENT\"
-                name=\"user-company\"
-              />
-            </div>
-            <div class=\"mb-1\">
-              <label class=\"form-label\" for=\"country\">Country</label>
-              <select id=\"country\" class=\"select2 form-select\">
-                <option value=\"Australia\">USA</option>
-                <option value=\"Bangladesh\">Bangladesh</option>
-                <option value=\"Belarus\">Belarus</option>
-                <option value=\"Brazil\">Brazil</option>
-                <option value=\"Canada\">Canada</option>
-                <option value=\"China\">China</option>
-                <option value=\"France\">France</option>
-                <option value=\"Germany\">Germany</option>
-                <option value=\"India\">India</option>
-                <option value=\"Indonesia\">Indonesia</option>
-                <option value=\"Israel\">Israel</option>
-                <option value=\"Italy\">Italy</option>
-                <option value=\"Japan\">Japan</option>
-                <option value=\"Korea\">Korea, Republic of</option>
-                <option value=\"Mexico\">Mexico</option>
-                <option value=\"Philippines\">Philippines</option>
-                <option value=\"Russia\">Russian Federation</option>
-                <option value=\"South Africa\">South Africa</option>
-                <option value=\"Thailand\">Thailand</option>
-                <option value=\"Turkey\">Turkey</option>
-                <option value=\"Ukraine\">Ukraine</option>
-                <option value=\"United Arab Emirates\">United Arab Emirates</option>
-                <option value=\"United Kingdom\">United Kingdom</option>
-                <option value=\"United States\">United States</option>
-              </select>
-            </div>
-            <div class=\"mb-1\">
-              <label class=\"form-label\" for=\"user-role\">User Role</label>
-              <select id=\"user-role\" class=\"select2 form-select\">
-                <option value=\"subscriber\">Subscriber</option>
-                <option value=\"editor\">Editor</option>
-                <option value=\"maintainer\">Maintainer</option>
-                <option value=\"author\">Author</option>
-                <option value=\"admin\">Admin</option>
-              </select>
-            </div>
-            <div class=\"mb-2\">
-              <label class=\"form-label\" for=\"user-plan\">Select Plan</label>
-              <select id=\"user-plan\" class=\"select2 form-select\">
-                <option value=\"basic\">Basic</option>
-                <option value=\"enterprise\">Enterprise</option>
-                <option value=\"company\">Company</option>
-                <option value=\"team\">Team</option>
-              </select>
-            </div>
-            <button type=\"submit\" class=\"btn btn-primary me-1 data-submit\">Submit</button>
-            <button type=\"reset\" class=\"btn btn-outline-secondary\" data-bs-dismiss=\"modal\">Cancel</button>
-          </div>
-        </form>
-      </div>
-    </div>
-    <!-- Modal to add new user Ends-->
-  </div>
-  <!-- list and filter end -->
-</section>
-<!-- users list ends -->
+    <!-- list and filter end -->
+  </section>
+  <!-- users list ends -->
 {% endblock %}
 
 
 {% block vendor_script %}
   <script src=\"{{ asset('vendors/js/forms/select/select2.full.min.js') }}\"></script>
-  <script src=\"{{ asset('vendors/js/tables/datatable/jquery.dataTables.min.js') }}\"></script>
-  <script src=\"{{ asset('vendors/js/tables/datatable/dataTables.bootstrap5.min.js') }}\"></script>
-  <script src=\"{{ asset('vendors/js/tables/datatable/dataTables.responsive.min.js') }}\"></script>
-  <script src=\"{{ asset('vendors/js/tables/datatable/responsive.bootstrap5.js') }}\"></script>
-  <script src=\"{{ asset('vendors/js/tables/datatable/datatables.buttons.min.js') }}\"></script>
   <script src=\"{{ asset('vendors/js/tables/datatable/jszip.min.js') }}\"></script>
-  <script src=\"{{ asset('vendors/js/tables/datatable/pdfmake.min.js') }}\"></script>
   <script src=\"{{ asset('vendors/js/tables/datatable/vfs_fonts.js') }}\"></script>
   <script src=\"{{ asset('vendors/js/tables/datatable/buttons.html5.min.js') }}\"></script>
   <script src=\"{{ asset('vendors/js/tables/datatable/buttons.print.min.js') }}\"></script>
-  <script src=\"{{ asset('vendors/js/tables/datatable/dataTables.rowGroup.min.js') }}\"></script>
   <script src=\"{{ asset('vendors/js/forms/validation/jquery.validate.min.js') }}\"></script>
   <script src=\"{{ asset('vendors/js/forms/cleave/cleave.min.js') }}\"></script>
   <script src=\"{{ asset('vendors/js/forms/cleave/addons/cleave-phone.us.js') }}\"></script>
