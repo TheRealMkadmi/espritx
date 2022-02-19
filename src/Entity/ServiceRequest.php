@@ -35,7 +35,7 @@ class ServiceRequest
     private $Title;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $Description;
 
@@ -46,7 +46,7 @@ class ServiceRequest
     private $Type;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Email(message="Veuillez introduire un email valide",
      * normalizer="trim")
      */
@@ -67,6 +67,16 @@ class ServiceRequest
      * uploadErrorMessage="Problème lors du téléchargement du fichier!")
      */
     private $Attachements;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $Status;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $RequestResponse;
 
     public function getId(): ?int
     {
@@ -165,6 +175,30 @@ class ServiceRequest
     public function setAttachements(?string $Attachements): self
     {
         $this->Attachements = $Attachements;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->Status;
+    }
+
+    public function setStatus(string $Status): self
+    {
+        $this->Status = $Status;
+
+        return $this;
+    }
+
+    public function getRequestResponse(): ?string
+    {
+        return $this->RequestResponse;
+    }
+
+    public function setRequestResponse(?string $RequestResponse): self
+    {
+        $this->RequestResponse = $RequestResponse;
 
         return $this;
     }
