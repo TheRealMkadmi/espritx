@@ -25,7 +25,12 @@ abstract class AbstractFixtureEx extends Fixture
     return $collection;
   }
 
-  public function sampleSubArray(array $original_array, $n_min, $n_max){
+  public function sampleReferenceArray(string $collection_reference, $n_min, $n_max){
+    $arr = $this->getReferenceArray($collection_reference)->toArray();
+    return $this->sampleSubArray($arr, $n_min, $n_max);
+  }
+
+  public function sampleSubArray(array $original_array, $n_min, $n_max){ //todo: wipe out?
     $indices = array_rand($original_array, random_int($n_min, $n_max));
     if(!is_array($indices)) {
       $indices = [$indices];

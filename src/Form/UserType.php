@@ -16,7 +16,8 @@ class UserType extends AbstractBootstrapType
 {
   public function buildForm(FormBuilderInterface $builder, array $options): void
   {
-    $this->addSimpleTextInput($builder, 'first_name', "First Name", "What should we call you?")
+    $this
+      ->addSimpleTextInput($builder, 'first_name', "First Name", "What should we call you?")
       ->addSimpleTextInput($builder, 'last_name', "Last Name", "What's your family name?")
       ->addSimpleTextInput($builder, 'email', "Email", "Email")
       ->addSimpleTextInput($builder, 'identityDocumentNumber', "Identity Number", "Full number of the identity provider selected")

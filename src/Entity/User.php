@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\PersistentCollection;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Security\Core\User\{EquatableInterface, UserInterface};
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * This entity violates just a bit the design paradigm of Doctrine. We're going the ActiveRecord way for ergonomics.
@@ -29,9 +30,12 @@ class User implements UserInterface, EquatableInterface
     $this->posts = new ArrayCollection();
     $this->groups = new ArrayCollection();
     $this->userStatus = UserStatus::get(UserStatus::PENDING);
+    $this->commentaires = new ArrayCollection();
+    $this->likes = new ArrayCollection();
   }
 
   //<editor-fold desc="id">
+
   /**
    * @ORM\Id
    * @ORM\GeneratedValue
@@ -46,6 +50,13 @@ class User implements UserInterface, EquatableInterface
   //</editor-fold>
   //<editor-fold desc="First Name">
   /**
+   * @Assert\NotNull
+   * @Assert\Length(min=3, max=16)
+   * @Assert\Regex(
+   *     pattern="/\d/",
+   *     match=false,
+   *     message="Your name cannot contain a number"
+   * )
    * @ORM\Column(type="string", length=20)
    */
   private string $first_name;
@@ -63,6 +74,13 @@ class User implements UserInterface, EquatableInterface
   //</editor-fold>
   //<editor-fold desc="Last Name">
   /**
+   * @Assert\NotNull
+   * @Assert\Length(min=3, max=16)
+   * @Assert\Regex(
+   *     pattern="/\d/",
+   *     match=false,
+   *     message="Your name cannot contain a number"
+   * )
    * @ORM\Column(type="string", length=25)
    */
   private string $last_name;
@@ -80,6 +98,10 @@ class User implements UserInterface, EquatableInterface
   //</editor-fold>
   //<editor-fold desc="Email">
   /**
+   * @Assert\NotBlank
+   * @Assert\Email(
+   *    message = "The email '{{ value }}' is not a valid email."
+   * )
    * @var string
    * @ORM\Column(type="string", unique=true)
    */
@@ -98,6 +120,7 @@ class User implements UserInterface, EquatableInterface
   //</editor-fold>
   //<editor-fold desc="Phone Number">
   /**
+   * @Assert\Regex("/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/")
    * @ORM\Column(type="string", length=255, nullable=true)
    */
   private $phonenumber;
@@ -115,6 +138,8 @@ class User implements UserInterface, EquatableInterface
   //</editor-fold>
   //<editor-fold desc="Class">
   /**
+   * @Assert\NotNull
+   * @Assert\Regex("/^[1-5](A|B|TWIN|SLEAMS)\d{1,3}$/")
    * @ORM\Column(type="string", length=255, nullable=true)
    */
   private $class;
@@ -249,6 +274,8 @@ class User implements UserInterface, EquatableInterface
   //</editor-fold>
   //<editor-fold desc="UserStatus">
   /**
+   * @Assert\NotNull
+   * @Elao\Enum\Bridge\Symfony\Validator\Constraint\Enum(class=UserStatus::class)
    * @ORM\Column(type="userstatus")
    */
   protected UserStatus $userStatus;
@@ -267,6 +294,7 @@ class User implements UserInterface, EquatableInterface
   //<editor-fold desc="Groups">
   /**
    * @ORM\ManyToMany(targetEntity=Group::class, inversedBy="members")
+   * @Assert\Count(min="1", minMessage="User must be at least part of one group.")
    */
   private ArrayCollection|array|PersistentCollection $groups;
 
@@ -297,6 +325,7 @@ class User implements UserInterface, EquatableInterface
   //<editor-fold desc="Permissions">
   /**
    * @ORM\ManyToMany(targetEntity=Permission::class, inversedBy="users")
+   * @Assert\Count(min="1", minMessage="User must at least have one permission.")
    */
   private Collection|array $individualPermissions;
 
@@ -342,7 +371,6 @@ class User implements UserInterface, EquatableInterface
   }
   //</editor-fold>
   //<editor-fold desc="Posts">
-
   /**
    * @ORM\OneToMany(targetEntity=Post::class, mappedBy="author", orphanRemoval=true)
    */
@@ -350,20 +378,25 @@ class User implements UserInterface, EquatableInterface
 
 
 
-  /**
-   * @return Collection|Post[]
-   */
-  public function getPosts(): Collection|array
-  {
-    return $this->posts;
-  }
+    /**
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="user")
+     */
+    private $commentaires;
 
-  public function addPost(Post $post): self
-  {
-    if (!$this->posts->contains($post)) {
-      $this->posts[] = $post;
-      $post->setAuthor($this);
+    /**
+     * @return Collection|Post[]
+     */
+    public function getPosts(): Collection|array
+    {
+        return $this->posts;
     }
+
+    public function addPost(Post $post): self
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts[] = $post;
+            $post->setUser($this);
+        }
 
     return $this;
   }
@@ -372,8 +405,8 @@ class User implements UserInterface, EquatableInterface
   {
     if ($this->posts->removeElement($post)) {
       // set the owning side to null (unless already changed)
-      if ($post->getAuthor() === $this) {
-        $post->setAuthor(null);
+      if ($post->getUser() === $this) {
+        $post->setUser(null);
       }
     }
     return $this;
@@ -382,6 +415,7 @@ class User implements UserInterface, EquatableInterface
   //<editor-fold desc="DocIdentityType">
   /**
    * @ORM\Column(type="identitydoctype")
+   * @Elao\Enum\Bridge\Symfony\Validator\Constraint\Enum(class=DocumentIdentityTypeEnum::class)
    */
   protected DocumentIdentityTypeEnum $identityType;
 
@@ -399,8 +433,14 @@ class User implements UserInterface, EquatableInterface
   //<editor-fold desc="Identity Document Number">
   /**
    * @ORM\Column(type="string", length=8, nullable=true)
+   * @Assert\Regex("/([A-Z0-9<]{9}[0-9]{1}[A-Z]{3}[0-9]{7}[A-Z]{1}[0-9]{7}[A-Z0-9<]{14}[0-9]{2})|(\d{8})/")
    */
   private $identityDocumentNumber;
+
+  /**
+   * @ORM\OneToMany(targetEntity=PostLike::class, mappedBy="user")
+   */
+  private $likes;
 
   public function getIdentityDocumentNumber(): ?string
   {
@@ -445,5 +485,16 @@ class User implements UserInterface, EquatableInterface
     return $this->email;
   }
 
+  public function removeLike(PostLike $like): self
+  {
+    if ($this->likes->removeElement($like)) {
+      // set the owning side to null (unless already changed)
+      if ($like->getUser() === $this) {
+        $like->setUser(null);
+      }
+    }
+
+    return $this;
+  }
 
 }
