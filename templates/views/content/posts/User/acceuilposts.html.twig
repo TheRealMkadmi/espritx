@@ -291,74 +291,89 @@
 
 
         {% if post.isDeleted == 0 %}
-    <section class="hero">
-        <div class="container">
-            <div class="row">
+            <section class="hero">
+                <div class="container">
+                    <div class="row">
 
-                <div class="col-lg-6 offset-lg-3">
+                        <div class="col-lg-6 offset-lg-3">
 
-                    <div class="cardbox shadow-lg bg-white">
+                            <div class="cardbox shadow-lg bg-white">
 
-                        <div class="cardbox-heading">
-                            <!-- START dropdown-->
-                            <div class="dropdown float-right">
-        {% if app.user == post.user %}
-                                <details class="dropdown">
-                                    <summary role="button">
-                                        <a class="button"> <em class="fa fa-ellipsis-h"></em></a>
-                                    </summary>
+                                <div class="cardbox-heading">
+                                    <!-- START dropdown-->
+                                    <div class="dropdown float-right">
+                                        {% if app.user == post.user %}
+                                        <details class="dropdown">
+                                            <summary role="button">
+                                                <a class="button"> <em class="fa fa-ellipsis-h"></em></a>
+                                            </summary>
+                                            <ul>
+
+                                                <li><a href="{{ path('editpost', {'id': post.id}) }}">Modifier</a></li>
+                                                <li><a href="{{ path('changedelete_post', {'id': post.id}) }}">Supprimer</a></li>
+                                            </ul>
+                                            {% endif %}                    </details>
+
+                                    </div><!--/ dropdown -->
+                                    <div class="media m-0">
+                                        <div class="d-flex mr-3">
+                                            <a href=""><img class="img-fluid rounded-circle" src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/4.jpg" alt="User"></a>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <p class="m-0">{{ post.user.firstName }}</p>
+
+                                            <small><span><i class="icon ion-md-pin"></i> {{ post.title }}</span></small>
+                                            <small><span><i class="icon ion-md-time"></i> {{ post.createdAt | date('Y-M-D') }} à {{ post.createdAt | date('h:m') }} </span></small>
+                                        </div>
+                                    </div><!--/ media -->
+                                </div><!--/ cardbox-heading -->
+
+                                <div class="cardbox-item">
+
+
+                                    <div class="cardbox-item">
+
+                                        {{ post.content }}
+                                        <img class="img-fluid" src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/1.jpg" alt="Image">
+                                    </div>
+                                </div><!--/ cardbox-item -->
+                                <div class="cardbox-base">
+                                    <ul class="float-right">
+                                        <li><a><i class="fa fa-comments"></i></a></li>
+                                        <li><a href="#"><em class="mr-5">{{ post.commentaires | length }}</em></a></li>
+                                        <li><a><i class="fa fa-share-alt"></i></a></li>
+                                        <li><a><em class="mr-3">03</em></a></li>
+                                    </ul>
                                     <ul>
 
-                                        <li><a href="{{ path('editpost', {'id': post.id}) }}">Modifier</a></li>
-                                        <li><a href="{{ path('changedelete_post', {'id': post.id}) }}">Supprimer</a></li>
+                                        {# /////////////////************************ like code **************** /////////////// #}
+
+                                        <a href="{{ path('post_like',{'id':post.id}) }}" class="btn btn-link js-like">
+
+                                            {% if app.user and post.isLikedByUser(app.user) %}
+                                                <i class="fa fa-thumbs-up"></i>
+                                            {% else%}
+                                                <i class="fa fa-thumbs-o-up"></i>
+                                            {% endif %}
+                                            <span class="js-likes">{{ post.likes | length }}</span>
+
+                                            <span class="js-label">j'aime</span>
+                                            {# /////////////////************************ like code **************** /////////////// #}
+                                        </a>
+
+                                        <li><a href="#"><img src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/3.jpeg" class="img-fluid rounded-circle" alt="User"></a></li>
+                                        <li><a href="#"><img src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/1.jpg" class="img-fluid rounded-circle" alt="User"></a></li>
+                                        <li><a href="#"><img src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/5.jpg" class="img-fluid rounded-circle" alt="User"></a></li>
+                                        <li><a href="#"><img src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/2.jpg" class="img-fluid rounded-circle" alt="User"></a></li>
+
                                     </ul>
-            {% endif %}                    </details>
-
-                            </div><!--/ dropdown -->
-                            <div class="media m-0">
-                                <div class="d-flex mr-3">
-                                    <a href=""><img class="img-fluid rounded-circle" src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/4.jpg" alt="User"></a>
                                 </div>
-
-                                <div class="media-body">
-                                    <p class="m-0">{{ post.user.firstName }}</p>
-
-                                    <small><span><i class="icon ion-md-pin"></i> {{ post.title }}</span></small>
-                                    <small><span><i class="icon ion-md-time"></i> {{ post.createdAt | date('Y-M-D') }} à {{ post.createdAt | date('h:m') }} </span></small>
-                                </div>
-                            </div><!--/ media -->
-                        </div><!--/ cardbox-heading -->
-
-                        <div class="cardbox-item">
-
-
-                            <div class="cardbox-item">
-
-                              {{ post.content }}
-                                <img class="img-fluid" src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/1.jpg" alt="Image">
-                            </div>
-                        </div><!--/ cardbox-item -->
-                        <div class="cardbox-base">
-                            <ul class="float-right">
-                                <li><a><i class="fa fa-comments"></i></a></li>
-                                <li><a href="#"><em class="mr-5">{{ post.commentaires | length }}</em></a></li>
-                                <li><a><i class="fa fa-share-alt"></i></a></li>
-                                <li><a><em class="mr-3">03</em></a></li>
-                            </ul>
-                            <ul>
-                                <li><a><i class="fa fa-thumbs-up"></i></a></li>
-                                <li><a href="#"><img src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/3.jpeg" class="img-fluid rounded-circle" alt="User"></a></li>
-                                <li><a href="#"><img src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/1.jpg" class="img-fluid rounded-circle" alt="User"></a></li>
-                                <li><a href="#"><img src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/5.jpg" class="img-fluid rounded-circle" alt="User"></a></li>
-                                <li><a href="#"><img src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/2.jpg" class="img-fluid rounded-circle" alt="User"></a></li>
-                                <li><a><span>242 Likes</span></a></li>
-                            </ul>
-                        </div>
-                        <!--/ cardbox-base -->
+                                <!--/ cardbox-base -->
 
 
 
-                        <div class="cardbox-comments">
+                                <div class="cardbox-comments">
 			  <span class="comment-avatar float-left">
 		        <a class="btn btn-primary"
                    href="{{ path('comment_new',{"id":post.id}) }}"><i
@@ -373,59 +388,105 @@
 
 
 
-                            <div class="search">
-                                <input placeholder="Write a comment" type="text">
-                                <button><i class="fa fa-camera"></i></button>
-                            </div>
-                            <!--/. Search -->
-                        </div>
-                        <!--/ cardbox-like -->
+                                    <div class="search">
+                                        <input placeholder="Write a comment" type="text">
+                                        <button><i class="fa fa-camera"></i></button>
+                                    </div>
+                                    <!--/. Search -->
+                                </div>
+                                <!--/ cardbox-like -->
 
-                        {% for comm in post.commentaires %}
+                                {% for comm in post.commentaires %}
 
-                            <div style="background-color: #F8F9F9;padding: 1px;border-radius: 20px" id="add" class="add">
-                                <p>
-
-
-
-                                <p id="part2" style="font-size: small">Ajouté par <span style="font-weight: bold" >{{ comm.user.firstName |upper }}  </span>le {{ comm.createdAt|date('d/m/Y H:i') }}</p>
-
-                                    <span>{{ comm.content }}</span>
-                                {% if app.user == comm.user %}
-                                    <a href="{{ path('editcomment', {'id': comm.id}) }}">modifier</a>
-                                    <a href="{{ path('delete_commnt_user', {'id': comm.id}) }}">supprimer</a>
-
-                                {% endif %}
-
-
-                            </div>
-                            <br>
-                        {% endfor %}
-
-                    </div>
-                    <!--/ cardbox -->
+                                    <div style="background-color: #F8F9F9;padding: 1px;border-radius: 20px" id="add" class="add">
+                                        <p>
 
 
 
+                                        <p id="part2" style="font-size: small">Ajouté par <span style="font-weight: bold" >{{ comm.user.firstName |upper }}  </span>le {{ comm.createdAt|date('d/m/Y H:i') }}</p>
 
-                </div><!--/ col-lg-6 -->
-                <div class="col-lg-3">
-                    <div class="shadow-lg p-4 mb-2 bg-white author">
-                        <a href="#">Contacter l'annonceur</a>
-                        <p>Email: {{ post.user.email }}</p>
-                    </div>
-                </div><!--/ col-lg-3 -->
+                                        <span>{{ comm.content }}</span>
+                                        {% if app.user == comm.user %}
+                                            <a href="{{ path('editcomment', {'id': comm.id}) }}">modifier</a>
+                                            <a href="{{ path('delete_commnt_user', {'id': comm.id}) }}">supprimer</a>
 
-            </div><!--/ row -->
-        </div><!--/ container -->
-    </section>
-        {% endif %}
+                                        {% endif %}
+
+
+                                    </div>
+                                    <br>
                                 {% endfor %}
+
+                            </div>
+                            <!--/ cardbox -->
+
+
+
+
+                        </div><!--/ col-lg-6 -->
+                        <div class="col-lg-3">
+                            <div class="shadow-lg p-4 mb-2 bg-white author">
+                                <a href="#">Contacter l'annonceur</a>
+                                <p>Numero de telephone: {{ post.user.phonenumber}} </p>
+                                <p>Email: {{ post.user.email }}</p>
+                            </div>
+                        </div><!--/ col-lg-3 -->
+
+                    </div><!--/ row -->
+                </div><!--/ container -->
+            </section>
+        {% endif %}
+    {% endfor %}
 {% endblock %}
 
 
 {% block page_script %}
     <!-- Page js files -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    {# bloc java script pour ajax #}
+    <script>
+
+        // fonction
+        function onClickBtnLike(event){
+            event.preventDefault();
+
+            // nheb na7i lien mte3 like bech ki nekliki meyodhherlich lien
+            // this hiya l "a mte3 l href ili 9a3da nekliki aaliha "
+            const url=this.href;
+            const spanCount=this.querySelector('span.js-likes');
+
+            // nbadel l'icone
+            const icone =this.querySelector('i');
+            axios.get(url).then(function (response){
+                //  console.log(response);
+
+                spanCount.textContent = response.data.likess;
+                // console.log(likess);
+
+                if(icone.classList.contains('fa')) {
+                    icone.classList.replace('fa','fas');
+                }
+                else {
+                    icone.classList.replace('fas', 'fa');
+                }
+
+                // si il'ya une erreur
+            }).catch(function (error){
+                if(error.response.status===403){
+                    window.alert('pardon!! vous ne pouvez pas liker un article si vous n\'etes pas connecté! ');
+                }
+            })
+
+
+        }
+
+        //recupere tous les lien de "a" qui contiennent la classe js-like
+        // forEach(function) ==> f kol a.js-like bch naamel fonction
+        document.querySelectorAll('a.js-like').forEach(function(link){
+            link.addEventListener('click',onClickBtnLike)
+        })
+
+    </script>
+
 
 {% endblock %}
-

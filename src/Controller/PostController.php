@@ -4,12 +4,16 @@ namespace App\Controller;
 
 use App\Entity\Commentaire;
 use App\Entity\Post;
+use App\Entity\PostLike;
 use App\Form\CommentaireType;
 use App\Form\PostType;
 use App\Repository\CommentaireRepository;
+use App\Repository\PostLikeRepository;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectManager;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
@@ -119,7 +123,7 @@ class PostController extends AbstractController
         $form1 = $this->createForm(PostType::class, $post);
         $form1->handleRequest($request);
 
-       // dd($post);
+        // dd($post);
         $em = $this->getDoctrine()->getManager();
         if (($form1->isSubmitted() && $form1->isValid())) {
 
@@ -131,7 +135,7 @@ class PostController extends AbstractController
             $this->addFlash('notice', 'Publication modifiée avec succée !');
             return $this->redirectToRoute("acceuil_user_posts");
         }
-       return $this->render('views/content/posts/User/editPost.html.twig', ['form' => $form1->createView()]);
+        return $this->render('views/content/posts/User/editPost.html.twig', ['form' => $form1->createView()]);
 
     }
 
@@ -220,10 +224,10 @@ class PostController extends AbstractController
         $now = new \DateTimeImmutable('now');
         $commentaire = new Commentaire();
 //        $comment = $_POST['aa'];
-$form=$this->createForm(CommentaireType::class,$commentaire);
+        $form=$this->createForm(CommentaireType::class,$commentaire);
         $form->handleRequest($request);
 
-       // $data = $request->request->get('aa');
+        // $data = $request->request->get('aa');
 //        dd($data);
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -238,7 +242,7 @@ $form=$this->createForm(CommentaireType::class,$commentaire);
                 'dateajout' => $commentaire->getCreatedAt()->format('H:i')], 200);
         }
         return $this->json(['code' => 200, 'nbrcomments' => $pub->getCommentaires()->count(),
-            ], 200);
+        ], 200);
     }
 
 
@@ -270,28 +274,29 @@ $form=$this->createForm(CommentaireType::class,$commentaire);
         $commentaire = new Commentaire();
         $form = $this->createForm(CommentaireType::class, $commentaire);
 
-            $now = new \DateTimeImmutable('now');
+        $now = new \DateTimeImmutable('now');
 
-$post=$postRepository->find($id);
-            $form->handleRequest($request);
+        $post=$postRepository->find($id);
+        $form->handleRequest($request);
 
-            $em = $this->getDoctrine()->getManager();
-            if (($form->isSubmitted() && $form->isValid())) {
+        $em = $this->getDoctrine()->getManager();
+        if (($form->isSubmitted() && $form->isValid())) {
             $commentaire->setPost($post);
 
             $commentaire->setCreatedAt($now);
 
 
             $commentaire->setUser($repository->find($this->getUser()->getId()));
-                $em->persist($commentaire);
-                $em->flush();
+            $em->persist($commentaire);
+            $em->flush();
 
 
-                $this->addFlash("success", "Publication ajoutée ");
-                return $this->redirectToRoute("acceuil_user_posts");
+            $this->addFlash("success", "Publication ajoutée ");
+            return $this->json(['code' => 200, 'nbrcomments' => $post->getCommentaires()->count(),
+                'dateajout' => $commentaire->getCreatedAt()->format('H:i')], 200);
 
 
-            }
+        }
 
 
 
@@ -353,7 +358,53 @@ $post=$postRepository->find($id);
 
     }
 
+///////////////////////// Likes ////////////////////////////
+/// cette fonction permet de liker ou unliker un post
+    /**
+     * @param Post $post
+     * @param PostLikeRepository $likeRepository
+     * @return Response
+     * @Route ("/post/{id}/like", name="post_like")
+     */
+    public function like(Post $post, PostLikeRepository $likeRepository):Response{
+        $em = $this->getDoctrine()->getManager();
+        $user=$this->getUser();
+        // savoir si le user est connecté ou nn
+        if(!$user)return $this->json([
+            'code'=>403,
+            'message'=>'il faut etre connecté'
+        ],403);
+        // savoir si ce post est liké par user ou non
+        if($post->isLikedByUser($user)){
+            // retrouver le j'aime
+            $like=$likeRepository->findOneBy([
+                'post'=>$post,
+                'user'=>$user
+            ]);
+            $em->remove($like);
+            $em->flush();
 
+            return $this->json([
+                'code'=>200,
+                'message'=>'like bien supprimé',
+                'likess'=>$likeRepository->count(['post'=>$post])
+            ],200);
+
+        }
+
+        $like=new PostLike();
+        $like->setPost($post)
+            ->setUser($user);
+        $em->persist($like);
+        $em->flush();
+        return $this->json([
+            'code'=>200,
+            'message'=>'like bien ajouté',
+            'likess'=>$likeRepository->count(['post'=>$post])
+        ],200);
+
+
+    }
 
 
 
