@@ -30,9 +30,12 @@ class User implements UserInterface, EquatableInterface
     $this->posts = new ArrayCollection();
     $this->groups = new ArrayCollection();
     $this->userStatus = UserStatus::get(UserStatus::PENDING);
+    $this->commentaires = new ArrayCollection();
+    $this->likes = new ArrayCollection();
   }
 
   //<editor-fold desc="id">
+
   /**
    * @ORM\Id
    * @ORM\GeneratedValue
@@ -373,29 +376,38 @@ class User implements UserInterface, EquatableInterface
    */
   private Collection $posts;
 
-  /**
-   * @return Collection|Post[]
-   */
-  public function getPosts(): Collection|array
-  {
-    return $this->posts;
-  }
 
-  public function addPost(Post $post): self
-  {
-    if (!$this->posts->contains($post)) {
-      $this->posts[] = $post;
-      $post->setUser($this);
+
+    /**
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="user")
+     */
+    private $commentaires;
+
+    /**
+     * @return Collection|Post[]
+     */
+    public function getPosts(): Collection|array
+    {
+        return $this->posts;
     }
+
+    public function addPost(Post $post): self
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts[] = $post;
+            $post->setUser($this);
+        }
 
     return $this;
   }
 
   public function removePost(Post $post): self
   {
-    // set the owning side to null (unless already changed)
-    if ($this->posts->removeElement($post) && $post->getUser() === $this) {
-      $post->setUser(null);
+    if ($this->posts->removeElement($post)) {
+      // set the owning side to null (unless already changed)
+      if ($post->getUser() === $this) {
+        $post->setUser(null);
+      }
     }
     return $this;
   }
@@ -424,6 +436,11 @@ class User implements UserInterface, EquatableInterface
    * @Assert\Regex("/([A-Z0-9<]{9}[0-9]{1}[A-Z]{3}[0-9]{7}[A-Z]{1}[0-9]{7}[A-Z0-9<]{14}[0-9]{2})|(\d{8})/")
    */
   private $identityDocumentNumber;
+
+  /**
+   * @ORM\OneToMany(targetEntity=PostLike::class, mappedBy="user")
+   */
+  private $likes;
 
   public function getIdentityDocumentNumber(): ?string
   {
@@ -467,4 +484,17 @@ class User implements UserInterface, EquatableInterface
   {
     return $this->email;
   }
+
+  public function removeLike(PostLike $like): self
+  {
+    if ($this->likes->removeElement($like)) {
+      // set the owning side to null (unless already changed)
+      if ($like->getUser() === $this) {
+        $like->setUser(null);
+      }
+    }
+
+    return $this;
+  }
+
 }
