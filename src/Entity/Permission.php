@@ -7,13 +7,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JetBrains\PhpStorm\Pure;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PermissionRepository::class)
  */
 class Permission
 {
-
   public function __construct()
   {
     $this->groups = new ArrayCollection();
@@ -36,6 +36,15 @@ class Permission
   //</editor-fold>
   //<editor-fold desc="Description">
   /**
+   * @Assert\NotNull(message="Please provide a description.")
+   * @Assert\Length(
+   *      min = 8,
+   *      max = 120,
+   *      minMessage = "Description be at least {{ limit }} characters long",
+   *      maxMessage = "Description cannot be longer than {{ limit }} characters",
+   *      allowEmptyString = false
+   * )
+   * @Assert\Type("string")
    * @ORM\Column(type="string", length=255)
    */
   private $description;
@@ -54,6 +63,15 @@ class Permission
   //</editor-fold>
   //<editor-fold desc="Title">
   /**
+   * @Assert\NotBlank
+   * @Assert\Length(
+   *      min = 8,
+   *      max = 20,
+   *      minMessage = "Title be at least {{ limit }} characters long",
+   *      maxMessage = "Title cannot be longer than {{ limit }} characters",
+   *      allowEmptyString = false
+   * )
+   * @Assert\Type("string")
    * @ORM\Column(type="string", length=255)
    */
   private $title;
@@ -73,6 +91,8 @@ class Permission
   /**
    * Holds the authorization beacon for the permission
    * @ORM\Column(type="string", length=255)
+   * @Assert\Length(min=4, max=12)
+   * @Assert\NotNull(message="Please provide an attribute.")
    */
   private $attribute;
 
@@ -91,6 +111,8 @@ class Permission
   //<editor-fold desc="Subject">
   /**
    * Holds the FQCN for the authorization subject; i.e Entity::class
+   * @Assert\NotNull(message="Please provide a guard subject.")
+   * @App\Validator\EntityFQCN
    * @ORM\Column(type="string", length=255)
    */
   private $subject;
@@ -141,6 +163,7 @@ class Permission
   //</editor-fold>
   //<editor-fold desc="Enabled">
   /**
+   * @Assert\NotNull
    * @ORM\Column(type="boolean")
    */
   private ?bool $enabled;
@@ -160,6 +183,7 @@ class Permission
   //<editor-fold desc="Expression">
   /**
    * @ORM\Column(type="string", length=255, nullable=true)
+   * @App\Validator\ExpressionLanguageSyntax
    */
   private ?string $expression;
 
@@ -210,6 +234,6 @@ class Permission
 
   #[Pure] public function __toString(): string
   {
-    return $this->getId();
+    return $this->getTitle();
   }
 }

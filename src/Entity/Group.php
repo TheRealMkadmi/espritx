@@ -6,6 +6,7 @@ use App\Enum\GroupType;
 use App\Repository\GroupRepository;
 use Doctrine\Common\Collections\{ArrayCollection, Collection};
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=GroupRepository::class)
@@ -43,7 +44,9 @@ class Group
   //</editor-fold>
   //<editor-fold desc="Display Name">
   /**
-   * @ORM\Column(type="string", length=80)
+   * @ORM\Column(type="string", length=32)
+   * @Assert\NotNull
+   * @Assert\Length(min=5, max=25)
    */
   private ?string $display_name;
 
@@ -62,7 +65,9 @@ class Group
   //</editor-fold>
   //<editor-fold desc="Security Title">
   /**
-   * @ORM\Column(type="string", length=64)
+   * @ORM\Column(type="string", length=32)
+   * @Assert\NotNull
+   * @Assert\Length(min=5, max=32)
    */
   private ?string $security_title;
 
@@ -123,10 +128,11 @@ class Group
   //<editor-fold desc="Group Type">
   /**
    * @ORM\Column(type="grouptype", nullable=true)
+   * @Assert\NotNull
    */
   protected $groupType;
 
-  public function getGroupType(): GroupType
+  public function getGroupType(): ?GroupType
   {
     return $this->groupType;
   }
@@ -141,11 +147,12 @@ class Group
   //<editor-fold desc="Members">
   /**
    * @ORM\ManyToMany(targetEntity=User::class, mappedBy="groups", fetch="EAGER")
+   * @Assert\Count(min="1")
    */
   private $members;
 
   /**
-   * @return Collection|User[]
+   * @return Collection
    */
   public function getMembers(): Collection
   {
@@ -173,6 +180,7 @@ class Group
   //<editor-fold desc="Services Enjoyed By Group">
   /**
    * @ORM\ManyToMany(targetEntity=Service::class, mappedBy="Recipient")
+   * @Assert\Count(min="1", minMessage="A group must at least receive one service.")
    */
   private $enjoyable_services;
 
@@ -218,7 +226,6 @@ class Group
     return $this;
   }
   //</editor-fold>
-
 
   // public function notifyAllMembers(){}
   public function __toString(): string

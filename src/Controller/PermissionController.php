@@ -120,16 +120,21 @@ class PermissionController extends AbstractController
     }
     return $this->render('views/content/apps/rolesPermission/permission/app-access-permission-form.html.twig', [
       'permission' => $permission,
+      'breadcrumbs' => [
+        ["name" => "Management"],
+        ["name" => "Permissions", "link" => "permission_index"],
+        ["name" => "Edit"],
+      ],
       'form' => $form->createView(),
     ]);
   }
 
   /**
-   * @Route("/{id}", name="permission_delete", methods={"POST"})
+   * @Route("/{id}/delete", name="permission_delete", methods={"GET"})
    */
   public function delete(Request $request, Permission $permission, EntityManagerInterface $entityManager): Response
   {
-    if ($this->isCsrfTokenValid('delete' . $permission->getId(), $request->request->get('_token'))) {
+    if ($this->isCsrfTokenValid('delete-perm' . $permission->getId(), $request->query->get('_token'))) {
       $entityManager->remove($permission);
       $entityManager->flush();
     }

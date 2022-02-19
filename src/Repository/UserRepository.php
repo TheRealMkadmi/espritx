@@ -31,4 +31,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     $this->_em->persist($user);
     $this->_em->flush();
   }
+
+  public function getCountByStatus(){
+    $res = $this->createQueryBuilder('u')
+      ->groupBy("u.userStatus")
+      ->select("u.userStatus as status, COUNT(u) as cnt")
+      ->select("")
+      ->getQuery()
+      ->getResult();
+    $ret = [];
+    foreach ($res as $user_status){
+      $ret[strtolower((string)$user_status["status"])] = $user_status["cnt"];
+    }
+    $ret["total"] = array_sum(array_values($ret));
+    return $ret;
+  }
 }

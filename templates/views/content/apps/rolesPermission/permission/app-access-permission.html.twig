@@ -1,7 +1,7 @@
 {% extends 'views/layouts/contentLayoutMaster.html.twig' %}
 
 {% block title %}
-  {{ 'Permission' }}
+  {{ 'Manage Permissions' }}
 {% endblock %}
 
 {% block vendor_style %}
@@ -78,7 +78,7 @@
                   <a href="{{ url("permission_edit", {id: permission.id}) }}">
                     <i data-feather="edit-2" class="me-50"></i>
                   </a>
-                  <a href="{{ url("permission_delete", {id: permission.id}) }}">
+                  <a href="{{ url("permission_delete", {id: permission.id}) }}?_token={{ csrf_token('delete-perm' ~ permission.id|trim)}}">
                     <i data-feather="trash" class="me-50"></i>
                   </a>
                 </div>

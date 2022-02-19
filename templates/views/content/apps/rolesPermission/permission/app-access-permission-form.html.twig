@@ -20,7 +20,7 @@
       <h4 class="card-title">Permission Details</h4>
     </div>
     <div class="card-body">
-      {{ form_start(form, {'method': 'POST'}) }}
+      {{ form_start(form, {'attr':{'novalidate':'novalidate', 'method': 'POST'}} ) }}
       <div class="row">
         <div class="col-12 d-flex justify-content-end">
           {{ form_widget(form.enabled, {attr: {"class" : ""}}) }}

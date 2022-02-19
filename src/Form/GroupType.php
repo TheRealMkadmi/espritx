@@ -5,6 +5,8 @@ namespace App\Form;
 use App\Entity\Group;
 use App\Entity\Permission;
 use App\Entity\User;
+use App\Enum\UserStatus;
+use Elao\Enum\Bridge\Symfony\Form\Type\EnumType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,6 +23,11 @@ class GroupType extends AbstractBootstrapType
       ->addSelect2EntityField($builder, 'permissions', Permission::class, "title", 'ajax_autocomplete_permissions', "Group Permissions")
       ->addButton($builder, "save")
       ->addButton($builder, "reset", "btn-outline-secondary", ResetType::class);
+    $builder->add('groupType', EnumType::class, [
+      'enum_class' => \App\Enum\GroupType::class,
+    ]);
+    $builder->add("enjoyable_services")->add("provided_services");
+
   }
 
   public function configureOptions(OptionsResolver $resolver): void
