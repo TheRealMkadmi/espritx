@@ -9,9 +9,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\PreUpdate;
 use Doctrine\ORM\PersistentCollection;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Security\Core\User\{EquatableInterface, UserInterface};
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -124,6 +126,7 @@ class User implements UserInterface, EquatableInterface
    * @ORM\Column(type="string", length=255, nullable=true)
    */
   private $phonenumber;
+
   public function getPhonenumber(): ?string
   {
     return $this->phonenumber;
@@ -157,18 +160,33 @@ class User implements UserInterface, EquatableInterface
   }
   //</editor-fold>
   //<editor-fold desc="PlainPassword">
-  protected ?string $plainTextPassword;
+  protected ?string $plainPassword;
 
-  public function setPlainPassword(?string $password)
+  public function setPlainPassword(?string $password): static
   {
+    if (empty($password)) {
+      return $this;
+    }
     $this->plainPassword = $password;
-
+    $this->password = null;
     return $this;
   }
 
   public function getPlainTextPassword(): ?string
   {
-    return $this->plainTextPassword;
+    return $this->plainPassword;
+  }
+
+  /**
+   * @ORM\PreUpdate
+   * @ORM\PrePersist
+   */
+  public function storePassword(UserPasswordEncoderInterface $passwordEncoder): void
+  {
+    if (!$this->getPlainTextPassword()) {
+      return;
+    }
+    $this->setPassword($passwordEncoder->encodePassword($this, $this->getPlainTextPassword()));
   }
   //</editor-fold>
   //<editor-fold desc="Password">
@@ -377,26 +395,25 @@ class User implements UserInterface, EquatableInterface
   private Collection $posts;
 
 
+  /**
+   * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="user")
+   */
+  private $commentaires;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="user")
-     */
-    private $commentaires;
+  /**
+   * @return Collection|Post[]
+   */
+  public function getPosts(): Collection|array
+  {
+    return $this->posts;
+  }
 
-    /**
-     * @return Collection|Post[]
-     */
-    public function getPosts(): Collection|array
-    {
-        return $this->posts;
+  public function addPost(Post $post): self
+  {
+    if (!$this->posts->contains($post)) {
+      $this->posts[] = $post;
+      $post->setUser($this);
     }
-
-    public function addPost(Post $post): self
-    {
-        if (!$this->posts->contains($post)) {
-            $this->posts[] = $post;
-            $post->setUser($this);
-        }
 
     return $this;
   }
@@ -407,6 +424,23 @@ class User implements UserInterface, EquatableInterface
       // set the owning side to null (unless already changed)
       if ($post->getUser() === $this) {
         $post->setUser(null);
+      }
+    }
+    return $this;
+  }
+  //</editor-fold>
+  //<editor-fold desc="Likes">
+  /**
+   * @ORM\OneToMany(targetEntity=PostLike::class, mappedBy="user")
+   */
+  private $likes;
+
+  public function removeLike(PostLike $like): self
+  {
+    if ($this->likes->removeElement($like)) {
+      // set the owning side to null (unless already changed)
+      if ($like->getUser() === $this) {
+        $like->setUser(null);
       }
     }
     return $this;
@@ -437,11 +471,6 @@ class User implements UserInterface, EquatableInterface
    */
   private $identityDocumentNumber;
 
-  /**
-   * @ORM\OneToMany(targetEntity=PostLike::class, mappedBy="user")
-   */
-  private $likes;
-
   public function getIdentityDocumentNumber(): ?string
   {
     return $this->identityDocumentNumber;
@@ -459,7 +488,7 @@ class User implements UserInterface, EquatableInterface
    */
   public function eraseCredentials()
   {
-    $this->plainTextPassword = null;
+    $this->plainPassword = null;
   }
 
   public function getUsername(): string
@@ -485,16 +514,5 @@ class User implements UserInterface, EquatableInterface
     return $this->email;
   }
 
-  public function removeLike(PostLike $like): self
-  {
-    if ($this->likes->removeElement($like)) {
-      // set the owning side to null (unless already changed)
-      if ($like->getUser() === $this) {
-        $like->setUser(null);
-      }
-    }
-
-    return $this;
-  }
 
 }
