@@ -12,6 +12,7 @@
         "elao/enum": "^1.17",
         "gedmo/doctrine-extensions": "^3.5",
         "knplabs/knp-paginator-bundle": "^5.8",
+        "mercuryseries/flashy-bundle": "^4.0",
         "phpdocumentor/reflection-docblock": "^5.3",
         "sensio/framework-extra-bundle": "^5.1",
         "stof/doctrine-extensions-bundle": "^1.7",

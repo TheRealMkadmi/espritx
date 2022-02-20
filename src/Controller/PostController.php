@@ -93,11 +93,12 @@ class PostController extends AbstractController
                 $post->setUser($repository->find($this->getUser()->getId()));
                 $em->persist($post);
                 $em->flush();
+                $request->getSession()->getFlashBag()->add("info", "Publication ajoutée ");
 
 
-                $this->addFlash("success", "Publication ajoutée ");
+               // $this->addFlash("info", "Publication ajoutée ");
 
-
+                return $this->redirectToRoute("acceuil_user_posts");
 
             }
 
@@ -105,6 +106,7 @@ class PostController extends AbstractController
             echo "Exception Found - " . $e->getMessage() . "<br/>";
         }
         return $this->render('views/content/posts/User/newPost.html.twig', ['form' => $form1->createView()]);
+
     }
 ////////////////////Modifuer Post ////////////////////////////////////
 /// En tant qu'utilisateur, je veux modifier une publication.
@@ -366,7 +368,7 @@ class PostController extends AbstractController
      * @return Response
      * @Route ("/post/{id}/like", name="post_like")
      */
-    public function like(Post $post, PostLikeRepository $likeRepository):Response{
+    public function like(Request $request,Post $post, PostLikeRepository $likeRepository):Response{
         $em = $this->getDoctrine()->getManager();
         $user=$this->getUser();
         // savoir si le user est connecté ou nn
@@ -383,7 +385,7 @@ class PostController extends AbstractController
             ]);
             $em->remove($like);
             $em->flush();
-
+            $request->getSession()->getFlashBag()->add("info", "oh oh !! ");
             return $this->json([
                 'code'=>200,
                 'message'=>'like bien supprimé',
@@ -397,11 +399,13 @@ class PostController extends AbstractController
             ->setUser($user);
         $em->persist($like);
         $em->flush();
+        $request->getSession()->getFlashBag()->add('info', 'Merci');
         return $this->json([
             'code'=>200,
             'message'=>'like bien ajouté',
             'likess'=>$likeRepository->count(['post'=>$post])
         ],200);
+
 
 
     }
