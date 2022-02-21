@@ -47,4 +47,20 @@ class CommentaireRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
+    public function getCommentsForPost($postId)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('c')
+            ->where('c.post = :post_id')
+            ->addOrderBy('c.created_at')
+            ->setParameter('post_id', $postId);
+
+
+
+        return $qb->getQuery()
+            ->getResult();
+    }
+
 }
