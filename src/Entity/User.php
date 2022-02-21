@@ -9,10 +9,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\PreUpdate;
 use Doctrine\ORM\PersistentCollection;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Symfony\Component\Security\Core\User\{EquatableInterface, UserInterface};
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\EquatableInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -21,6 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  * @ORM\HasLifecycleCallbacks
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class User implements UserInterface, EquatableInterface
 {
@@ -471,6 +473,11 @@ class User implements UserInterface, EquatableInterface
    */
   private $identityDocumentNumber;
 
+  /**
+   * @ORM\Column(type="boolean")
+   */
+  private $isVerified = false;
+
   public function getIdentityDocumentNumber(): ?string
   {
     return $this->identityDocumentNumber;
@@ -512,6 +519,18 @@ class User implements UserInterface, EquatableInterface
   public function __toString(): string
   {
     return $this->email;
+  }
+
+  public function isVerified(): bool
+  {
+      return $this->isVerified;
+  }
+
+  public function setIsVerified(bool $isVerified): self
+  {
+      $this->isVerified = $isVerified;
+
+      return $this;
   }
 
 
