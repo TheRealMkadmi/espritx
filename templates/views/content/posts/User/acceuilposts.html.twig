@@ -327,6 +327,24 @@
                 <div class="container">
                     <div class="row">
 
+
+                        <form name="form" method="get" id="{{ post.id }}" class="comment"
+                              action="{{ path('newcomment',{'id':post.id}) }}">
+                            <input type="text" placeholder="Ecrivez votre commentaire ici ..."
+                                   style="padding: 11px;width: 490px" name="aa" id="aa" class="texte">
+
+                            <br>
+
+                            <div style="background-color: #F6FDFE;padding: 1px;border-radius: 20px">
+                                            <span style="font-size: medium;font-weight: bold;margin-left: 10px" id="11"
+                                                  class="c1"></span>
+                                <p class="msg" id="msg" style="font-size: small;margin-left: 10px"></p>
+                            </div>
+
+                        </form>
+
+
+
                         <div class="col-lg-6 offset-lg-3">
 
                             <div class="cardbox shadow-lg bg-white">
@@ -529,6 +547,52 @@
         document.querySelectorAll('a.js-like').forEach(function (link) {
             link.addEventListener('click', onClickBtnLike)
         })
+
+
+
+
+
+
+        function onClickBtnComment(event) {
+            event.preventDefault();
+            const url = this.action;
+            console.log(url);
+            var com = this.querySelector('.msg');
+            var span = this.querySelector('.c1');
+            var count = this.querySelector('.count');
+            var texte = this.querySelector('.texte');
+            console.log(texte);
+            let data = new FormData(this);
+            axios.post(url, data).then(function (response) {
+                // $('#count').load(document.URL +  ' #count');
+                console.log(response.data);
+                count.textContent = response.data.nbrcomments;
+                span.textContent = response.data.message;
+                {% if  app.user %}
+                com.textContent = " Ajouté par {{ app.user.firstName |upper }} " ;
+                window.alert('Votre commentaire est  bien ajouté! ');
+                {% endif %}
+                $('#aa').value = "";
+
+             //    $('#msg').load(document.URL +  ' #msg');
+            }).catch(function (error) {
+                window.alert('pardon!! vous ne pouvez pas liker un article si vous n\'etes pas connecté! ');
+            })
+        }
+
+        document.querySelectorAll('form.comment').forEach(function (link) {
+            link.addEventListener('submit', onClickBtnComment)
+        });
+    </script>
+
+
+
+
+
+
+
+
+
 
     </script>
 

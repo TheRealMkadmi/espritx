@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\CommentaireRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
  * @ORM\Entity(repositoryClass=CommentaireRepository::class)
@@ -100,4 +102,8 @@ class Commentaire
 
         return $this;
     }
+
+
+
+
 }

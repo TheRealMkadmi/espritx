@@ -288,4 +288,11 @@ class Post
 
     }
 
+    public function getPost($length = null)
+    {
+        if (false === is_null($length) && $length > 0)
+            return substr($this->getPost(), 0, $length);
+        else
+            return $this->getPost();
+    }
 }

@@ -194,7 +194,9 @@ class PostController extends AbstractController
     {
         $commentaire = new Commentaire();
         $form = $this->createForm(CommentaireType::class, $commentaire);
-        $posts = $repository->findAll();
+        $posts = $repository->getLatestPosts();
+
+        $forms = [];
 
 
         return $this->render('views/content/posts/User/acceuilposts.html.twig', [ 'posts' => $posts,'form' => $form->createView()]);
@@ -229,22 +231,22 @@ class PostController extends AbstractController
         $form=$this->createForm(CommentaireType::class,$commentaire);
         $form->handleRequest($request);
 
-        // $data = $request->request->get('aa');
-//        dd($data);
-        if ($form->isSubmitted() && $form->isValid()) {
+        $data = $request->request->get('aa');
+     //  dd($data);
+        //if ($form->isSubmitted() && $form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
             $commentaire->setCreatedAt($now);
             $commentaire->setUser($rep->find($this->getUser()->getId()));
             $commentaire->setPost($pub);
-
+        $commentaire->setContent($data);
             $em->persist($commentaire);
             $em->flush();
             return $this->json(['code' => 200, 'nbrcomments' => $pub->getCommentaires()->count(),
                 'dateajout' => $commentaire->getCreatedAt()->format('H:i')], 200);
-        }
-        return $this->json(['code' => 200, 'nbrcomments' => $pub->getCommentaires()->count(),
-        ], 200);
+      //  }
+     //   return $this->json(['code' => 200, 'nbrcomments' => $pub->getCommentaires()->count(),
+       // ], 200);
     }
 
 
