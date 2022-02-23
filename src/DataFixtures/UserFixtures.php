@@ -32,8 +32,7 @@ class UserFixtures extends AbstractFixtureEx implements DependentFixtureInterfac
       $user->setFirstName($generator->firstName);
       $user->setLastName($generator->lastName);
       $user->setEmail("test_user_" . $generator->unique()->randomNumber(5) . "@esprit.tn");
-      $user->setPhonenumber($generator->phoneNumber);
-
+      $user->setPhoneNumber($generator->phoneNumber);
       $user->setUserStatus(UserStatus::Random());
       $user->setClass("3A" . $generator->randomNumber(2));
       $user->setIdentityType(DocumentIdentityTypeEnum::Random());

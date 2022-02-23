@@ -22,6 +22,8 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\Twig\AvatarExtension:
+        tags: [twig.extension]
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
     App\Controller\:
@@ -35,6 +37,13 @@ services:
         arguments: [ '@security.helper', '@doctrine.orm.entity_manager' ]
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
+
+    user_listener:
+        class: App\Entity\Listener\UserListener
+        public: false
+        autowire: true
+        tags:
+            - {name: doctrine.orm.entity_listener}
 
     Tetranz\Select2EntityBundle\Service\AutocompleteService: "@tetranz_select2entity.autocomplete_service"
     app.login_listener:

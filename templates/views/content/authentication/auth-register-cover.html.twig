@@ -67,21 +67,24 @@
           <h2 class="card-title fw-bold mb-1">Adventure starts here 🚀</h2>
           <p class="card-text mb-2">Make your app management easy and fun!</p>
           {{ form_start(form, {'method': 'POST'}) }}
-            <div class="mb-1">
-              {{ form_row(form.email) }}
+          {% for flash_error in app.flashes('verify_email_error') %}
+            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+          {% endfor %}
+          <div class="mb-1">
+            {{ form_row(form.email) }}
+          </div>
+          <div class="mb-1">
+            {{ form_row(form.plainPassword{
+              label: 'Password'
+            }) }}
+          </div>
+          <div class="mb-1">
+            <div class="form-check">
+              {{ form_row(registrationForm.agreeTerms) }}
             </div>
-            <div class="mb-1">
-              {{ form_row(form.password) }}
-            </div>
-            <div class="mb-1">
-              <div class="form-check">
-                <input class="form-check-input" id="register-privacy-policy" type="checkbox" tabindex="4"/>
-                <label class="form-check-label" for="register-privacy-policy">I agree to<a href="#">&nbsp;privacy policy
-                    & terms</a></label>
-              </div>
-            </div>
-            <button class="btn btn-primary w-100" tabindex="5">Sign up</button>
-          </form>
+          </div>
+          <button class="btn btn-primary w-100" tabindex="5">Sign up</button>
+          {{ form_end(form) }}
           <p class="text-center mt-2">
             <span>Already have an account?</span>
             {# {{path('auth/login-cover')}} #}

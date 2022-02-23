@@ -20,7 +20,7 @@
       <h4 class="card-title">User Details</h4>
     </div>
     <div class="card-body">
-      {{ form_start(form, {'method': 'POST'}) }}
+      {{ form_start(form, {'attr':{'novalidate':'novalidate', 'method': 'POST'}} ) }}
       <div class="row">
 
         <div class="col-md-6 col-12">
@@ -31,7 +31,7 @@
         </div>
 
         <div class="col-md-6 col-12">
-          {{ form_row(form.phonenumber) }}
+          {{ form_row(form.phoneNumber) }}
         </div>
         <div class="col-md-6 col-12">
           {{ form_row(form.email) }}
@@ -56,6 +56,12 @@
         </div>
         <div class="col-md-6 col-12">
           {{ form_row(form.individualPermissions) }}
+        </div>
+        <div class="col-md-6 col-12">
+          {{ form_row(form.avatarFile) }}
+        </div>
+        <div class="col-md-6 col-12">
+          {{ form_row(form.plainPassword) }}
         </div>
 
         <div class="d-flex justify-content-end gap-1 mt-1">

@@ -7,22 +7,28 @@ use App\Enum\UserStatus;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\PersistentCollection;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Vich\UploaderBundle\Entity\File as EmbeddedFile;
 
 /**
- * This entity violates just a bit the design paradigm of Doctrine. We're going the ActiveRecord way for ergonomics.
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  * @ORM\HasLifecycleCallbacks
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @Vich\Uploadable
+ * @ORM\EntityListeners({"App\Entity\Listener\UserListener"})
  */
 class User implements UserInterface, EquatableInterface
 {
@@ -36,6 +42,7 @@ class User implements UserInterface, EquatableInterface
     $this->userStatus = UserStatus::get(UserStatus::PENDING);
     $this->commentaires = new ArrayCollection();
     $this->likes = new ArrayCollection();
+    $this->avatar = new EmbeddedFile();
   }
 
   //<editor-fold desc="id">
@@ -52,6 +59,50 @@ class User implements UserInterface, EquatableInterface
     return $this->id;
   }
   //</editor-fold>
+
+  //<editor-fold desc="Avatar">
+  /**
+   * NOTE: This is not a mapped field of entity metadata, just a simple property.
+   *
+   * @Vich\UploadableField(
+   *   mapping="avatar_image",
+   *   fileNameProperty="avatar.name"
+   * )
+   *
+   * @var File|null
+   */
+  private ?File $avatarFile = null;
+
+  public function setAvatarFile(File|UploadedFile|null $avatarFile = null) : static
+  {
+    $this->avatarFile = $avatarFile;
+    if ($avatarFile !== null) {
+      $this->updatedAt = new \DateTimeImmutable();
+    }
+    return $this;
+  }
+
+  public function getAvatarFile(): ?File
+  {
+    return $this->avatarFile;
+  }
+
+  /**
+   * @ORM\Embedded(class="Vich\UploaderBundle\Entity\File")
+   */
+  private ?EmbeddedFile $avatar;
+  public function setAvatar(?EmbeddedFile $avatar): static
+  {
+    $this->avatar = $avatar;
+    return $this;
+  }
+
+  public function getAvatar(): ?EmbeddedFile
+  {
+    return $this->avatar;
+  }
+  //</editor-fold>
+
   //<editor-fold desc="First Name">
   /**
    * @Assert\NotNull
@@ -127,17 +178,16 @@ class User implements UserInterface, EquatableInterface
    * @Assert\Regex("/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/")
    * @ORM\Column(type="string", length=255, nullable=true)
    */
-  private $phonenumber;
+  private ?string $phoneNumber = null;
 
-  public function getPhonenumber(): ?string
+  public function getPhoneNumber(): ?string
   {
-    return $this->phonenumber;
+    return $this->phoneNumber;
   }
 
-  public function setPhonenumber(?string $phonenumber): self
+  public function setPhoneNumber(?string $phonenumber): self
   {
-    $this->phonenumber = $phonenumber;
-
+    $this->phoneNumber = $phonenumber;
     return $this;
   }
   //</editor-fold>
@@ -162,7 +212,7 @@ class User implements UserInterface, EquatableInterface
   }
   //</editor-fold>
   //<editor-fold desc="PlainPassword">
-  protected ?string $plainPassword;
+  protected ?string $plainPassword = null;
 
   public function setPlainPassword(?string $password): static
   {
@@ -174,21 +224,9 @@ class User implements UserInterface, EquatableInterface
     return $this;
   }
 
-  public function getPlainTextPassword(): ?string
+  public function getPlainPassword(): ?string
   {
     return $this->plainPassword;
-  }
-
-  /**
-   * @ORM\PreUpdate
-   * @ORM\PrePersist
-   */
-  public function storePassword(UserPasswordEncoderInterface $passwordEncoder): void
-  {
-    if (!$this->getPlainTextPassword()) {
-      return;
-    }
-    $this->setPassword($passwordEncoder->encodePassword($this, $this->getPlainTextPassword()));
   }
   //</editor-fold>
   //<editor-fold desc="Password">
@@ -523,14 +561,14 @@ class User implements UserInterface, EquatableInterface
 
   public function isVerified(): bool
   {
-      return $this->isVerified;
+    return $this->isVerified;
   }
 
   public function setIsVerified(bool $isVerified): self
   {
-      $this->isVerified = $isVerified;
+    $this->isVerified = $isVerified;
 
-      return $this;
+    return $this;
   }
 
 
