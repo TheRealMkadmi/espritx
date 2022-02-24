@@ -85,7 +85,7 @@ class SerRequestController extends AbstractController
     {
         $em->remove($serreq);
         $em->flush();
-        return $this->redirectToRoute('/request/', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('ser_requests', [], Response::HTTP_SEE_OTHER);
     }
 
 }

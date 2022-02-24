@@ -71,7 +71,7 @@ class ServiceRequest
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $Status;
+    private $Status = "Unseen";
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
