@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\User;
 use App\Enum\DocumentIdentityTypeEnum;
 use App\Enum\UserStatus;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -12,6 +13,8 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends AbstractFixtureEx implements DependentFixtureInterface
 {
+  public const LOADED_USER_FIXTURES = "loaded_users";
+
   private UserPasswordEncoderInterface $passwordEncoder;
 
   public function __construct(
@@ -53,7 +56,7 @@ class UserFixtures extends AbstractFixtureEx implements DependentFixtureInterfac
       $testing_users->add($user);
     }
     $manager->flush();
-    $this->addReferenceArray(self::LOADED_ROLE_FIXTURES, $testing_users);
+    $this->addReferenceArray(self::LOADED_USER_FIXTURES, $testing_users);
   }
 
   public function getDependencies()

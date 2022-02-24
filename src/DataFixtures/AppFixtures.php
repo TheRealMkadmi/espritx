@@ -18,6 +18,6 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
 
   public function getDependencies()
   {
-    return [UserFixtures::class, ServiceFixtures::class];
+    return [UserFixtures::class, ServiceRequestsFixtures::class];
   }
 }

@@ -11,6 +11,8 @@ use Faker\Factory;
 
 class ServiceFixtures extends AbstractFixtureEx implements DependentFixtureInterface
 {
+  public const LOADED_SERVICE_FIXTURES = "loaded_services";
+
   public function load(ObjectManager $manager): void
   {
     $groups = $this->getReferenceArray(GroupFixtures::LOADED_ROLE_FIXTURES)->toArray();
@@ -28,7 +30,7 @@ class ServiceFixtures extends AbstractFixtureEx implements DependentFixtureInter
       $testing_services->add($service);
     }
     $manager->flush();
-    $this->addReferenceArray(self::LOADED_ROLE_FIXTURES, $testing_services);
+    $this->addReferenceArray(self::LOADED_SERVICE_FIXTURES, $testing_services);
   }
 
   public function getDependencies()
