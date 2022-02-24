@@ -41,7 +41,8 @@ class UserType extends AbstractBootstrapType
     $builder->add("avatarFile", VichImageType::class, [
       'allow_delete' => true,
       'delete_label' => "Delete?",
-      'image_uri' => false
+      'image_uri' => false,
+      'download_uri' => false,
     ]);
   }
 
