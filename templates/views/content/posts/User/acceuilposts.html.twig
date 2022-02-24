@@ -320,6 +320,17 @@
 
 {% endfor %}
 
+
+
+
+
+
+
+
+
+
+
+
     {% for post in posts %}
 
         {% if post.isDeleted == 0 %}
@@ -327,21 +338,6 @@
                 <div class="container">
                     <div class="row">
 
-
-                        <form name="form" method="get" id="{{ post.id }}" class="comment"
-                              action="{{ path('newcomment',{'id':post.id}) }}">
-                            <input type="text" placeholder="Ecrivez votre commentaire ici ..."
-                                   style="padding: 11px;width: 490px" name="aa" id="aa" class="texte">
-
-                            <br>
-
-                            <div style="background-color: #F6FDFE;padding: 1px;border-radius: 20px">
-                                            <span style="font-size: medium;font-weight: bold;margin-left: 10px" id="11"
-                                                  class="c1"></span>
-                                <p class="msg" id="msg" style="font-size: small;margin-left: 10px"></p>
-                            </div>
-
-                        </form>
 
 
 
@@ -353,18 +349,29 @@
                                     <!-- START dropdown-->
                                     <div class="dropdown float-right">
                                         {% if app.user == post.user %}
+
+
+
+
+
                                         <details class="dropdown">
                                             <summary role="button">
                                                 <a class="button"> <em class="fa fa-ellipsis-h"></em></a>
                                             </summary>
                                             <ul>
 
+
                                                 <li><a href="{{ path('editpost', {'id': post.id}) }}">Modifier</a></li>
                                                 <li>
                                                     <a href="{{ path('changedelete_post', {'id': post.id}) }}">Supprimer</a>
                                                 </li>
                                             </ul>
-                                            {% endif %}                    </details>
+
+                                        </details>
+                                            {% if  not post.isValid %}
+                                                <p style="size: 8px" class="btn-warning " > <i class="fa fa-times">Votre publication en attente de verification par notre admin</i></p>
+                                            {% endif %}
+                                        {% endif %}
 
                                     </div><!--/ dropdown -->
                                     <div class="media m-0">
@@ -389,15 +396,17 @@
                                     <div class="cardbox-item">
 
                                         {{ post.content }}
+
+
                                         <img class="img-fluid"
-                                             src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/1.jpg"
+                                             src="{{ asset('uploads/brochures/' ~ post.image) }}"
                                              alt="Image">
                                     </div>
                                 </div><!--/ cardbox-item -->
                                 <div class="cardbox-base">
                                     <ul class="float-right">
                                         <li><a><i class="fa fa-comments"></i></a></li>
-                                        <li><a href="#"><em class="mr-5">{{ post.commentaires | length }}</em></a></li>
+                                        <li><a href="{{ path('singlepost',{'id':post.id}) }}"><em class="mr-5">{{ post.commentaires | length }}</em></a></li>
                                         <li><a><i class="fa fa-share-alt"></i></a></li>
                                         <li><a><em class="mr-3">03</em></a></li>
                                     </ul>
@@ -436,7 +445,25 @@
                                 <!--/ cardbox-base -->
 
 
-                                <div class="cardbox-comments">
+
+
+
+
+                                    <form name="form" method="get" id="{{ post.id }}" class="comment"
+                                          action="{{ path('newcomment',{'id':post.id}) }}">
+                                        <input type="text" placeholder="Ecrivez votre commentaire ici ..."
+                                               style="padding: 11px;width: 490px" name="aa" id="aa" class="texte">
+
+                                        <br>
+                                        <p  id="m" style="font-size: small;margin-left: 10px"></p>
+
+
+
+
+
+                                    </form>
+
+                                    {#
 			  <span class="comment-avatar float-left">
 		        <a class="btn btn-primary"
                    href="{{ path('comment_new',{"id":post.id}) }}"><i
@@ -454,22 +481,26 @@
                                         <input placeholder="Write a comment" type="text">
                                         <button><i class="fa fa-camera"></i></button>
                                     </div>
-                                    <!--/. Search -->
-                                </div>
+                                    <!--/. Search -->  #}
+
                                 <!--/ cardbox-like -->
 
-                                {% for comm in post.commentaires %}
 
-                                    <div style="background-color: #F8F9F9;padding: 1px;border-radius: 20px" id="add"
+
+                          {#    {% for comm in post.commentaires |slice (0) %}#}
+                                {% for comm in comments %}
+                                    {% if post.id is same as comm.post.id %}
+                                    <div style="background-color: #F8F9F9;padding: 3px;border-radius: 20px" id="add"
                                          class="add">
                                         <p>
-
-
                                         <p id="part2" style="font-size: small">Ajouté par <span
-                                                    style="font-weight: bold">{{ comm.user.firstName |upper }}  </span>le {{ comm.createdAt|date('d/m/Y H:i') }}
+                                                    style="font-weight: bold">{{ comm.user.firstName  }}  </span>le {{ comm.createdAt|date('d/m/Y H:i') }}
                                         </p>
+                                            <span>{{ comm.content }}</span>
 
-                                        <span>{{ comm.content }}</span>
+
+
+
                                         {% if app.user == comm.user %}
                                             <a href="{{ path('editcomment', {'id': comm.id}) }}">modifier</a>
                                             <a href="{{ path('delete_commnt_user', {'id': comm.id}) }}">supprimer</a>
@@ -479,6 +510,7 @@
 
                                     </div>
                                     <br>
+                                    {% endif %}
                                 {% endfor %}
 
                             </div>
@@ -499,6 +531,9 @@
             </section>
         {% endif %}
     {% endfor %}
+
+
+
 {% endblock %}
 
 
@@ -561,40 +596,51 @@
             var span = this.querySelector('.c1');
             var count = this.querySelector('.count');
             var texte = this.querySelector('.texte');
-            console.log(texte);
+
+            var inputVal = document.getElementById("aa").value;
+
             let data = new FormData(this);
             axios.post(url, data).then(function (response) {
                 // $('#count').load(document.URL +  ' #count');
-                console.log(response.data);
+                console.log(inputVal);
+                //  console.log(response.data);
                 count.textContent = response.data.nbrcomments;
                 span.textContent = response.data.message;
-                {% if  app.user %}
-                com.textContent = " Ajouté par {{ app.user.firstName |upper }} " ;
-                window.alert('Votre commentaire est  bien ajouté! ');
-                {% endif %}
-                $('#aa').value = "";
+                {% if app.user %}
 
-             //    $('#msg').load(document.URL +  ' #msg');
+               com.textContent = " Ajouté par {{ app.user.firstName |upper }} " + "  à " + "  " + response.data.dateajout;
+                {% endif %}
+        // $('#aa').value = "";
+                // $('#msg').load(document.URL +  ' #msg');
+
+
+
+               // document.getElementById("msg1").innerHTML="dddd";
             }).catch(function (error) {
-                window.alert('pardon!! vous ne pouvez pas liker un article si vous n\'etes pas connecté! ');
+                console.log(error)
             })
+            {% if app.user %}
+                document.getElementById("m").innerHTML = "Ajouté a l'instant  par {{ app.user.firstName |upper }} <br/>" + inputVal;
+            {% endif %}
         }
 
         document.querySelectorAll('form.comment').forEach(function (link) {
+
             link.addEventListener('submit', onClickBtnComment)
         });
-    </script>
-
-
-
-
-
-
-
-
-
 
     </script>
+
+
+
+
+
+
+
+
+
+
+
 
 
 {% endblock %}
