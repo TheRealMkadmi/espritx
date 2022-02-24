@@ -18,25 +18,25 @@
         <!-- list and filter start -->
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Manage requests</h4>
+                <h4 class="card-title">Manage requests {{ ser.Name }}</h4>
             </div>
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-1">
         <span class="card-text">
           You can view and answer requests in the table below.
         </span>
-                    <a class="btn btn-primary waves-effect waves-float waves-light" href="{{ url('SerivceReq_Add') }}">Add</a>
+                    <a class="btn btn-primary waves-effect waves-float waves-light" href="{{ url('ser_requests') }}">Show All</a>
                 </div>
                 <div class="table-responsive row">
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th{% if pagination.isSorted('sr.Title') %} class="sorted"{% endif %}>
-                                {{ knp_pagination_sortable(pagination, 'Title', 'sr.Title') }}
+                            <th>
+                                {{ 'Title' }}
                             </th>
 
-                            <th{% if pagination.isSorted('sr.Type') %} class="sorted"{% endif %}>
-                                {{ knp_pagination_sortable(pagination, 'Type', 'sr.Type') }}
+                            <th>
+                                {{ 'Type' }}
                             </th>
 
                             <th>
@@ -47,14 +47,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for requests in pagination %}
+                        {% for requests in SerReq %}
                             <tr>
                                 <td>
                                     <!-- BEGIN: Title and creation date-->
                                     <div class="d-flex justify-content-left align-items-center">
                                         <div class="d-flex flex-column">
                                                 <span class="fw-bolder fs-6">{{ requests.Title }}</span>
-
                                             {#  <small class="emp_post text-muted">{{ requests.Created_At }}</small>#}
                                         </div>
                                     </div>
@@ -63,7 +62,7 @@
                                 <td>
                                     <div class="d-flex justify-content-left align-items-center">
                                         <div class="d-flex flex-column">
-                                                <span class="fw-bolder fs-6">{{ requests.Type }}</span>
+                                            <span class="fw-bolder fs-6">{{ requests.Type }}</span>
                                         </div>
                                     </div>
                                 </td>
@@ -86,17 +85,6 @@
                         {% endfor %}
                         </tbody>
                     </table>
-                </div>
-
-                <div class="d-flex justify-content-between my-2">
-                    <div class="col-sm-12 col-md-6 text-muted">
-                        Showing {{ ((pagination.currentPageNumber - 1) * pagination.itemNumberPerPage) + 1 }}
-                        to {{ min(pagination.currentPageNumber * pagination.itemNumberPerPage, pagination.getTotalItemCount) }}
-                        of {{ pagination.getTotalItemCount }} entries
-                    </div>
-                    <div class="col-sm-12 col-md-6 navigation">
-                        {{ knp_pagination_render(pagination) }}
-                    </div>
                 </div>
             </div>
         </div>

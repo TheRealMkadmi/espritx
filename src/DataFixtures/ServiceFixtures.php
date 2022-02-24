@@ -14,7 +14,7 @@ class ServiceFixtures extends AbstractFixtureEx implements DependentFixtureInter
   {
     $groups = $this->getReferenceArray(GroupFixtures::LOADED_ROLE_FIXTURES)->toArray();
     $generator = Factory::create();
-    for ($i = 0; $i < 30; $i++) {
+    for ($i = 0; $i < 10; $i++) {
       $service = new Service();
       $service->setName("Demand of " . str_replace("'", "", implode(" ", $generator->words(2))));
       /** @var Group $group */
