@@ -32,7 +32,7 @@
       "slug": "",
       "submenu": [
         {
-          "__url__": "#",
+          "__url__": "login",
           "name": "Logout",
           "icon": "circle",
           "slug": ""
@@ -62,13 +62,13 @@
       "slug": "",
       "submenu": [
         {
-          "__url__": "#",
+          "url": "group_index",
           "name": "Roles",
           "icon": "circle",
           "slug": "users-roles"
         },
         {
-          "__url__": "#",
+          "url": "permission_index",
           "name": "Permission",
           "icon": "circle",
           "slug": "users-permissions"
@@ -81,12 +81,13 @@
       "slug": "",
       "submenu": [
         {
-          "__url__": "#",
+          "url": "user_index",
           "name": "List",
           "icon": "circle",
           "slug": "users-list"
         },
         {
+          "url": "user_create",
           "name": "Add",
           "icon": "circle",
           "slug": ""
@@ -105,7 +106,7 @@
       "slug": "Groups-Users"
     },
     {
-      "__url__": "#",
+      "url": "postall",
       "name": "Posts",
       "icon": "file-text",
       "slug": "Posts"
@@ -152,12 +153,13 @@
       "slug": ""
     },
     {
+      "url": "service",
       "name": "Service-Groups",
       "icon": "briefcase",
       "slug": ""
     },
     {
-      "__url__": "#",
+      "url": "ser_requests",
       "name": "Requests",
       "icon": "server",
       "slug": "Service-Requests"
