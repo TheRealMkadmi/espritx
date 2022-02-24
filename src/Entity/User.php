@@ -28,9 +28,9 @@ use Vich\UploaderBundle\Entity\File as EmbeddedFile;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  * @ORM\HasLifecycleCallbacks
+ * @ORM\EntityListeners({"App\Entity\Listener\UserListener"})
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  * @Vich\Uploadable
- * @ORM\EntityListeners({"App\Entity\Listener\UserListener"})
  */
 class User implements UserInterface, EquatableInterface, \Serializable
 {
@@ -116,14 +116,14 @@ class User implements UserInterface, EquatableInterface, \Serializable
    * )
    * @ORM\Column(type="string", length=20)
    */
-  private string $first_name;
+  private ?string $first_name = null;
 
-  public function getFirstName(): string
+  public function getFirstName(): ?string
   {
     return $this->first_name;
   }
 
-  public function setFirstName(string $first_name): self
+  public function setFirstName(?string $first_name): self
   {
     $this->first_name = $first_name;
     return $this;
@@ -140,14 +140,14 @@ class User implements UserInterface, EquatableInterface, \Serializable
    * )
    * @ORM\Column(type="string", length=25)
    */
-  private string $last_name;
+  private ?string $last_name = null;
 
-  public function getLastName(): string
+  public function getLastName(): ?string
   {
     return $this->last_name;
   }
 
-  public function setLastName(string $last_name): self
+  public function setLastName(?string $last_name): self
   {
     $this->last_name = $last_name;
     return $this;
@@ -159,17 +159,17 @@ class User implements UserInterface, EquatableInterface, \Serializable
    * @Assert\Email(
    *    message = "The email '{{ value }}' is not a valid email."
    * )
-   * @var string
+   * @var string|null
    * @ORM\Column(type="string", unique=true)
    */
-  protected string $email;
+  protected ?string $email = null;
 
   public function getEmail(): ?string
   {
     return $this->email;
   }
 
-  public function setEmail($email): static
+  public function setEmail(?string $email): static
   {
     $this->email = $email;
     return $this;
@@ -179,6 +179,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
   /**
    * @Assert\Regex("/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/")
    * @ORM\Column(type="string", length=255, nullable=true)
+   * @Assert\NotBlank
    */
   private ?string $phoneNumber = null;
 
@@ -214,6 +215,13 @@ class User implements UserInterface, EquatableInterface, \Serializable
   }
   //</editor-fold>
   //<editor-fold desc="PlainPassword">
+  /**
+   * @var string|null
+   * @Assert\Expression(
+   *   "(this.getPassword() != '' and value == '') or (value == '' and this.getPassword() != '')",
+   *    message="A password of at least 6 characters must be set."
+   * )
+   */
   protected ?string $plainPassword = null;
 
   public function setPlainPassword(?string $password): static
@@ -279,11 +287,12 @@ class User implements UserInterface, EquatableInterface, \Serializable
   /**
    * @ORM\Column(name="last_activity_at", type="datetime", nullable=true)
    */
-  protected ?\DateTime $lastActivityAt;
+  protected ?\DateTime $lastActivityAt = null;
 
-  public function setLastActivityAt(\DateTime $lastActivityAt)
+  public function setLastActivityAt(?\DateTime $lastActivityAt): static
   {
     $this->lastActivityAt = $lastActivityAt;
+    return $this;
   }
 
   public function getLastActivityAt(): ?\DateTime
@@ -293,7 +302,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
   public function isActiveNow(): bool
   {
-    $delay = new \DateTime('1 minutes ago');
+    $delay = new \DateTime('5 minutes ago');
     return ($this->getLastActivityAt() > $delay);
   }
   //</editor-fold>
@@ -301,14 +310,14 @@ class User implements UserInterface, EquatableInterface, \Serializable
   /**
    * @Column(type="string", nullable=true)
    */
-  protected ?string $confirmationToken;
+  protected ?string $confirmationToken = null;
 
   public function getConfirmationToken(): ?string
   {
     return $this->confirmationToken;
   }
 
-  public function setConfirmationToken(string $confirmationToken)
+  public function setConfirmationToken(string $confirmationToken): static
   {
     $this->confirmationToken = $confirmationToken;
 
@@ -385,12 +394,11 @@ class User implements UserInterface, EquatableInterface, \Serializable
   //<editor-fold desc="Permissions">
   /**
    * @ORM\ManyToMany(targetEntity=Permission::class, inversedBy="users")
-   * @Assert\Count(min="1", minMessage="User must at least have one permission.")
    */
   private Collection|array $individualPermissions;
 
   /**
-   * @return Collection|Permission[]
+   * @return Collection
    */
   public function getIndividualPermissions(): Collection
   {
@@ -432,7 +440,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
   //</editor-fold>
   //<editor-fold desc="Posts">
   /**
-   * @ORM\OneToMany(targetEntity=Post::class, mappedBy="author", orphanRemoval=true)
+   * @ORM\OneToMany(targetEntity=Post::class, mappedBy="user", orphanRemoval=true)
    */
   private Collection $posts;
 
@@ -510,13 +518,10 @@ class User implements UserInterface, EquatableInterface, \Serializable
   /**
    * @ORM\Column(type="string", length=8, nullable=true)
    * @Assert\Regex("/([A-Z0-9<]{9}[0-9]{1}[A-Z]{3}[0-9]{7}[A-Z]{1}[0-9]{7}[A-Z0-9<]{14}[0-9]{2})|(\d{8})/")
+   * @Assert\NotBlank
    */
-  private $identityDocumentNumber;
+  private ?string $identityDocumentNumber = null;
 
-  /**
-   * @ORM\OneToMany(targetEntity=ServiceRequest::class, mappedBy="Requester", orphanRemoval=true)
-   */
-  private $serviceRequests;
 
   public function getIdentityDocumentNumber(): ?string
   {
@@ -567,19 +572,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
   }
 
   //</editor-fold>
-
-
-  public function isEqualTo(UserInterface $user)
-  {
-    return $this->getUsername() === $user->getUsername();
-    // do we add check for password; or delegate the username uniqueness constraint to the database?
-  }
-
-  public function __toString(): string
-  {
-    return $this->email;
-  }
-
+  //<editor-fold desc="Serializable">
   public function serialize()
   {
     return serialize(array(
@@ -599,6 +592,12 @@ class User implements UserInterface, EquatableInterface, \Serializable
       'allowed_classes' => true
     ]);
   }
+  //</editor-fold>
+  //<editor-fold desc="Service Requests">
+  /**
+   * @ORM\OneToMany(targetEntity=ServiceRequest::class, mappedBy="Requester", orphanRemoval=true)
+   */
+  private $serviceRequests;
 
   /**
    * @return Collection<int, ServiceRequest>
@@ -629,4 +628,18 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     return $this;
   }
+
+  //</editor-fold>
+
+  public function isEqualTo(UserInterface $user)
+  {
+    return $this->getUsername() === $user->getUsername();
+    // do we add check for password; or delegate the username uniqueness constraint to the database?
+  }
+
+  public function __toString(): string
+  {
+    return $this->email;
+  }
+
 }

@@ -14,8 +14,15 @@ class UserListener
   }
 
   /** @ORM\PrePersist */
+  public function prePersist(User $user, LifecycleEventArgs $event): void
+  {
+    if (!empty($user->getPlainPassword())) {
+      $user->setPassword($this->encoderInterface->encodePassword($user, $user->getPlainPassword()));
+    }
+  }
+
   /** @ORM\PreUpdate */
-  public function passwordUpdateHandler(User $user, LifecycleEventArgs $event): void
+  public function preUpdate(User $user, LifecycleEventArgs $event): void
   {
     if (!empty($user->getPlainPassword())) {
       $user->setPassword($this->encoderInterface->encodePassword($user, $user->getPlainPassword()));

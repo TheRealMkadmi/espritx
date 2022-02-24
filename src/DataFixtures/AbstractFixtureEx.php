@@ -28,7 +28,7 @@ abstract class AbstractFixtureEx extends Fixture
   public function getSingleRandomItem(string $collection_reference)
   {
     $arr = $this->getReferenceArray($collection_reference)->toArray();
-    return $indices = $arr[array_rand($arr)];
+    return $arr[array_rand($arr)];
   }
 
   public function sampleReferenceArray(string $collection_reference, $n_min, $n_max)

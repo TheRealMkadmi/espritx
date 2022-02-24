@@ -18,15 +18,15 @@ class UserType extends AbstractBootstrapType
   public function buildForm(FormBuilderInterface $builder, array $options): void
   {
     $this
-      ->addSimpleTextInput($builder, 'first_name', "First Name", "What should we call you?")
-      ->addSimpleTextInput($builder, 'last_name', "Last Name", "What's your family name?")
+      ->addSimpleTextInput($builder, 'first_name', "First Name", "Please use your legal name.")
+      ->addSimpleTextInput($builder, 'last_name', "Last Name", "Please use your legal name.")
       ->addSimpleTextInput($builder, 'email', "Email", "Email")
       ->addSimpleTextInput($builder, 'plainPassword', "New Password", "Leave empty if unchanged...")
       ->addSimpleTextInput($builder, 'identityDocumentNumber', "Identity Number", "Full number of the identity provider selected")
       ->addSimpleTextInput($builder, 'phoneNumber', "Phone Number", "Please include a country code if outside Tunisia")
       ->addSimpleTextInput($builder, 'class', "Class", "Class currently enrolled in..")
       ->addSelect2EntityField($builder, 'groups', Group::class, "display_name", 'ajax_autocomplete_groups_user_form', "Select groups for this user..")
-      ->addSelect2EntityField($builder, 'individualPermissions', Permission::class, "title", 'ajax_autocomplete_permissions_user_form', "Select groups for this permission..")
+      ->addSelect2EntityField($builder, 'individualPermissions', Permission::class, "title", 'ajax_autocomplete_permissions_user_form', "Or attach individual permissions..")
       ->addButton($builder, "save")
       ->addButton($builder, "reset", "btn-outline-secondary", ResetType::class);
 
