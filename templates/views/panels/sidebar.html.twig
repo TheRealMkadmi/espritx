@@ -63,7 +63,7 @@
                     </li>
                 {% else %}
                     <li class="nav-item {{ (menu.classlist is defined) ? menu.classlist : "" }} {{ (app.request.get('_route') == menu.slug) ? 'active' : '' }}">
-                        <a href="{# {{isset(menu.url)? path($menu.url):'javascript:void(0)'}} todo: fixme #}"
+                        <a href="{{(menu.url is defined)? url(menu.url):'javascript:void(0)'}}"
                            class="d-flex align-items-center" target="{{ (menu.newTab is defined) ? '_blank':'_self' }}">
                             <i data-feather="{{ menu.icon }}"></i>
                             <span class="menu-title text-truncate">{{ menu.name }}</span>
