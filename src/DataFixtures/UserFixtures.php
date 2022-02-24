@@ -25,7 +25,7 @@ class UserFixtures extends AbstractFixtureEx implements DependentFixtureInterfac
   {
     $groups = $this->getReferenceArray(GroupFixtures::LOADED_ROLE_FIXTURES)->toArray();
     $permissions = $this->getReferenceArray(PermissionFixtures::LOADED_PERMISSION_FIXTURES)->toArray();
-
+    $testing_users = new ArrayCollection();
     $generator = Factory::create();
     for ($i = 0; $i < 50; $i++) {
       $user = new User();
@@ -50,8 +50,10 @@ class UserFixtures extends AbstractFixtureEx implements DependentFixtureInterfac
         $user->addIndividualPermission($group);
       }
       $manager->persist($user);
+      $testing_users->add($user);
     }
     $manager->flush();
+    $this->addReferenceArray(self::LOADED_ROLE_FIXTURES, $testing_users);
   }
 
   public function getDependencies()
