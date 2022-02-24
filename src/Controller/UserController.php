@@ -86,7 +86,7 @@ class UserController extends AbstractController
   }
 
   /**
-   * @Route("/{id}/update", name="user_edit", methods={"GET", "POST"})
+   * @Route("/update/{id}", name="user_edit", methods={"GET", "POST"})
    */
   public function update(Request $request, User $user, EntityManagerInterface $entityManager): Response
   {
@@ -111,11 +111,11 @@ class UserController extends AbstractController
   }
 
   /**
-   * @Route("/{id}", name="user_delete", methods={"POST"})
+   * @Route("/delete/{id}", name="user_delete", methods={"GET"})
    */
   public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
   {
-    if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+    if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->query->get('_token'))) {
       $entityManager->remove($user);
       $entityManager->flush();
     }

@@ -69,10 +69,14 @@
           {{ form_row(form.individualPermissions) }}
         </div>
         <div class="col-md-6 col-12">
-          &nbsp;
+          {% if user.password is empty %}
+            {{ form_row(form.plainPassword, {"attr" : { "placeholder" : "Choose something strong and memorable." }}) }}
+          {% else %}
+            {{ form_row(form.plainPassword, {"attr" : { "placeholder" : "Leave blank if unchanged." }}) }}
+          {% endif %}
         </div>
         <div class="col-md-6 col-12">
-          {{ form_row(form.plainPassword) }}
+          &nbsp;
         </div>
         <div class="d-flex justify-content-end gap-1 mt-1">
           {{ form_widget(form.reset) }}
