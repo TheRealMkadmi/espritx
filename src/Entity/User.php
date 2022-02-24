@@ -11,7 +11,9 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\PersistentCollection;
+use Exception;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -30,7 +32,7 @@ use Vich\UploaderBundle\Entity\File as EmbeddedFile;
  * @Vich\Uploadable
  * @ORM\EntityListeners({"App\Entity\Listener\UserListener"})
  */
-class User implements UserInterface, EquatableInterface
+class User implements UserInterface, EquatableInterface, \Serializable
 {
   use TimestampableEntity;
 
@@ -46,7 +48,6 @@ class User implements UserInterface, EquatableInterface
   }
 
   //<editor-fold desc="id">
-
   /**
    * @ORM\Id
    * @ORM\GeneratedValue
@@ -59,7 +60,6 @@ class User implements UserInterface, EquatableInterface
     return $this->id;
   }
   //</editor-fold>
-
   //<editor-fold desc="Avatar">
   /**
    * NOTE: This is not a mapped field of entity metadata, just a simple property.
@@ -102,7 +102,6 @@ class User implements UserInterface, EquatableInterface
     return $this->avatar;
   }
   //</editor-fold>
-
   //<editor-fold desc="First Name">
   /**
    * @Assert\NotNull
@@ -511,11 +510,6 @@ class User implements UserInterface, EquatableInterface
    */
   private $identityDocumentNumber;
 
-  /**
-   * @ORM\Column(type="boolean")
-   */
-  private $isVerified = false;
-
   public function getIdentityDocumentNumber(): ?string
   {
     return $this->identityDocumentNumber;
@@ -524,6 +518,22 @@ class User implements UserInterface, EquatableInterface
   public function setIdentityDocumentNumber(?string $identityDocumentNumber): self
   {
     $this->identityDocumentNumber = $identityDocumentNumber;
+    return $this;
+  }
+  //</editor-fold>
+  //<editor-fold desc="Is Verified">
+  /**
+   * @ORM\Column(type="boolean")
+   */
+  private $isVerified = false;
+  public function isVerified(): bool
+  {
+    return $this->isVerified;
+  }
+
+  public function setIsVerified(bool $isVerified): self
+  {
+    $this->isVerified = $isVerified;
     return $this;
   }
   //</editor-fold>
@@ -548,6 +558,8 @@ class User implements UserInterface, EquatableInterface
   }
 
   //</editor-fold>
+
+
   public function isEqualTo(UserInterface $user)
   {
     return $this->getUsername() === $user->getUsername();
@@ -559,17 +571,21 @@ class User implements UserInterface, EquatableInterface
     return $this->email;
   }
 
-  public function isVerified(): bool
+  public function serialize()
   {
-    return $this->isVerified;
+    return serialize(array(
+      $this->id,
+      $this->email,
+      $this->password
+    ));
   }
 
-  public function setIsVerified(bool $isVerified): self
+  public function unserialize(string $data)
   {
-    $this->isVerified = $isVerified;
-
-    return $this;
+    [
+      $this->id,
+      $this->email,
+      $this->password
+    ] = unserialize($data);
   }
-
-
 }
