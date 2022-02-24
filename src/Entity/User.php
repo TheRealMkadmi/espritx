@@ -49,6 +49,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
   }
 
   //<editor-fold desc="id">
+
   /**
    * @ORM\Id
    * @ORM\GeneratedValue
@@ -74,7 +75,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
    */
   private ?File $avatarFile = null;
 
-  public function setAvatarFile(File|UploadedFile|null $avatarFile = null) : static
+  public function setAvatarFile(File|UploadedFile|null $avatarFile = null): static
   {
     $this->avatarFile = $avatarFile;
     if ($avatarFile !== null) {
@@ -92,6 +93,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
    * @ORM\Embedded(class="Vich\UploaderBundle\Entity\File")
    */
   private ?EmbeddedFile $avatar;
+
   public function setAvatar(?EmbeddedFile $avatar): static
   {
     $this->avatar = $avatar;
@@ -512,11 +514,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
   private $identityDocumentNumber;
 
   /**
-   * @ORM\Column(type="boolean")
-   */
-  private $isVerified = false;
-
-  /**
    * @ORM\OneToMany(targetEntity=ServiceRequest::class, mappedBy="Requester", orphanRemoval=true)
    */
   private $serviceRequests;
@@ -537,6 +534,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
    * @ORM\Column(type="boolean")
    */
   private $isVerified = false;
+
   public function isVerified(): bool
   {
     return $this->isVerified;
@@ -591,42 +589,44 @@ class User implements UserInterface, EquatableInterface, \Serializable
     ));
   }
 
-    public function unserialize(string $data)
-    {
-        [
-            $this->id,
-            $this->email,
-            $this->password
-        ] = unserialize($data);
-    }
+  public function unserialize(string $data)
+  {
+    [
+      $this->id,
+      $this->email,
+      $this->password
+    ] = unserialize($data, [
+      'allowed_classes' => true
+    ]);
+  }
 
   /**
    * @return Collection<int, ServiceRequest>
    */
   public function getServiceRequests(): Collection
   {
-      return $this->serviceRequests;
+    return $this->serviceRequests;
   }
 
   public function addServiceRequest(ServiceRequest $serviceRequest): self
   {
-      if (!$this->serviceRequests->contains($serviceRequest)) {
-          $this->serviceRequests[] = $serviceRequest;
-          $serviceRequest->setRequester($this);
-      }
+    if (!$this->serviceRequests->contains($serviceRequest)) {
+      $this->serviceRequests[] = $serviceRequest;
+      $serviceRequest->setRequester($this);
+    }
 
-      return $this;
+    return $this;
   }
 
   public function removeServiceRequest(ServiceRequest $serviceRequest): self
   {
-      if ($this->serviceRequests->removeElement($serviceRequest)) {
-          // set the owning side to null (unless already changed)
-          if ($serviceRequest->getRequester() === $this) {
-              $serviceRequest->setRequester(null);
-          }
+    if ($this->serviceRequests->removeElement($serviceRequest)) {
+      // set the owning side to null (unless already changed)
+      if ($serviceRequest->getRequester() === $this) {
+        $serviceRequest->setRequester(null);
       }
+    }
 
-      return $this;
+    return $this;
   }
 }
