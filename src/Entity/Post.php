@@ -22,6 +22,7 @@ class Post
     private $id;
 
     /**
+     *@Assert\NotBlank
      *@Assert\Length(
      *      min = 3,
      *      max = 15,
@@ -82,14 +83,20 @@ class Post
     private $is_deleted;
 
     /**
-     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="post")
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="post",cascade={"remove"})
      */
     private $commentaires;
 
     /**
-     * @ORM\OneToMany(targetEntity=PostLike::class, mappedBy="post")
+     * @ORM\OneToMany(targetEntity=PostLike::class, mappedBy="post",cascade={"remove"})
      */
     private $likes;
+
+    /**
+     * @Assert\NotBlank
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $image;
 
     public function __construct()
     {
@@ -294,5 +301,17 @@ class Post
             return substr($this->getPost(), 0, $length);
         else
             return $this->getPost();
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
     }
 }
