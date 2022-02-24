@@ -20,7 +20,7 @@ class ServiceRequestsFixtures extends AbstractFixtureEx implements DependentFixt
   {
     $service_requests = new ArrayCollection();
     $generator = Factory::create();
-    for ($i = 0; $i < 10; $i++) {
+    for ($i = 0; $i < 30; $i++) {
       $service_request = new ServiceRequest();
       $service_request->setTitle(str_replace("'", "", implode(" ", $generator->words(2))));
       $service_request->setDescription(str_replace("'", "", $generator->realText(25)));
