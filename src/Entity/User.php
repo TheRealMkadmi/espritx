@@ -43,6 +43,7 @@ class User implements UserInterface, EquatableInterface
     $this->commentaires = new ArrayCollection();
     $this->likes = new ArrayCollection();
     $this->avatar = new EmbeddedFile();
+    $this->serviceRequests = new ArrayCollection();
   }
 
   //<editor-fold desc="id">
@@ -516,6 +517,11 @@ class User implements UserInterface, EquatableInterface
    */
   private $isVerified = false;
 
+  /**
+   * @ORM\OneToMany(targetEntity=ServiceRequest::class, mappedBy="Requester", orphanRemoval=true)
+   */
+  private $serviceRequests;
+
   public function getIdentityDocumentNumber(): ?string
   {
     return $this->identityDocumentNumber;
@@ -569,6 +575,36 @@ class User implements UserInterface, EquatableInterface
     $this->isVerified = $isVerified;
 
     return $this;
+  }
+
+  /**
+   * @return Collection<int, ServiceRequest>
+   */
+  public function getServiceRequests(): Collection
+  {
+      return $this->serviceRequests;
+  }
+
+  public function addServiceRequest(ServiceRequest $serviceRequest): self
+  {
+      if (!$this->serviceRequests->contains($serviceRequest)) {
+          $this->serviceRequests[] = $serviceRequest;
+          $serviceRequest->setRequester($this);
+      }
+
+      return $this;
+  }
+
+  public function removeServiceRequest(ServiceRequest $serviceRequest): self
+  {
+      if ($this->serviceRequests->removeElement($serviceRequest)) {
+          // set the owning side to null (unless already changed)
+          if ($serviceRequest->getRequester() === $this) {
+              $serviceRequest->setRequester(null);
+          }
+      }
+
+      return $this;
   }
 
 

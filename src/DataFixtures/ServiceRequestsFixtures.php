@@ -4,18 +4,17 @@ namespace App\DataFixtures;
 
 use App\Entity\Group;
 use App\Entity\Service;
-use Doctrine\Common\Collections\ArrayCollection;
+use App\Entity\ServiceRequests;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
-class ServiceFixtures extends AbstractFixtureEx implements DependentFixtureInterface
+class ServiceRequestsFixtures extends AbstractFixtureEx implements DependentFixtureInterface
 {
   public function load(ObjectManager $manager): void
   {
     $groups = $this->getReferenceArray(GroupFixtures::LOADED_ROLE_FIXTURES)->toArray();
     $generator = Factory::create();
-      $testing_services = new ArrayCollection();
     for ($i = 0; $i < 10; $i++) {
       $service = new Service();
       $service->setName("Demand of " . str_replace("'", "", implode(" ", $generator->words(2))));
@@ -25,10 +24,8 @@ class ServiceFixtures extends AbstractFixtureEx implements DependentFixtureInter
       }
       $service->setResponsible($groups[array_rand($groups)]);
       $manager->persist($service);
-      $testing_services->add($service);
     }
     $manager->flush();
-    $this->addReferenceArray(self::LOADED_ROLE_FIXTURES, $testing_services);
   }
 
   public function getDependencies()

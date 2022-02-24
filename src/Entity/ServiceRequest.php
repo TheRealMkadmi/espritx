@@ -78,6 +78,12 @@ class ServiceRequest
      */
     private $RequestResponse;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="serviceRequests")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $Requester;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -199,6 +205,18 @@ class ServiceRequest
     public function setRequestResponse(?string $RequestResponse): self
     {
         $this->RequestResponse = $RequestResponse;
+
+        return $this;
+    }
+
+    public function getRequester(): ?User
+    {
+        return $this->Requester;
+    }
+
+    public function setRequester(?User $Requester): self
+    {
+        $this->Requester = $Requester;
 
         return $this;
     }
