@@ -34,6 +34,11 @@ class Messages
      */
     private $Relat;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $Sens;
+
 
     public function getId(): ?int
     {
@@ -60,6 +65,18 @@ class Messages
     public function setRelat(?ConversationThread $Relat): self
     {
         $this->Relat = $Relat;
+
+        return $this;
+    }
+
+    public function getSens(): ?bool
+    {
+        return $this->Sens;
+    }
+
+    public function setSens(bool $Sens): self
+    {
+        $this->Sens = $Sens;
 
         return $this;
     }
