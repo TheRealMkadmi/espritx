@@ -8,7 +8,7 @@
       "slug": "",
       "submenu": [
         {
-          "__url__": "#",
+          "url": "dashboard-analytics",
           "name": "Analytics",
           "icon": "circle",
           "slug": "Dashboard-Analytics"
@@ -110,12 +110,6 @@
       "name": "Posts",
       "icon": "file-text",
       "slug": "Posts"
-    },
-    {
-      "__url__": "#",
-      "name": "Comments",
-      "icon": "layout",
-      "slug": "Comments"
     },
 
     {
