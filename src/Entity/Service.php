@@ -42,7 +42,7 @@ class Service
     private $Recipient;
 
     /**
-     * @ORM\OneToMany(targetEntity=ServiceRequest::class, mappedBy="Type")
+     * @ORM\OneToMany(targetEntity=ServiceRequest::class, mappedBy="Type" ,cascade={"remove"})
      */
     private $serviceRequests;
 
