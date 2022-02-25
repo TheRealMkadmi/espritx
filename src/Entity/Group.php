@@ -45,7 +45,7 @@ class Group
   //<editor-fold desc="Display Name">
   /**
    * @ORM\Column(type="string", length=32)
-   * @Assert\NotNull
+   * @Assert\NotBlank
    * @Assert\Length(min=5, max=25)
    */
   private ?string $display_name;
@@ -56,17 +56,16 @@ class Group
     return $this->display_name;
   }
 
-  public function setDisplayName(string $display_name): self
+  public function setDisplayName(?string $display_name): self
   {
     $this->display_name = $display_name;
-
     return $this;
   }
   //</editor-fold>
   //<editor-fold desc="Security Title">
   /**
    * @ORM\Column(type="string", length=32)
-   * @Assert\NotNull
+   * @Assert\NotBlank
    * @Assert\Length(min=5, max=32)
    */
   private ?string $security_title;
@@ -76,7 +75,7 @@ class Group
     return $this->security_title;
   }
 
-  public function setSecurityTitle(string $security_title): self
+  public function setSecurityTitle(?string $security_title): self
   {
     $security_title = strtoupper($security_title);
     if (!str_starts_with($security_title, "ROLE_")) {

@@ -27,7 +27,7 @@ class GroupFixtures extends AbstractFixtureEx implements DependentFixtureInterfa
     foreach ($chunked_perms as $permission_chunk) {
       $group = new Group();
       $group->setSecurityTitle("ROLE_TEST_" . strtoupper($generator->unique()->randomNumber(5)));
-      $group->setDisplayName(((bool)random_int(0, 1)) ? "Service " : "" . str_replace("'", "", implode(" ", $generator->words(2))));
+      $group->setDisplayName((((bool)random_int(0, 1)) ? "Service " : "") . str_replace("'", "", implode(" ", $generator->words(2))));
       $group->setGroupType(GroupType::Random());
       foreach ($permission_chunk as $permission) {
         $group->addPermission($permission);

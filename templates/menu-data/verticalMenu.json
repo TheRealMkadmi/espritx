@@ -181,6 +181,34 @@
       "icon": "folder",
       "slug": "Contact",
       "newTab": true
+    },
+    {
+      "navheader": "Communication",
+      "slug": ""
+    },
+    {
+      "name": "Messaging",
+      "icon": "user-check",
+      "slug": "",
+      "submenu": [
+        {
+          "url": "conversation",
+          "name": "Conversations",
+          "icon": "circle",
+          "slug": ""
+        },
+        {
+          "url": "message_show",
+          "name": "messages",
+          "icon": "circle",
+          "slug": ""
+        }
+      ]
+    },
+
+    {
+      "navheader": "&nbsp;",
+      "slug": ""
     }
   ]
 }
