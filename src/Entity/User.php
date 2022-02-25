@@ -177,7 +177,8 @@ class User implements UserInterface, EquatableInterface, \Serializable
   //</editor-fold>
   //<editor-fold desc="Phone Number">
   /**
-   * @Assert\Regex("/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/")
+   * @Assert\Regex("/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/",
+   * message="Respect this format: +21611111111")
    * @ORM\Column(type="string", length=255, nullable=true)
    * @Assert\NotBlank
    */
