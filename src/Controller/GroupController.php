@@ -110,9 +110,19 @@ class GroupController extends AbstractController
   /**
    * @Route("/{id}/delete", name="group_delete", methods={"GET"})
    */
-  public function delete(Request $request, Group $group, EntityManagerInterface $entityManager): Response
+  public function delete(Request $request, Group $group, EntityManagerInterface $entityManager, GroupRepository $groupRepository): Response
   {
     if ($this->isCsrfTokenValid('delete' . $group->getId(), $request->query->get('_token'))) {
+      if(count($group->getProvidedServices()) > 0){
+        return $this->render('views/content/apps/rolesPermission/role/app-access-roles.html.twig', [
+          'breadcrumbs' => [
+            ["name" => "Management"],
+            ["name" => "Groups", "link" => "group_index"],
+          ],
+          'error' => 'The group still has attached services. Please delete the attached services before deleting the group.',
+          'groups' => $groupRepository->findAll(),
+        ]);
+      }
       $entityManager->remove($group);
       $entityManager->flush();
     }
