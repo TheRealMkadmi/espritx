@@ -24,15 +24,22 @@
                 <div class="col app-calendar-sidebar flex-grow-0 overflow-hidden d-flex flex-column" id="app-calendar-sidebar">
                     <div class="sidebar-wrapper">
                         <div class="card-body d-flex justify-content-center">
-                            <button
-                                    class="btn btn-primary btn-toggle-sidebar w-100"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#add-new-sidebar"
-                            >
-                                <span class="align-middle">Add Event</span>
+                            <button class="btn btn-primary btn-toggle-sidebar w-100" >
+                                <a href="{{ path('addNewEvent') }}">
+                                    <span class="align-middle">Add Event</span>
+                                </a>
                             </button>
                         </div>
+                        <div class="card-body d-flex justify-content-center">
+                            <button class="btn btn-primary btn-toggle-sidebar w-100" >
+                                <a href="{{ path('indexCall') }}">
+                                    <span class="align-middle">Show calls</span>
+                                </a>
+                            </button>
+                            
+                        </div>
                         <div class="card-body pb-0">
+
                             <h5 class="section-label mb-1">
                                 <span class="align-middle">Filter</span>
                             </h5>
@@ -97,6 +104,8 @@
                             <div id="calendar">
 
                             </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -178,20 +187,80 @@
 
     </section>
 
+    <script>
+        window.onload= () => {
+            let calendarElt = document.getElementById("calendar")
+
+            let calendar = new FullCalendar.Calendar(calendarElt,{
+                initialView: 'dayGridMonth',
+                dayMaxEventRows: true,
+                locale: 'fr',
+                timeZone: 'Europe/Paris',
+                headerToolbar: {
+                    start: 'prev,next,today',
+                    center: 'title',
+                    end:'dayGridMonth,timeGridWeek'
+                },
+                events: {{ event | raw }} ,
+                editable: true,
+                eventResizableFromStart: true,
+                selectable:true,
+                // eventClick: function (info){
+                //     Swal.fire({
+                //         icon: 'error',
+                //         title: 'Oops...',
+                //         text: 'Something went wrong!',
+                //         footer: '<a href="">Why do I have this issue?</a>'
+                //     })
+                // }
+                eventClick: function(info) {
+                   
+                    alert('Evenement : ' + info.event.title);
+                    alert('Description : ' + info.event.extendedProps.description);
+                    alert(`Pour modifier : /event/${info.event.id}/edit`);
+                    alert(`Pour supprimer : /event/${info.event.id}/delete`);
+                    }
+                   
+
+            })
+            console.log(calendar)
+            calendar.on('eventChange',(e)=> {
+                console.log("event change",e)
+                let url = `/api/${e.event.id}/edit`
+                let donnees = {
+                    "title": e.event.title,
+                    "description":e.event.extendedProps.description,
+                    "start": e.event.start,
+                    "end": e.event.end,
+                    "allDay": e.event.allDay
+                }
+                console.log("data to put in the calendar",donnees)
+                let xhr = new XMLHttpRequest
+                xhr.open("PUT",url)
+                xhr.send(JSON.stringify(donnees))
+            })
+            // lets try
+
+
+            calendar.render()
+
+        }
+    </script>
 {% endblock %}
 
 
 {% block vendor_script %}
-<script src="{{ asset('vendors/js/calendar/fullcalendar.min.js') }}"></script>
-<script src="{{ asset('vendors/js/extensions/moment.min.js') }}"></script>
-<script src="{{ asset('vendors/js/forms/select/select2.full.min.js') }}"></script>
-<script src="{{ asset('vendors/js/forms/validation/jquery.validate.min.js') }}"></script>
-<script src="{{ asset('vendors/js/pickers/flatpickr/flatpickr.min.js') }}"></script>
+    <script src="{{ asset('vendors/js/calendar/fullcalendar.min.js') }}"></script>
+    <script src="{{ asset('vendors/js/extensions/moment.min.js') }}"></script>
+    <script src="{{ asset('vendors/js/forms/select/select2.full.min.js') }}"></script>
+    <script src="{{ asset('vendors/js/forms/validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('vendors/js/pickers/flatpickr/flatpickr.min.js') }}"></script>
 {% endblock %}
 
 
 {% block page_script %}
-<script src="{{ asset('js/scripts/pages/app-calendar-events.js') }}"></script>
-<script src="{{ asset('js/scripts/pages/app-calendar.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.10.2/main.min.js"
+        integrity="sha256-YK3r7IQuHVY5YtEUbGuFMcwtIYCRtRKpZyMej0emzBc=" crossorigin="anonymous"></script>
+
 {% endblock %}
 

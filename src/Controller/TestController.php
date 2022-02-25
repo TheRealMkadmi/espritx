@@ -155,20 +155,20 @@ class TestController extends AbstractController
         ]);
     }
 
-    // Calender App
+    /* // Calender App
     /**
      * @Route("app/calendar",name="app-calendar")
-     */
+     
     public function calendarApp()
     {
         $pageConfigs = [
             'pageHeader' => false
         ];
 
-        return $this->render('views/content/apps/calendar/app-calendar.html.twig', [
+        return $this->render('all_events_data/app-calendar.html.twig', [
             'pageConfigs' => $pageConfigs
         ]);
-    }
+    } */   
 
     // Email App
     /**

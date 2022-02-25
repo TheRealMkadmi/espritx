@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ServiceController extends AbstractController
 {
-    /**
+    /***
      * @Route("/", name="service")
      */
     public function Services(ServiceRepository $Repo): Response
