@@ -219,7 +219,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
   /**
    * @var string|null
    * @Assert\Expression(
-   *   "(this.getPassword() != '' and value == '') or (value == '' and this.getPassword() != '')",
+   *   "(this.getPassword() != '' and value == '') or (value != '' and this.getPassword() == '')",
    *    message="A password of at least 6 characters must be set."
    * )
    */
