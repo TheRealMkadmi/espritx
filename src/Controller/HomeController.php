@@ -16,6 +16,10 @@ class HomeController extends AbstractController
    */
   public function show(Request $request): Response
   {
-    return $this->render('home/home.html.twig');
+      $pageConfigs = [
+          'mainLayoutType' => 'horizontal',
+          'pageHeader' => false];
+
+      return $this->render('views/content/dashboard/dashboard-analytics.html.twig', ['pageConfigs' => $pageConfigs]);
   }
 }
