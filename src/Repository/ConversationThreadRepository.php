@@ -47,4 +47,11 @@ class ConversationThreadRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function countallConver()
+    {
+        return $this->createQueryBuilder('c')
+            ->select('count(c.id)')
+        ->getQuery()
+        ->getSingleScalarResult();
+}
 }

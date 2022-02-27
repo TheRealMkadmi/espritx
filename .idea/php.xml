@@ -9,7 +9,6 @@
       <path value="$PROJECT_DIR$/vendor/egulias/email-validator" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-code" />
       <path value="$PROJECT_DIR$/vendor/nikic/php-parser" />
-      <path value="$PROJECT_DIR$/vendor/sensio/framework-extra-bundle" />
       <path value="$PROJECT_DIR$/vendor/behat/transliterator" />
       <path value="$PROJECT_DIR$/vendor/gedmo/doctrine-extensions" />
       <path value="$PROJECT_DIR$/vendor/twig/extra-bundle" />
@@ -146,82 +145,10 @@
       <path value="$PROJECT_DIR$/vendor/tetranz/select2entity-bundle" />
       <path value="$PROJECT_DIR$/vendor/knplabs/knp-paginator-bundle" />
       <path value="$PROJECT_DIR$/vendor/knplabs/knp-components" />
+      <path value="$PROJECT_DIR$/vendor/willdurand/negotiation" />
+      <path value="$PROJECT_DIR$/vendor/willdurand/jsonp-callback-validator" />
+      <path value="$PROJECT_DIR$/vendor/friendsofsymfony/rest-bundle" />
     </include_path>
-  </component>
-  <component name="PhpInterpretersPhpInfoCache">
-    <phpInfoCache>
-      <interpreter name="Ubuntu">
-        <phpinfo binary_type="PHP" php_cgi="/usr/bin/php-cgi" php_cli="/usr/bin/php8.0" path_separator=":" remote_host="1.1.1.1" version="8.0.12">
-          <additional_php_ini>/etc/php/8.0/cli/conf.d/10-mysqlnd.ini, /etc/php/8.0/cli/conf.d/10-opcache.ini, /etc/php/8.0/cli/conf.d/10-pdo.ini, /etc/php/8.0/cli/conf.d/15-xml.ini, /etc/php/8.0/cli/conf.d/20-calendar.ini, /etc/php/8.0/cli/conf.d/20-ctype.ini, /etc/php/8.0/cli/conf.d/20-curl.ini, /etc/php/8.0/cli/conf.d/20-dom.ini, /etc/php/8.0/cli/conf.d/20-exif.ini, /etc/php/8.0/cli/conf.d/20-ffi.ini, /etc/php/8.0/cli/conf.d/20-fileinfo.ini, /etc/php/8.0/cli/conf.d/20-ftp.ini, /etc/php/8.0/cli/conf.d/20-gd.ini, /etc/php/8.0/cli/conf.d/20-gettext.ini, /etc/php/8.0/cli/conf.d/20-gmp.ini, /etc/php/8.0/cli/conf.d/20-iconv.ini, /etc/php/8.0/cli/conf.d/20-mbstring.ini, /etc/php/8.0/cli/conf.d/20-mysqli.ini, /etc/php/8.0/cli/conf.d/20-pdo_mysql.ini, /etc/php/8.0/cli/conf.d/20-pdo_pgsql.ini, /etc/php/8.0/cli/conf.d/20-pdo_sqlite.ini, /etc/php/8.0/cli/conf.d/20-pgsql.ini, /etc/php/8.0/cli/conf.d/20-phar.ini, /etc/php/8.0/cli/conf.d/20-posix.ini, /etc/php/8.0/cli/conf.d/20-readline.ini, /etc/php/8.0/cli/conf.d/20-shmop.ini, /etc/php/8.0/cli/conf.d/20-simplexml.ini, /etc/php/8.0/cli/conf.d/20-soap.ini, /etc/php/8.0/cli/conf.d/20-sockets.ini, /etc/php/8.0/cli/conf.d/20-sqlite3.ini, /etc/php/8.0/cli/conf.d/20-sysvmsg.ini, /etc/php/8.0/cli/conf.d/20-sysvsem.ini, /etc/php/8.0/cli/conf.d/20-sysvshm.ini, /etc/php/8.0/cli/conf.d/20-tokenizer.ini, /etc/php/8.0/cli/conf.d/20-xdebug.ini, /etc/php/8.0/cli/conf.d/20-xmlreader.ini, /etc/php/8.0/cli/conf.d/20-xmlwriter.ini, /etc/php/8.0/cli/conf.d/20-xsl.ini, /etc/php/8.0/cli/conf.d/25-swoole.ini, /etc/php/8.0/cli/conf.d/30-ds.ini</additional_php_ini>
-          <configuration_file>/etc/php/8.0/cli/php.ini</configuration_file>
-          <configuration_options>
-            <configuration_option name="include_path" value=".:/usr/share/php" />
-          </configuration_options>
-          <debuggers>
-            <debugger_info debugger="xdebug" debugger_version="3.0.4">
-              <debug_extensions />
-            </debugger_info>
-          </debuggers>
-          <loaded_extensions>
-            <extension name="Core" />
-            <extension name="FFI" />
-            <extension name="PDO" />
-            <extension name="Phar" />
-            <extension name="Reflection" />
-            <extension name="SPL" />
-            <extension name="SimpleXML" />
-            <extension name="Zend OPcache" />
-            <extension name="calendar" />
-            <extension name="ctype" />
-            <extension name="curl" />
-            <extension name="date" />
-            <extension name="dom" />
-            <extension name="ds" />
-            <extension name="exif" />
-            <extension name="fileinfo" />
-            <extension name="filter" />
-            <extension name="ftp" />
-            <extension name="gd" />
-            <extension name="gettext" />
-            <extension name="gmp" />
-            <extension name="hash" />
-            <extension name="iconv" />
-            <extension name="json" />
-            <extension name="libxml" />
-            <extension name="mbstring" />
-            <extension name="mysqli" />
-            <extension name="mysqlnd" />
-            <extension name="openssl" />
-            <extension name="pcntl" />
-            <extension name="pcre" />
-            <extension name="pdo_mysql" />
-            <extension name="pdo_pgsql" />
-            <extension name="pdo_sqlite" />
-            <extension name="pgsql" />
-            <extension name="posix" />
-            <extension name="readline" />
-            <extension name="session" />
-            <extension name="shmop" />
-            <extension name="soap" />
-            <extension name="sockets" />
-            <extension name="sodium" />
-            <extension name="sqlite3" />
-            <extension name="standard" />
-            <extension name="swoole" />
-            <extension name="sysvmsg" />
-            <extension name="sysvsem" />
-            <extension name="sysvshm" />
-            <extension name="tokenizer" />
-            <extension name="xdebug" />
-            <extension name="xml" />
-            <extension name="xmlreader" />
-            <extension name="xmlwriter" />
-            <extension name="xsl" />
-            <extension name="zlib" />
-          </loaded_extensions>
-        </phpinfo>
-      </interpreter>
-    </phpInfoCache>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0">
     <option name="suggestChangeDefaultLanguageLevel" value="false" />

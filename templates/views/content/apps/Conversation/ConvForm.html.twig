@@ -12,29 +12,40 @@
 {% endblock %}
 
 {% block content %}
-    <h3>Add Message</h3>
+    <h3>Add conversation</h3>
     <p>Add a new unit of case-by-case access</p>
 
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Message :</h4>
+            <h4 class="card-title">Conversation :</h4>
         </div>
         <div class="card-body">
             {{ form_start(form,{'attr':{'novalidate':'novalidate'}},{'method': 'POST'}) }}
             <div class="row">
                 <div class="col-md-6 col-12">
                     <div class="mb-2">
-                        {{ form_row(form.content) }}
+                        {{ form_row(form.user1) }}
                     </div>
                 </div>
 
                 <div class="col-md-6 col-12">
                     <div class="mb-2">
-                        {{ form_row(form.Relat) }}
+                        {{ form_row(form.user2) }}
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="mb-2">
+                        {{ form_row(form.email) }}
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="mb-2">
+                        {{ form_row(form.email2) }}
                     </div>
                 </div>
                 <div class="d-flex justify-content-end gap-1">
-                    {{ form_widget(form.Ajouter) }}
+                    {{ form_widget(form.reset) }}
+                    {{ form_widget(form.save) }}
                 </div>
             </div>
             {{ form_end(form) }}

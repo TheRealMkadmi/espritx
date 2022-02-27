@@ -38,6 +38,39 @@ class ConversationThread
      */
     private $messages;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email."
+     * )
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Your first name must be at least {{ limit }} characters long",
+     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
+     * )
+     */
+    private $Email;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email."
+     * )
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Your first name must be at least {{ limit }} characters long",
+     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
+     * )
+     */
+    private $email2;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $Chateph;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
@@ -99,6 +132,42 @@ class ConversationThread
                 $message->setRelat(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->Email;
+    }
+
+    public function setEmail(string $Email): self
+    {
+        $this->Email = $Email;
+
+        return $this;
+    }
+
+    public function getEmail2(): ?string
+    {
+        return $this->email2;
+    }
+
+    public function setEmail2(string $email2): self
+    {
+        $this->email2 = $email2;
+
+        return $this;
+    }
+
+    public function getChateph(): ?bool
+    {
+        return $this->Chateph;
+    }
+
+    public function setChateph(bool $Chateph): self
+    {
+        $this->Chateph = $Chateph;
 
         return $this;
     }
