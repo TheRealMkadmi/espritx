@@ -7,6 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity(repositoryClass=CommentaireRepository::class)
@@ -17,6 +20,7 @@ class Commentaire
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
      */
     private $id;
 
@@ -24,16 +28,19 @@ class Commentaire
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="commentaires")
+     * @Groups("post:read")
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=Post::class, inversedBy="commentaires")
+     *
      */
     private $post;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Groups("post:read")
      */
     private $created_at;
 
@@ -45,6 +52,7 @@ class Commentaire
      *      maxMessage = "le contenu de votre commentaire ne doit pas depasser  {{ limit }} caracteres"
      * )
      * @ORM\Column(type="string", length=255)
+     * @Groups("post:read")
      */
     private $content;
 

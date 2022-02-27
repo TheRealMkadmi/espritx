@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Commentaire;
 use App\Entity\Post;
 use App\Entity\PostLike;
+use App\Entity\User;
 use App\Form\CommentaireType;
 use App\Form\EditPostType;
 use App\Form\PostType;
@@ -15,6 +16,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use phpDocumentor\Reflection\Types\This;
+use PhpParser\Node\Expr\Cast\Object_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\File\File;
@@ -22,8 +24,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use function Doctrine\Common\Annotations\AnnotationException;
+
 
 class PostController extends AbstractController
 {
@@ -47,9 +56,12 @@ class PostController extends AbstractController
    * @return Response
    * @throws Exception
    */
-  public function afficher_tous_les_Post(PostRepository $repository, Request $request): Response
+  public function afficher_tous_les_Post(PostRepository $repository, Request $request,SerializerInterface $serializer): Response
   {
     $posts = $repository->findAll();
+    //$json=$serializer->serialize($posts,'json',['groups'=>'posts']);
+   // dump($json);
+   // die;
     return $this->render('views/content/posts/Admin/allpost.html.twig', ['posts' => $posts]);
   }
 
@@ -427,5 +439,59 @@ class PostController extends AbstractController
     return $this->render('views/content/posts/User/SinglPost.html.twig', ['post' => $pub, 'form' => $form->createView()]);
   }
 
+
+  ////////////////////////////////////// ///////////////////////////////   API /////////////////// //////////////////  //////////////
+
+    /**
+     * @Route("api/post/all", name="postall_api")
+     * @return Response
+     * @throws Exception
+     */
+    public function api_tous_les_Post(PostRepository $repository,NormalizerInterface $normalizer): Response
+    {
+        $posts = $repository->findAll();
+        $jsoncontent=$normalizer->normalize($posts,'json',['groups'=>'post:read']);
+        return new Response(json_encode(($jsoncontent)));
+
+    }
+    /**
+     * @Route ("api/addPost",name="addpost_api")
+     */
+
+    public function addPost_api(Request $request,NormalizerInterface $normalizer){
+        $now = new \DateTimeImmutable('now');
+        $donnees=json_decode($request->getContent());
+        $em=$this->getDoctrine()->getManager();
+        $post=new Post();
+        $post->setIsValid(0);
+        $post->setIsDeleted(0);
+
+        $post->setCreatedAt($now);
+        $post->setUpdatedAt($now);
+$user=$this->getDoctrine()->getRepository(User::class)->find(2);
+        $post->setUser($user);
+        $post->setTitle($donnees->title);
+        $post->setContent($donnees->content);
+
+        $em->persist($post);
+        $em->flush();
+//$jsoncontent=$normalizer->normalize($post,'json',['groups'=>'post:read']);
+
+        return new Response('post ajouté');
+
+    }
+
+/*
+    public function addPost_api(Request $request,SerializerInterface $serializer,EntityManagerInterface $entityManager){
+
+        $content=$request->getContent();
+
+        $data=$serializer->deserialize($content,Post::class,'json');
+        $entityManager->persist($data);
+        $entityManager->flush();
+        return new Response('post ajouté');
+
+    }
+*/
 
 }

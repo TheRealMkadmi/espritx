@@ -23,6 +23,8 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Vich\UploaderBundle\Entity\File as EmbeddedFile;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -54,6 +56,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
    * @ORM\Id
    * @ORM\GeneratedValue
    * @ORM\Column(type="integer")
+   * @Groups("post:read")
    */
   private $id;
 
@@ -115,6 +118,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
    *     message="Your name cannot contain a number"
    * )
    * @ORM\Column(type="string", length=20)
+   * @Groups("post:read")
    */
   private ?string $first_name = null;
 
@@ -139,6 +143,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
    *     message="Your name cannot contain a number"
    * )
    * @ORM\Column(type="string", length=25)
+   * @Groups("post:read")
    */
   private ?string $last_name = null;
 
@@ -161,6 +166,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
    * )
    * @var string|null
    * @ORM\Column(type="string", unique=true)
+   * @Groups("post:read")
    */
   protected ?string $email = null;
 
@@ -181,6 +187,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
    * message="Respect this format: +21611111111")
    * @ORM\Column(type="string", length=255, nullable=true)
    * @Assert\NotBlank
+   * @Groups("post:read")
    */
   private ?string $phoneNumber = null;
 
@@ -200,6 +207,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
    * @Assert\NotNull
    * @Assert\Regex("/^[1-5](A|B|TWIN|SLEAMS)\d{1,3}$/")
    * @ORM\Column(type="string", length=255, nullable=true)
+   *
    */
   private $class;
 
@@ -222,6 +230,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
    *   "(this.getPassword() != '' and value == '') or (value != '' and this.getPassword() == '')",
    *    message="A password of at least 6 characters must be set."
    * )
+   * @Groups("post:read")
    */
   protected ?string $plainPassword = null;
 
@@ -244,6 +253,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
   /**
    * @var string The hashed password
    * @ORM\Column(type="string")
+   * @Groups("post:read")
    */
   private $password;
 
@@ -501,6 +511,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
   /**
    * @ORM\Column(type="identitydoctype")
    * @Elao\Enum\Bridge\Symfony\Validator\Constraint\Enum(class=DocumentIdentityTypeEnum::class)
+   * @Groups("post:read")
    */
   protected DocumentIdentityTypeEnum $identityType;
 
@@ -520,6 +531,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
    * @ORM\Column(type="string", length=8, nullable=true)
    * @Assert\Regex("/([A-Z0-9<]{9}[0-9]{1}[A-Z]{3}[0-9]{7}[A-Z]{1}[0-9]{7}[A-Z0-9<]{14}[0-9]{2})|(\d{8})/")
    * @Assert\NotBlank
+   * @Groups("post:read")
    */
   private ?string $identityDocumentNumber = null;
 
@@ -538,6 +550,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
   //<editor-fold desc="Is Verified">
   /**
    * @ORM\Column(type="boolean")
+   * @Groups("post:read")
    */
   private $isVerified = false;
 

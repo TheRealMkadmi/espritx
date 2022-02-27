@@ -7,6 +7,7 @@ use App\Repository\GroupRepository;
 use Doctrine\Common\Collections\{ArrayCollection, Collection};
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=GroupRepository::class)
@@ -25,9 +26,11 @@ class Group
   //<editor-fold desc="id">
 
   /**
+   * @Groups("post")
    * @ORM\Id
    * @ORM\GeneratedValue
    * @ORM\Column(type="integer")
+   *
    */
   private int $id;
 
@@ -47,6 +50,7 @@ class Group
    * @ORM\Column(type="string", length=32)
    * @Assert\NotBlank
    * @Assert\Length(min=5, max=25)
+   * @Groups("post")
    */
   private ?string $display_name;
 
