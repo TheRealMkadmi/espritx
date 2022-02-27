@@ -493,5 +493,75 @@ $user=$this->getDoctrine()->getRepository(User::class)->find(2);
 
     }
 */
+    /**
+     * @param Request $request
+     * @param $id
+     * @param NormalizerInterface $normalizer
+     * @Route("/api/post/{id}" , name="api_post_id")
+     */
+
+
+    public function Post_By_Id_JSON(Request $request,$id,NormalizerInterface $normalizer){
+        $em=$this->getDoctrine()->getManager();
+        $post=$em->getRepository(Post::class)->find($id);
+        $jsoncontent=$normalizer->normalize($post,'json',['groups'=>'post:read']);
+        return new Response(json_encode(($jsoncontent)));
+    }
+
+    /**
+     * @param Request $request
+     * @param NormalizerInterface $normalizer
+     * @param $id
+
+     */
+
+
+    /**
+     * @param Request $request
+     * @param NormalizerInterface $normalizer
+     * @param $id
+     * @return Response
+     * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
+     * @Route("/api/updatePost/{id}",name="api_post_update")
+     */
+public function Update_Post_Json(Request $request,NormalizerInterface $normalizer,$id){
+    $now = new \DateTimeImmutable('now');
+    $em= $this->getDoctrine()->getManager();
+    $post=$em->getRepository(Post::class)->find($id);
+    $post->setIsValid(0);
+    $post->setIsDeleted(0);
+
+    $post->setCreatedAt($now);
+    $post->setUpdatedAt($now);
+    $user=$this->getDoctrine()->getRepository(User::class)->find(2);
+    $post->setUser($user);
+    $post->setTitle($request->get('title'));
+    $post->setContent($request->get('content'));
+    $em->flush();
+    $content=$normalizer->normalize($post,'json',['groups'=>'post:read']);
+    return new Response("Post bien modifié".json_encode($content));
+
+
+}
+
+    /**
+     * @param Request $request
+     * @param NormalizerInterface $normalizer
+     * @param $id
+     * Route("/api/DeletePost/{id}",name="api_delete_post", methods={"DELETE"})
+     * @return Response
+     * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
+     */
+
+public function deletePost_Json(NormalizerInterface $normalizer,$id){
+
+    $em=$this->getDoctrine()->getManager();
+    $post=$em->getRepository(Post::class)->find($id);
+    $em->remove($post);
+    $em->flush();
+    $content=$normalizer->normalize($post,'json',['groups'=>'post:read']);
+    return new Response("Post bien eté supprimé".json_encode($content));
+}
+
 
 }
