@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\ConversationThread;
 use App\Entity\Messages;
 use App\Form\MessagesType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -86,9 +87,12 @@ class MessagesController extends AbstractController
   public function show(): Response
   {
     $messages = $this->getDoctrine()->getRepository(Messages::class)->findAll();
-
+    $count = $this->getDoctrine()->getRepository(Messages::class)->countallConver();
     return $this->render('conversation/AfficheMessages.html.twig', [
-      "messages" => $messages,
+      "messages" => $messages,"count"=>$count,'breadcrumbs' => [
+        ["name" => "Management"],
+        ["name" => "Messages", "link" => "message_show"],
+      ]
     ]);
 
   }

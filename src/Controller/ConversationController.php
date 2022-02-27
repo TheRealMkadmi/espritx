@@ -31,7 +31,10 @@ class ConversationController extends AbstractController
         $conversations = $this->getDoctrine()->getRepository(ConversationThread::class)->findAll();
 $count = $this->getDoctrine()->getRepository(ConversationThread::class)->countallConver();
         return $this->render('conversation/Affiche.html.twig', [
-            "conversations" => $conversations,"count"=>$count
+            "conversations" => $conversations,"count"=>$count,'breadcrumbs' => [
+            ["name" => "Management"],
+            ["name" => "Conversations", "link" => "message_show"],
+          ]
         ]);
     }
     /**
