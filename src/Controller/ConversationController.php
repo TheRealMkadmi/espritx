@@ -109,7 +109,7 @@ $count = $this->getDoctrine()->getRepository(ConversationThread::class)->countal
             return $this->respond($form, Response::HTTP_BAD_REQUEST);
         }
 
-        /** @var Customer $Conversation */
+        /** @var ConversationThread $Conversation */
         $Conversation = $form->getData();
 
         $this->getDoctrine()->getManager()->persist($Conversation);
@@ -148,7 +148,7 @@ $count = $this->getDoctrine()->getRepository(ConversationThread::class)->countal
             return $this->respond($form1, Response::HTTP_BAD_REQUEST);
         }
 
-        /** @var Customer $Conversation */
+        /** @var ConversationThread $Conversation */
         $Conversation = $form1->getData();
 
         $this->getDoctrine()->getManager()->flush();
