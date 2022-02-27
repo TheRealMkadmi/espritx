@@ -12,6 +12,7 @@
         "elao/enum": "^1.17",
         "gedmo/doctrine-extensions": "^3.5",
         "knplabs/knp-paginator-bundle": "^5.8",
+        "lexik/jwt-authentication-bundle": "^2.14",
         "liip/imagine-bundle": "^2.7",
         "mercuryseries/flashy-bundle": "^4.0",
         "phpdocumentor/reflection-docblock": "^5.3",
