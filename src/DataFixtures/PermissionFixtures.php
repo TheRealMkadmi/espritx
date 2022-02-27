@@ -24,7 +24,7 @@ class PermissionFixtures extends AbstractFixtureEx
       $perm->setAttribute("perm_$i");
       $perm->setSubject(Post::class);
       $manager->persist($perm);
-      $perms[] = $perm;
+      $perms->add($perm);
     }
     $manager->flush();
     $this->addReferenceArray(self::LOADED_PERMISSION_FIXTURES, $perms);

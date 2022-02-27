@@ -63,7 +63,7 @@ class ServiceController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('service', [], Response::HTTP_SEE_OTHER);
         }
-        return $this->render('views/content/apps/administrativeService/app-service-form.html.twig', [
+        return $this->render('views/content/apps/administrativeService/app-service-form-Modif.html.twig', [
             'ser'=>$ser,
             'form' => $form->createView(),
         ]);
@@ -79,5 +79,22 @@ class ServiceController extends AbstractController
         $em->remove($ser);
         $em->flush();
         return $this->redirectToRoute('service', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/{id}/showRequests", name="ser_sh_requests")
+     */
+    public function affRequests(ServiceRepository $Repo,$id): Response
+    {
+
+        $ser=$Repo->find($id);
+        $SerReq=$ser->getServiceRequests();
+        return $this->render('views/content/apps/administrativeService/Requests/Affiche.html.twig', [
+            'breadcrumbs' => [
+                ["name" => "Management"],
+            ],
+            'SerReq' => $SerReq,
+            'ser'=>$ser,
+        ]);
     }
 }

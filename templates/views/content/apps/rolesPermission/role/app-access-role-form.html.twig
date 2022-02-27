@@ -20,7 +20,7 @@
       <h4 class="card-title">Group Details</h4>
     </div>
     <div class="card-body">
-      {{ form_start(form, {'method': 'POST'}) }}
+      {{ form_start(form, {'attr':{'novalidate':'novalidate', 'method': 'POST'}} ) }}
       <div class="row">
         <div class="col-md-6 col-12">
           {{ form_row(form.security_title) }}
@@ -35,6 +35,22 @@
         </div>
         <div class="col-md-6 col-12">
           {{ form_row(form.permissions) }}
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col-md-6 col-12">
+          {{ form_row(form.enjoyable_services) }}
+        </div>
+        <div class="col-md-6 col-12">
+          {{ form_row(form.provided_services) }}
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col-md-6 col-12">
+          {{ form_row(form.groupType) }}
+        </div>
+        <div class="col-md-6 col-12">
+          &nbsp;
         </div>
       </div>
       <div class="row">

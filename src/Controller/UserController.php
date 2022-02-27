@@ -22,23 +22,29 @@ class UserController extends AbstractController
   /**
    * @Route("/", name="user_index", methods={"GET"})
    */
-  public function index(EntityManagerInterface $em, PaginatorInterface $paginator, Request $request): Response
+  public function all(EntityManagerInterface $em,
+                      PaginatorInterface     $paginator,
+                      Request                $request,
+                      UserRepository         $userRepository): Response
   {
     $dql = <<<DQL
     select u from App\Entity\User u 
     DQL;
     $query = $em->createQuery($dql);
-
+    $q = $userRepository->getCountByStatus();
     $pagination = $paginator->paginate(
       $query,
       $request->query->getInt('page', 1),
       10
     );
+
+
     return $this->render('views/content/apps/user/app-user-list.html.twig', [
       'breadcrumbs' => [
         ["name" => "Management"],
         ["name" => "Users", "link" => "user_index"],
       ],
+      'statusStatistics' => $q,
       'pagination' => $pagination,
     ]);
   }
@@ -60,6 +66,11 @@ class UserController extends AbstractController
 
     return $this->render('views/content/apps/user/app-user-form.html.twig', [
       'user' => $user,
+      'breadcrumbs' => [
+        ["name" => "Management"],
+        ["name" => "Users", "link" => "user_index"],
+        ["name" => "Create"],
+      ],
       'form' => $form->createView(),
     ]);
   }
@@ -75,9 +86,9 @@ class UserController extends AbstractController
   }
 
   /**
-   * @Route("/{id}/edit", name="user_edit", methods={"GET", "POST"})
+   * @Route("/update/{id}", name="user_edit", methods={"GET", "POST"})
    */
-  public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
+  public function update(Request $request, User $user, EntityManagerInterface $entityManager): Response
   {
     $form = $this->createForm(UserType::class, $user);
     $form->handleRequest($request);
@@ -88,18 +99,23 @@ class UserController extends AbstractController
       return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    return $this->render('user/edit.html.twig', [
+    return $this->render('views/content/apps/user/app-user-form.html.twig', [
       'user' => $user,
+      'breadcrumbs' => [
+        ["name" => "Management"],
+        ["name" => "Users", "link" => "user_index"],
+        ["name" => "Edit"],
+      ],
       'form' => $form->createView(),
     ]);
   }
 
   /**
-   * @Route("/{id}", name="user_delete", methods={"POST"})
+   * @Route("/delete/{id}", name="user_delete", methods={"GET"})
    */
   public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
   {
-    if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+    if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->query->get('_token'))) {
       $entityManager->remove($user);
       $entityManager->flush();
     }

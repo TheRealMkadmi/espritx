@@ -13,6 +13,9 @@
         "friendsofsymfony/rest-bundle": "3.3.0",
         "gedmo/doctrine-extensions": "^3.5",
         "knplabs/knp-paginator-bundle": "^5.8",
+        "lexik/jwt-authentication-bundle": "^2.14",
+        "liip/imagine-bundle": "^2.7",
+        "mercuryseries/flashy-bundle": "^4.0",
         "phpdocumentor/reflection-docblock": "^5.3",
         "stof/doctrine-extensions-bundle": "^1.7",
         "symfony/asset": "4.4.*",
@@ -38,9 +41,11 @@
         "symfony/web-link": "4.4.*",
         "symfony/yaml": "4.4.*",
         "symfonycasts/reset-password-bundle": "^1.12",
+        "symfonycasts/verify-email-bundle": "^1.8",
         "tetranz/select2entity-bundle": "^3.1",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+        "vich/uploader-bundle": "^1.19"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.4",

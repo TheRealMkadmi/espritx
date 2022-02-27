@@ -17,11 +17,23 @@
 
   <div class="card">
     <div class="card-header">
-      <h4 class="card-title">Permission Details</h4>
+      <h4 class="card-title">User Details</h4>
     </div>
     <div class="card-body">
-      {{ form_start(form, {'method': 'POST'}) }}
+      {{ form_start(form, {'attr':{'novalidate':'novalidate', 'method': 'POST'}} ) }}
       <div class="row">
+
+        <div class="col-md-12 col-12 d-flex justify-content-between align-items-center mb-2">
+          {% include "views/content/_partials/_fragments/user-avatar.html.twig" with {'user': user, 'size': 'xl'} %}
+
+          {% if form.avatarFile.delete is defined %}
+            {{ form_widget(form.avatarFile.file, {'attr': {'class': 'mx-2'}}) }}
+            {{ form_widget(form.avatarFile.delete) }}
+          {% else %}
+            {{ form_widget(form.avatarFile.file, {'attr': {'class': 'ms-2'}}) }}
+          {% endif %}
+        </div>
+
 
         <div class="col-md-6 col-12">
           {{ form_row(form.first_name) }}
@@ -31,7 +43,7 @@
         </div>
 
         <div class="col-md-6 col-12">
-          {{ form_row(form.phonenumber) }}
+          {{ form_row(form.phoneNumber) }}
         </div>
         <div class="col-md-6 col-12">
           {{ form_row(form.email) }}
@@ -50,14 +62,22 @@
         <div class="col-md-6 col-12">
           {{ form_row(form.class) }}
         </div>
-
         <div class="col-md-6 col-12">
           {{ form_row(form.groups) }}
         </div>
         <div class="col-md-6 col-12">
           {{ form_row(form.individualPermissions) }}
         </div>
-
+        <div class="col-md-6 col-12">
+          {% if user.password is empty %}
+            {{ form_row(form.plainPassword, {"attr" : { "placeholder" : "Choose something strong and memorable." }}) }}
+          {% else %}
+            {{ form_row(form.plainPassword, {"attr" : { "placeholder" : "Leave blank if unchanged." }}) }}
+          {% endif %}
+        </div>
+        <div class="col-md-6 col-12">
+          &nbsp;
+        </div>
         <div class="d-flex justify-content-end gap-1 mt-1">
           {{ form_widget(form.reset) }}
           {{ form_widget(form.save) }}

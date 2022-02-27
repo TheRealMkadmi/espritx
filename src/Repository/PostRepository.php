@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Commentaire;
 use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -68,4 +69,29 @@ class PostRepository extends ServiceEntityRepository
         return $post;
     }
 
+
+
+
+    public function getLatestPosts($limit = null)
+    {
+        $qb = $this->createQueryBuilder('b')
+            ->select('b')
+            ->addOrderBy('b.created_at', 'DESC');
+
+        if (false === is_null($limit))
+            $qb->setMaxResults($limit);
+
+        return $qb->getQuery()
+            ->getResult();
+    }
+    public function CommentsMaxQuatre()
+    {
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+        $queryBuilder->select('o')
+            ->from(Commentaire::class, 'o')
+            ->orderBy('o.created_at','DESC')
+            ->setMaxResults(4);
+
+        $query = $queryBuilder->getQuery();
+        return $query->getResult();}
 }
