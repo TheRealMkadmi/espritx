@@ -17,6 +17,7 @@
         "liip/imagine-bundle": "^2.7",
         "mercuryseries/flashy-bundle": "^4.0",
         "phpdocumentor/reflection-docblock": "^5.3",
+        "sensio/framework-extra-bundle": "^6.2",
         "stof/doctrine-extensions-bundle": "^1.7",
         "symfony/asset": "4.4.*",
         "symfony/console": "4.4.*",
