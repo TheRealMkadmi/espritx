@@ -440,7 +440,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /** @var Group $group */
     foreach ($this->groups as $group) {
       foreach ($group->getPermissions() as $group_perm) {
-        $group[] = $group_perm;
+        $perms[] = $group_perm;
       }
     }
     foreach ($this->getIndividualPermissions() as $permission) {
