@@ -94,6 +94,8 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
   /**
    * @ORM\Embedded(class="Vich\UploaderBundle\Entity\File")
+   * @Groups ("Service")
+   * @Groups ("Request")
    */
   private ?EmbeddedFile $avatar;
 
@@ -119,6 +121,8 @@ class User implements UserInterface, EquatableInterface, \Serializable
    * )
    * @ORM\Column(type="string", length=20)
    * @Groups("post:read")
+   * @Groups ("Service")
+   * @Groups ("Request")
    */
   private ?string $first_name = null;
 
@@ -144,6 +148,8 @@ class User implements UserInterface, EquatableInterface, \Serializable
    * )
    * @ORM\Column(type="string", length=25)
    * @Groups("post:read")
+   * @Groups ("Service")
+   * @Groups ("Request")
    */
   private ?string $last_name = null;
 

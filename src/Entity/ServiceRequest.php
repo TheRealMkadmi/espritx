@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ServiceRequestRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -31,17 +32,20 @@ class ServiceRequest
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotNull (message="Ce champ ne peut pas être nul")
+     * @Groups ("Request")
      */
     private $Title;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups ("Request")
      */
     private $Description;
 
     /**
      * @ORM\ManyToOne(targetEntity=Service::class, inversedBy="serviceRequests")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups ("Request")
      */
     private $Type;
 
@@ -70,6 +74,7 @@ class ServiceRequest
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups ("Request")
      */
     private $Status = "Unseen";
 
@@ -81,6 +86,8 @@ class ServiceRequest
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="serviceRequests")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups ("Service")
+     * @Groups ("Request")
      */
     private $Requester;
 

@@ -51,6 +51,7 @@ class Group
    * @Assert\NotBlank
    * @Assert\Length(min=5, max=25)
    * @Groups("post")
+   * @Groups("Service")
    */
   private ?string $display_name;
 

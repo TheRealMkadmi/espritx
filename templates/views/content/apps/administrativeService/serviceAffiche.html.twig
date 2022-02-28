@@ -48,6 +48,7 @@
                             {% if Ser.serviceRequests|length > 0 %}
                             <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
                                 {% for i in 0..(min(Ser.serviceRequests|length,4)-1) %}
+                                    {% if Ser.serviceRequests[i].Requester != null  %}
                                 <li
                                         data-bs-toggle="tooltip"
                                         data-popup="tooltip-custom"
@@ -57,6 +58,7 @@
                                 >
                                     {% include "views/content/_partials/_fragments/user-avatar.html.twig" with {'user': Ser.serviceRequests[i].Requester} %}
                                 </li>
+                                    {% endif %}
                                 {% endfor %}
                             </ul>
                             {% endif %}
