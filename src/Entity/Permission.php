@@ -21,7 +21,6 @@ class Permission
   }
 
   //<editor-fold desc="id">
-
   /**
    * @ORM\Id
    * @ORM\GeneratedValue
