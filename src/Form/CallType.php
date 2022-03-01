@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Call;
+use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -35,6 +37,11 @@ class CallType extends AbstractType
 
         ])
         ->add('description')
+        ->add('users',EntityType::class, [
+            'class' => User::class,
+            'multiple' => true,
+        ])
+        ->add("user")
         
         ;
     }

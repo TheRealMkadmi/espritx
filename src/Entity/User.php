@@ -52,6 +52,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     $this->avatar = new EmbeddedFile();
     $this->serviceRequests = new ArrayCollection();
+    $this->UserCall = new ArrayCollection();
 
   }
 
@@ -635,6 +636,11 @@ class User implements UserInterface, EquatableInterface, \Serializable
   private $serviceRequests;
 
   /**
+   * @ORM\OneToMany(targetEntity=Call::class, mappedBy="user")
+   */
+  private $UserCall;
+
+  /**
    * @return Collection<int, ServiceRequest>
    */
   public function getServiceRequests(): Collection
@@ -664,7 +670,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
     return $this;
   }
 
-<<<<<<< HEAD
   /**
    * @return Collection<int, Event>
    */
@@ -722,8 +727,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
       return $this;
   }
 
-}
-=======
+
   //</editor-fold>
 
   public function isEqualTo(UserInterface $user)
@@ -737,5 +741,34 @@ class User implements UserInterface, EquatableInterface, \Serializable
     return $this->email;
   }
 
+  /**
+   * @return Collection<int, Call>
+   */
+  public function getUserCall(): Collection
+  {
+      return $this->UserCall;
+  }
+
+  public function addUserCall(Call $userCall): self
+  {
+      if (!$this->UserCall->contains($userCall)) {
+          $this->UserCall[] = $userCall;
+          $userCall->setUser($this);
+      }
+
+      return $this;
+  }
+
+  public function removeUserCall(Call $userCall): self
+  {
+      if ($this->UserCall->removeElement($userCall)) {
+          // set the owning side to null (unless already changed)
+          if ($userCall->getUser() === $this) {
+              $userCall->setUser(null);
+          }
+      }
+
+      return $this;
+  }
+
 }
->>>>>>> c8f53f6d9cb89f38ea766779c2f0b154c24a564a

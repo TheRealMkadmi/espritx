@@ -27,12 +27,21 @@ class CallController extends AbstractController
         ]);
     }
 
-      /**
+    /**
      * @Route("/add", name="addNewCall")
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+
+        $user = $this->getUser();
+        // savoir si le user est connecté ou nn
+
+        /*  if (!$user){
+            $this->addFlash('notice', 'U R NOT CONNECTED !');
+            return $this->redirectToRoute('indexCall');
+        }  */
         $call = new Call();
+
         $form = $this->createForm(CallType::class, $call);
         $form->handleRequest($request);
 
@@ -40,7 +49,7 @@ class CallController extends AbstractController
             $entityManager->persist($call);
             $entityManager->flush();
             $this->addFlash('notice', 'call ajouté avec succée !');
-            return $this->redirectToRoute('all_events_data');
+            return $this->redirectToRoute('indexCall');
         }
 
         return $this->render('call/add.html.twig', [
@@ -50,13 +59,25 @@ class CallController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="update")
+     * @Route("/{id}/editcall", name="updatecall")
      */
     public function edit($id, Request $request, CallRepository $rep)
     {
         $call = $rep->find($id);
+        /*  $user = $this->getUser();
+        // savoir si le user est connecté ou nn
 
-        $form1 = $this->createForm(EventType::class, $call);
+        if (!$user){
+            $this->addFlash('notice', 'U R NOT CONNECTED !');
+            return $this->redirectToRoute('indexCall');
+        } 
+        if($user->getId()!=$call->getUser()->getId()){
+            $this->addFlash('notice', 'U cant change this bro till u be the owner !');
+            return $this->redirectToRoute('indexCall');
+        } */
+
+
+        $form1 = $this->createForm(CallType::class, $call);
         $form1->handleRequest($request);
 
         $em = $this->getDoctrine()->getManager();
@@ -72,13 +93,44 @@ class CallController extends AbstractController
             'call' => $call,
             'form' => $form1->createView(),
         ]);
-
     }
 
     /**
-     * @Route("/{id}/delete", name="delete")
+     * @Route("/{id}/delete", name="deleteCall")
      */
     public function supprimer($id)
+    {
+
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $call = $entityManager->getRepository(Call::class)->find($id);
+
+        /*
+        $user = $this->getUser();
+        // savoir si le user est connecté ou nn
+
+        if (!$user){
+            $this->addFlash('notice', 'U R NOT CONNECTED !');
+            return $this->redirectToRoute('indexCall');
+        } 
+        if($user->getId()!=$call->getUser()->getId()){
+            $this->addFlash('notice', 'U cant change this bro till u be the owner !');
+            return $this->redirectToRoute('indexCall');
+        }
+        */
+        $entityManager->remove($call);
+        $this->addFlash('success', 'Call bien été supprimée.');
+
+
+        $entityManager->flush();
+        return $this->redirectToRoute('indexCall');
+    }
+
+    /**
+     * @Route("/{id}/deleteAdmin", name="deleteCallback")
+     */
+    public function supprimercall($id)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -88,8 +140,6 @@ class CallController extends AbstractController
 
 
         $entityManager->flush();
-        return $this->redirectToRoute('indexCall');
-
-
+        return $this->redirectToRoute('backoffice');
     }
 }

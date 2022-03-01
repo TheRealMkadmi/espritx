@@ -75,7 +75,7 @@ class EventController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/delete", name="delete")
+     * @Route("/{id}/delete", name="deleteEvent")
      */
     public function supprimer($id)
     {
@@ -88,6 +88,24 @@ class EventController extends AbstractController
 
         $entityManager->flush();
         return $this->redirectToRoute('all_events_data');
+
+
+    }
+
+    /**
+     * @Route("/{id}/delete", name="deleteEventback")
+     */
+    public function supprimerEvent($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $event = $entityManager->getRepository(Event::class)->find($id);
+        $entityManager->remove($event);
+        $this->addFlash('success', 'Evenement bien été supprimée.');
+
+
+        $entityManager->flush();
+        return $this->redirectToRoute('backoffice');
 
 
     }

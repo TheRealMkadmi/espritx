@@ -24,14 +24,14 @@
                 <div class="col app-calendar-sidebar flex-grow-0 overflow-hidden d-flex flex-column" id="app-calendar-sidebar">
                     <div class="sidebar-wrapper">
                         <div class="card-body d-flex justify-content-center">
-                            <button class="btn btn-primary btn-toggle-sidebar w-100" >
+                            <button class="btn btn-info btn-toggle-sidebar w-100" >
                                 <a href="{{ path('addNewEvent') }}">
                                     <span class="align-middle">Add Event</span>
                                 </a>
                             </button>
                         </div>
                         <div class="card-body d-flex justify-content-center">
-                            <button class="btn btn-primary btn-toggle-sidebar w-100" >
+                            <button class="btn btn-info btn-toggle-sidebar w-100" >
                                 <a href="{{ path('indexCall') }}">
                                     <span class="align-middle">Show calls</span>
                                 </a>
@@ -205,25 +205,21 @@
                 editable: true,
                 eventResizableFromStart: true,
                 selectable:true,
-                // eventClick: function (info){
-                //     Swal.fire({
-                //         icon: 'error',
-                //         title: 'Oops...',
-                //         text: 'Something went wrong!',
-                //         footer: '<a href="">Why do I have this issue?</a>'
-                //     })
-                // }
+                
                 eventClick: function(info) {
-                   
-                    alert('Evenement : ' + info.event.title);
-                    alert('Description : ' + info.event.extendedProps.description);
-                    alert(`Pour modifier : /event/${info.event.id}/edit`);
-                    alert(`Pour supprimer : /event/${info.event.id}/delete`);
+                    Swal.fire({
+                    title: info.event.title,
+                    icon: 'info',
+                   {#  html:
+                        'Vous pouvez ' +
+                        '<a href="{{ path('update', {'id':info.event.id}) }}"><b>Modfier</b></a> ' +
+                        '<a href="{{ path('deleteEvent', {'id':info.event.id}) }}"><b>Supprimer</b></a>', #}
+                    })
                     }
                    
 
             })
-            console.log(calendar)
+           
             calendar.on('eventChange',(e)=> {
                 console.log("event change",e)
                 let url = `/api/${e.event.id}/edit`
@@ -255,6 +251,8 @@
     <script src="{{ asset('vendors/js/forms/select/select2.full.min.js') }}"></script>
     <script src="{{ asset('vendors/js/forms/validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('vendors/js/pickers/flatpickr/flatpickr.min.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 {% endblock %}
 
 

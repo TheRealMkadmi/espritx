@@ -24,15 +24,15 @@
                 <div class="col app-calendar-sidebar flex-grow-0 overflow-hidden d-flex flex-column" id="app-calendar-sidebar">
                     <div class="sidebar-wrapper">
                         <div class="card-body d-flex justify-content-center">
-                            <button class="btn btn-primary btn-toggle-sidebar w-100" >
+                            <button class="btn btn-info btn-toggle-sidebar w-100" >
                                 <a href="{{ path('addNewCall') }}">
-                                    <span class="align-middle">Add Event</span>
+                                    <span class="align-middle">Add call</span>
                                 </a>
                             </button>
                             
                         </div>
                         <div class="card-body d-flex justify-content-center">
-                            <button class="btn btn-primary btn-toggle-sidebar w-100" >
+                            <button class="btn btn-info btn-toggle-sidebar w-100" >
                                 <a href="{{ path('all_events_data') }}">
                                     <span class="align-middle">Show events</span>
                                 </a>
@@ -217,10 +217,14 @@
                 // }
                 eventClick: function(info) {
                    
-                    alert('Evenement : ' + info.event.title);
-                    alert('Description : ' + info.event.extendedProps.description);
-                    alert(`Pour modifier : /event/${info.event.id}/edit`);
-                    alert(`Pour supprimer : /event/${info.event.id}/delete`);
+                    Swal.fire({
+                    title: info.event.title,
+                    icon: 'info',
+                   {#  html:
+                        'Vous pouvez ' +
+                        '<a href="{{ path('updatecall', {'id':info.event.id}) }}"><b>Modfier</b></a> ' +
+                        '<a href="{{ path('deleteCall', {'id':info.event.id}) }}"><b>Supprimer</b></a>', #}
+                    })
                     }
                    
 
@@ -234,9 +238,9 @@
                     "description":e.event.extendedProps.description,
                     "start": e.event.start,
                     "end": e.event.end,
-                    "allDay": e.event.allDay
+                    
                 }
-                console.log("data to put in the calendar",donnees)
+                console.log("Call to put in the calendar",donnees)
                 let xhr = new XMLHttpRequest
                 xhr.open("PUT",url)
                 xhr.send(JSON.stringify(donnees))
@@ -252,11 +256,12 @@
 
 
 {% block vendor_script %}
-    <script src="{{ asset('vendors/js/calendar/fullcalendar.min.js') }}"></script>
-    <script src="{{ asset('vendors/js/extensions/moment.min.js') }}"></script>
+   
     <script src="{{ asset('vendors/js/forms/select/select2.full.min.js') }}"></script>
     <script src="{{ asset('vendors/js/forms/validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('vendors/js/pickers/flatpickr/flatpickr.min.js') }}"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 {% endblock %}
 
 
