@@ -17,8 +17,9 @@ class BlogPostType extends AbstractType
         $builder
             ->add('slug',TextType::class,['label'=> 'Titre'])
             ->add('body')
-            ->add('save', SubmitType::class)
+
             ->add('image',FileType::class, array('label' =>'Image(image)'))
+            ->add('save', SubmitType::class)
         ;
     }
 

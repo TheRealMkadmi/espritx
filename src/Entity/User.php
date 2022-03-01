@@ -53,6 +53,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     $this->avatar = new EmbeddedFile();
     $this->serviceRequests = new ArrayCollection();
     $this->UserCall = new ArrayCollection();
+    $this->postCategories = new ArrayCollection();
 
   }
 
@@ -641,6 +642,11 @@ class User implements UserInterface, EquatableInterface, \Serializable
   private $UserCall;
 
   /**
+   * @ORM\OneToMany(targetEntity=PostCategory::class, mappedBy="user")
+   */
+  private $postCategories;
+
+  /**
    * @return Collection<int, ServiceRequest>
    */
   public function getServiceRequests(): Collection
@@ -765,6 +771,36 @@ class User implements UserInterface, EquatableInterface, \Serializable
           // set the owning side to null (unless already changed)
           if ($userCall->getUser() === $this) {
               $userCall->setUser(null);
+          }
+      }
+
+      return $this;
+  }
+
+  /**
+   * @return Collection<int, PostCategory>
+   */
+  public function getPostCategories(): Collection
+  {
+      return $this->postCategories;
+  }
+
+  public function addPostCategory(PostCategory $postCategory): self
+  {
+      if (!$this->postCategories->contains($postCategory)) {
+          $this->postCategories[] = $postCategory;
+          $postCategory->setUser($this);
+      }
+
+      return $this;
+  }
+
+  public function removePostCategory(PostCategory $postCategory): self
+  {
+      if ($this->postCategories->removeElement($postCategory)) {
+          // set the owning side to null (unless already changed)
+          if ($postCategory->getUser() === $this) {
+              $postCategory->setUser(null);
           }
       }
 
