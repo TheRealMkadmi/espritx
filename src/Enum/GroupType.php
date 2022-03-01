@@ -2,6 +2,7 @@
 
 namespace App\Enum;
 
+use App\Traits\RandomizableEnum;
 use Elao\Enum\SimpleChoiceEnum;
 use ReflectionClass;
 
@@ -13,8 +14,10 @@ use ReflectionClass;
  * @method static FACULTY_STAFF
  * @method static TEACHERS
  */
-final class GroupType extends AbstractSimpleChoiceEnumEx
+final class GroupType extends SimpleChoiceEnum
 {
+  use RandomizableEnum;
+
   public const STUDENT = 'student';
   public const SITE_STAFF = 'site staff';
   public const FACULTY_STAFF = 'faculty staff';

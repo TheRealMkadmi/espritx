@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\AccessTypeEnum;
 use App\Repository\PermissionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -89,21 +90,20 @@ class Permission
   //<editor-fold desc="Attribute">
   /**
    * Holds the authorization beacon for the permission
-   * @ORM\Column(type="string", length=255)
-   * @Assert\Length(min=4, max=12)
+   * @Elao\Enum\Bridge\Symfony\Validator\Constraint\Enum(class=AccessTypeEnum::class)
+   * @ORM\Column(type="accesstype")
    * @Assert\NotNull(message="Please provide an attribute.")
    */
-  private $attribute;
+  private AccessTypeEnum $attribute;
 
-  public function getAttribute(): ?string
+  public function getAttribute(): AccessTypeEnum
   {
     return $this->attribute;
   }
 
-  public function setAttribute(string $attribute): self
+  public function setAttribute(AccessTypeEnum $attribute): self
   {
     $this->attribute = $attribute;
-
     return $this;
   }
   //</editor-fold>

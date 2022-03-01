@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Enum\GroupType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +16,14 @@ class SecurityController extends AbstractController
    */
   public function login(AuthenticationUtils $authenticationUtils): Response
   {
-    if ($this->getUser()) {
+    /** @var User $user */
+    $user = $this->getUser();
+    if ($user) {
+      foreach ($user->getGroups() as $group){
+        if($group->getGroupType() == GroupType::STUDENT()){
+          return $this->redirectToRoute('postall');
+        }
+      }
       return $this->redirectToRoute('dashboard-analytics');
     }
     $error = $authenticationUtils->getLastAuthenticationError();

@@ -93,33 +93,14 @@
         </ul>
       </div>
       <ul class="nav navbar-nav align-items-center ms-auto">
-        <li class="nav-item dropdown dropdown-language">
-          <a class="nav-link dropdown-toggle" id="dropdown-flag" href="#" data-bs-toggle="dropdown"
-             aria-haspopup="true">
-            <i class="flag-icon flag-icon-us"></i>
-            <span class="selected-language">English</span>
-          </a>
-          {# {{ path('lang/en') }} #}
-          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-flag">
-            <a class="dropdown-item" href="#" data-language="en">
-              <i class="flag-icon flag-icon-us"></i> English
-            </a>
-            {# {{ path('lang/fr') }} #}
-            <a class="dropdown-item" href="#" data-language="fr">
-              <i class="flag-icon flag-icon-fr"></i> French
-            </a>
-          </div>
-        </li>
         <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style">
-            <i class="ficon"
-                                                                                     data-feather="{{ (configData['theme'] == 'dark') ? 'sun' : 'moon' }}"></i></a>
+            <i class="ficon" data-feather="{{ (configData['theme'] == 'dark') ? 'sun' : 'moon' }}"></i></a>
         </li>
         <li class="nav-item nav-search"><a class="nav-link nav-link-search"><i class="ficon"
                                                                                data-feather="search"></i></a>
           <div class="search-input">
             <div class="search-input-icon"><i data-feather="search"></i></div>
-            <input class="form-control input" type="text" placeholder="Explore Vuexy..." tabindex="-1"
-                   data-search="search">
+            <input class="form-control input" type="text" placeholder="Search..." tabindex="-1" data-search="search">
             <div class="search-input-close"><i data-feather="x"></i></div>
             <ul class="search-list search-list-main"></ul>
           </div>
@@ -235,22 +216,16 @@
              data-bs-toggle="dropdown" aria-haspopup="true">
             <div class="user-nav d-sm-flex d-none">
           <span class="user-name fw-bolder">
-         {# {% if Auth::check()%}{{ Auth::user().name }} {% else %} #}
-
-              John Doe
-          {# {% endif %} #}
+            {{ app.user.firstName ~ " " ~ app.user.lastName }}
           </span>
-              <span class="user-status">
-            Admin
-          </span>
+              <div class="d-flex user-status">
+                {% for group in app.user.groups %}
+                  {{ include('views/content/_partials/_fragments/group-type-badge.html.twig',
+                    {'grouptype': group.groupType, 'displayname': group.displayName}) }}
+                {% endfor %}
+              </div>
             </div>
-            <span class="avatar">
-          <img class="round"
-               {# (Auth::user()) ? Auth::user().profile_photo_url : #}
-            src="{{ asset('images/portrait/small/avatar-s-11.jpg') }}"
-               alt="avatar" height="40" width="40">
-          <span class="avatar-status-online"></span>
-        </span>
+            {% include "views/content/_partials/_fragments/user-avatar.html.twig" with {'user': app.user} %}
           </a>
           <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
             <h6 class="dropdown-header">Manage Profile</h6>

@@ -4,3 +4,4 @@ elao_enum:
             App\Enum\UserStatus: userstatus
             App\Enum\GroupType: grouptype
             App\Enum\DocumentIdentityTypeEnum: identitydoctype
+            App\Enum\AccessTypeEnum: accesstype

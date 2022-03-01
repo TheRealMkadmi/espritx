@@ -19,6 +19,7 @@ security:
                 path: app_logout
 
         main:
+            pattern: /
             anonymous: lazy
             logout_on_user_change: false
             provider: app_user_provider
@@ -28,6 +29,10 @@ security:
                 path: /
             logout:
                 path: app_logout
+
+            form_login:
+                login_path: login
+                check_path: login
             guard:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
@@ -44,5 +49,8 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, role: IS_AUTHENTICATED_REMEMBERED }
     # - { path: ^/admin, roles: ROLE_ADMIN }
     # - { path: ^/profile, roles: ROLE_USER }
