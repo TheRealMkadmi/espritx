@@ -49,8 +49,14 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
     $this->userStatus = UserStatus::get(UserStatus::PENDING);
     $this->commentaires = new ArrayCollection();
     $this->likes = new ArrayCollection();
+
+    $this->events = new ArrayCollection();
+    $this->calls = new ArrayCollection();
+
     $this->avatar = new EmbeddedFile();
     $this->serviceRequests = new ArrayCollection();
+    $this->UserCall = new ArrayCollection();
+
   }
 
   //<editor-fold desc="id">
@@ -545,6 +551,16 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   private ?string $identityDocumentNumber = null;
 
 
+  /**
+   * @ORM\OneToMany(targetEntity=Event::class, mappedBy="user")
+   */
+  private $events;
+
+  /**
+   * @ORM\ManyToMany(targetEntity=Call::class, mappedBy="users")
+   */
+  private $calls;
+
   public function getIdentityDocumentNumber(): ?string
   {
     return $this->identityDocumentNumber;
@@ -623,6 +639,11 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   private $serviceRequests;
 
   /**
+   * @ORM\OneToMany(targetEntity=Call::class, mappedBy="user")
+   */
+  private $UserCall;
+
+  /**
    * @return Collection<int, ServiceRequest>
    */
   public function getServiceRequests(): Collection
@@ -652,6 +673,64 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
     return $this;
   }
 
+  /**
+   * @return Collection<int, Event>
+   */
+  public function getEvents(): Collection
+  {
+      return $this->events;
+  }
+
+  public function addEvent(Event $event): self
+  {
+      if (!$this->events->contains($event)) {
+          $this->events[] = $event;
+          $event->setUser($this);
+      }
+
+      return $this;
+  }
+
+  public function removeEvent(Event $event): self
+  {
+      if ($this->events->removeElement($event)) {
+          // set the owning side to null (unless already changed)
+          if ($event->getUser() === $this) {
+              $event->setUser(null);
+          }
+      }
+
+      return $this;
+  }
+
+  /**
+   * @return Collection<int, Call>
+   */
+  public function getCalls(): Collection
+  {
+      return $this->calls;
+  }
+
+  public function addCall(Call $call): self
+  {
+      if (!$this->calls->contains($call)) {
+          $this->calls[] = $call;
+          $call->addUser($this);
+      }
+
+      return $this;
+  }
+
+  public function removeCall(Call $call): self
+  {
+      if ($this->calls->removeElement($call)) {
+          $call->removeUser($this);
+      }
+
+      return $this;
+  }
+
+
   //</editor-fold>
 
   public function isEqualTo(UserInterface $user)
@@ -663,6 +742,36 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   public function __toString(): string
   {
     return $this->email;
+  }
+
+  /**
+   * @return Collection<int, Call>
+   */
+  public function getUserCall(): Collection
+  {
+      return $this->UserCall;
+  }
+
+  public function addUserCall(Call $userCall): self
+  {
+      if (!$this->UserCall->contains($userCall)) {
+          $this->UserCall[] = $userCall;
+          $userCall->setUser($this);
+      }
+
+      return $this;
+  }
+
+  public function removeUserCall(Call $userCall): self
+  {
+      if ($this->UserCall->removeElement($userCall)) {
+          // set the owning side to null (unless already changed)
+          if ($userCall->getUser() === $this) {
+              $userCall->setUser(null);
+          }
+      }
+
+      return $this;
   }
 
 }

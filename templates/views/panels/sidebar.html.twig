@@ -63,14 +63,14 @@
                     </li>
                 {% else %}
                     <li class="nav-item {{ (menu.classlist is defined) ? menu.classlist : "" }} {{ (app.request.get('_route') == menu.slug) ? 'active' : '' }}">
-                        <a href="{{(menu.url is defined)? url(menu.url):'javascript:void(0)'}}"
+                         <a href="{{(menu.url is defined)? url(menu.url):'javascript:void(0)'}}"
                            class="d-flex align-items-center" target="{{ (menu.newTab is defined) ? '_blank':'_self' }}">
                             <i data-feather="{{ menu.icon }}"></i>
                             <span class="menu-title text-truncate">{{ menu.name }}</span>
                             {% if menu.badge is defined %}
                                 <span class="{{ (menu.badgeClass is defined) ? menu.badgeClass : "badge rounded-pill badge-light-primary ms-auto me-1" }}">{{ menu.badge }}</span>
                             {% endif %}
-                        </a>
+                        </a> 
                         {% if menu.submenu is defined %}
                             {{ include('views/panels/submenu.html.twig', {'menu' : menu.submenu} ) }}
                         {% endif %}
@@ -116,3 +116,4 @@
     </div>
 </div>
 <!-- END: Main Menu-.
+
