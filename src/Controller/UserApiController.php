@@ -29,19 +29,15 @@ class UserApiController extends AbstractApiController
   public function addUser(Request $request, EntityManagerInterface $entityManager)
   {
     $form = $this->buildForm(UserType::class);
-
     $form->handleRequest($request);
-
     if (!$form->isSubmitted() || !$form->isValid()) {
       return $this->respond($form, Response::HTTP_BAD_REQUEST);
     }
 
     /** @var User $user */
     $user = $form->getData();
-
     $entityManager->persist($user);
     $entityManager->flush();
-
     return $this->respond($user);
   }
 
