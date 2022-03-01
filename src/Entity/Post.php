@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
@@ -18,10 +20,13 @@ class Post
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
+     *
      */
     private $id;
 
     /**
+     *@Assert\NotBlank
      *@Assert\Length(
      *      min = 3,
      *      max = 15,
@@ -31,12 +36,14 @@ class Post
 
      *
      * @ORM\Column(type="string", length=255)
+     * @Groups("post:read")
      */
     private $title;
 
     /**
      * @Gedmo\Slug(fields={"title"})
      * @ORM\Column(type="string", length=255)
+     * @Groups("post:read")
      */
     private $slug;
 
@@ -48,19 +55,22 @@ class Post
      *      maxMessage = "le contenue de votre post ne doit pas depasser  {{ limit }} caracteres"
      * )
      * @ORM\Column(type="text")
+     * @Groups("post:read")
      */
     private $content;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Groups("post:read")
      */
     private $created_at;
 
 
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="posts", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("post:read")
      */
     private $user;
 
@@ -68,28 +78,41 @@ class Post
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups("post:read")
      */
     private $isValid;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Groups("post:read")
+     *
      */
     private $updated_at;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups("post:read")
      */
     private $is_deleted;
 
     /**
-     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="post")
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="post",cascade={"remove"})
+     *
      */
     private $commentaires;
 
     /**
-     * @ORM\OneToMany(targetEntity=PostLike::class, mappedBy="post")
+     * @ORM\OneToMany(targetEntity=PostLike::class, mappedBy="post",cascade={"remove"})
+     *
      */
     private $likes;
+
+    /**
+     * @Assert\NotBlank
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups("post:read")
+     */
+    private $image;
 
     public function __construct()
     {
@@ -286,6 +309,34 @@ class Post
         }
         return  false;
 
+    }
+
+   /* public function getPost($length = null)
+    {
+        if (false === is_null($length) && $length > 0)
+            return substr($this->getPost(), 0, $length);
+        else
+            return $this->getPost();
+    }
+*/
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at;
     }
 
 }

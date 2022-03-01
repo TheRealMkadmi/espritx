@@ -60,7 +60,7 @@
         <div class="shadow-bottom"></div>
         <!-- Horizontal menu content-->
         <div class="navbar-container main-menu-content" data-menu="menu-container">
-            <ul class="nav navbar-nav" id="main-menu-navigation" data-menu="menu-navigation">
+            <ul class="nav navbar-nav justify-content-center" id="main-menu-navigation" data-menu="menu-navigation">
                 {% set menuItems = menuData.horizontalMenuData %}
                 {% if menuItems is defined %}
                     {% for menu in menuItems.menu %}
@@ -70,8 +70,7 @@
                                 {% endif %} #}
                         <li class="nav-item {{ (menu.submenu is defined) ? 'dropdown' : "" }} {{ (menu.classlist is defined) ? menu.classlist : "" }} {{ (app.request.get('_route') == menu.slug) ? 'active' : '' }}"
                                 {{ (menu.submenu is defined) ? 'data-menu=dropdown' : "" }}>
-                            {# {{(menu.url is defined)? url(menu.url):'#'}} todo: replace this in href attr after reworking data #}
-                            <a href="#"
+                            <a href="{{ (menu.url is defined)? url(menu.url):'#' }}"
                                class="nav-link d-flex align-items-center {% if menu.submenu is defined %}{{ 'dropdown-toggle' }}{% endif %}"
                                target="{{ (menu.newTab is defined) ? '_blank':'_self' }}" {% if menu.submenu is defined %}{{ 'data-bs-toggle=dropdown' }}{% endif %}>
                                 <i data-feather="{{ menu.icon }}"></i>

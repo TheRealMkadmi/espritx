@@ -36,7 +36,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     $res = $this->createQueryBuilder('u')
       ->groupBy("u.userStatus")
       ->select("u.userStatus as status, COUNT(u) as cnt")
-      ->select("")
       ->getQuery()
       ->getResult();
     $ret = [];

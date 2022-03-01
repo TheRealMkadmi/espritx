@@ -11,69 +11,6 @@
     <h3>Services</h3>
 
     <div class="row">
-
-        {% for Ser in Services %}
-            <div class="col-xl-4 col-lg-6 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <span>Latest requests: {# Services.count#} </span>
-                            <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
-                                <li
-                                        data-bs-toggle="tooltip"
-                                        data-popup="tooltip-custom"
-                                        data-bs-placement="top"
-                                        title="Vinnie Mostowy"
-                                        class="avatar avatar-sm pull-up"
-                                >
-                                    <img class="rounded-circle" src="{{ asset('images/avatars/2.png') }}" alt="Avatar"/>
-                                </li>
-                                <li
-                                        data-bs-toggle="tooltip"
-                                        data-popup="tooltip-custom"
-                                        data-bs-placement="top"
-                                        title="Allen Rieske"
-                                        class="avatar avatar-sm pull-up"
-                                >
-                                    <img class="rounded-circle" src="{{ asset('images/avatars/12.png') }}" alt="Avatar"/>
-                                </li>
-                                <li
-                                        data-bs-toggle="tooltip"
-                                        data-popup="tooltip-custom"
-                                        data-bs-placement="top"
-                                        title="Julee Rossignol"
-                                        class="avatar avatar-sm pull-up"
-                                >
-                                    <img class="rounded-circle" src="{{ asset('images/avatars/6.png') }}" alt="Avatar"/>
-                                </li>
-                                <li
-                                        data-bs-toggle="tooltip"
-                                        data-popup="tooltip-custom"
-                                        data-bs-placement="top"
-                                        title="Kaith D'souza"
-                                        class="avatar avatar-sm pull-up"
-                                >
-                                    <img class="rounded-circle" src="{{ asset('images/avatars/11.png') }}" alt="Avatar"/>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-end mt-1 pt-25">
-                            <div class="role-heading">
-                                <h4 class="fw-bolder">{{ Ser.name }}</h4>
-                                <a href="{{ url('Service_Edit', {id: Ser.id}) }}">
-                                    <small class="fw-bolder">Edit Service</small>
-                                </a>
-                            </div>
-                            <a href="{{ url('Service_Del', {id: Ser.id}) }}"
-                               class="text-body">
-                                <i data-feather="x-circle" class="font-medium-5"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-
         <div class="col-xl-4 col-lg-6 col-md-6">
             <div class="card">
                 <div class="row">
@@ -101,6 +38,51 @@
                 </div>
             </div>
         </div>
+
+        {% for Ser in Services %}
+            <div class="col-xl-4 col-lg-6 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <span>Number of requests: {{ Ser.serviceRequests|length }} </span>
+                            {% if Ser.serviceRequests|length > 0 %}
+                            <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
+                                {% for i in 0..(min(Ser.serviceRequests|length,4)-1) %}
+                                    {% if Ser.serviceRequests[i].Requester != null  %}
+                                <li
+                                        data-bs-toggle="tooltip"
+                                        data-popup="tooltip-custom"
+                                        data-bs-placement="top"
+                                        title="{{ Ser.serviceRequests[i].Requester.firstName~' '~Ser.serviceRequests[i].Requester.lastName }}"
+                                        class="avatar-sm pull-up"
+                                >
+                                    {% include "views/content/_partials/_fragments/user-avatar.html.twig" with {'user': Ser.serviceRequests[i].Requester} %}
+                                </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </div>
+                        <div class="d-flex justify-content-between align-items-end mt-1 pt-25">
+                            <div class="role-heading">
+                                <a href="{{ url('ser_sh_requests', {id: Ser.id}) }}">
+                                <h4 class="fw-bolder">{{ Ser.name }}</h4>
+                                </a>
+                                <a href="{{ url('Service_Edit', {id: Ser.id}) }}">
+                                    <small class="fw-bolder">Edit Service</small>
+                                </a>
+                            </div>
+                            <a href="{{ url('Service_Del', {id: Ser.id}) }}"
+                               class="text-body">
+                                <i data-feather="x-circle" class="font-medium-5"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+
     </div>
 {% endblock %}
 

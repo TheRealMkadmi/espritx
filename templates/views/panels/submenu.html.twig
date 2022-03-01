@@ -3,7 +3,7 @@
     {% if menu is defined %}
         {% for submenu in menu %}
             <li {{ (submenu.slug == app.request.get('_route')) ? "active" : "" }}>
-                <a href="{# (submenu.url is defined) ? path(submenu.url):'#' todo: fix me #}"
+                <a href="{{ (submenu.url is defined) ? path(submenu.url):'javascript:void(0)' }}"
                    class="d-flex align-items-center"
                    target="{{ ((submenu.newTab is defined) and submenu.newTab == true)  ? '_blank':'_self' }}">
                     {% if submenu.icon is defined %}

@@ -10,7 +10,8 @@
             {% for breadcrumb in breadcrumbs%}
               <li class="breadcrumb-item">
                 {% if breadcrumb['link'] is defined %}
-                  <a href="{{ breadcrumb['link'] == 'javascript:void(0)' ? breadcrumb['link']:path(breadcrumb['link']) }}">
+                {# {{ breadcrumb['link'] == 'javascript:void(0)' ? breadcrumb['link']:path(breadcrumb['link']) }} #}
+                  <a href="#">
                     {% endif %}
                       {{breadcrumb['name']}}
                     {% if breadcrumb['link'] is defined %}

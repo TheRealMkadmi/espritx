@@ -1506,6 +1506,15 @@ class TestController extends AbstractController
         return $this->render('views/content/miscellaneous/page-not-authorized.html.twig', ['pageConfigs' => $pageConfigs]);
     }
 
+    /**
+     * @Route("auth/register",name="cov")
+     */
+    public function register_cover()
+    {
+        $pageConfigs = ['blankPage' => true];
+
+        return $this->render('views/content/authentication/auth-register-cover.html.twig', ['pageConfigs' => $pageConfigs]);
+    }
     // Maintenance
     /**
      * @Route("page/maintenance",name="maintenance")

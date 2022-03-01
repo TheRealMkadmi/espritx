@@ -115,12 +115,8 @@
                 <td>
                   <!-- BEGIN: Avatar, email & name -->
                   <div class="d-flex justify-content-left align-items-center">
-                    <div class="avatar-wrapper">
-                      <div class="avatar me-1">
-                        <img
-                            src="https://pixinvent.com/demo/vuexy-bootstrap-laravel-admin-template/demo-1/images/avatars/2.png"
-                            alt="Avatar" height="32" width="32">
-                      </div>
+                    <div class="avatar-wrapper" style="margin-right: 10px;">
+                      {% include "views/content/_partials/_fragments/user-avatar.html.twig" with {'user': user} %}
                     </div>
                     <div class="d-flex flex-column">
                       <a href="https://pixinvent.com/demo/vuexy-bootstrap-laravel-admin-template/demo-1/app/user/view/account"
@@ -152,7 +148,7 @@
                     <a href="{{ url("user_edit", {id: user.id}) }}">
                       <i data-feather="edit-2" class="me-50"></i>
                     </a>
-                    <a href="{{ url("user_delete", {id: user.id}) }}">
+                    <a href="{{ url("user_delete", {id: user.id}) }}?_token={{ csrf_token("delete"~user.id) }}">
                       <i data-feather="trash" class="me-50"></i>
                     </a>
                   </div>
@@ -169,7 +165,7 @@
             to {{ min(pagination.currentPageNumber * pagination.itemNumberPerPage, pagination.getTotalItemCount) }}
             of {{ pagination.getTotalItemCount }} entries
           </div>
-          <div class="col-sm-12 col-md-6 navigation">
+          <div class="col-sm-12 col-md-6 navigation d-flex justify-content-end">
             {{ knp_pagination_render(pagination) }}
           </div>
         </div>

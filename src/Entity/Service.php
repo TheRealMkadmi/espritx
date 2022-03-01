@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use http\Env\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -25,6 +26,8 @@ class Service
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotBlank(message="Veuillez ajouter un nom de service!")
+     * @Groups("Service")
+     * @Groups ("Request")
      */
     private $Name;
 
@@ -32,17 +35,20 @@ class Service
      * @ORM\ManyToOne(targetEntity=Group::class, inversedBy="provided_services")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotNull(message="Veuillez sélectionnez un responsable pour ce service!")
+     * @Groups("Service")
      */
     private $Responsible;
 
     /**
      * @ORM\ManyToMany(targetEntity=Group::class, inversedBy="enjoyable_services")
      * @Assert\Count(min="1", minMessage="Sélectionnez au moins un bénéficaire de ce service!")
+     * @Groups("Service")
      */
     private $Recipient;
 
     /**
-     * @ORM\OneToMany(targetEntity=ServiceRequest::class, mappedBy="Type")
+     * @ORM\OneToMany(targetEntity=ServiceRequest::class, mappedBy="Type" ,cascade={"remove"})
+     * @Groups("Service")
      */
     private $serviceRequests;
 
@@ -135,8 +141,9 @@ class Service
         return $this;
     }
 
+
     public function __toString(): string
     {
-      return $this->getName();
+        return $this->getName();
     }
 }

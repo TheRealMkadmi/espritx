@@ -224,3 +224,7 @@ modules.xml
 /web/js/
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,phpstorm+all,symfony,node
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###
+

@@ -17,7 +17,7 @@ class MessagesController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('messages/index.html.twig', [
+        return $this->render('messages/Realindex.html.twig', [
             'controller_name' => 'MessagesController',
         ]);
     }
@@ -35,19 +35,22 @@ class MessagesController extends AbstractController
             $entityManager->persist($message);
             $entityManager->flush();
 
-            return $this->redirectToRoute('messages/index.html.twig', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('message_show', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('messages/index.html.twig', [
             'messages' => $message,
             'form' => $form->createView(),
         ]);
+
     }
 
 
 
+
+
     /**
-     * @Route("/messages/{id}/edit", name="messages_edit", methods={"GET", "POST"})
+     * @Route("/messages/edit/{id}", name="messages_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Messages $messages, EntityManagerInterface $entityManager): Response
     {
@@ -57,7 +60,7 @@ class MessagesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('messages', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('message_show', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('messages/index.html.twig', [
@@ -65,18 +68,42 @@ class MessagesController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("messages/delete/{id}", name="messages_delete")
+     */
+    public function delete(int $id): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $message = $entityManager->getRepository(Messages::class)->find($id);
+        $entityManager->remove($message);
+        $entityManager->flush();
+        return $this->redirectToRoute('message_show', [], Response::HTTP_SEE_OTHER);
+    }
 
     /**
-     * @Route("messages/{id}", name="messages_delete", methods={"POST"})
+     * @Route ("messages/show", name="message_show")
      */
-    public function delete(Request $request, messages $messages, EntityManagerInterface $entityManager): Response
+    public function show(): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$messages->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($messages);
-            $entityManager->flush();
-        }
+        $messages = $this->getDoctrine()->getRepository(Messages::class)->findAll();
 
-        return $this->redirectToRoute('messages', [], Response::HTTP_SEE_OTHER);
+        return $this->render('conversation/AfficheMessages.html.twig', [
+            "messages" => $messages,
+        ]);
+
+    }
+
+    /**
+     * @Route ("api/messages/show", name="message_show_api")
+     */
+    public function api_show(): Response
+    {
+        $messages = $this->getDoctrine()->getRepository(Messages::class)->findAll();
+
+        return $this->render('conversation/AfficheMessages.html.twig', [
+            "messages" => $messages,
+        ]);
+
     }
 
 

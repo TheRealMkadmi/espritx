@@ -1,33 +1,50 @@
-
 {% extends 'views/layouts/contentLayoutMaster.html.twig' %}
 
 {% block title %} Chat Application {% endblock %}
 
 {% block page_style %}
-    <!-- Page css files -->
-    <link rel="stylesheet" href="{{ asset('css/base/pages/app-chat.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/base/pages/app-chat-list.css') }}">
+  <!-- Page css files -->
+  <link rel="stylesheet" href="{{ asset('css/base/pages/app-chat.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/base/pages/app-chat-list.css') }}">
 {% endblock %}
 
 
 {% block content_sidebar %}
-    {% include 'views/content/apps/chat/app-chat-sidebar.html.twig' %}
+  {% include 'views/content/apps/chat/app-chat-sidebar.html.twig' %}
 {% endblock %}
 
 
 {% block content %}
+<h3>Rédigez une publication</h3>
+<p>Ecrivez quelque chose d'inspirant.</p>
+
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">Détails de la publication</h4>
+  </div>
+  <div class="card-body">
     {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+    <div class="row">
+      <div class="col-12">
+        {{ form_row(form.title) }}
+      </div>
+      <div class="col-12">
+        {{ form_row(form.content) }}
+      </div>
 
-    {{ form_row(form.title) }}
-    {{ form_row(form.content) }}
-
-    <button class="btn">{{ button_label|default('Publier') }}</button>
+      <div class="col-12">
+        {{ form_row(form.image) }}
+      </div>
+      <div class="col-12 d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary" style="width: 13.5rem;">{{ button_label|default('Publier') }}</button>
+      </div>
+    </div>
     {{ form_end(form) }}
-{% endblock %}
 
-
-{% block page_script %}
+  </div>
+  {% endblock %}
+  {% block page_script %}
     <!-- Page js files -->
     <script src="{{ asset('js/scripts/pages/app-chat.js') }}"></script>
-{% endblock %}
+  {% endblock %}
 
