@@ -33,6 +33,7 @@ class User implements UserInterface, EquatableInterface
     $this->commentaires = new ArrayCollection();
     $this->likes = new ArrayCollection();
     $this->events = new ArrayCollection();
+    $this->calls = new ArrayCollection();
   }
 
   //<editor-fold desc="id">
@@ -448,6 +449,11 @@ class User implements UserInterface, EquatableInterface
    */
   private $events;
 
+  /**
+   * @ORM\ManyToMany(targetEntity=Call::class, mappedBy="users")
+   */
+  private $calls;
+
   public function getIdentityDocumentNumber(): ?string
   {
     return $this->identityDocumentNumber;
@@ -528,6 +534,33 @@ class User implements UserInterface, EquatableInterface
           if ($event->getUser() === $this) {
               $event->setUser(null);
           }
+      }
+
+      return $this;
+  }
+
+  /**
+   * @return Collection<int, Call>
+   */
+  public function getCalls(): Collection
+  {
+      return $this->calls;
+  }
+
+  public function addCall(Call $call): self
+  {
+      if (!$this->calls->contains($call)) {
+          $this->calls[] = $call;
+          $call->addUser($this);
+      }
+
+      return $this;
+  }
+
+  public function removeCall(Call $call): self
+  {
+      if ($this->calls->removeElement($call)) {
+          $call->removeUser($this);
       }
 
       return $this;
