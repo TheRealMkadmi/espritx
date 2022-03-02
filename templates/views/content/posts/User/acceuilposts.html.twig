@@ -9,9 +9,7 @@
           fill: #ea5455;
           stroke: #ea5455
       }
-  </style>
 
-  <style>
       .cardbox .cardbox-heading {
           padding: 16px;
           margin: 0;
@@ -297,6 +295,11 @@
 
 
 {% block content %}
+
+
+
+
+
   <div class="alert alert-success px-1 py-2">
     {% for message in app.flashes('info') %}
       {{ message }}
@@ -317,8 +320,9 @@
 
   {% for post in posts %}
     {% if post.isDeleted == 0 %}
-      <div class="row">
-        <div class="col-9">
+
+      <div style="margin-left: 200px" class="row">
+        <div class="col-8">
           <div class="card card-apply-job">
             <div class="card-body">
               <div class="d-flex flex-row justify-content-between align-items-center mb-2">
@@ -343,12 +347,22 @@
                   </div>
                 </div>
               </div>
-              <h5 class="apply-job-title">{{ post.title }}</h5>
+              <h5 id="titre" class="apply-job-title">{{ post.title }}</h5>
 
               <p class="card-text mb-2">
                 {{ post.content }}
               </p>
-              <img class="img-fluid my-2" src="{{ asset('images/slider/06.jpg') }}" alt="Card image cap"/>
+
+                <div class="col-md-6 thumbnail">
+                    <div id="{{ post.id }}" class="map1" style="height: 200px; width:600px"></div>
+                    <div  class="test">
+                        <input id="tableau1" type="hidden" value="{{ post.longitude }}"/>
+                        <input id="tableau2" type="hidden" value="{{ post.latitude }}"/>
+                    </div>
+                    </a>
+                </div>
+
+              <img class="img-fluid my-1" src="{{ asset('/uploads/brochures/'~post.image) }}" alt="{{ post.image }}"/>
               <!-- Likes -->
               <div class="row d-flex justify-content-start align-items-center flex-wrap pb-50">
                 <div class="col-sm-6 d-flex justify-content-between justify-content-sm-start mb-2">
@@ -434,11 +448,30 @@
         </div>
       </div>
     {% endif %}
+
   {% endfor %}
 {% endblock %}
 
 
 {% block page_script %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <!-- Page js files -->
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   {# bloc java script pour ajax #}
@@ -520,6 +553,45 @@
       document.querySelectorAll('form.comment').forEach(function (link) {
           link.addEventListener('submit', onClickBtnComment)
       });
+/////////***************************************Map***************************************////////////////
+
 
   </script>
+
+    <script>
+        // $(document).ready(function() {
+        let map;
+        let markers = [];
+
+        function initMap() {
+            tab = document.querySelectorAll("div.map1");
+            tab2 = document.querySelectorAll("div.test");
+            long = tab2[0].childNodes;
+            console.log(tab2[0].childNodes);
+            console.log(long[1], long[3]);
+            for (let i = 0; i < tab.length; i++) {
+                var latit = Number(tab2[i].childNodes[3].value);
+                var long = Number(tab2[i].childNodes[1].value);
+                const haightAshbury = {lat: long, lng: latit};
+                map = new google.maps.Map(document.getElementById(tab[i].id), {
+                    zoom: 12,
+                    center: haightAshbury,
+                    draggable: true
+                });
+                new google.maps.Marker({
+                    position: haightAshbury,
+                    map,
+                    title: "Localisation",
+                });
+            }
+        }
+    </script>
+
+    <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDch6NmhxtcdIgcCRjZbblh5z16CK-a2Jo&callback=initMap&libraries=&v=weekly"
+            async
+    ></script>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 {% endblock %}

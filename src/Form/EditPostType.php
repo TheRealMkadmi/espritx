@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Post;
 
+use Hoa\Iterator\Map;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

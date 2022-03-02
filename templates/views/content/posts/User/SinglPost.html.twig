@@ -297,6 +297,34 @@
 
 
 {% block content %}
+
+
+    <div id="modal-contact" role="dialog" aria-modal="true" class="fade modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title h4">Contacter l'annonceur</div> <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+                </div>
+                {{ form_start(formContact) }}
+                <div class="modal-body">
+                    {{ form_widget(formContact.title) }}
+                    {{ form_row(formContact.email) }}
+                    {{ form_row(formContact.message) }}
+
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                    <button type="button" class="btn btn-primary">Fermer</button>
+                </div>
+
+                {{ form_end(formContact) }}
+            </div>
+        </div>
+    </div>
+
+
     <div class="alert alert-success px-1 py-2">
         {% for message in app.flashes('info') %}
             {{ message }}
@@ -348,7 +376,7 @@
                             <p class="card-text mb-2">
                                 {{ post.content }}
                             </p>
-                            <img class="img-fluid my-2" src="{{ asset('images/slider/06.jpg') }}" alt="Card image cap"/>
+                            <img class="img-fluid my-2" src="{{ asset('/uploads/brochures/'~post.image) }}" alt="{{ post.image }}"/>
                             <!-- Likes -->
                             <div class="row d-flex justify-content-start align-items-center flex-wrap pb-50">
                                 <div class="col-sm-6 d-flex justify-content-between justify-content-sm-start mb-2">
@@ -425,6 +453,8 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="card-title">Contacter l'annonceur</div>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-contact">Contacter l'annonceur par mail</button>
+
                             <div class="card-text">
                                 Numéro de telephone: {{ post.user.phonenumber }} <br>
                                 Email: {{ post.user.email }}
@@ -441,6 +471,18 @@
 
 
 {% block page_script %}
+
+
+
+
+    <script>
+
+        window.onload = () =>{
+            document.querySelector("#post_contact_title").value="{{ post.title }}";
+        }
+
+    </script>
+
     <!-- Page js files -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     {# bloc java script pour ajax #}
