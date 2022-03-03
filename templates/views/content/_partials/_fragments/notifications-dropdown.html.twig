@@ -4,40 +4,34 @@
       <div class="dropdown-header d-flex">
         <h4 class="notification-title mb-0 me-auto">Notifications</h4>
         {% if mgilet_notification_unseen_count(app.user) > 0 %}
-          <div class="badge rounded-pill badge-light-primary">{{ mgilet_notification_unseen_count(app.user) }} New</div>
+          <div class="badge rounded-pill badge-light-primary"><span class="unread-notifications-count">{{ mgilet_notification_unseen_count(app.user) }}</span> New</div>
         {% endif %}
       </div>
     </li>
-    <li class="scrollable-container media-list">
+    <li class="scrollable-container media-list notification-list">
       {% for item in notificationList %}
-        <a class="d-flex flex-fill" href="{{ item.notification.link }}">
-          <div class="list-item d-flex align-items-start">
-            <div class="me-1">
-              <div class="avatar">
-                <img src="{{ asset('images/portrait/small/avatar-s-15.jpg') }}" alt="avatar" width="32"
-                     height="32">
-              </div>
-            </div>
-            <div class="list-item-body flex-grow-1">
-              <p class="media-heading"><span class="fw-bolder">{{ item.notification.subject }}</span></p>
-              <small class="notification-text">{{ item.notification.message }}</small>
-            </div>
-              {% if item.seen %}
-                <a class="align-self-center" href="{{ mgilet_notification_generate_path('notification_mark_as_unseen', item.notifiableEntity, item.notification) }}">
-                  <i data-feather='x'></i>
-                </a>
-              {% else %}
-                <a class="align-self-center" href="{{ mgilet_notification_generate_path('notification_mark_as_seen', item.notifiableEntity, item.notification) }}">
-                  <i data-feather='check'></i>
-                </a>
-              {% endif %}
+        <div class="list-item d-flex align-items-start notification-row" data-navigation="{{ item.notification.link }}">
+          <div class="list-item-body flex-grow-1">
+            <p class="media-heading"><span class="fw-bolder">{{ item.notification.subject }}</span></p>
+            <small class="notification-text">{{ item.notification.message }}</small>
           </div>
-        </a>
+          <a class="align-self-center anchor-async-seen {{ (item.seen) ? "hidden": "" }}"
+             href="javascript:void(0)"
+             data-target="{{ mgilet_notification_generate_path('notification_mark_as_seen', item.notifiableEntity, item.notification) }}">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+          </a>
+          <a class="align-self-center anchor-async-unseen {{ (not item.seen) ? "hidden": "" }}"
+             href="javascript:void(0)"
+             data-target="{{ mgilet_notification_generate_path('notification_mark_as_unseen', item.notifiableEntity, item.notification) }}">
+            <i class='fa fa-eye-slash' aria-hidden="true"></i>
+          </a>
+        </div>
       {% endfor %}
     </li>
     <li class="dropdown-menu-footer">
-      <a class="btn btn-primary w-100"
-         href="{{ mgilet_notification_generate_path('notification_mark_all_as_seen', notificationList|first.notifiableEntity) }}">
+      <a class="btn btn-primary w-100 read-all-notifications-anchor"
+         href="javascript:void(0)"
+         data-target="{{ mgilet_notification_generate_path('notification_mark_all_as_seen', notificationList|first.notifiableEntity) }}">
         Read all notifications
       </a>
     </li>
@@ -46,14 +40,13 @@
   <ul class="dropdown-menu dropdown-menu-media dropdown-menu-end">
     <li class="dropdown-menu-header">
       <div class="dropdown-header d-flex">
-        <h4 class="notification-title mb-0 me-auto">Notifications</h4>
+        <h4 class="notification-title mb-0 me-auto">It's quiet here..</h4>
       </div>
     </li>
     <li class="scrollable-container media-list">
       <a class="d-flex" href="javascript:void(0)">
         <div class="list-item d-flex align-items-start">
           <div class="list-item-body flex-grow-1">
-            <p class="media-heading"><span class="fw-bolder">It's quiet here..</span></p>
             <small class="notification-text">You currently don't have any notification. Check back in a few.</small>
           </div>
         </div>

@@ -108,9 +108,23 @@
         <li class="nav-item dropdown dropdown-notification me-25">
           <a class="nav-link" href="javascript:void(0);" data-bs-toggle="dropdown">
             <i class="ficon" data-feather="bell"></i>
+            <script>
+                const notifications = {
+                    __count: {{ mgilet_notification_unseen_count(app.user) }},
+                    update() {
+                        $("span.unread-notifications-count").text(this.__count);
+                    },
+                    get unread_count() {
+                        return this.__count;
+                    },
+                    set unread_count(count) {
+                        this.__count = count;
+                        this.update(this.__count);
+                    }
+                };
+            </script>
             {% if mgilet_notification_unseen_count(app.user) > 0 %}
-              <span
-                  class="badge rounded-pill bg-danger badge-up">{{ mgilet_notification_unseen_count(app.user) }}</span>
+              <span class="badge rounded-pill bg-danger badge-up unread-notifications-count">{{ mgilet_notification_unseen_count(app.user) }}</span>
             {% endif %}
           </a>
           {{ mgilet_notification_render(app.user, { 'template': 'views/content/_partials/_fragments/notifications-dropdown.html.twig'}) }}

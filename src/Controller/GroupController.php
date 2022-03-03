@@ -9,6 +9,7 @@ use App\Form\UserType;
 use App\Repository\GroupRepository;
 use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -111,16 +112,17 @@ class GroupController extends AbstractController
   }
 
   /**
-   * @Route("/test_notif/{id}", name="test_gp_not", methods={"GET"})
+   * @Route("/test_notif", name="test_gp_not", methods={"GET"})
    */
   public function testNotifications(Request                $request,
                                     GroupRepository        $groupRepository,
                                     NotificationService    $notification,
-                                    EntityManagerInterface $entityManager,
-                                                           $id)
+                                    EntityManagerInterface $entityManager)
   {
-
-    $notification->notifyGroup($groupRepository->find($id), "lorem", "ipsum", "http://google.tn", true);
+    foreach ($groupRepository->findAll() as $group) {
+      for ($i = 0; $i < 10; $i++)
+        $notification->notifyGroup($group, "lorem", "ipsum", "http://google.tn", false);
+    }
     $entityManager->flush();
   }
 
