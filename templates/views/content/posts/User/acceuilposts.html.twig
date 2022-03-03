@@ -352,7 +352,7 @@
               <p class="card-text mb-2">
                 {{ post.content }}
               </p>
-
+{% if post.longitude != null  and post .latitude != null %}
                 <div class="col-md-6 thumbnail">
                     <div id="{{ post.id }}" class="map1" style="height: 200px; width:600px"></div>
                     <div  class="test">
@@ -361,6 +361,7 @@
                     </div>
                     </a>
                 </div>
+    {% endif %}
 
               <img class="img-fluid my-1" src="{{ asset('/uploads/brochures/'~post.image) }}" alt="{{ post.image }}"/>
               <!-- Likes -->

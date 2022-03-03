@@ -157,6 +157,11 @@ class PostController extends AbstractController
     // dd($post);
     $em = $this->getDoctrine()->getManager();
     if (($form1->isSubmitted() && $form1->isValid())) {
+        $a = $request->request->get('markers1');
+        $b = $request->request->get('markers2');
+        $post->setLongitude($a);
+        $post->setLatitude($b);
+
       // $post->setImage(
       //   new File($this->getParameter('uploads/brochures').'/'.$post->getImage())
       //);
@@ -165,7 +170,7 @@ class PostController extends AbstractController
       $em->persist($post);
 
       $em->flush();
-      $this->addFlash('notice', 'Publication modifiée avec succée !');
+        $request->getSession()->getFlashBag()->add("info", "Publication modifiée ");
       return $this->redirectToRoute("acceuil_user_posts");
     }
     return $this->render('views/content/posts/User/editPost.html.twig', ['form' => $form1->createView()]);
@@ -178,10 +183,10 @@ class PostController extends AbstractController
   /**
    * @Route("/user/post/changedelete/{id}",name="changedelete_post")
    */
-  public function supprimer_Post_user(Post $post, PostRepository $postRepository)
+  public function supprimer_Post_user(Post $post, PostRepository $postRepository,Request $request)
   {
     $post = $postRepository->changeDelete($post);
-    $this->addFlash('success', 'Publication bien été approuvée');
+      $request->getSession()->getFlashBag()->add("info", "Publication supprimée");
     return $this->redirectToRoute('acceuil_user_posts');
     // return $this->json(["message"=>"success","value"=>$post->getIsDeleted()]);
   }
