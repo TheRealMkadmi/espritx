@@ -442,7 +442,7 @@ class PostController extends AbstractController
    * @param Request $request
    * @return Response
    */
-  public function singlepost($id, PostRepository $repository, Request $request,MailerInterface $mailer): Response
+  public function singlepost($id, PostRepository $repository, Request $request,\Swift_Mailer $mailer): Response
   {
     $pub = $repository->find($id);
     $commentaire = new Commentaire();
@@ -454,13 +454,33 @@ class PostController extends AbstractController
 
 
 
-      $contact= $form->handleRequest($request);
+      $contact= $formcontact->handleRequest($request);
 
      if($formcontact->isSubmitted() && $formcontact->isValid()) {
 
          // hadharna l mail
 
-         $email = (new TemplatedEmail())
+
+         $message = (new \Swift_Message('Hello Email'))
+             ->setFrom($contact->get('email')->getData())
+             ->setTo($pub->getUser()->getEmail())
+             ->setBody(
+                 $this->renderView(
+                 // templates/emails/registration.html.twig
+                     'views/content/posts/email/contact_post.html.twig',
+                     [
+                         'post' => $pub,
+                         'mail' => $contact->get('email')->getData(),
+                         'message' => $contact->get('message')->getData()
+                     ]
+                 ),
+                 'text/html'
+             );
+
+
+
+
+      /*   $email = (new TemplatedEmail())
              ->from($contact->get('email')->getData())
              ->to($pub->getUser()->getEmail())
              ->subject('Contact au sujet de votre post "' . $pub->getTitle() . '"')
@@ -469,9 +489,9 @@ class PostController extends AbstractController
                  'post' => $pub,
                  'mail' => $contact->get('email')->getData(),
                  'message' => $contact->get('message')->getData()
-             ]);
+             ]);*/
          // nab3eth l mail
-         $mailer->send($email);
+         $mailer->send($message);
          // on confirme et on redirige
          $this->addFlash('message','Votre email a bien envoyé ');
          return $this->redirectToRoute('singlepost',['id'=>$pub->getId()]);
