@@ -105,6 +105,7 @@
             <ul class="search-list search-list-main"></ul>
           </div>
         </li>
+        {% if app.user %}
         <li class="nav-item dropdown dropdown-notification me-25">
           <a class="nav-link" href="javascript:void(0);" data-bs-toggle="dropdown">
             <i class="ficon" data-feather="bell"></i>
@@ -188,6 +189,7 @@
             </a>
           </div>
         </li>
+        {% endif %}
       </ul>
     </div>
   </nav>
