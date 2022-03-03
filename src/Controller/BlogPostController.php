@@ -7,6 +7,7 @@ use App\Entity\User;
 
 use App\Form\BlogPostType;
 use App\Repository\BlogPostRepository;
+use App\Repository\PostCategoryRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -32,13 +33,12 @@ class BlogPostController extends AbstractController
     /**
      * @Route("/blogpost/new", name="newblogpost")
      * @param Request $request
-     * @param UserRepository $repository
+     * @param PostCategoryRepository $repository
      * @return Response
-     * @throws Exception
      */
 
 
-    public function newBlogPost(Request $request, UserRepository $repository): Response
+    public function newBlogPost(Request $request, PostCategoryRepository $repository): Response
     {
 
 
