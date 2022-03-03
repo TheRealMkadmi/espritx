@@ -32,7 +32,7 @@ $(document).ready(function (e) {
             }
         })
         .click(function (e) {
-            window.location.href($(this).data("navigation"));
+            window.location.href = $(this)[0].dataset.navigation;
         });
 
     $(".read-all-notifications-anchor").click(function (e) {
