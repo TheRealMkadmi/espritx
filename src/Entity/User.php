@@ -14,6 +14,8 @@ use Doctrine\ORM\PersistentCollection;
 use Exception;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use Mgilet\NotificationBundle\Annotation\Notifiable;
+use Mgilet\NotificationBundle\NotifiableInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -33,8 +35,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\EntityListeners({"App\Entity\Listener\UserListener"})
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  * @Vich\Uploadable
+ * @Notifiable(name="user")
  */
-class User implements UserInterface, EquatableInterface, \Serializable
+class User implements UserInterface, EquatableInterface, \Serializable, NotifiableInterface
 {
   use TimestampableEntity;
 

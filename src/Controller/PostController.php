@@ -8,6 +8,7 @@ use App\Entity\PostLike;
 use App\Entity\User;
 use App\Form\CommentaireType;
 use App\Form\EditPostType;
+use App\Form\PostContactType;
 use App\Form\PostType;
 use App\Repository\CommentaireRepository;
 use App\Repository\PostLikeRepository;
@@ -17,11 +18,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use phpDocumentor\Reflection\Types\This;
 use PhpParser\Node\Expr\Cast\Object_;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -86,6 +89,10 @@ class PostController extends AbstractController
 
       $em = $this->getDoctrine()->getManager();
       if (($form1->isSubmitted() && $form1->isValid())) {
+          $a = $request->request->get('markers1');
+          $b = $request->request->get('markers2');
+          $post->setLongitude($a);
+          $post->setLatitude($b);
         $file = $form1->get('image')->getData();
         $fileName = md5(uniqid()) . '.' . $file->guessExtension();
         $file->move(
@@ -228,11 +235,15 @@ class PostController extends AbstractController
     $commentaire = new Commentaire();
     $form = $this->createForm(CommentaireType::class, $commentaire);
     $posts = $repository->getLatestPosts();
+
+
     $comments = $repository->CommentsMaxQuatre();
 //dd($commentaire);
 
 
     $forms = [];
+
+
 
 
     return $this->render('views/content/posts/User/acceuilposts.html.twig', ['comments' => $comments, 'posts' => $posts, 'form' => $form->createView()]);
@@ -431,12 +442,65 @@ class PostController extends AbstractController
    * @param Request $request
    * @return Response
    */
-  public function singlepost($id, PostRepository $repository, Request $request): Response
+  public function singlepost($id, PostRepository $repository, Request $request,\Swift_Mailer $mailer): Response
   {
     $pub = $repository->find($id);
     $commentaire = new Commentaire();
     $form = $this->createForm(CommentaireType::class, $commentaire);
-    return $this->render('views/content/posts/User/SinglPost.html.twig', ['post' => $pub, 'form' => $form->createView()]);
+
+
+      $formcontact= $this->createForm(PostContactType::class);
+
+
+
+
+      $contact= $formcontact->handleRequest($request);
+
+     if($formcontact->isSubmitted() && $formcontact->isValid()) {
+
+         // hadharna l mail
+
+
+         $message = (new \Swift_Message('Hello Email'))
+             ->setFrom($contact->get('email')->getData())
+             ->setTo($pub->getUser()->getEmail())
+             ->setBody(
+                 $this->renderView(
+                 // templates/emails/registration.html.twig
+                     'views/content/posts/email/contact_post.html.twig',
+                     [
+                         'post' => $pub,
+                         'mail' => $contact->get('email')->getData(),
+                         'message' => $contact->get('message')->getData()
+                     ]
+                 ),
+                 'text/html'
+             );
+
+
+
+
+      /*   $email = (new TemplatedEmail())
+             ->from($contact->get('email')->getData())
+             ->to($pub->getUser()->getEmail())
+             ->subject('Contact au sujet de votre post "' . $pub->getTitle() . '"')
+             ->htmlTemplate('views/content/posts/email/contact_post.html.twig')
+             ->context([
+                 'post' => $pub,
+                 'mail' => $contact->get('email')->getData(),
+                 'message' => $contact->get('message')->getData()
+             ]);*/
+         // nab3eth l mail
+         $mailer->send($message);
+         // on confirme et on redirige
+         $this->addFlash('message','Votre email a bien envoyé ');
+         return $this->redirectToRoute('singlepost',['id'=>$pub->getId()]);
+
+     }
+
+
+
+    return $this->render('views/content/posts/User/SinglPost.html.twig', ['formContact'=>$formcontact->createView(),'post' => $pub, 'form' => $form->createView()]);
   }
 
 

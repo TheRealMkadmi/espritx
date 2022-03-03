@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Permission;
 use App\Entity\Post;
+use App\Enum\AccessTypeEnum;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -21,7 +22,7 @@ class PermissionFixtures extends AbstractFixtureEx
       $perm->setTitle(implode(" ", $generator->words(3)));
       $perm->setDescription(str_replace("'", "", $generator->realText(60)));
       $perm->setEnabled(true);
-      $perm->setAttribute("perm_$i");
+      $perm->setAttribute(AccessTypeEnum::Random());
       $perm->setSubject(Post::class);
       $manager->persist($perm);
       $perms->add($perm);

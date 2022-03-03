@@ -2,6 +2,7 @@
 
 namespace App\Enum;
 
+use App\Traits\RandomizableEnum;
 use Elao\Enum\SimpleChoiceEnum;
 use ReflectionClass;
 
@@ -13,8 +14,9 @@ use ReflectionClass;
  * @method static RESTRICTED
  * @method static ALUMNUS
  */
-final class UserStatus extends AbstractSimpleChoiceEnumEx
+final class UserStatus extends SimpleChoiceEnum
 {
+  use RandomizableEnum;
   public const ACTIVE = 'active';
   public const PENDING = 'pending';
   public const RESTRICTED = 'restricted';
