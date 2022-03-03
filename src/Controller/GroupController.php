@@ -7,6 +7,7 @@ use App\Form\GroupType;
 use App\Form\PermissionType;
 use App\Form\UserType;
 use App\Repository\GroupRepository;
+use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -57,7 +58,9 @@ class GroupController extends AbstractController
   {
     $result = $autocompleteService->getAutocompleteResults($request, PermissionType::class);
     return new JsonResponse($result);
-  }  /**
+  }
+
+  /**
    * @param Request $request
    * @param AutocompleteService $autocompleteService
    * @return JsonResponse
@@ -108,12 +111,26 @@ class GroupController extends AbstractController
   }
 
   /**
+   * @Route("/test_notif/{id}", name="test_gp_not", methods={"GET"})
+   */
+  public function testNotifications(Request                $request,
+                                    GroupRepository        $groupRepository,
+                                    NotificationService    $notification,
+                                    EntityManagerInterface $entityManager,
+                                                           $id)
+  {
+
+    $notification->notifyGroup($groupRepository->find($id), "lorem", "ipsum", "http://google.tn", true);
+    $entityManager->flush();
+  }
+
+  /**
    * @Route("/{id}/delete", name="group_delete", methods={"GET"})
    */
   public function delete(Request $request, Group $group, EntityManagerInterface $entityManager, GroupRepository $groupRepository): Response
   {
     if ($this->isCsrfTokenValid('delete' . $group->getId(), $request->query->get('_token'))) {
-      if(count($group->getProvidedServices()) > 0){
+      if (count($group->getProvidedServices()) > 0) {
         return $this->render('views/content/apps/rolesPermission/role/app-access-roles.html.twig', [
           'breadcrumbs' => [
             ["name" => "Management"],
