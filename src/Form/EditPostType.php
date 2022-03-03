@@ -21,12 +21,13 @@ class EditPostType extends AbstractType
                 'label' => 'Taper le titre de votre post',
             ])
             //  ->add('slug')
+
             ->add('content', TextType::class, [
                 'attr' => ['rows' => 10],
                 'help' => "merci d'accepter les regles d'utilisation",
                 'label' => 'Ecrire ....',
             ])
-            // ->add('image', FileType::class, array('label' => 'Image(image)'))
+
 
 
             // ->add('created_at')
