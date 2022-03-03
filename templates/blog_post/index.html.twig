@@ -1,7 +1,7 @@
 {% extends 'views/layouts/contentLayoutMaster.html.twig' %}
 
 
-{% block title %} Blog Post {% endblock %}
+{% block title %} Forum EspritX {% endblock %}
 
 {% block page_style %}
     <!-- Page css files -->
@@ -18,12 +18,14 @@
 {% block content %}
     <div class="blog-list-wrapper">
 
-    <h1>Blog Post</h1>
+    <h1> Forum EspritX </h1>
     {% for blog in blogs %}
         <div class="col-md-6 col-12">
             <div class="card">
-                <a href="{{ asset('page/blog/detail') }}">
-                    <img class="card-img-top img-fluid" src="{{asset('images/slider/02.jpg')}}" alt="Blog Post pic" />
+
+
+               <a href="{{ asset('page/blog/detail') }}">
+                   <img class="img-fluid my-1" src="{{ asset('/uploads/brochures/'~blog.image) }}" alt="{{ blog.image }}"/>
                 </a>
                 <div class="card-body">
                     <h4 class="card-title">
@@ -37,9 +39,9 @@
                         </div>
                         <div class="author-info">
                             <small class="text-muted me-25">by</small>
-                            <small><a href="#" class="text-body">Ghani Pradita</a></small>
+                            <small><a href="#" class="text-body"> Internaute </a></small>
                             <span class="text-muted ms-50 me-25">|</span>
-                            <small class="text-muted">Jan 10, 2020</small>
+                             <small class="text-muted"> Categorie : {{ blog.postcategory }}</small>
                         </div>
                     </div>
                     <div class="my-1 py-25">

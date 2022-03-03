@@ -34,6 +34,11 @@ class BlogPost
      */
     private $image;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=PostCategory::class, inversedBy="blogPosts")
+     */
+    private $post_category;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -71,6 +76,18 @@ class BlogPost
     public function setImage(string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getPostCategory(): ?PostCategory
+    {
+        return $this->post_category;
+    }
+
+    public function setPostCategory(?PostCategory $post_category): self
+    {
+        $this->post_category = $post_category;
 
         return $this;
     }
