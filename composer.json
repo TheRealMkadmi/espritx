@@ -110,8 +110,7 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
             "ckeditor:install": "symfony-cmd",
             "doctrine:schema:update --force": "symfony-cmd",
-            "doctrine:fixtures:load -n": "symfony-cmd",
-
+            "doctrine:fixtures:load -n": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"
