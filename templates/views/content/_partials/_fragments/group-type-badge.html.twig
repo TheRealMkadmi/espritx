@@ -12,5 +12,7 @@
 
 <span class="d-flex text-truncate align-middle align-items-center">
   <i data-feather='{{ feather_icon }}' style="margin-right: 0.1rem;"></i>
+  {% if displayname is defined %}
   <span class="fw-bold" style="font-size: 12px">{{ displayname|upper }}</span>
+  {% endif %}
 </span>
