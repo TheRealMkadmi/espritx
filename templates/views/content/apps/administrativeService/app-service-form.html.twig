@@ -22,13 +22,13 @@
   <div class="card-header">
   </div>
   <div class="card-body">
- {#   {{ form_start (form,{'attr':{'novalidate':'novalidate'}},{'method': 'POST'}) }}
+    {{ form_start (form,{'attr':{'novalidate':'novalidate'}},{'method': 'POST'}) }}
       {{ form_row(form.Name) }}
       {{ form_row(form.Responsible) }}
       {{ form_row(form.Recipient) }}
     <div class="float-end">
       {{ form_row(form.Ajouter) }}</div>
-    {{ form_end(form) }}#}
+    {{ form_end(form) }}
   </div>
 </div>
 

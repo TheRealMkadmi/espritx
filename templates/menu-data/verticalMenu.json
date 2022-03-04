@@ -147,8 +147,8 @@
       "slug": ""
     },
     {
-      "__url": "service",
-      "name": "Service-Groups",
+      "url": "service",
+      "name": "Services",
       "icon": "briefcase",
       "slug": ""
     },
