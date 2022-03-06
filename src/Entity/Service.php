@@ -52,10 +52,16 @@ class Service
      */
     private $serviceRequests;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Fields::class, mappedBy="service", orphanRemoval=true, cascade={"persist"})
+     */
+    private $Other_Fields;
+
     public function __construct()
     {
         $this->Recipient = new ArrayCollection();
         $this->serviceRequests = new ArrayCollection();
+        $this->Other_Fields = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -145,5 +151,46 @@ class Service
     public function __toString(): string
     {
         return $this->getName();
+    }
+
+    /**
+     * @return Collection<int, Fields>
+     */
+    public function getOtherFields(): Collection
+    {
+        return $this->Other_Fields;
+    }
+
+    public function addOtherField(Fields $otherField): self
+    {
+        if (!$this->Other_Fields->contains($otherField)) {
+            $this->Other_Fields[] = $otherField;
+            $otherField->setService($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOtherField(Fields $otherField): self
+    {
+        if ($this->Other_Fields->removeElement($otherField)) {
+            // set the owning side to null (unless already changed)
+            if ($otherField->getService() === $this) {
+                $otherField->setService(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function addField(Fields $f):void
+    {
+        $f->setService($this);
+        $this->Other_Fields->add($f);
+    }
+
+    public function removeField(Fields $f):void
+    {
+        $this->Other_Fields->removeElement($f);
     }
 }

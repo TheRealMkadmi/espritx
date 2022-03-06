@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Fields;
 use App\Entity\Service;
 use App\Repository\ServiceRepository;
 use App\Form\ServiceType;
