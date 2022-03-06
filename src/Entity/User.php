@@ -199,13 +199,11 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   //</editor-fold>
   //<editor-fold desc="Phone Number">
   /**
-   * @Assert\Regex("/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/",
-   * message="Respect this format: +21611111111")
+   * @Assert\Regex("/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/", message="Respect this format: +21611111111")
    * @ORM\Column(type="string", length=255, nullable=true)
    * @Assert\NotBlank
-   * @Groups("post:read")
    */
-  private ?string $phoneNumber = null;
+  private ?string $phoneNumber = "N/A";
 
   public function getPhoneNumber(): ?string
   {
@@ -225,7 +223,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
    * @ORM\Column(type="string", length=255, nullable=true)
    *
    */
-  private $class;
+  private $class = "N/A";
 
   public function getClass(): ?string
   {
@@ -542,13 +540,12 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   //</editor-fold>
   //<editor-fold desc="DocIdentityType">
   /**
-   * @ORM\Column(type="identitydoctype")
+   * @ORM\Column(type="identitydoctype", nullable=true)
    * @Elao\Enum\Bridge\Symfony\Validator\Constraint\Enum(class=DocumentIdentityTypeEnum::class)
-   * @Groups("post:read")
    */
-  protected DocumentIdentityTypeEnum $identityType;
+  protected ?DocumentIdentityTypeEnum $identityType;
 
-  public function getIdentityType(): DocumentIdentityTypeEnum
+  public function getIdentityType(): ?DocumentIdentityTypeEnum
   {
     return $this->identityType;
   }
@@ -566,18 +563,12 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
    * @Assert\NotBlank
    * @Groups("post:read")
    */
-  private ?string $identityDocumentNumber = null;
+  private ?string $identityDocumentNumber = "N/A";
 
 
-  /**
-   * @ORM\OneToMany(targetEntity=Event::class, mappedBy="user")
-   */
-  private $events;
 
-  /**
-   * @ORM\ManyToMany(targetEntity=Call::class, mappedBy="users")
-   */
-  private $calls;
+
+
 
   public function getIdentityDocumentNumber(): ?string
   {
@@ -608,63 +599,12 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
     return $this;
   }
   //</editor-fold>
-  //<editor-fold desc="UserInterface">
-  /**
-   * @see UserInterface
-   */
-  public function eraseCredentials()
-  {
-    $this->plainPassword = null;
-  }
 
-  public function getUsername(): string
-  {
-    return $this->email;
-  }
-
-  public function getRoles()
-  {
-    /** @var Group $g */
-    return array_map(static fn($g) => $g->getSecurityTitle(), $this->groups->toArray());
-  }
-
-  //</editor-fold>
-  //<editor-fold desc="Serializable">
-  public function serialize()
-  {
-    return serialize(array(
-      $this->id,
-      $this->email,
-      $this->password
-    ));
-  }
-
-  public function unserialize(string $data)
-  {
-    [
-      $this->id,
-      $this->email,
-      $this->password
-    ] = unserialize($data, [
-      'allowed_classes' => true
-    ]);
-  }
-  //</editor-fold>
   //<editor-fold desc="Service Requests">
   /**
    * @ORM\OneToMany(targetEntity=ServiceRequest::class, mappedBy="Requester", orphanRemoval=true)
    */
   private $serviceRequests;
-
-  /**
-   * @ORM\OneToMany(targetEntity=Call::class, mappedBy="user")
-   */
-  private $UserCall;
-
-  /**
-   * @ORM\OneToMany(targetEntity=PostCategory::class, mappedBy="user")
-   */
-  private $postCategories;
 
   /**
    * @return Collection<int, ServiceRequest>
@@ -696,6 +636,12 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
     return $this;
   }
 
+  //<editor-fold desc="Events">
+  /**
+   * @ORM\OneToMany(targetEntity=Event::class, mappedBy="user")
+   */
+  private $events;
+
   /**
    * @return Collection<int, Event>
    */
@@ -725,7 +671,13 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
 
     return $this;
   }
+  //</editor-fold>
 
+  //<editor-fold desc="Calls">
+  /**
+   * @ORM\ManyToMany(targetEntity=Call::class, mappedBy="users")
+   */
+  private $calls;
   /**
    * @return Collection<int, Call>
    */
@@ -752,21 +704,15 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
 
     return $this;
   }
+  //</editor-fold>
 
 
   //</editor-fold>
-
-  public function isEqualTo(UserInterface $user)
-  {
-    return $this->getUsername() === $user->getUsername();
-    // do we add check for password; or delegate the username uniqueness constraint to the database?
-  }
-
-  public function __toString(): string
-  {
-    return $this->email;
-  }
-
+  //<editor-fold desc="User Call">
+  /**
+   * @ORM\OneToMany(targetEntity=Call::class, mappedBy="user")
+   */
+  private $UserCall;
   /**
    * @return Collection<int, Call>
    */
@@ -796,6 +742,12 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
 
     return $this;
   }
+  //</editor-fold>
+  //<editor-fold desc="Post Categories">
+  /**
+   * @ORM\OneToMany(targetEntity=PostCategory::class, mappedBy="user")
+   */
+  private $postCategories;
 
   /**
    * @return Collection<int, PostCategory>
@@ -826,5 +778,57 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
 
     return $this;
   }
+  //</editor-fold>
+  //<editor-fold desc="Serializable">
+  public function serialize()
+  {
+    return serialize(array(
+      $this->id,
+      $this->email,
+      $this->password
+    ));
+  }
 
+  public function unserialize(string $data)
+  {
+    [
+      $this->id,
+      $this->email,
+      $this->password
+    ] = unserialize($data, [
+      'allowed_classes' => true
+    ]);
+  }
+  //</editor-fold>
+  //<editor-fold desc="UserInterface">
+  /**
+   * @see UserInterface
+   */
+  public function eraseCredentials()
+  {
+    $this->plainPassword = null;
+  }
+
+  public function getUsername(): string
+  {
+    return $this->email;
+  }
+
+  public function getRoles()
+  {
+    /** @var Group $g */
+    return array_map(static fn($g) => $g->getSecurityTitle(), $this->groups->toArray());
+  }
+
+  //</editor-fold>
+  public function isEqualTo(UserInterface $user)
+  {
+    return $this->getUsername() === $user->getUsername();
+    // do we add check for password; or delegate the username uniqueness constraint to the database?
+  }
+
+  public function __toString(): string
+  {
+    return $this->email;
+  }
 }

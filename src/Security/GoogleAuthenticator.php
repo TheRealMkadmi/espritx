@@ -5,6 +5,7 @@ namespace App\Security;
 use App\Entity\User;
 
 // your user entity
+use App\Enum\UserStatus;
 use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Client\OAuth2ClientInterface;
 use KnpU\OAuth2ClientBundle\Client\Provider\GoogleClient;
@@ -12,25 +13,26 @@ use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
 use KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use League\OAuth2\Client\Provider\GoogleUser;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class GoogleAuthenticator extends SocialAuthenticator
 {
-  private $clientRegistry;
-  private $em;
-  private $router;
-
-  public function __construct(ClientRegistry $clientRegistry, EntityManagerInterface $em, RouterInterface $router)
+  public function __construct(private ClientRegistry               $clientRegistry,
+                              private EntityManagerInterface       $em,
+                              private RouterInterface              $router,
+                              private MailerInterface              $mailer,
+                              private UserPasswordEncoderInterface $userPasswordEncoder)
   {
-    $this->clientRegistry = $clientRegistry;
-    $this->em = $em;
-    $this->router = $router;
   }
 
   public function supports(Request $request)
@@ -47,25 +49,45 @@ class GoogleAuthenticator extends SocialAuthenticator
   {
     /** @var GoogleUser $googleUser */
     $googleUser = $this->getGoogleClient()->fetchUserFromToken($credentials);
-
     $email = $googleUser->getEmail();
-
-    // 1) have they logged in with Facebook before? Easy!
-    $existingUser = $this->em->getRepository(User::class)
-      ->findOneBy(['googleId' => $googleUser->getId()]);
+    $existingUser = $this->em->getRepository(User::class)->findOneBy(['googleId' => $googleUser->getId()]);
     if ($existingUser) {
       return $existingUser;
     }
-    // 2) do we have a matching user by email?
-    $user = $this->em->getRepository(User::class)
-      ->findOneBy(['email' => $email]);
 
-    // 3) Maybe you just want to "register" them by creating
-    // a User object
+    $user = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
+
+    if ($googleUser == null) {
+      throw new AuthenticationException("Could not fetch user from Google Hosted Domain");
+    }
+
+    if ($googleUser->getHostedDomain() != "esprit.tn") {
+      throw new AuthenticationException("Only @esprit.tn emails are allowed to use this application");
+    }
+
+    if ($user == null) {
+      $user = new User();
+      $user->setFirstName($googleUser->getFirstName());
+      $user->setLastName($googleUser->getLastName());
+      $user->setEmail($googleUser->getEmail());
+      $user->setIsVerified(true);
+      $user->setUserStatus(UserStatus::ACTIVE());
+      $password = bin2hex(random_bytes(8));
+      $user->setPlainPassword($password);
+      $email = (new TemplatedEmail())
+        ->from(new Address('postmaster@espritx.xyz', 'ESPRITx'))
+        ->to($user->getEmail())
+        ->subject('Welcome to ESPRITx!')
+        ->htmlTemplate('emails/mail-welcome.html.twig')
+        ->context([
+          'user' => $user,
+          'password' => $password
+        ]);
+      $this->mailer->send($email);
+    }
     $user->setGoogleId($googleUser->getId());
     $this->em->persist($user);
     $this->em->flush();
-
     return $user;
   }
 

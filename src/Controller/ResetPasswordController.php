@@ -135,7 +135,6 @@ class ResetPasswordController extends AbstractController
         'user' => $user,
         'ip' => $request->getClientIp()
       ]);
-
     $mailer->send($email);
     $this->setTokenObjectInSession($resetToken);
     return $this->redirectToRoute('app_check_email');
