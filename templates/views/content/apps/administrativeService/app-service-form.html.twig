@@ -15,25 +15,22 @@
   <style>
       *[id^='service_Other_Fields'] {
           display: flex;
+          gap: 1rem;
+      }
+      *[id^='service_Other_Fields'] > .mb-2 {
+          display: flex;
+          align-items: center;
+          margin-bottom: 0px!important;
+      }
+      *[id^='service_Other_Fields'] > .mb-2 > label {
+          display: none;
       }
       .tags > div {
           display: flex;
-          justify-content: space-between;
+          margin-bottom: 1rem;
       }
-      div>.mb-2 {
-          display: flex;
-          justify-content: space-between;
-          align-self: center;
-          flex-grow: 2;
-      }
-      div>.mb-2>label {
-          visibility: hidden;
-      }
-      div>.mb-2>legend {
-          visibility: hidden;
-      }
-      div>.mb-2>.btn-primary {
-          height: 25%;
+      .tags > div > fieldset {
+          margin-bottom: 0px!important;
       }
   </style>
 {% endblock %}
@@ -49,13 +46,19 @@
       {{ form_row(form.Responsible) }}
       {{ form_row(form.Recipient) }}
       {{ form_label(form.Other_Fields) }}
+
       <div class="tags" data-index="{{ form.Other_Fields|length > 0 ? form.Other_Fields|last.vars.name + 1 : 0 }}"
            data-prototype="{{ form_row(form.Other_Fields.vars.prototype)|e('html_attr') }}">
       </div>
-      <button type="button" class="btn-secondary btn" data-collection-holder-class="tags">Add another field</button>
+      <button type="button" class="btn-secondary btn mb-2" data-collection-holder-class="tags">Add new field</button>
+
+
       {{ form_row(form.Other_Fields, {'label': '<span class="glyphicon glyphicon-search" aria-hidden="true"></span>'}) }}
+
       <div class="float-end">
-        {{ form_row(form.Ajouter) }}</div>
+        {{ form_row(form.Ajouter) }}
+      </div>
+
       {{ form_end(form) }}
     </div>
   </div>

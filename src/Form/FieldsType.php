@@ -12,42 +12,33 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class FieldsType extends AbstractType
+class FieldsType extends AbstractBootstrapType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
-        $builder
-            ->add('Name',NULL,[
-                'attr'=>[
-                'placeholder'=>"Nom de champ",],
-                'label'=>'Field Title',
-            ])
-            ->add('Type', ChoiceType::class, [
-                'choices'  => [
-                    'Text' => "TextType",
-                    'Email' => "EmailType",
-                    'Number' => "NumberType",
-                    'Date' => "DateType",
-                    'Date and Time' => "DateTimeType",
-                    'Country'=>"CountryType",
-                    'File' => "FileType",
-                ],
-                'expanded'=>false,
-                'multiple'=>false,
-                'placeholder'=>"Type de données",
-            ])
-            ->add('Requiry',CheckboxType::class,[
-                    'required' => false,
-                'label'=>"Required",
-            ])
+  public function buildForm(FormBuilderInterface $builder, array $options): void
+  {
+    $this->addSimpleTextInput($builder, "name", "", "Field name");
+    $builder
+      ->add('Type', ChoiceType::class, [
+        'choices' => [
+          'Text' => "TextType",
+          'Email' => "EmailType",
+          'Number' => "NumberType",
+          'Date' => "DateType",
+          'Date and Time' => "DateTimeType",
+          'Country' => "CountryType",
+          'File' => "FileType",
+        ],
+        'expanded' => false,
+        'multiple' => false,
+        'placeholder' => "Data type",
+      ]);
+    $this->addSwitchInput($builder, "requiry", true);
+  }
 
-        ;
-    }
-
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => Fields::class,
-        ]);
-    }
+  public function configureOptions(OptionsResolver $resolver): void
+  {
+    $resolver->setDefaults([
+      'data_class' => Fields::class,
+    ]);
+  }
 }
