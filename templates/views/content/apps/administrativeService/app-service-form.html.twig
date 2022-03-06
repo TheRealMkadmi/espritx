@@ -18,6 +18,16 @@
       }
       .tags > div {
           display: flex;
+          justify-content: space-between;
+      }
+      div>.mb-2 {
+          display: flex;
+          justify-content: space-between;
+          align-self: center;
+          flex-grow: 2;
+      }
+      div>.mb-2>label {
+          visibility: hidden;
       }
   </style>
 {% endblock %}
@@ -116,10 +126,8 @@
       }
 
       function addTagFormDeleteLink($tagFormLi) {
-          var $removeFormButton = $('<button type="button" class="btn-danger" style="margin: 10px">Delete this tag</button>');
-          $tagFormLi.append($removeFormButton);
 
-          $removeFormButton.on('click', function (e) {
+          $('body').on('click', '.btn-outline-danger', function (e) {
               // remove the li for the tag form
               $tagFormLi.remove();
           });
