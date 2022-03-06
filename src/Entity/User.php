@@ -239,6 +239,23 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
     return $this;
   }
   //</editor-fold>
+  //<editor-fold desc="Google ID">
+  /**
+   * @ORM\Column(type="string", length=255, nullable=true)
+   */
+  private ?string $googleId;
+
+  public function getGoogleId(): ?string
+  {
+    return $this->googleId;
+  }
+
+  public function setGoogleId(?string $class): self
+  {
+    $this->googleId = $class;
+    return $this;
+  }
+  //</editor-fold>
   //<editor-fold desc="PlainPassword">
   /**
    * @var string|null
@@ -684,29 +701,29 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
    */
   public function getEvents(): Collection
   {
-      return $this->events;
+    return $this->events;
   }
 
   public function addEvent(Event $event): self
   {
-      if (!$this->events->contains($event)) {
-          $this->events[] = $event;
-          $event->setUser($this);
-      }
+    if (!$this->events->contains($event)) {
+      $this->events[] = $event;
+      $event->setUser($this);
+    }
 
-      return $this;
+    return $this;
   }
 
   public function removeEvent(Event $event): self
   {
-      if ($this->events->removeElement($event)) {
-          // set the owning side to null (unless already changed)
-          if ($event->getUser() === $this) {
-              $event->setUser(null);
-          }
+    if ($this->events->removeElement($event)) {
+      // set the owning side to null (unless already changed)
+      if ($event->getUser() === $this) {
+        $event->setUser(null);
       }
+    }
 
-      return $this;
+    return $this;
   }
 
   /**
@@ -714,26 +731,26 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
    */
   public function getCalls(): Collection
   {
-      return $this->calls;
+    return $this->calls;
   }
 
   public function addCall(Call $call): self
   {
-      if (!$this->calls->contains($call)) {
-          $this->calls[] = $call;
-          $call->addUser($this);
-      }
+    if (!$this->calls->contains($call)) {
+      $this->calls[] = $call;
+      $call->addUser($this);
+    }
 
-      return $this;
+    return $this;
   }
 
   public function removeCall(Call $call): self
   {
-      if ($this->calls->removeElement($call)) {
-          $call->removeUser($this);
-      }
+    if ($this->calls->removeElement($call)) {
+      $call->removeUser($this);
+    }
 
-      return $this;
+    return $this;
   }
 
 
@@ -755,29 +772,29 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
    */
   public function getUserCall(): Collection
   {
-      return $this->UserCall;
+    return $this->UserCall;
   }
 
   public function addUserCall(Call $userCall): self
   {
-      if (!$this->UserCall->contains($userCall)) {
-          $this->UserCall[] = $userCall;
-          $userCall->setUser($this);
-      }
+    if (!$this->UserCall->contains($userCall)) {
+      $this->UserCall[] = $userCall;
+      $userCall->setUser($this);
+    }
 
-      return $this;
+    return $this;
   }
 
   public function removeUserCall(Call $userCall): self
   {
-      if ($this->UserCall->removeElement($userCall)) {
-          // set the owning side to null (unless already changed)
-          if ($userCall->getUser() === $this) {
-              $userCall->setUser(null);
-          }
+    if ($this->UserCall->removeElement($userCall)) {
+      // set the owning side to null (unless already changed)
+      if ($userCall->getUser() === $this) {
+        $userCall->setUser(null);
       }
+    }
 
-      return $this;
+    return $this;
   }
 
   /**
@@ -785,29 +802,29 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
    */
   public function getPostCategories(): Collection
   {
-      return $this->postCategories;
+    return $this->postCategories;
   }
 
   public function addPostCategory(PostCategory $postCategory): self
   {
-      if (!$this->postCategories->contains($postCategory)) {
-          $this->postCategories[] = $postCategory;
-          $postCategory->setUser($this);
-      }
+    if (!$this->postCategories->contains($postCategory)) {
+      $this->postCategories[] = $postCategory;
+      $postCategory->setUser($this);
+    }
 
-      return $this;
+    return $this;
   }
 
   public function removePostCategory(PostCategory $postCategory): self
   {
-      if ($this->postCategories->removeElement($postCategory)) {
-          // set the owning side to null (unless already changed)
-          if ($postCategory->getUser() === $this) {
-              $postCategory->setUser(null);
-          }
+    if ($this->postCategories->removeElement($postCategory)) {
+      // set the owning side to null (unless already changed)
+      if ($postCategory->getUser() === $this) {
+        $postCategory->setUser(null);
       }
+    }
 
-      return $this;
+    return $this;
   }
 
 }
