@@ -19,16 +19,25 @@
 <p>Préciser le nom de service et les responsables ainsi que les bénéficaires de chaque service.</p>
 
 <div class="card">
-  <div class="card-header">
-  </div>
   <div class="card-body">
- {#   {{ form_start (form,{'attr':{'novalidate':'novalidate'}},{'method': 'POST'}) }}
+    {{ form_start (form,{'attr':{'novalidate':'novalidate'}},{'method': 'POST'}) }}
       {{ form_row(form.Name) }}
       {{ form_row(form.Responsible) }}
       {{ form_row(form.Recipient) }}
+    {{ form_label(form.Other_Fields) }}
+    <div class="tags" data-index="{{ form.Other_Fields|length > 0 ? form.Other_Fields|last.vars.name + 1 : 0 }}"
+        data-prototype="{{ form_widget(form.Other_Fields.vars.prototype)|e('html_attr') }}">
+      {% for field in form.Other_Fields %}
+          {{ form_row(field.Name) }}
+          {{ form_row(field.Type) }}
+          {{ form_row(field.Requiry) }}
+      {% endfor %}
+    </div>
+    <button type="button" class="btn-secondary btn" data-collection-holder-class="tags">Add another field</button>
+    {{ form_row(form.Other_Fields, {'label': '<span class="glyphicon glyphicon-search" aria-hidden="true"></span>'}) }}
     <div class="float-end">
       {{ form_row(form.Ajouter) }}</div>
-    {{ form_end(form) }}#}
+    {{ form_end(form) }}
   </div>
 </div>
 
@@ -49,4 +58,67 @@
   <script src="{{ asset('js/scripts/pages/modal-add-permission.js') }}"></script>
   <script src="{{ asset('js/scripts/pages/modal-edit-permission.js') }}"></script>
   <script src="{{ asset('js/scripts/pages/app-access-permission.js') }}"></script>
+  <script>
+    jQuery(document).ready(function() {
+      // Get the div that holds the collection of tags
+      var $tagsCollectionHolder = $('div.tags');
+
+      // Get the div that holds the collection of tags
+      $collectionHolder = $('div.tags');
+
+      // add a delete link to all of the existing tag form li elements
+      $collectionHolder.find('li').each(function() {
+        addTagFormDeleteLink($(this));
+      });
+
+      // count the current form inputs we have (e.g. 2), use that as the new
+      // index when inserting a new item (e.g. 2)
+      $tagsCollectionHolder.data('index', $tagsCollectionHolder.find('input').length);
+
+      $('body').on('click', '.btn-secondary', function(e) {
+        var $collectionHolderClass = $(e.currentTarget).data('collectionHolderClass');
+        // add a new tag form (see next code block)
+        addFormToCollection($collectionHolderClass);
+      })
+    });
+
+    function addFormToCollection($collectionHolderClass) {
+      // Get the ul that holds the collection of tags
+      var $collectionHolder = $('.' + $collectionHolderClass);
+
+      // Get the data-prototype explained earlier
+      var prototype = $collectionHolder.data('prototype');
+
+      // get the new index
+      var index = $collectionHolder.data('index');
+
+      var newForm = prototype;
+      // You need this only if you didn't set 'label' => false in your tags field in TaskType
+      // Replace '__name__label__' in the prototype's HTML to
+      // instead be a number based on how many items we have
+      // newForm = newForm.replace(/__name__label__/g, index);
+
+      // Replace '__name__' in the prototype's HTML to
+      // instead be a number based on how many items we have
+      newForm = newForm.replace(/__name__/g, index);
+
+      // increase the index with one for the next item
+      $collectionHolder.data('index', index + 1);
+
+      // Display the form in the page in an li, before the "Add a tag" link li
+      var $newFormTr = $('<div></div>').append(newForm);
+      // Add the new form at the end of the list
+      $collectionHolder.append($newFormTr);
+      addTagFormDeleteLink($newFormTr);
+    }
+    function addTagFormDeleteLink($tagFormLi) {
+      var $removeFormButton = $('<button type="button" class="btn-danger" style="margin: 10px">Delete this tag</button>');
+      $tagFormLi.append($removeFormButton);
+
+      $removeFormButton.on('click', function(e) {
+        // remove the li for the tag form
+        $tagFormLi.remove();
+      });
+    }
+  </script>
 {% endblock %}
