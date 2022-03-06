@@ -32,7 +32,7 @@ class FieldsType extends AbstractBootstrapType
         'multiple' => false,
         'placeholder' => "Data type",
       ]);
-    $this->addSwitchInput($builder, "requiry", true);
+    $this->addSwitchInput($builder, "Required", true,);
   }
 
   public function configureOptions(OptionsResolver $resolver): void

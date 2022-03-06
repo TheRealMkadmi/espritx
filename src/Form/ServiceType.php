@@ -27,7 +27,7 @@ class ServiceType extends AbstractType
                 EntityType::class,
                 ['class'=>Group::class,
                     'choice_label'=>'display_name',
-                    'placeholder'=>'Sélectionner le départment responsable'])
+                    'placeholder'=>'Select the responsible department'])
             ->add('Recipient',
                 EntityType::class,
                 ['class'=>Group::class,
@@ -42,7 +42,7 @@ class ServiceType extends AbstractType
                     'allow_delete'=>true,
                     'by_reference' => false,
                 ])
-            ->add('Ajouter',SubmitType::class)
+            ->add('Add',SubmitType::class)
         ;
     }
 

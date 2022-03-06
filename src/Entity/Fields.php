@@ -30,7 +30,7 @@ class Fields
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Requiry;
+    private $Required;
 
     /**
      * @ORM\ManyToOne(targetEntity=Service::class, inversedBy="Other_Fields",cascade={"all"})
@@ -74,12 +74,12 @@ class Fields
 
     public function getRequiry(): ?string
     {
-        return $this->Requiry;
+        return $this->Required;
     }
 
-    public function setRequiry(string $Requiry): self
+    public function setRequiry(string $Required): self
     {
-        $this->Requiry = $Requiry;
+        $this->Requiry = $Required;
 
         return $this;
     }

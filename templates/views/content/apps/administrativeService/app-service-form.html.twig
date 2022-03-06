@@ -36,8 +36,8 @@
 {% endblock %}
 
 {% block content %}
-  <h3>Ajouter un service</h3>
-  <p>Préciser le nom de service et les responsables ainsi que les bénéficaires de chaque service.</p>
+  <h3>Add service</h3>
+  <p>Specify the name of the service and the persons in charge as well as the beneficiaries of each service.</p>
 
   <div class="card">
     <div class="card-body">
@@ -56,7 +56,7 @@
       {{ form_row(form.Other_Fields, {'label': '<span class="glyphicon glyphicon-search" aria-hidden="true"></span>'}) }}
 
       <div class="float-end">
-        {{ form_row(form.Ajouter) }}
+        {{ form_row(form.Add) }}
       </div>
 
       {{ form_end(form) }}
