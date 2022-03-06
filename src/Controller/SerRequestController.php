@@ -63,7 +63,7 @@ class SerRequestController extends AbstractController
     /**
      * @Route("/add", name="SerivceReq_Add")
      */
-    public function addService(Request $request, EntityManagerInterface $em): Response
+    public function addServiceRequest(Request $request, EntityManagerInterface $em): Response
     {
         $serreq = new ServiceRequest();
         $f = $this->createForm(SerRequestType::class, $serreq);
@@ -71,10 +71,16 @@ class SerRequestController extends AbstractController
         if ($f->isSubmitted() && $f->isValid()) {
             $em->persist($serreq);
             $em->flush();
-            return $this->redirectToRoute('ser_requests', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('SerivceReq_User', [], Response::HTTP_SEE_OTHER);
         }
+
+        $pageConfigs = [
+            'mainLayoutType' => 'horizontal',
+            'pageHeader' => false
+        ];
         return $this->render('views/content/apps/administrativeService/Requests/request-service-form.html.twig', [
             'form' => $f->createView(),
+            'pageConfigs' => $pageConfigs,
         ]);
     }
 
@@ -83,17 +89,22 @@ class SerRequestController extends AbstractController
      * @return Response
      * @Route ("/{id}/edit", name="SerivceReq_Edit")
      */
-    public function ModifServices(EntityManagerInterface $em, Request $request, ServiceRequest $serreq): Response
+    public function ModifServiceRequest(EntityManagerInterface $em, Request $request, ServiceRequest $serreq): Response
     {
         $form = $this->createForm(SerRequestType::class, $serreq);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
-            return $this->redirectToRoute('ser_requests', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('SerivceReq_User', [], Response::HTTP_SEE_OTHER);
         }
+        $pageConfigs = [
+            'mainLayoutType' => 'horizontal',
+            'pageHeader' => false
+        ];
         return $this->render('views/content/apps/administrativeService/Requests/request-service-form.html.twig', [
             'serreq' => $serreq,
             'form' => $form->createView(),
+            'pageConfigs' => $pageConfigs,
         ]);
     }
 
@@ -102,11 +113,11 @@ class SerRequestController extends AbstractController
      * @return Response
      * @Route ("/{id}/delete", name="SerivceReq_Del")
      */
-    public function SuppServices(EntityManagerInterface $em, ServiceRequest $serreq): Response
+    public function SuppServiceRequest(EntityManagerInterface $em, ServiceRequest $serreq): Response
     {
         $em->remove($serreq);
         $em->flush();
-        return $this->redirectToRoute('ser_requests', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('SerivceReq_User', [], Response::HTTP_SEE_OTHER);
     }
 
 
