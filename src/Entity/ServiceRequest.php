@@ -4,25 +4,28 @@ namespace App\Entity;
 
 use App\Repository\ServiceRequestRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Entity\File as EmbeddedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=ServiceRequestRepository::class)
+ * @Vich\Uploadable
  */
 class ServiceRequest
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     */
-    private $Created_At;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
@@ -57,20 +60,14 @@ class ServiceRequest
     private $Email;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Image(notFoundMessage="Image intruvable",
-     * maxSize="2M", maxSizeMessage="L'image ne doit pas dépasser pas le {{limit}} {{suffix}}!",
-     * uploadErrorMessage="Problème lors du téléchargement du fichier!")
+     * @ORM\Embedded(class="Vich\UploaderBundle\Entity\File")
      */
     private $Picture;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\File(notFoundMessage="Fichier introuvable",
-     * maxSize="5M", maxSizeMessage="Le fichier ne doit pas dépasser pas le {{limit}} {{suffix}}!",
-     * uploadErrorMessage="Problème lors du téléchargement du fichier!")
+     * @ORM\Embedded(class="Vich\UploaderBundle\Entity\File")
      */
-    private $Attachements;
+    private ?EmbeddedFile $Attachements;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -91,21 +88,74 @@ class ServiceRequest
      */
     private $Requester;
 
+    /**
+     * @Vich\UploadableField(
+     *   mapping="requestfile_file",
+     *   fileNameProperty="Attachements.name"
+     * )
+     * @var File|null
+     * @Assert\File(
+     *     maxSize = "10M",
+     *     mimeTypes = {"application/pdf", "application/x-pdf"},
+     *     mimeTypesMessage = "Please upload a valid PDF"
+     * )
+     */
+    private ?File $AttachementsFile = null;
+
+    /**
+     * @Vich\UploadableField(
+     *   mapping="requestimage_image",
+     *   fileNameProperty="Picture.name"
+     * )
+     * @var File|null
+     * @Assert\File(
+     *     maxSize = "5M",
+     *     mimeTypes = {"application/jpg", "application/x-jpeg", "application/png", "application/x-png"},
+     *     mimeTypesMessage = "Please upload a valid Image (Only JPEG, JPG and PNG are allowed)"
+     * )
+     */
+    private ?File $PictureFile = null;
+
+    /**
+     * ServiceRequest constructor.
+     */
+    public function __construct()
+    {
+        $this->Attachements = new EmbeddedFile();
+        $this->Picture = new EmbeddedFile();
+    }
+
+    public function setAttachementsFile(File|UploadedFile|null $Attachements = null): static
+    {
+        $this->AttachementsFile = $Attachements;
+        if ($Attachements !== null) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+        return $this;
+    }
+
+    public function getAttachementsFile(): ?File
+    {
+        return $this->AttachementsFile;
+    }
+
+    public function setPictureFile(File|UploadedFile|null $Picture = null): static
+    {
+        $this->PictureFile = $Picture;
+        if ($Picture !== null) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+        return $this;
+    }
+
+    public function getPictureFile(): ?File
+    {
+        return $this->PictureFile;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->Created_At;
-    }
-
-    public function setCreatedAt(?\DateTimeImmutable $Created_At): self
-    {
-        $this->Created_At = $Created_At;
-
-        return $this;
     }
 
     public function getRespondedAt(): ?\DateTimeImmutable
@@ -168,24 +218,24 @@ class ServiceRequest
         return $this;
     }
 
-    public function getPicture(): ?string
+    public function getPicture(): ?EmbeddedFile
     {
         return $this->Picture;
     }
 
-    public function setPicture(?string $Picture): self
+    public function setPicture(?EmbeddedFile $Picture): static
     {
         $this->Picture = $Picture;
 
         return $this;
     }
 
-    public function getAttachements(): ?string
+    public function getAttachements(): ?EmbeddedFile
     {
         return $this->Attachements;
     }
 
-    public function setAttachements(?string $Attachements): self
+    public function setAttachements(?EmbeddedFile $Attachements): static
     {
         $this->Attachements = $Attachements;
 
