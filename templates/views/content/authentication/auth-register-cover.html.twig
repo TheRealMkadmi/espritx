@@ -41,6 +41,12 @@
             <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
           {% endfor %}
           <div class="mb-1">
+            {{ form_row(form.firstName) }}
+          </div>
+          <div class="mb-1">
+            {{ form_row(form.lastName) }}
+          </div>
+          <div class="mb-1">
             {{ form_row(form.email) }}
           </div>
           <div class="mb-1">
@@ -49,9 +55,7 @@
             }) }}
           </div>
           <div class="mb-1">
-            <div class="form-check">
-              {{ form_row(form.agreeTerms) }}
-            </div>
+            {{ form_row(form.agreeTerms) }}
           </div>
           <button class="btn btn-primary w-100" tabindex="5">Sign up</button>
           {{ form_end(form) }}

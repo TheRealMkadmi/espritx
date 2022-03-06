@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Enum\DocumentIdentityTypeEnum;
 use App\Enum\UserStatus;
 use App\Repository\UserRepository;
+use App\Validator\EmailDomain;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -182,6 +183,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
    * )
    * @var string|null
    * @ORM\Column(type="string", unique=true)
+   * @EmailDomain(domains = {"esprit.tn"})
    * @Groups("post:read")
    */
   protected ?string $email = null;
@@ -201,7 +203,6 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   /**
    * @Assert\Regex("/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/", message="Respect this format: +21611111111")
    * @ORM\Column(type="string", length=255, nullable=true)
-   * @Assert\NotBlank
    */
   private ?string $phoneNumber = "N/A";
 
@@ -259,7 +260,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
    * @var string|null
    * @Assert\Expression(
    *   "(this.getPassword() != '' and value == '') or (value != '' and this.getPassword() == '')",
-   *    message="A password of at least 6 characters must be set."
+   *    message="A password of at least {{ limit }} characters must be set."
    * )
    * @Groups("post:read")
    */
