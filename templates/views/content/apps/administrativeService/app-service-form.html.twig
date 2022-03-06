@@ -29,6 +29,12 @@
       div>.mb-2>label {
           visibility: hidden;
       }
+      div>.mb-2>legend {
+          visibility: hidden;
+      }
+      div>.mb-2>.btn-primary {
+          height: 25%;
+      }
   </style>
 {% endblock %}
 
@@ -126,8 +132,10 @@
       }
 
       function addTagFormDeleteLink($tagFormLi) {
+          var $removeFormButton = $('<button type="button" class="btn btn-outline-danger text-nowrap px-1 waves-effect">X</button>');
+          $tagFormLi.append($removeFormButton);
 
-          $('body').on('click', '.btn-outline-danger', function (e) {
+          $removeFormButton.on('click', function (e) {
               // remove the li for the tag form
               $tagFormLi.remove();
           });

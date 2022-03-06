@@ -40,12 +40,7 @@ class FieldsType extends AbstractType
                     'required' => false,
                 'label'=>"Required",
             ])
-            ->add('Remove',SubmitType::class, [
-                'label'=>"X",
-                'attr'=>[
-                    'class'=>'btn btn-outline-danger text-nowrap px-1 waves-effect',
-                ]
-            ])
+
         ;
     }
 
