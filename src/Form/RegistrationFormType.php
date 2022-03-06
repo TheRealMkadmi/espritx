@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
@@ -21,8 +22,16 @@ class RegistrationFormType extends AbstractType
   {
 
     $builder
-      ->add("firstName")
-      ->add('lastName')
+      ->add("firstName", TextType::class, [
+        "attr" => [
+          "placeholder" => "Please use your legal first name."
+        ]
+      ])
+      ->add('lastName', TextType::class, [
+        "attr" => [
+          "placeholder" => "Please use your legal last name."
+        ]
+      ])
       ->add('email', EmailType::class, [
         "attr" => [
           "placeholder" => "@esprit.tn Email"

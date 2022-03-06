@@ -58,7 +58,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
     $this->serviceRequests = new ArrayCollection();
     $this->UserCall = new ArrayCollection();
     $this->postCategories = new ArrayCollection();
-
+    $this->identityType = DocumentIdentityTypeEnum::UNKNOWN();
   }
 
   //<editor-fold desc="id">
@@ -201,7 +201,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   //</editor-fold>
   //<editor-fold desc="Phone Number">
   /**
-   * @Assert\Regex("/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/", message="Respect this format: +21611111111")
+   * @Assert\Regex("/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$|()/", message="Respect this format: +21611111111")
    * @ORM\Column(type="string", length=255, nullable=true)
    */
   private ?string $phoneNumber = "N/A";
@@ -219,8 +219,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   //</editor-fold>
   //<editor-fold desc="Class">
   /**
-   * @Assert\NotNull
-   * @Assert\Regex("/^[1-5](A|B|TWIN|SLEAMS)\d{1,3}$/")
+   * @Assert\Regex("/^[1-5](A|B|TWIN|SLEAMS)\d{1,3}$|()/")
    * @ORM\Column(type="string", length=255, nullable=true)
    *
    */
@@ -406,7 +405,6 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   //<editor-fold desc="Groups">
   /**
    * @ORM\ManyToMany(targetEntity=Group::class, inversedBy="members")
-   * @Assert\Count(min="1", minMessage="User must be at least part of one group.")
    */
   private ArrayCollection|array|PersistentCollection $groups;
 
@@ -560,16 +558,10 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   //<editor-fold desc="Identity Document Number">
   /**
    * @ORM\Column(type="string", length=8, nullable=true)
-   * @Assert\Regex("/([A-Z0-9<]{9}[0-9]{1}[A-Z]{3}[0-9]{7}[A-Z]{1}[0-9]{7}[A-Z0-9<]{14}[0-9]{2})|(\d{8})/")
-   * @Assert\NotBlank
+   * @Assert\Regex("/([A-Z0-9<]{9}[0-9]{1}[A-Z]{3}[0-9]{7}[A-Z]{1}[0-9]{7}[A-Z0-9<]{14}[0-9]{2})|(\d{8})|/")
    * @Groups("post:read")
    */
-  private ?string $identityDocumentNumber = "N/A";
-
-
-
-
-
+  private ?string $identityDocumentNumber;
 
   public function getIdentityDocumentNumber(): ?string
   {

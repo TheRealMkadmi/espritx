@@ -11,6 +11,7 @@ use ReflectionClass;
  *
  * @method static CIN
  * @method static PASSPORT
+ * @method static UNKNOWN
  */
 final class DocumentIdentityTypeEnum extends SimpleChoiceEnum
 {
@@ -18,4 +19,5 @@ final class DocumentIdentityTypeEnum extends SimpleChoiceEnum
 
   public const CIN = 'cin';
   public const PASSPORT = 'passport';
+  public const UNKNOWN = 'Unknown';
 }
