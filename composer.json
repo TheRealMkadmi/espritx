@@ -20,6 +20,7 @@
         "friendsofsymfony/rest-bundle": "3.3.0",
         "gedmo/doctrine-extensions": "^3.5",
         "knplabs/knp-paginator-bundle": "^5.8",
+        "knplabs/knp-snappy-bundle": "^1.9",
         "lexik/jwt-authentication-bundle": "^2.14",
         "liip/imagine-bundle": "^2.7",
         "mercuryseries/flashy-bundle": "^4.0",
