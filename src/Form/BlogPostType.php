@@ -15,10 +15,10 @@ class BlogPostType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('slug',TextType::class,['label'=> 'Titre'])
+            ->add('slug',TextType::class,array('data_class'=> null))
             ->add('body')
             ->add('post_category')
-            ->add('image',FileType::class, array('label' =>'Image(image)'))
+            ->add('image',FileType::class, array('data_class'=> null))
             ->add('save', SubmitType::class)
         ;
     }
