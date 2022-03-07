@@ -19,6 +19,7 @@
         "friendsofsymfony/ckeditor-bundle": "^2.4",
         "friendsofsymfony/rest-bundle": "3.3.0",
         "gedmo/doctrine-extensions": "^3.5",
+        "haydenpierce/class-finder": "^0.4.3",
         "knplabs/knp-paginator-bundle": "^5.8",
         "knplabs/knp-snappy-bundle": "^1.9",
         "knpuniversity/oauth2-client-bundle": "^2.10",

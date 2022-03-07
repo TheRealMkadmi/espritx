@@ -154,6 +154,9 @@
     "guzzlehttp/psr7": {
         "version": "2.1.0"
     },
+    "haydenpierce/class-finder": {
+        "version": "0.4.3"
+    },
     "imagine/imagine": {
         "version": "1.2.4"
     },
