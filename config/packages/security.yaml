@@ -23,6 +23,7 @@ security:
       anonymous: lazy
       logout_on_user_change: false
       provider: app_user_provider
+      access_denied_handler: App\Security\AccessDeniedHandler
       remember_me:
         secret: '%kernel.secret%'
         lifetime: 604800

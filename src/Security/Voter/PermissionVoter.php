@@ -3,7 +3,9 @@
 namespace App\Security\Voter;
 
 use App\Entity\Group;
+use App\Entity\Permission;
 use App\Entity\User;
+use App\Enum\GroupType;
 use App\Repository\PermissionRepository;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\ExpressionLanguage\Expression;
@@ -14,64 +16,63 @@ use Symfony\Component\Security\Core\Security;
 
 class PermissionVoter implements VoterInterface
 {
-  private LoggerInterface $logger;
-  private Security $security;
-  private AccessDecisionManagerInterface $decisionManager;
-  private PermissionRepository $permissionRepository;
 
   public function __construct(
-    Security                       $security,
-    LoggerInterface                $logger,
-    AccessDecisionManagerInterface $decisionManager,
-    PermissionRepository           $permissionRepository
+    private Security                       $security,
+    private LoggerInterface                $logger,
+    private AccessDecisionManagerInterface $decisionManager,
+    private PermissionRepository           $permissionRepository
   )
   {
-    $this->permissionRepository = $permissionRepository;
-    $this->decisionManager = $decisionManager;
-    $this->security = $security;
-    $this->logger = $logger;
   }
 
   public function vote(TokenInterface $token, $subject, array $attributes): int
   {
     // tf you're doing here?
-    if (!$token->getUser() instanceof User) {
+    /** @var User $user */
+    $user = $token->getUser();
+    if (!$user instanceof User) {
       return self::ACCESS_DENIED;
     }
-
-    // It ain't called super admin for nothing. Heil Hitler.
-    if ($this->security->isGranted(Group::ROLE_SUPER_ADMIN)) {
+    if ($user->isPartOfGroupType(GroupType::SUPER_ADMIN())) {
+      // It ain't called super admin for nothing. Heil Hitler.
       return self::ACCESS_GRANTED;
     }
 
-    // Find all stored permissions for this attribute and subject
-    $permissions = $this->permissionRepository->findBy([
-      'attribute' => $attributes,
-      'subject' => get_class($subject),
-    ]);
+    if(is_string($subject)){
+      $applicable_permissions = array_filter($user->getAggregatePermissions(),
+        static fn(Permission $p) =>
+          $p->getSubject() === $subject &&
+          in_array($p->getAttribute(), $attributes, true)
+      );
+    }
+    else {
+      $applicable_permissions = array_filter($user->getAggregatePermissions(),
+        static fn(Permission $p) =>
+          $p->getSubject() === get_class($subject) &&
+          in_array($p->getAttribute(), $attributes, true)
+      );
+    }
 
     // We know nothing about that subject. Shut up.
-    if (count($permissions) === 0) {
+    if (count($applicable_permissions) === 0) {
       $attrs = implode(", ", $attributes);
       $this->logger->warning("Voting on ambiguous access attributes ({$attrs}) for $subject");
       return self::ACCESS_ABSTAIN;
     }
 
-    foreach ($permissions as $permission) {
+    foreach ($applicable_permissions as $permission) {
       if (!$permission->getEnabled()) {
         continue; // Sometimes we shut off the water until the plumber comes.
       }
-
       // if the permission has an extra expression, verify this is true, otherwise grant access directly
       // ref: https://symfony.com/doc/4.4/components/expression_language/syntax.html
-      if ($permission->getExpression() !== null) {
+      if (!is_string($subject) && $permission->getExpression() !== null) {
         $allowed = $this->security->isGranted(new Expression($permission->getExpression()), $subject);
         return $allowed ? self::ACCESS_GRANTED : self::ACCESS_DENIED;
-      } else {
-        return self::ACCESS_GRANTED;
       }
+      return self::ACCESS_GRANTED;
     }
     // in any other case, deny access
     return self::ACCESS_ABSTAIN;
-  }
-}
+  }}

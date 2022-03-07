@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Enum\DocumentIdentityTypeEnum;
+use App\Enum\GroupType;
 use App\Enum\UserStatus;
 use App\Repository\UserRepository;
 use App\Validator\EmailDomain;
@@ -408,6 +409,16 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
    */
   private ArrayCollection|array|PersistentCollection $groups;
 
+  public function isPartOfGroupType(GroupType $groupType): bool
+  {
+    /** @var Group $group */
+    foreach ($this->groups as $group) {
+      if ($group->getGroupType() === $groupType)
+        return true;
+    }
+    return false;
+  }
+
   /**
    * @return Collection|Group[]
    */
@@ -630,6 +641,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   }
 
   //<editor-fold desc="Events">
+
   /**
    * @ORM\OneToMany(targetEntity=Event::class, mappedBy="user")
    */
@@ -671,6 +683,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
    * @ORM\ManyToMany(targetEntity=Call::class, mappedBy="users")
    */
   private $calls;
+
   /**
    * @return Collection<int, Call>
    */
@@ -706,6 +719,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
    * @ORM\OneToMany(targetEntity=Call::class, mappedBy="user")
    */
   private $UserCall;
+
   /**
    * @return Collection<int, Call>
    */
