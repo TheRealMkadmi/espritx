@@ -7,12 +7,17 @@ use App\Form\SerRequestType;
 use App\Repository\ServiceRepository;
 use App\Repository\ServiceRequestRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Knp\Bundle\SnappyBundle\KnpSnappyBundle;
 use Knp\Component\Pager\PaginatorInterface;
+use Knp\Snappy\Pdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 
 /**
  * @Route ("/request")
@@ -120,6 +125,22 @@ class SerRequestController extends AbstractController
         return $this->redirectToRoute('SerivceReq_User', [], Response::HTTP_SEE_OTHER);
     }
 
-
+    /**
+     * @Route ("/{id}/print", name="SerivceReq_Print")
+     */
+    public function PrintServiceRequest(ServiceRequest $serreq)
+    {
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+        $dompdf = new Dompdf($pdfOptions);
+        $html = $this->renderView('views/content/apps/administrativeService/Requests/printable.html.twig');
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+        $dompdf->stream("mypdf2.pdf", [
+        "Attachment" => true
+    ]);
+        return new Response();
+    }
 
 }

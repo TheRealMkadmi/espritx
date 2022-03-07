@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 // ...
+use App\Repository\CommentaireRepository;
+use App\Repository\GroupPostRepository;
 use App\Repository\PostRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,18 +18,15 @@ class HomeController extends AbstractController
   /**
    * @Route("/user/home", name="app_home", methods={"GET"})
    */
-  public function show(PostRepository $repository): Response
+  public function show(UserRepository $userRepository,PostRepository $repository, Request $request, CommentaireRepository $commentaireRepository,GroupPostRepository  $groupPostRepository): Response
   {
-
-      $posts = $repository->getLatestPosts();
-      $pageConfigs = [
-          'mainLayoutType' => 'horizontal',
-          'pageHeader' => false
-      ];
-
-      return $this->render('views/content/posts/User/acceuilposts.html.twig',
-          ['pageConfigs' => $pageConfigs,
-              'posts' => $posts]);
+      return $this->forward('App\Controller\PostController::afficher_posts', [
+          $userRepository,
+          $repository,
+          $request,
+          $commentaireRepository,
+          $groupPostRepository,
+        ]);
   }
 
     /**
