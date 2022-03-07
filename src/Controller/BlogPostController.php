@@ -86,7 +86,7 @@ class BlogPostController extends AbstractController
     }
 
     /**
-     * @Route("blogpost/Update/{id}",name="update")
+     * @Route("blogpost/Update/{id}",name="update_blog")
      */
     function Update_blog_post(BlogPostRepository $repository,$id,Request $request)
     {
@@ -104,6 +104,18 @@ class BlogPostController extends AbstractController
                 'f' => $form->createView(),
 
             ]);
+    }
+
+    /**
+     * @param BlogPostRepository $repository
+     * @param Request $request
+     * @return Response
+     * @Route("/searchCat",name="search")
+     */
+    function SearchCat(BlogPostRepository $repository,Request $request){
+        $post_category=$request->get('search');
+        $blogpost=$repository->SearchCat($post_category);
+        return $this->render('blog_post/index.html.twig',['blog'=>$blogpost]);
     }
 
 

@@ -19,6 +19,33 @@
     <div class="blog-list-wrapper">
 
     <h1> Forum EspritX </h1>
+
+    <table>
+        <tr>
+
+
+
+
+            <th><div class="form-row align-items-end">
+                    <div class="col">
+                        <div class="form-group">
+                            <form action="{{ path('search') }}">
+                                <input type="text" placeholder="search" name="a">
+                                <input type="submit" class="btn btn-success" value="Search">
+                            </form>
+                        </div>
+                    </div>
+                </div> </th>
+            <th><div class="form-row align-items-end">
+
+                    <div class="col">
+                        <div class="form-group">
+                            <a href="{{path('newblogpost')}}" class="btn btn-success">Ajouter</a>
+                        </div>
+                    </div>
+                </div></th>
+        </tr> </table>
+
     {% for blog in blogs %}
         <div class="col-md-6 col-12">
             <div class="card">
@@ -49,8 +76,8 @@
                                 <span class="badge rounded-pill badge-light-info me-50">Delete
                                 </span>
                         </a>
-                        <a href="#">
-                            <span class="badge rounded-pill badge-light-primary">Fashion</span>
+                        <a href="{{ path('update_blog',{'id':blog.id})}}">
+                            <span class="badge rounded-pill badge-light-primary">Update</span>
                         </a>
                     </div>
                     <p class="card-text blog-content-truncate">

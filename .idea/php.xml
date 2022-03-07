@@ -166,8 +166,6 @@
       <path value="$PROJECT_DIR$/vendor/symfony/swiftmailer-bundle" />
       <path value="$PROJECT_DIR$/vendor/friendsofsymfony/ckeditor-bundle" />
       <path value="$PROJECT_DIR$/vendor/symfony/google-mailer" />
-      <path value="$PROJECT_DIR$/vendor/knplabs/knp-snappy-bundle" />
-      <path value="$PROJECT_DIR$/vendor/knplabs/knp-snappy" />
       <path value="$PROJECT_DIR$/vendor/league/oauth2-client" />
       <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
       <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
@@ -179,6 +177,11 @@
       <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
       <path value="$PROJECT_DIR$/vendor/knpuniversity/oauth2-client-bundle" />
       <path value="$PROJECT_DIR$/vendor/league/oauth2-google" />
+      <path value="$PROJECT_DIR$/vendor/symfony/mailgun-mailer" />
+      <path value="$PROJECT_DIR$/vendor/sabberworm/php-css-parser" />
+      <path value="$PROJECT_DIR$/vendor/phenx/php-svg-lib" />
+      <path value="$PROJECT_DIR$/vendor/phenx/php-font-lib" />
+      <path value="$PROJECT_DIR$/vendor/dompdf/dompdf" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />
