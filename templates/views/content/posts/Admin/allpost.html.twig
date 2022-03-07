@@ -1,7 +1,7 @@
 
 {% extends 'views/layouts/contentLayoutMaster.html.twig' %}
 
-{% block title %} User List {% endblock %}
+{% block title %} Post List {% endblock %}
 
 {% block vendor_style %}
     <link rel="stylesheet" href="{{ asset('vendors/css/forms/select/select2.min.css') }}">
@@ -19,6 +19,27 @@
             <div class="card-header">
                 <h4 class="card-title">Gerer les publications</h4>
             </div>
+
+            <div class="container text-center ">
+                <button id="MyButton" class="btn btn-warning mb-4">Actualiser</button>
+                <div id="refreshDivID">
+                    <div class="reloaded-divs">
+
+
+                        <div class="alert alert-primary  show" role="alert">
+                            <strong>{{ pubs }}</strong> publication(s) non validée(s)!
+
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-1">
 
@@ -35,6 +56,9 @@
                             <th>
                                 Annonceur Post
                             </th>
+                            <th>
+                                Titre
+                            </th>
 
                             <th>
                                 Contenue
@@ -47,7 +71,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for post in posts %}
+                        {% for post in posts |sort|reverse %}
                             <tr>
                                 <td>
 
@@ -67,21 +91,25 @@
                                     <small class="emp_post text-muted">{{ post.user.firstName }}</small>
 
                                 </td>
+                                <td>
+                                    <small class="emp_post text-muted">{{ post.title }}</small>
+
+                                </td>
 
                                 <td><small class="emp_post text-muted">{{ post.content }}</small></td>
                                 <td><small class="emp_post text-muted">{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</small></td>
                                 <td>
                                     <div class="d-flex">
-                                        <a href="{{ path('editpost', {'id': post.id}) }}">
+                                        <a href="{{ path('editpost', {'id': post.id}) }}" onclick="return confirm('Etes-vous sure de modifier ce post ?! ')">
                                             <i data-feather="edit-2" class="me-50"></i>
                                         </a>
-                                        <a href="{{ path('deletepost_admin', {'id': post.id}) }}">
+                                        <a href="{{ path('deletepost_admin', {'id': post.id}) }}" onclick="return confirm('Etes-vous sure de supprimer ce post?! ')">
                                             <i data-feather="trash" class="me-50"></i>
                                         </a>
                                         {%  if post.isValid %}
                                             <a  href="{{ path('changevalidite_post', {'id': post.id}) }}">     <i data-feather="check" class="me-50"></i></a>
                                         {% else %}
-                                            <a  href="{{ path('changevalidite_post', {'id': post.id}) }}"> <i data-feather="x" class="me-50"></i></a>
+                                            <a  href="{{ path('changevalidite_post', {'id': post.id}) }}" onclick="return confirm('Voulez-vous vraiment approuver ce post  ?! ')"> <i data-feather="x" class="me-50"></i></a>
                                         {% endif %}
                                     </div>
                                 </td>
@@ -93,8 +121,11 @@
 
 
             </div>
-
+        </div>
     <!-- users list ends -->
+
+
+    {{ knp_pagination_render(posts) }}
 {% endblock %}
 
 
@@ -111,6 +142,14 @@
 
 
 {% block page_script %}
+
+        <script>
+            $("#MyButton").click(function() {
+            alert('Actualiser les alertes ?');
+            $("#refreshDivID").load("#refreshDivID .reloaded-divs > *");
+        });
+
+    </script>
     <script src="{{ asset('js/scripts/pages/app-user-list.js') }}"></script>
 {% endblock %}
 
