@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Enum\DocumentIdentityTypeEnum;
 use App\Enum\UserStatus;
 use App\Repository\UserRepository;
-use App\Validator\EmailDomain;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -58,7 +57,9 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
     $this->serviceRequests = new ArrayCollection();
     $this->UserCall = new ArrayCollection();
     $this->postCategories = new ArrayCollection();
-    $this->identityType = DocumentIdentityTypeEnum::UNKNOWN();
+    $this->groupPosts = new ArrayCollection();
+    $this->groupes = new ArrayCollection();
+
   }
 
   //<editor-fold desc="id">
@@ -183,7 +184,6 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
    * )
    * @var string|null
    * @ORM\Column(type="string", unique=true)
-   * @EmailDomain(domains = {"esprit.tn"})
    * @Groups("post:read")
    */
   protected ?string $email = null;
@@ -201,10 +201,13 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   //</editor-fold>
   //<editor-fold desc="Phone Number">
   /**
-   * @Assert\Regex("/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$|()/", message="Respect this format: +21611111111")
+   * @Assert\Regex("/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/",
+   * message="Respect this format: +21611111111")
    * @ORM\Column(type="string", length=255, nullable=true)
+   * @Assert\NotBlank
+   * @Groups("post:read")
    */
-  private ?string $phoneNumber = "N/A";
+  private ?string $phoneNumber = null;
 
   public function getPhoneNumber(): ?string
   {
@@ -219,11 +222,12 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   //</editor-fold>
   //<editor-fold desc="Class">
   /**
-   * @Assert\Regex("/^[1-5](A|B|TWIN|SLEAMS)\d{1,3}$|()/")
+   * @Assert\NotNull
+   * @Assert\Regex("/^[1-5](A|B|TWIN|SLEAMS)\d{1,3}$/")
    * @ORM\Column(type="string", length=255, nullable=true)
    *
    */
-  private $class = "N/A";
+  private $class;
 
   public function getClass(): ?string
   {
@@ -237,29 +241,12 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
     return $this;
   }
   //</editor-fold>
-  //<editor-fold desc="Google ID">
-  /**
-   * @ORM\Column(type="string", length=255, nullable=true)
-   */
-  private ?string $googleId;
-
-  public function getGoogleId(): ?string
-  {
-    return $this->googleId;
-  }
-
-  public function setGoogleId(?string $class): self
-  {
-    $this->googleId = $class;
-    return $this;
-  }
-  //</editor-fold>
   //<editor-fold desc="PlainPassword">
   /**
    * @var string|null
    * @Assert\Expression(
    *   "(this.getPassword() != '' and value == '') or (value != '' and this.getPassword() == '')",
-   *    message="A password of at least {{ limit }} characters must be set."
+   *    message="A password of at least 6 characters must be set."
    * )
    * @Groups("post:read")
    */
@@ -405,6 +392,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   //<editor-fold desc="Groups">
   /**
    * @ORM\ManyToMany(targetEntity=Group::class, inversedBy="members")
+   * @Assert\Count(min="1", minMessage="User must be at least part of one group.")
    */
   private ArrayCollection|array|PersistentCollection $groups;
 
@@ -539,12 +527,13 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   //</editor-fold>
   //<editor-fold desc="DocIdentityType">
   /**
-   * @ORM\Column(type="identitydoctype", nullable=true)
+   * @ORM\Column(type="identitydoctype")
    * @Elao\Enum\Bridge\Symfony\Validator\Constraint\Enum(class=DocumentIdentityTypeEnum::class)
+   * @Groups("post:read")
    */
-  protected ?DocumentIdentityTypeEnum $identityType;
+  protected DocumentIdentityTypeEnum $identityType;
 
-  public function getIdentityType(): ?DocumentIdentityTypeEnum
+  public function getIdentityType(): DocumentIdentityTypeEnum
   {
     return $this->identityType;
   }
@@ -558,10 +547,22 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   //<editor-fold desc="Identity Document Number">
   /**
    * @ORM\Column(type="string", length=8, nullable=true)
-   * @Assert\Regex("/([A-Z0-9<]{9}[0-9]{1}[A-Z]{3}[0-9]{7}[A-Z]{1}[0-9]{7}[A-Z0-9<]{14}[0-9]{2})|(\d{8})|/")
+   * @Assert\Regex("/([A-Z0-9<]{9}[0-9]{1}[A-Z]{3}[0-9]{7}[A-Z]{1}[0-9]{7}[A-Z0-9<]{14}[0-9]{2})|(\d{8})/")
+   * @Assert\NotBlank
    * @Groups("post:read")
    */
-  private ?string $identityDocumentNumber;
+  private ?string $identityDocumentNumber = null;
+
+
+  /**
+   * @ORM\OneToMany(targetEntity=Event::class, mappedBy="user")
+   */
+  private $events;
+
+  /**
+   * @ORM\ManyToMany(targetEntity=Call::class, mappedBy="users")
+   */
+  private $calls;
 
   public function getIdentityDocumentNumber(): ?string
   {
@@ -592,12 +593,73 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
     return $this;
   }
   //</editor-fold>
+  //<editor-fold desc="UserInterface">
+  /**
+   * @see UserInterface
+   */
+  public function eraseCredentials()
+  {
+    $this->plainPassword = null;
+  }
 
+  public function getUsername(): string
+  {
+    return $this->email;
+  }
+
+  public function getRoles()
+  {
+    /** @var Group $g */
+    return array_map(static fn($g) => $g->getSecurityTitle(), $this->groups->toArray());
+  }
+
+  //</editor-fold>
+  //<editor-fold desc="Serializable">
+  public function serialize()
+  {
+    return serialize(array(
+      $this->id,
+      $this->email,
+      $this->password
+    ));
+  }
+
+  public function unserialize(string $data)
+  {
+    [
+      $this->id,
+      $this->email,
+      $this->password
+    ] = unserialize($data, [
+      'allowed_classes' => true
+    ]);
+  }
+  //</editor-fold>
   //<editor-fold desc="Service Requests">
   /**
    * @ORM\OneToMany(targetEntity=ServiceRequest::class, mappedBy="Requester", orphanRemoval=true)
    */
   private $serviceRequests;
+
+  /**
+   * @ORM\OneToMany(targetEntity=Call::class, mappedBy="user")
+   */
+  private $UserCall;
+
+  /**
+   * @ORM\OneToMany(targetEntity=PostCategory::class, mappedBy="user")
+   */
+  private $postCategories;
+
+  /**
+   * @ORM\OneToMany(targetEntity=GroupPost::class, mappedBy="user", orphanRemoval=true)
+   */
+  private $groupPosts;
+
+  /**
+   * @ORM\ManyToMany(targetEntity=GroupPost::class, mappedBy="membre", orphanRemoval=true)
+   */
+  private $groupes;
 
   /**
    * @return Collection<int, ServiceRequest>
@@ -629,191 +691,66 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
     return $this;
   }
 
-  //<editor-fold desc="Events">
-  /**
-   * @ORM\OneToMany(targetEntity=Event::class, mappedBy="user")
-   */
-  private $events;
-
   /**
    * @return Collection<int, Event>
    */
   public function getEvents(): Collection
   {
-    return $this->events;
+      return $this->events;
   }
 
   public function addEvent(Event $event): self
   {
-    if (!$this->events->contains($event)) {
-      $this->events[] = $event;
-      $event->setUser($this);
-    }
+      if (!$this->events->contains($event)) {
+          $this->events[] = $event;
+          $event->setUser($this);
+      }
 
-    return $this;
+      return $this;
   }
 
   public function removeEvent(Event $event): self
   {
-    if ($this->events->removeElement($event)) {
-      // set the owning side to null (unless already changed)
-      if ($event->getUser() === $this) {
-        $event->setUser(null);
+      if ($this->events->removeElement($event)) {
+          // set the owning side to null (unless already changed)
+          if ($event->getUser() === $this) {
+              $event->setUser(null);
+          }
       }
-    }
 
-    return $this;
+      return $this;
   }
-  //</editor-fold>
 
-  //<editor-fold desc="Calls">
-  /**
-   * @ORM\ManyToMany(targetEntity=Call::class, mappedBy="users")
-   */
-  private $calls;
   /**
    * @return Collection<int, Call>
    */
   public function getCalls(): Collection
   {
-    return $this->calls;
+      return $this->calls;
   }
 
   public function addCall(Call $call): self
   {
-    if (!$this->calls->contains($call)) {
-      $this->calls[] = $call;
-      $call->addUser($this);
-    }
+      if (!$this->calls->contains($call)) {
+          $this->calls[] = $call;
+          $call->addUser($this);
+      }
 
-    return $this;
+      return $this;
   }
 
   public function removeCall(Call $call): self
   {
-    if ($this->calls->removeElement($call)) {
-      $call->removeUser($this);
-    }
-
-    return $this;
-  }
-  //</editor-fold>
-
-
-  //</editor-fold>
-  //<editor-fold desc="User Call">
-  /**
-   * @ORM\OneToMany(targetEntity=Call::class, mappedBy="user")
-   */
-  private $UserCall;
-  /**
-   * @return Collection<int, Call>
-   */
-  public function getUserCall(): Collection
-  {
-    return $this->UserCall;
-  }
-
-  public function addUserCall(Call $userCall): self
-  {
-    if (!$this->UserCall->contains($userCall)) {
-      $this->UserCall[] = $userCall;
-      $userCall->setUser($this);
-    }
-
-    return $this;
-  }
-
-  public function removeUserCall(Call $userCall): self
-  {
-    if ($this->UserCall->removeElement($userCall)) {
-      // set the owning side to null (unless already changed)
-      if ($userCall->getUser() === $this) {
-        $userCall->setUser(null);
+      if ($this->calls->removeElement($call)) {
+          $call->removeUser($this);
       }
-    }
 
-    return $this;
-  }
-  //</editor-fold>
-  //<editor-fold desc="Post Categories">
-  /**
-   * @ORM\OneToMany(targetEntity=PostCategory::class, mappedBy="user")
-   */
-  private $postCategories;
-
-  /**
-   * @return Collection<int, PostCategory>
-   */
-  public function getPostCategories(): Collection
-  {
-    return $this->postCategories;
+      return $this;
   }
 
-  public function addPostCategory(PostCategory $postCategory): self
-  {
-    if (!$this->postCategories->contains($postCategory)) {
-      $this->postCategories[] = $postCategory;
-      $postCategory->setUser($this);
-    }
-
-    return $this;
-  }
-
-  public function removePostCategory(PostCategory $postCategory): self
-  {
-    if ($this->postCategories->removeElement($postCategory)) {
-      // set the owning side to null (unless already changed)
-      if ($postCategory->getUser() === $this) {
-        $postCategory->setUser(null);
-      }
-    }
-
-    return $this;
-  }
-  //</editor-fold>
-  //<editor-fold desc="Serializable">
-  public function serialize()
-  {
-    return serialize(array(
-      $this->id,
-      $this->email,
-      $this->password
-    ));
-  }
-
-  public function unserialize(string $data)
-  {
-    [
-      $this->id,
-      $this->email,
-      $this->password
-    ] = unserialize($data, [
-      'allowed_classes' => true
-    ]);
-  }
-  //</editor-fold>
-  //<editor-fold desc="UserInterface">
-  /**
-   * @see UserInterface
-   */
-  public function eraseCredentials()
-  {
-    $this->plainPassword = null;
-  }
-
-  public function getUsername(): string
-  {
-    return $this->email;
-  }
-
-  public function getRoles()
-  {
-    /** @var Group $g */
-    return array_map(static fn($g) => $g->getSecurityTitle(), $this->groups->toArray());
-  }
 
   //</editor-fold>
+
   public function isEqualTo(UserInterface $user)
   {
     return $this->getUsername() === $user->getUsername();
@@ -824,4 +761,122 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   {
     return $this->email;
   }
+
+  /**
+   * @return Collection<int, Call>
+   */
+  public function getUserCall(): Collection
+  {
+      return $this->UserCall;
+  }
+
+  public function addUserCall(Call $userCall): self
+  {
+      if (!$this->UserCall->contains($userCall)) {
+          $this->UserCall[] = $userCall;
+          $userCall->setUser($this);
+      }
+
+      return $this;
+  }
+
+  public function removeUserCall(Call $userCall): self
+  {
+      if ($this->UserCall->removeElement($userCall)) {
+          // set the owning side to null (unless already changed)
+          if ($userCall->getUser() === $this) {
+              $userCall->setUser(null);
+          }
+      }
+
+      return $this;
+  }
+
+  /**
+   * @return Collection<int, PostCategory>
+   */
+  public function getPostCategories(): Collection
+  {
+      return $this->postCategories;
+  }
+
+  public function addPostCategory(PostCategory $postCategory): self
+  {
+      if (!$this->postCategories->contains($postCategory)) {
+          $this->postCategories[] = $postCategory;
+          $postCategory->setUser($this);
+      }
+
+      return $this;
+  }
+
+  public function removePostCategory(PostCategory $postCategory): self
+  {
+      if ($this->postCategories->removeElement($postCategory)) {
+          // set the owning side to null (unless already changed)
+          if ($postCategory->getUser() === $this) {
+              $postCategory->setUser(null);
+          }
+      }
+
+      return $this;
+  }
+
+  /**
+   * @return Collection<int, GroupPost>
+   */
+  public function getGroupPosts(): Collection
+  {
+      return $this->groupPosts;
+  }
+
+  public function addGroupPost(GroupPost $groupPost): self
+  {
+      if (!$this->groupPosts->contains($groupPost)) {
+          $this->groupPosts[] = $groupPost;
+          $groupPost->setUser($this);
+      }
+
+      return $this;
+  }
+
+  public function removeGroupPost(GroupPost $groupPost): self
+  {
+      if ($this->groupPosts->removeElement($groupPost)) {
+          // set the owning side to null (unless already changed)
+          if ($groupPost->getUser() === $this) {
+              $groupPost->setUser(null);
+          }
+      }
+
+      return $this;
+  }
+
+  /**
+   * @return Collection<int, GroupPost>
+   */
+  public function getGroupes(): Collection
+  {
+      return $this->groupes;
+  }
+
+  public function addGroupe(GroupPost $groupe): self
+  {
+      if (!$this->groupes->contains($groupe)) {
+          $this->groupes[] = $groupe;
+          $groupe->addMembre($this);
+      }
+
+      return $this;
+  }
+
+  public function removeGroupe(GroupPost $groupe): self
+  {
+      if ($this->groupes->removeElement($groupe)) {
+          $groupe->removeMembre($this);
+      }
+
+      return $this;
+  }
+
 }
