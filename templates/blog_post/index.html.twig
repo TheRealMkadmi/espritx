@@ -1,7 +1,7 @@
 {% extends 'views/layouts/contentLayoutMaster.html.twig' %}
 
 
-{% block title %} Blog Post {% endblock %}
+{% block title %} Forum EspritX {% endblock %}
 
 {% block page_style %}
     <!-- Page css files -->
@@ -18,59 +18,45 @@
 {% block content %}
     <div class="blog-list-wrapper">
 
-    <h1>Blog Post</h1>
-    {% for blog in blogs %}
-        <div class="col-md-6 col-12">
-            <div class="card">
-                <a href="{{ asset('page/blog/detail') }}">
-                    <img class="card-img-top img-fluid" src="{{asset('images/slider/02.jpg')}}" alt="Blog Post pic" />
-                </a>
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <a href="{{ asset('page/blog/detail') }}" class="blog-title-truncate text-body-heading"
-                        >{{ blog.slug }}</a
-                        >
-                    </h4>
-                    <div class="d-flex">
-                        <div class="avatar me-50">
-                            <img src="{{asset('images/portrait/small/avatar-s-7.jpg')}}" alt="Avatar" width="24" height="24" />
-                        </div>
-                        <div class="author-info">
-                            <small class="text-muted me-25">by</small>
-                            <small><a href="#" class="text-body">Ghani Pradita</a></small>
-                            <span class="text-muted ms-50 me-25">|</span>
-                            <small class="text-muted">Jan 10, 2020</small>
+    <h1> Forum EspritX </h1>
+
+    <table>
+        <tr>
+
+
+
+
+            <th><div class="form-row align-items-end">
+                    <div class="col">
+                        <div class="form-group">
+                            <form action="#" class="nk-form nk-form-style-1" novalidate="novalidate">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Type something..." id="search">
+                                    <button class="nk-btn nk-btn-color-main-1"><span class="ion-search"></span></button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                    <div class="my-1 py-25">
-                        <a href="{{ path('deleteblog_post',{'id':blog.id}) }}">
-                                <span class="badge rounded-pill badge-light-info me-50">Delete
-                                </span>
-                        </a>
-                        <a href="#">
-                            <span class="badge rounded-pill badge-light-primary">Fashion</span>
-                        </a>
+                </div> </th>
+            <th><div class="form-row align-items-end">
+
+                    <div class="col">
+                        <div class="form-group">
+                            <a href="{{path('newblogpost')}}" class="btn btn-success">Ajouter</a>
+                        </div>
                     </div>
-                    <p class="card-text blog-content-truncate">
-                        {{ blog.body }}
-                    </p>
-                    <hr />
-                    <div class="d-flex justify-content-between align-items-center">
-                        <a href="{{ asset('page/blog/detail#blogComment') }}">
-                            <div class="d-flex align-items-center">
-                                <i data-feather="message-square" class="font-medium-1 text-body me-50"></i>
-                                <span class="text-body fw-bold">76 Comments</span>
-                            </div>
-                        </a>
-                        <a href="{{ asset('page/blog/detail') }}" class="fw-bold">Read More</a>
-                    </div>
-                </div>
+                </div></th>
+        </tr> </table>
+
+        <div class="nk-blog-post nk-blog-post-border-bottom">
+            <div class="row vertical-gap" id="all">
+                {% include 'blog_post/ajaxblog.html.twig' %}
+            </div>
+            <div class="row vertical-gap" id="search">
             </div>
         </div>
-        </div>
-    {% endfor %}
 
-
+{#    {{ knp_pagination_render(blogs) }}#}
 
 
 
@@ -82,5 +68,33 @@
 {% block page_script %}
     <!-- Page js files -->
     <script src="{{ asset('js/scripts/pages/app-chat.js') }}"></script>
+
+    <script>
+        $( document ).ready(function() {
+            var currentRequest = null;
+            $("#search").keyup(function(e){
+                /* La variable value va prendre la valeur insérer dans le champ de texte
+                afin d’effectuer la recherche */
+                var value = $(this).val();
+                if(currentRequest != null) {
+                    currentRequest.abort();
+                }
+                /* Ajax est lancé lors du remplissage du champ texte dont l’id est
+                « search » pour faire la recherche */
+                currentRequest = $.ajax({
+                    url : "{{ path('ajaxcategory') }}",
+                    type : 'GET',
+                    data: {
+                        'searchValue' : value
+                    },
+                    success : function(retour)
+                    {
+                        $('#all').html(retour);
+                    },
+                });
+                return false;
+            });
+        });
+    </script>
 {% endblock %}
 

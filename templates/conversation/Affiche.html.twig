@@ -46,7 +46,8 @@
         <span class="card-text">
           You can view, create or update Conversations in the table below.
         </span>
-                        <a class="btn btn-primary waves-effect waves-float waves-light" href="{{ url('Conversation_Add') }}">Add</a>
+                        {# {{ url('Conversation_Add') }} #}
+                        <a class="btn btn-primary waves-effect waves-float waves-light" href="#">Add</a>
                     </div>
 
                     <div class="table-responsive row">
@@ -93,12 +94,12 @@
                                 </td>
                                 <td>
                                     <div class="d-flex">
-
-                                        <a href="{{ url("modify_conversation", {id: conversation.id}) }}">
+{# url("modify_conversation", {id: conversation.id})url("modify_conversation", {id: conversation.id}) #}
+                                        <a href="#">
                                             <i data-feather="edit-2" class="me-50"></i>
                                         </a>
-
-                                        <a href="  {{url("Conversation_Del", {id: conversation.id}) }}">
+{# url("modify_conversation", {id: conversation.id}) #}
+                                        <a href=" #">
                                             <i data-feather="trash" class="me-50"></i>
                                         </a>
                                     </div>

@@ -15,7 +15,7 @@ class ServiceFixtures extends AbstractFixtureEx implements DependentFixtureInter
 
   public function load(ObjectManager $manager): void
   {
-    $groups = $this->getReferenceArray(GroupFixtures::LOADED_ROLE_FIXTURES)->toArray();
+    $groups = $this->getReferenceArray(AccessControlFixtures::LOADED_ROLE_FIXTURES)->toArray();
     $generator = Factory::create();
     $testing_services = new ArrayCollection();
     for ($i = 0; $i < 10; $i++) {
@@ -35,6 +35,6 @@ class ServiceFixtures extends AbstractFixtureEx implements DependentFixtureInter
 
   public function getDependencies()
   {
-    return [GroupFixtures::class];
+    return [AccessControlFixtures::class];
   }
 }

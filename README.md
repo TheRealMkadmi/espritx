@@ -5,5 +5,6 @@
 <p style="color:green" >composer require mercuryseries/flashy-bundle</p>
 <p style="color:green" >composer require easycorp/easyadmin-bundle</p>
 
-Getting the user instance in new methods  
-https://github.com/lexik/LexikJWTAuthenticationBundle/blob/2.x/Resources/doc/9-access-authenticated-jwt-token.md
+
+todo:  
+caching everywhere (redis)! queries, sessions, expression language ast

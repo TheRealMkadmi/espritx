@@ -129,6 +129,11 @@ class Post
      */
     private $latitude;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=GroupPost::class, inversedBy="posts")
+     */
+    private $groupPost;
+
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
@@ -386,6 +391,18 @@ class Post
     public function setLatitude(?string $latitude): self
     {
         $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    public function getGroupPost(): ?GroupPost
+    {
+        return $this->groupPost;
+    }
+
+    public function setGroupPost(?GroupPost $groupPost): self
+    {
+        $this->groupPost = $groupPost;
 
         return $this;
     }

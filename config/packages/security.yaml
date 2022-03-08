@@ -1,56 +1,58 @@
 security:
-    encoders:
-        App\Entity\User:
-            algorithm: auto
-            cost: 14
+  encoders:
+    App\Entity\User:
+      algorithm: auto
+      cost: 14
 
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
-    providers:
-        # used to reload user from session & other features (e.g. switch_user)
-        app_user_provider:
-            entity:
-                class: App\Entity\User
-                property: email
-    firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-            logout:
-                path: app_logout
+  # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+  providers:
+    # used to reload user from session & other features (e.g. switch_user)
+    app_user_provider:
+      entity:
+        class: App\Entity\User
+        property: email
+  firewalls:
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+      logout:
+        path: app_logout
 
-        main:
-            pattern: /
-            anonymous: lazy
-            logout_on_user_change: false
-            provider: app_user_provider
-            remember_me:
-                secret: '%kernel.secret%'
-                lifetime: 604800
-                path: /
-            logout:
-                path: app_logout
+    main:
+      pattern: /
+      anonymous: lazy
+      logout_on_user_change: false
+      provider: app_user_provider
+      access_denied_handler: App\Security\AccessDeniedHandler
+      remember_me:
+        secret: '%kernel.secret%'
+        lifetime: 604800
+        path: /
+      logout:
+        path: app_logout
 
-            form_login:
-                login_path: login
-                check_path: login
-            guard:
-                authenticators:
-                    - App\Security\LoginFormAuthenticator
+      form_login:
+        login_path: login
+        check_path: login
+      guard:
+        entry_point: App\Security\LoginFormAuthenticator
+        authenticators:
+          - App\Security\LoginFormAuthenticator
+          - App\Security\GoogleAuthenticator
 
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#firewalls-authentication
+      # activate different ways to authenticate
+      # https://symfony.com/doc/current/security.html#firewalls-authentication
 
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
-    access_decision_manager:
-        strategy: unanimous
-        allow_if_all_abstain: false
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
-    access_control:
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/, role: IS_AUTHENTICATED_REMEMBERED }
-    # - { path: ^/admin, roles: ROLE_ADMIN }
-    # - { path: ^/profile, roles: ROLE_USER }
+      # https://symfony.com/doc/current/security/impersonating_user.html
+      # switch_user: true
+  access_decision_manager:
+    strategy: affirmative
+    allow_if_all_abstain: false
+  # Easy way to control access for large sections of your site
+  # Note: Only the *first* access control that matches will be used
+  access_control:
+    - { path: ^/(login|register|resetpassword|forum|connect).*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/.*, role: IS_AUTHENTICATED_REMEMBERED }
+  # - { path: ^/admin, roles: ROLE_ADMIN }
+  # - { path: ^/profile, roles: ROLE_USER }

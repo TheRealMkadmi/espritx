@@ -7,7 +7,9 @@ use App\Entity\User;
 
 use App\Form\BlogPostType;
 use App\Repository\BlogPostRepository;
+use App\Repository\PostCategoryRepository;
 use App\Repository\UserRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,15 +17,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
+/** @Route("/forum") */
 class BlogPostController extends AbstractController
 {
     /**
      * @Route("/blog/post", name="blog_post")
      */
-    public function afficher_blog (BlogPostRepository $blogPostRepository): Response
+    public function afficher_blog (BlogPostRepository $blogPostRepository  )
     {
         $blogs = $blogPostRepository->findAll();
+//        $blogs=$paginator->paginate(
+//            $data,
+//            $request->query->getInt('page',1), // num l page
+//            10);
         return $this->render('blog_post/index.html.twig',  ['blogs' => $blogs,
             'controller_name' => 'BlogPostController',
         ]);
@@ -32,13 +38,12 @@ class BlogPostController extends AbstractController
     /**
      * @Route("/blogpost/new", name="newblogpost")
      * @param Request $request
-     * @param UserRepository $repository
+     * @param PostCategoryRepository $repository
      * @return Response
-     * @throws Exception
      */
 
 
-    public function newBlogPost(Request $request, UserRepository $repository): Response
+    public function newBlogPost(Request $request, PostCategoryRepository $repository): Response
     {
 
 
@@ -86,7 +91,7 @@ class BlogPostController extends AbstractController
     }
 
     /**
-     * @Route("blogpost/Update/{id}",name="update")
+     * @Route("blogpost/Update/{id}",name="update_blog")
      */
     function Update_blog_post(BlogPostRepository $repository,$id,Request $request)
     {
@@ -105,6 +110,21 @@ class BlogPostController extends AbstractController
 
             ]);
     }
+
+    /**
+     * @Route("/searchcategory", name="ajaxcategory")
+     */
+    public function SearchCat(Request $request)
+    {
+        $repository = $this->getDoctrine()->getRepository(BlogPost::class);
+        $requestString=$request->get('searchValue');
+        $blogs = $repository->SearchCat($requestString);
+        return $this->render('blog_post/ajaxblog.html.twig', [
+            "blogs"=>$blogs,
+        ]);
+    }
+
+
 
 
 

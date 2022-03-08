@@ -72,14 +72,19 @@ class PostRepository extends ServiceEntityRepository
 
 
 
-    public function getLatestPosts($limit = null)
+    public function getLatestPosts($limit = null,$filters=null)
     {
+
+
         $qb = $this->createQueryBuilder('b')
             ->select('b')
             ->addOrderBy('b.created_at', 'DESC');
-
-        if (false === is_null($limit))
-            $qb->setMaxResults($limit);
+        if($filters != null){
+$qb->andWhere('b.groupPost IN (:grps)')
+    ->setParameter(':grps',array_values($filters));
+        }
+        if (false === is_null($limit)){
+            $qb->setMaxResults($limit);}
 
         return $qb->getQuery()
             ->getResult();

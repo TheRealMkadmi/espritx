@@ -73,4 +73,20 @@ class BlogPostRepository extends ServiceEntityRepository
         ;
     }
     */
+
+   /* function SearchCat($post_category){
+        return $this->createQueryBuilder('b')
+            ->where('b.post_category LIKE :post_category')
+            ->setParameter('post_category', '%'.$post_category.'%')
+            ->getQuery()->getResult();
+
+    }*/
+    public function SearchCat($slug)
+    {
+        return $this->createQueryBuilder('b')
+            ->where('b.slug LIKE :slug')
+            ->setParameter('slug','%'.$slug.'%')
+            ->getQuery()
+            ->getResult();
+    }
 }
