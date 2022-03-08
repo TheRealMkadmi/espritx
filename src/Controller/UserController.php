@@ -28,7 +28,7 @@ class UserController extends AbstractController
                       Request                $request,
                       UserRepository         $userRepository): Response
   {
-    $this->denyAccessUnlessGranted(AccessType::READ, User::class);
+    // $this->denyAccessUnlessGranted(AccessType::READ, User::class);
     $dql = <<<DQL
     select u from App\Entity\User u 
     DQL;

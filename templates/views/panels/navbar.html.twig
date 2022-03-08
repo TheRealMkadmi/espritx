@@ -110,7 +110,7 @@
               <div class="d-flex user-status">
                 {% for group in app.user.groups %}
                   {{ include('views/content/_partials/_fragments/group-type-badge.html.twig',
-                    {'grouptype': group.groupType, 'displayname': (app.user.groups.count > 0) ? "" : group.displayName } ) }}
+                    {'grouptype': group.groupType, 'displayname': (app.user.groups.count > 1) ? "" : group.displayName } ) }}
                 {% endfor %}
               </div>
             </div>
