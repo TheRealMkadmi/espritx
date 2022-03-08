@@ -49,13 +49,14 @@ class AllEventsDataController extends AbstractController
      */
     public function majEvent(?Event $event, Request $request)
     {
+        
         $donnees = json_decode($request->getContent());
+        
 
         if (
             isset($donnees->title) && !empty($donnees->title) &&
             isset($donnees->description) && !empty($donnees->description) &&
             isset($donnees->start) && !empty($donnees->start)
-
         ) {
             $code = 200;
             if (!$event) {
@@ -87,8 +88,10 @@ class AllEventsDataController extends AbstractController
      */
     public function indexCall(CallRepository $rep)
     {
+        $user = $this->getUser();
+        
         $calls = $rep->findAll();
-
+        
         $rdvs = [];
         foreach ($calls as $call) {
             $rdvs[] = [
@@ -102,6 +105,35 @@ class AllEventsDataController extends AbstractController
         }
 
         $data = json_encode($rdvs);
+        
+        return $this->render('call/index.html.twig', [
+            'call' => $data
+        ]);
+    }
+
+     /**
+     * @Route("app/calendar/Mycalls", name="Mycalls")
+     */
+    public function MyCalls(CallRepository $rep)
+    {
+        $user = $this->getUser();
+        dd($user);
+        $calls = $rep->findAll();
+        
+        $rdvs = [];
+        foreach ($calls as $call) {
+            $rdvs[] = [
+                'id' => $call->getId(),
+                'start' => $call->getStart()->format('Y-m-d H:i:s'),
+                'end' => $call->getEnd()->format('Y-m-d H:i:s'),
+                'title' => $call->getTitle(),
+                'description' => $call->getDescription(),
+
+            ];
+        }
+
+        $data = json_encode($rdvs);
+        dd($data);
         return $this->render('call/index.html.twig', [
             'call' => $data
         ]);
@@ -121,7 +153,7 @@ class AllEventsDataController extends AbstractController
         ) {
             $code = 200;
             if (!$call) {
-                $call = new Event;
+                $call = new Call;
                 $code = 201;
             }
             $call->setTitle($donnees->title);

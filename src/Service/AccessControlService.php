@@ -23,56 +23,26 @@ class AccessControlService
     $this->subjects = ClassFinder::getClassesInNamespace('App\Entity');
   }
 
-  public function GrantAccessToGroup(AccessType $accessType,
-                                     string     $subject,
-                                     Group      $group,
-                                     string     $expression = null,
-                                     string     $description = null,
-                                     string     $title = null,
-                                     bool       $flush = false)
+  public function GrantAccess(AccessType $accessType,
+                              string     $subject,
+                              Group|User $receiver,
+                              string     $expression = null,
+                              string     $description = null,
+                              string     $title = null,
+                              bool       $flush = false)
   {
     $permission = $this->make_permission($accessType, $title, $subject, $expression, $description);
-    $this->GrantPermissionToGroup($permission, $group);
     $this->em->persist($permission);
+    if ($receiver instanceof Group) {
+      $receiver->addPermission($permission);
+    } else {
+      $receiver->addIndividualPermission($permission);
+    }
+    $this->em->persist($receiver);
     if ($flush) {
       $this->em->flush();
     }
   }
-
-
-  public function GrantPermissionToGroup(Permission $permission, Group $group, $flush = false)
-  {
-    $group->addPermission($permission);
-    $this->em->persist($group);
-    if ($flush)
-      $this->em->persist($group);
-  }
-
-  public function GrantAccessToUser(AccessType $accessType,
-                                    string     $subject,
-                                    User       $user,
-                                    string     $description = null,
-                                    string     $title = null,
-                                    string     $expression = null,
-                                    bool       $flush = false)
-  {
-    $permission = $this->make_permission($accessType, $title, $subject, $expression, $description);
-    $this->GrantPermissionToUser($permission, $user);
-    $this->em->persist($permission);
-    if ($flush) {
-      $this->em->flush();
-    }
-  }
-
-
-  public function GrantPermissionToUser(Permission $permission, User $user, $flush = false)
-  {
-    $user->addIndividualPermission($permission);
-    $this->em->persist($user);
-    if ($flush)
-      $this->em->flush();
-  }
-
 
   /**
    * @param AccessType $accessType
@@ -96,4 +66,5 @@ class AccessControlService
     $permission->setEnabled(true);
     return $permission;
   }
+
 }

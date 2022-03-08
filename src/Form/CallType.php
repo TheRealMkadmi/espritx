@@ -11,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class CallType extends AbstractType
 {
@@ -36,13 +37,15 @@ class CallType extends AbstractType
             'date_widget'=>'single_text',
 
         ])
-        ->add('description')
+        ->add('description',TextareaType::class)
         ->add('users',EntityType::class, [
             'class' => User::class,
             'multiple' => true,
+            'expanded' => false,
+            'choice_label' => 'email' ,
+            'attr' => ['id' => 'selectCall' ]
         ])
-        ->add("user")
-        
+                
         ;
     }
 

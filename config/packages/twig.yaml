@@ -10,5 +10,6 @@ twig:
         menuData: '@App\Twig\MenuExtension'
         configData: '@App\Twig\ConfigExtension'
         chatStatus: 1
-
-
+    paths:
+        '%kernel.project_dir%/public/images': images
+        

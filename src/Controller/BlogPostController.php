@@ -9,6 +9,7 @@ use App\Form\BlogPostType;
 use App\Repository\BlogPostRepository;
 use App\Repository\PostCategoryRepository;
 use App\Repository\UserRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,9 +23,13 @@ class BlogPostController extends AbstractController
     /**
      * @Route("/blog/post", name="blog_post")
      */
-    public function afficher_blog (BlogPostRepository $blogPostRepository): Response
+    public function afficher_blog (BlogPostRepository $blogPostRepository  )
     {
         $blogs = $blogPostRepository->findAll();
+//        $blogs=$paginator->paginate(
+//            $data,
+//            $request->query->getInt('page',1), // num l page
+//            10);
         return $this->render('blog_post/index.html.twig',  ['blogs' => $blogs,
             'controller_name' => 'BlogPostController',
         ]);
@@ -107,16 +112,19 @@ class BlogPostController extends AbstractController
     }
 
     /**
-     * @param BlogPostRepository $repository
-     * @param Request $request
-     * @return Response
-     * @Route("/searchCat",name="search")
+     * @Route("/searchcategory", name="ajaxcategory")
      */
-    function SearchCat(BlogPostRepository $repository,Request $request){
-        $post_category=$request->get('search');
-        $blogpost=$repository->SearchCat($post_category);
-        return $this->render('blog_post/index.html.twig',['blog'=>$blogpost]);
+    public function SearchCat(Request $request)
+    {
+        $repository = $this->getDoctrine()->getRepository(BlogPost::class);
+        $requestString=$request->get('searchValue');
+        $blogs = $repository->SearchCat($requestString);
+        return $this->render('blog_post/ajaxblog.html.twig', [
+            "blogs"=>$blogs,
+        ]);
     }
+
+
 
 
 
