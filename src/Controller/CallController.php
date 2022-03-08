@@ -6,6 +6,7 @@ use App\Entity\Call;
 use App\Form\CallType;
 use App\Form\EventType;
 use App\Repository\CallRepository;
+use App\Service\Mail;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CallController extends AbstractController
 {
+    private $mailer;
+    public function __construct(Mail $mailer)
+    {
+        $this->mailer = $mailer;
+    }
     /**
      * @Route("/", name="call")
      */
@@ -41,13 +47,23 @@ class CallController extends AbstractController
             return $this->redirectToRoute('indexCall');
         }  */
         $call = new Call();
-
+        $call->setUser($this->getUser());
         $form = $this->createForm(CallType::class, $call);
         $form->handleRequest($request);
+        
+        $userCall =[];
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $users=$call->getUsers();
+            //dd($users);
+            foreach($users as $u){
+                $userCall[] =$u->getEmail();
+            }
+            //dd($userCall);
             $entityManager->persist($call);
             $entityManager->flush();
+            $this->mailer->sendNewCallEmail("zicou@gmail.com",["call"=>$call]);
+            $this->addFlash('success', 'Les membres du call sont notifies par un mail !');
             $this->addFlash('notice', 'call ajouté avec succée !');
             return $this->redirectToRoute('indexCall');
         }
@@ -64,7 +80,7 @@ class CallController extends AbstractController
     public function edit($id, Request $request, CallRepository $rep)
     {
         $call = $rep->find($id);
-        /*  $user = $this->getUser();
+          $user = $this->getUser();
         // savoir si le user est connecté ou nn
 
         if (!$user){
@@ -74,7 +90,7 @@ class CallController extends AbstractController
         if($user->getId()!=$call->getUser()->getId()){
             $this->addFlash('notice', 'U cant change this bro till u be the owner !');
             return $this->redirectToRoute('indexCall');
-        } */
+        } 
 
 
         $form1 = $this->createForm(CallType::class, $call);
@@ -106,7 +122,7 @@ class CallController extends AbstractController
 
         $call = $entityManager->getRepository(Call::class)->find($id);
 
-        /*
+        
         $user = $this->getUser();
         // savoir si le user est connecté ou nn
 
@@ -115,10 +131,10 @@ class CallController extends AbstractController
             return $this->redirectToRoute('indexCall');
         } 
         if($user->getId()!=$call->getUser()->getId()){
-            $this->addFlash('notice', 'U cant change this bro till u be the owner !');
+            $this->addFlash('notice', 'U cant delete this bro till u become the owner !');
             return $this->redirectToRoute('indexCall');
         }
-        */
+        
         $entityManager->remove($call);
         $this->addFlash('success', 'Call bien été supprimée.');
 

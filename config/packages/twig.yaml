@@ -9,4 +9,6 @@ twig:
     globals:
         menuData: '@App\Twig\MenuExtension'
         configData: '@App\Twig\ConfigExtension'
+    paths:
+        '%kernel.project_dir%/public/images': images
 
