@@ -3,10 +3,14 @@
 namespace App\Security\Voter;
 
 use App\Entity\Group;
+use App\Entity\Permission;
 use App\Entity\User;
+use App\Enum\GroupType;
 use App\Repository\PermissionRepository;
+use HaydenPierce\ClassFinder\ClassFinder;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
@@ -14,64 +18,63 @@ use Symfony\Component\Security\Core\Security;
 
 class PermissionVoter implements VoterInterface
 {
-  private LoggerInterface $logger;
-  private Security $security;
-  private AccessDecisionManagerInterface $decisionManager;
-  private PermissionRepository $permissionRepository;
+
+  /**
+   * @var string[]
+   */
+  private array $subjects;
 
   public function __construct(
-    Security                       $security,
-    LoggerInterface                $logger,
-    AccessDecisionManagerInterface $decisionManager,
-    PermissionRepository           $permissionRepository
+    private LoggerInterface $logger,
   )
   {
-    $this->permissionRepository = $permissionRepository;
-    $this->decisionManager = $decisionManager;
-    $this->security = $security;
-    $this->logger = $logger;
+    $this->subjects = ClassFinder::getClassesInNamespace('App\Entity');
   }
 
   public function vote(TokenInterface $token, $subject, array $attributes): int
   {
-    // tf you're doing here?
-    if (!$token->getUser() instanceof User) {
-      return self::ACCESS_DENIED;
+    // sanity check
+    if (!in_array((is_string($subject) ? $subject : get_class($subject)), $this->subjects, true)) {
+      $this->logger->info("Subject must be an entity. Current value: $subject");
+      return VoterInterface::ACCESS_ABSTAIN;
     }
 
-    // It ain't called super admin for nothing. Heil Hitler.
-    if ($this->security->isGranted(Group::ROLE_SUPER_ADMIN)) {
+    // tf you're doing here?
+    /** @var User $user */
+    $user = $token->getUser();
+    if (!$user instanceof User)
+      return self::ACCESS_DENIED;
+
+    if ($user->isPartOfGroupType(GroupType::SUPER_ADMIN())) { // Heil Hitler.
       return self::ACCESS_GRANTED;
     }
 
-    // Find all stored permissions for this attribute and subject
-    $permissions = $this->permissionRepository->findBy([
-      'attribute' => $attributes,
-      'subject' => get_class($subject),
-    ]);
-
-    // We know nothing about that subject. Shut up.
-    if (count($permissions) === 0) {
-      $attrs = implode(", ", $attributes);
-      $this->logger->warning("Voting on ambiguous access attributes ({$attrs}) for $subject");
-      return self::ACCESS_ABSTAIN;
-    }
-
-    foreach ($permissions as $permission) {
-      if (!$permission->getEnabled()) {
-        continue; // Sometimes we shut off the water until the plumber comes.
+    $applicable_permissions = array_filter($user->getAggregatePermissions(),
+      static fn(Permission $p) => $p->getEnabled() &&
+        $p->getSubject() === (is_string($subject) ? $subject : get_class($subject))
+    );
+    $expressionLanguage = new ExpressionLanguage();
+    $decision = self::ACCESS_DENIED;
+    /** @var Permission $applicable_permission */
+    foreach ($applicable_permissions as $applicable_permission) {
+      foreach ($attributes as $attribute) {
+        if ($applicable_permission->getAttribute()->hasFlag($attribute)) {
+          if (!is_string($subject) && $applicable_permission->getExpression() !== null) {
+            // Not gonna even bother preventing an RCE todo.
+            $result = $expressionLanguage->evaluate($applicable_permission->getExpression(), [
+              'user' => $token->getUser(),
+              'object' => $subject
+            ]);
+            if ($result)
+              $decision = self::ACCESS_GRANTED;
+          } else {
+            $decision = self::ACCESS_GRANTED;
+          }
+        }
+        if ($decision === self::ACCESS_GRANTED) return $decision;
       }
-
-      // if the permission has an extra expression, verify this is true, otherwise grant access directly
-      // ref: https://symfony.com/doc/4.4/components/expression_language/syntax.html
-      if ($permission->getExpression() !== null) {
-        $allowed = $this->security->isGranted(new Expression($permission->getExpression()), $subject);
-        return $allowed ? self::ACCESS_GRANTED : self::ACCESS_DENIED;
-      } else {
-        return self::ACCESS_GRANTED;
-      }
+      if ($decision === self::ACCESS_GRANTED) return $decision;
     }
-    // in any other case, deny access
-    return self::ACCESS_ABSTAIN;
+    return $decision;
   }
 }

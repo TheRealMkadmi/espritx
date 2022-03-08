@@ -2,6 +2,12 @@
     "behat/transliterator": {
         "version": "v1.3.0"
     },
+    "botman/botman": {
+        "version": "2.6.1"
+    },
+    "botman/driver-web": {
+        "version": "1.5.1"
+    },
     "doctrine/annotations": {
         "version": "1.13",
         "recipe": {
@@ -115,6 +121,9 @@
             "config/packages/elao_enum.yaml"
         ]
     },
+    "evenement/evenement": {
+        "version": "v3.0.1"
+    },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.5"
     },
@@ -156,6 +165,9 @@
     },
     "guzzlehttp/psr7": {
         "version": "2.1.0"
+    },
+    "haydenpierce/class-finder": {
+        "version": "0.4.3"
     },
     "imagine/imagine": {
         "version": "1.2.4"
@@ -230,6 +242,9 @@
     "monolog/monolog": {
         "version": "2.3.5"
     },
+    "mpociot/pipeline": {
+        "version": "1.0.2"
+    },
     "myclabs/deep-copy": {
         "version": "1.10.2"
     },
@@ -238,6 +253,9 @@
     },
     "nikic/php-parser": {
         "version": "v4.13.2"
+    },
+    "opis/closure": {
+        "version": "3.6.3"
     },
     "phar-io/manifest": {
         "version": "2.0.3"
@@ -328,6 +346,27 @@
     "ralouphie/getallheaders": {
         "version": "3.0.3"
     },
+    "react/cache": {
+        "version": "v1.1.1"
+    },
+    "react/dns": {
+        "version": "v1.9.0"
+    },
+    "react/event-loop": {
+        "version": "v1.2.0"
+    },
+    "react/promise": {
+        "version": "v2.9.0"
+    },
+    "react/promise-timer": {
+        "version": "v1.8.0"
+    },
+    "react/socket": {
+        "version": "v1.11.0"
+    },
+    "react/stream": {
+        "version": "v1.2.0"
+    },
     "sabberworm/php-css-parser": {
         "version": "8.4.0"
     },
@@ -390,6 +429,9 @@
         "files": [
             "config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "spatie/macroable": {
+        "version": "1.0.1"
     },
     "stof/doctrine-extensions-bundle": {
         "version": "1.7",
@@ -837,11 +879,17 @@
     "theseer/tokenizer": {
         "version": "1.2.1"
     },
+    "tightenco/collect": {
+        "version": "v8.83.2"
+    },
     "twig/extra-bundle": {
         "version": "v3.3.8"
     },
     "twig/twig": {
         "version": "v3.3.8"
+    },
+    "twilio/sdk": {
+        "version": "6.35.0"
     },
     "vich/uploader-bundle": {
         "version": "1.19",

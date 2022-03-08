@@ -20,7 +20,7 @@
         <div class="card">
           <div class="card-body d-flex align-items-center justify-content-between">
             <div>
-              <h3 class="fw-bolder mb-75">{{ statusStatistics["total"] }}</h3>
+              <h3 class="fw-bolder mb-75">{{ (statusStatistics.total is defined) ?  statusStatistics.total : 0 }}</h3>
               <span>Total Users</span>
             </div>
             <div class="avatar bg-light-primary p-50">
@@ -35,7 +35,7 @@
         <div class="card">
           <div class="card-body d-flex align-items-center justify-content-between">
             <div>
-              <h3 class="fw-bolder mb-75">{{ statusStatistics["restricted"] }}</h3>
+              <h3 class="fw-bolder mb-75">{{ (statusStatistics.restricted is defined) ?  statusStatistics.restricted : 0 }}</h3>
               <span>Restricted Users</span>
             </div>
             <div class="avatar bg-light-danger p-50">
@@ -50,7 +50,9 @@
         <div class="card">
           <div class="card-body d-flex align-items-center justify-content-between">
             <div>
-              <h3 class="fw-bolder mb-75">{{ statusStatistics["active"] + statusStatistics["alumnus"] }}</h3>
+              {% set activeUsers = (statusStatistics.active is defined) ? statusStatistics.active : 0 %}
+              {% set alumniUsers = (statusStatistics.alumnus is defined) ? statusStatistics.alumnus : 0 %}
+              <h3 class="fw-bolder mb-75">{{ activeUsers + alumniUsers }}</h3>
               <span>Active/Alumni Users</span>
             </div>
             <div class="avatar bg-light-success p-50">
@@ -65,7 +67,7 @@
         <div class="card">
           <div class="card-body d-flex align-items-center justify-content-between">
             <div>
-              <h3 class="fw-bolder mb-75">{{ statusStatistics["pending"] }}</h3>
+              <h3 class="fw-bolder mb-75">{{ (statusStatistics.restricted is defined) ?  statusStatistics.restricted : 0 }}</h3>
               <span>Pending Users</span>
             </div>
             <div class="avatar bg-light-warning p-50">
@@ -77,7 +79,6 @@
         </div>
       </div>
     </div>
-
     <!-- list and filter start -->
     <div class="card">
       <div class="card-header">

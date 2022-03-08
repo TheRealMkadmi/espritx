@@ -11,6 +11,8 @@
         "php": "^8.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "botman/botman": "^2.6",
+        "botman/driver-web": "^1.5",
         "doctrine/annotations": "^1.13",
         "doctrine/doctrine-bundle": "^2.5",
         "doctrine/doctrine-migrations-bundle": "^3.2",
@@ -20,6 +22,7 @@
         "friendsofsymfony/ckeditor-bundle": "^2.4",
         "friendsofsymfony/rest-bundle": "3.3.0",
         "gedmo/doctrine-extensions": "^3.5",
+        "haydenpierce/class-finder": "^0.4.3",
         "knplabs/knp-paginator-bundle": "^5.8",
         "knpuniversity/oauth2-client-bundle": "^2.10",
         "league/oauth2-google": "^4.0",
@@ -61,6 +64,7 @@
         "tetranz/select2entity-bundle": "^3.1",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
+        "twilio/sdk": "^6.35",
         "vich/uploader-bundle": "^1.19"
     },
     "require-dev": {

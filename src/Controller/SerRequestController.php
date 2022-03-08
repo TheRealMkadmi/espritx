@@ -3,21 +3,23 @@
 namespace App\Controller;
 
 use App\Entity\ServiceRequest;
+use App\Enum\AccessType;
 use App\Form\SerRequestType;
 use App\Repository\ServiceRepository;
 use App\Repository\ServiceRequestRepository;
+use BotMan\BotMan\Drivers\DriverManager;
+use BotMan\Drivers\Web\WebDriver;
 use Doctrine\ORM\EntityManagerInterface;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-use Knp\Bundle\SnappyBundle\KnpSnappyBundle;
 use Knp\Component\Pager\PaginatorInterface;
-use Knp\Snappy\Pdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use BotMan\BotMan\BotMan;
+use BotMan\BotMan\BotManFactory;
 
 /**
  * @Route ("/request")
@@ -48,7 +50,9 @@ class SerRequestController extends AbstractController
      */
     public function affRequests(EntityManagerInterface $em, PaginatorInterface $paginator, Request $request): Response
     {
-        $dql = <<<DQL
+      //$this->denyAccessUnlessGranted([AccessType::READ], ServiceRequest::class);
+
+      $dql = <<<DQL
     select sr from App\Entity\ServiceRequest sr 
     DQL;
         $query = $em->createQuery($dql);
@@ -96,6 +100,7 @@ class SerRequestController extends AbstractController
      */
     public function ModifServiceRequest(EntityManagerInterface $em, Request $request, ServiceRequest $serreq): Response
     {
+        // $this->denyAccessUnlessGranted([AccessType::EDIT], $serreq);
         $form = $this->createForm(SerRequestType::class, $serreq);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -138,9 +143,8 @@ class SerRequestController extends AbstractController
         $dompdf->setPaper('A4', 'landscape');
         $dompdf->render();
         $dompdf->stream("mypdf2.pdf", [
-        "Attachment" => true
-    ]);
+            "Attachment" => true
+        ]);
         return new Response();
     }
-
 }
