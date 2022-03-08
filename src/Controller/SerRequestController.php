@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ServiceRequest;
-use App\Enum\AccessTypeEnum;
+use App\Enum\AccessType;
 use App\Form\SerRequestType;
 use App\Repository\ServiceRepository;
 use App\Repository\ServiceRequestRepository;
@@ -50,7 +50,7 @@ class SerRequestController extends AbstractController
      */
     public function affRequests(EntityManagerInterface $em, PaginatorInterface $paginator, Request $request): Response
     {
-      //$this->denyAccessUnlessGranted([AccessTypeEnum::READ], ServiceRequest::class);
+      //$this->denyAccessUnlessGranted([AccessType::READ], ServiceRequest::class);
 
       $dql = <<<DQL
     select sr from App\Entity\ServiceRequest sr 
@@ -100,7 +100,7 @@ class SerRequestController extends AbstractController
      */
     public function ModifServiceRequest(EntityManagerInterface $em, Request $request, ServiceRequest $serreq): Response
     {
-        // $this->denyAccessUnlessGranted([AccessTypeEnum::EDIT], $serreq);
+        // $this->denyAccessUnlessGranted([AccessType::EDIT], $serreq);
         $form = $this->createForm(SerRequestType::class, $serreq);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

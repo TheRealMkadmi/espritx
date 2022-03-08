@@ -9,7 +9,7 @@ use App\Entity\Post;
 use App\Entity\Service;
 use App\Entity\ServiceRequest;
 use App\Entity\User;
-use App\Enum\AccessTypeEnum;
+use App\Enum\AccessType;
 use App\Enum\GroupType;
 use App\Service\AccessControlService;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -20,7 +20,7 @@ use Faker\Factory;
 
 class AccessControlFixtures extends AbstractFixtureEx
 {
-  public function __construct(private AccessControlService $accessControlService)
+  public function __construct(private AccessControlService $aclService)
   {
   }
 
@@ -38,40 +38,41 @@ class AccessControlFixtures extends AbstractFixtureEx
       $group->setSecurityTitle("ROLE_" . strtoupper(str_replace(" ", "_", $groupType)));
       switch ($groupType) {
         case GroupType::STUDENT():
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::get(AccessTypeEnum::READ | AccessTypeEnum::CREATE), Post::class, $group);
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::EDIT(), Post::class, $group, "object.getUser() == user");
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::CREATE(), ServiceRequest::class, $group);
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::get(AccessTypeEnum::READ | AccessTypeEnum::EDIT), ServiceRequest::class, $group, "object.Requester == user");
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::READ_CREATE(), Commentaire::class, $group);
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::EDIT(), Commentaire::class, $group, "object.getUser() == user");
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::READ(), User::class, $group);
+          $this->aclService->GrantAccessToGroup(AccessType::get(AccessType::READ | AccessType::CREATE), Post::class, $group);
+          $this->aclService->GrantAccessToGroup(AccessType::EDIT(), Post::class, $group, "object.getUser() == user");
+          $this->aclService->GrantAccessToGroup(AccessType::CREATE(), ServiceRequest::class, $group);
+          $this->aclService->GrantAccessToGroup(AccessType::get(AccessType::READ | AccessType::EDIT), ServiceRequest::class, $group, "object.Requester == user");
+          $this->aclService->GrantAccessToGroup(AccessType::READ_CREATE(), Commentaire::class, $group);
+          $this->aclService->GrantAccessToGroup(AccessType::EDIT(), Commentaire::class, $group, "object.getUser() == user");
+          $this->aclService->GrantAccessToGroup(AccessType::READ(), User::class, $group, "object.getId() == user.getId()");
           break;
         case GroupType::TEACHERS():
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::READ_CREATE(), Post::class, $group);
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::EDIT(), Post::class, $group, "object.getUser() == user");
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::READ_CREATE(), Commentaire::class, $group);
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::EDIT(), Commentaire::class, $group);
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::CREATE(), ServiceRequest::class, $group);
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::READ_EDIT(), ServiceRequest::class, $group);
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::READ(), User::class, $group);
+          $this->aclService->GrantAccessToGroup(AccessType::READ_CREATE(), Post::class, $group);
+          $this->aclService->GrantAccessToGroup(AccessType::EDIT(), Post::class, $group, "object.getUser() == user");
+          $this->aclService->GrantAccessToGroup(AccessType::READ_CREATE(), Commentaire::class, $group);
+          $this->aclService->GrantAccessToGroup(AccessType::EDIT(), Commentaire::class, $group);
+          $this->aclService->GrantAccessToGroup(AccessType::CREATE(), ServiceRequest::class, $group);
+          $this->aclService->GrantAccessToGroup(AccessType::READ_EDIT(), ServiceRequest::class, $group);
+          $this->aclService->GrantAccessToGroup(AccessType::READ(), User::class, $group, "object.getId() == user.getId()");
           break;
         case GroupType::FACULTY_STAFF():
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::READ_CREATE(), ServiceRequest::class, $group);
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::DELETE_EDIT(), ServiceRequest::class, $group, "user.getGroups().contains(object.getType().getResponsible())");
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::READ_CREATE(), Post::class, $group);
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::EDIT(), Post::class, $group);
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::READ_CREATE(), Commentaire::class, $group);
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::EDIT(), Commentaire::class, $group);
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::READ(), Service::class, $group, "user.getGroups()contains(object.getRecipient())");
+          $this->aclService->GrantAccessToGroup(AccessType::READ_CREATE(), ServiceRequest::class, $group);
+          $this->aclService->GrantAccessToGroup(AccessType::DELETE_EDIT(), ServiceRequest::class, $group, "user.getGroups().contains(object.getType().getResponsible())");
+          $this->aclService->GrantAccessToGroup(AccessType::READ_CREATE(), Post::class, $group);
+          $this->aclService->GrantAccessToGroup(AccessType::EDIT(), Post::class, $group);
+          $this->aclService->GrantAccessToGroup(AccessType::READ_CREATE(), Commentaire::class, $group);
+          $this->aclService->GrantAccessToGroup(AccessType::EDIT(), Commentaire::class, $group);
+          $this->aclService->GrantAccessToGroup(AccessType::READ(), User::class, $group);
+          $this->aclService->GrantAccessToGroup(AccessType::READ(), Service::class, $group, "user.getGroups().contains(object.getRecipient())");
           break;
         case GroupType::SITE_STAFF():
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::MANAGE(), User::class, $group);
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::READ_CREATE_EDIT(), Group::class, $group);
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::MANAGE(), Permission::class, $group);
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::READ_CREATE_DELETE(), Commentaire::class, $group);
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::EDIT(), Commentaire::class, $group);
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::READ_CREATE_DELETE(), Post::class, $group);
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::EDIT(), Post::class, $group);
+          $this->aclService->GrantAccessToGroup(AccessType::MANAGE(), User::class, $group);
+          $this->aclService->GrantAccessToGroup(AccessType::READ_CREATE_EDIT(), Group::class, $group);
+          $this->aclService->GrantAccessToGroup(AccessType::MANAGE(), Permission::class, $group);
+          $this->aclService->GrantAccessToGroup(AccessType::READ_CREATE_DELETE(), Commentaire::class, $group);
+          $this->aclService->GrantAccessToGroup(AccessType::EDIT(), Commentaire::class, $group);
+          $this->aclService->GrantAccessToGroup(AccessType::READ_CREATE_DELETE(), Post::class, $group);
+          $this->aclService->GrantAccessToGroup(AccessType::EDIT(), Post::class, $group);
           break;
         default:
           break;
