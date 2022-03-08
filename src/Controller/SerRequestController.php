@@ -100,7 +100,7 @@ class SerRequestController extends AbstractController
      */
     public function ModifServiceRequest(EntityManagerInterface $em, Request $request, ServiceRequest $serreq): Response
     {
-        // $this->denyAccessUnlessGranted([AccessTypeEnum::EDIT], $serreq);
+        $this->denyAccessUnlessGranted([AccessTypeEnum::EDIT], $serreq);
         $form = $this->createForm(SerRequestType::class, $serreq);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
