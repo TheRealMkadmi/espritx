@@ -57,12 +57,12 @@ class AccessControlFixtures extends AbstractFixtureEx
           break;
         case GroupType::FACULTY_STAFF():
           $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::READ_CREATE(), ServiceRequest::class, $group);
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::DELETE_EDIT(), ServiceRequest::class, $group, "object.getType().getResponsible() in user.getGroups().");
+          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::DELETE_EDIT(), ServiceRequest::class, $group, "user.getGroups().contains(object.getType().getResponsible())");
           $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::READ_CREATE(), Post::class, $group);
           $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::EDIT(), Post::class, $group);
           $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::READ_CREATE(), Commentaire::class, $group);
           $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::EDIT(), Commentaire::class, $group);
-          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::READ(), Service::class, $group, "object.getRecipient() in user.getGroups()");
+          $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::READ(), Service::class, $group, "user.getGroups()contains(object.getRecipient())");
           break;
         case GroupType::SITE_STAFF():
           $this->accessControlService->GrantAccessToGroup(AccessTypeEnum::MANAGE(), User::class, $group);
