@@ -9,4 +9,6 @@ twig:
     globals:
         menuData: '@App\Twig\MenuExtension'
         configData: '@App\Twig\ConfigExtension'
+        chatStatus: 1
+
 

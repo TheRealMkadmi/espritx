@@ -64,6 +64,7 @@
         "tetranz/select2entity-bundle": "^3.1",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
+        "twilio/sdk": "^6.35",
         "vich/uploader-bundle": "^1.19"
     },
     "require-dev": {

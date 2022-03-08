@@ -48,7 +48,6 @@ class UserFixtures extends AbstractFixtureEx implements DependentFixtureInterfac
       $user->setPassword($this->passwordEncoder->encodePassword(
         $user, '12345'
       ));
-      //$user->addIndividualPermission($this->getSingleRandomItem());
       $manager->persist($user);
       $testing_users->add($user);
       //}
