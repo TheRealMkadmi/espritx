@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\ConversationThread;
 use App\Entity\Permission;
 use App\Entity\User;
 use App\Form\ConversationType;
