@@ -5,7 +5,7 @@ namespace App\Service;
 use App\Entity\Group;
 use App\Entity\Permission;
 use App\Entity\User;
-use App\Enum\AccessTypeEnum;
+use App\Enum\AccessType;
 use App\Repository\GroupRepository;
 use App\Repository\PermissionRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,13 +23,13 @@ class AccessControlService
     $this->subjects = ClassFinder::getClassesInNamespace('App\Entity');
   }
 
-  public function GrantAccessToGroup(AccessTypeEnum $accessType,
-                                     string         $subject,
-                                     Group          $group,
-                                     string         $expression = null,
-                                     string         $description = null,
-                                     string         $title = null,
-                                     bool           $flush = false)
+  public function GrantAccessToGroup(AccessType $accessType,
+                                     string     $subject,
+                                     Group      $group,
+                                     string     $expression = null,
+                                     string     $description = null,
+                                     string     $title = null,
+                                     bool       $flush = false)
   {
     $permission = $this->make_permission($accessType, $title, $subject, $expression, $description);
     $this->GrantPermissionToGroup($permission, $group);
@@ -48,13 +48,13 @@ class AccessControlService
       $this->em->persist($group);
   }
 
-  public function GrantAccessToUser(AccessTypeEnum $accessType,
-                                    string         $subject,
-                                    User           $user,
-                                    string         $description = null,
-                                    string         $title = null,
-                                    string         $expression = null,
-                                    bool           $flush = false)
+  public function GrantAccessToUser(AccessType $accessType,
+                                    string     $subject,
+                                    User       $user,
+                                    string     $description = null,
+                                    string     $title = null,
+                                    string     $expression = null,
+                                    bool       $flush = false)
   {
     $permission = $this->make_permission($accessType, $title, $subject, $expression, $description);
     $this->GrantPermissionToUser($permission, $user);
@@ -75,14 +75,14 @@ class AccessControlService
 
 
   /**
-   * @param AccessTypeEnum $accessType
+   * @param AccessType $accessType
    * @param string|null $title
    * @param string $subject
    * @param string|null $expression
    * @param string|null $description
    * @return Permission
    */
-  private function make_permission(AccessTypeEnum $accessType, ?string $title, string $subject, ?string $expression, ?string $description): Permission
+  private function make_permission(AccessType $accessType, ?string $title, string $subject, ?string $expression, ?string $description): Permission
   {
     $permission = new Permission();
     $permission->setAttribute($accessType);

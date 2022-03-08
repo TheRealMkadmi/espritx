@@ -16,7 +16,7 @@ use Elao\Enum\FlaggedEnum;
  * @method static READ_CREATE_DELETE
  * @method static DELETE_EDIT
  */
-final class AccessTypeEnum extends FlaggedEnum
+final class AccessType extends FlaggedEnum
 {
   use RandomizableEnum;
 

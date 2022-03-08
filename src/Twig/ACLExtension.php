@@ -16,6 +16,7 @@ class ACLExtension extends AbstractExtension
       new TwigFunction('isStudent', [$this, 'isStudent']),
       new TwigFunction('isSiteStaff', [$this, 'isSiteStaff']),
       new TwigFunction('isFacultyStaff', [$this, 'isFacultyStaff']),
+      new TwigFunction('isTeacher', [$this, 'isTeacher']),
       new TwigFunction('isSuperAdmin', [$this, 'isSuperAdmin']),
     ];
   }
@@ -23,6 +24,11 @@ class ACLExtension extends AbstractExtension
   public function isStudent(User $user)
   {
     return $user->isPartOfGroupType(GroupType::STUDENT());
+  }
+
+  public function isTeacher(User $user)
+  {
+    return $user->isPartOfGroupType(GroupType::TEACHERS());
   }
 
   public function isSiteStaff(User $user)
