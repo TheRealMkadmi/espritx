@@ -45,4 +45,13 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     $ret["total"] = array_sum(array_values($ret));
     return $ret;
   }
+    public function findbyId($value): ?User
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
 }

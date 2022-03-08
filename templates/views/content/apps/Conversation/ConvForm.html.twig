@@ -22,29 +22,14 @@
         <div class="card-body">
             {{ form_start(form,{'attr':{'novalidate':'novalidate'}},{'method': 'POST'}) }}
             <div class="row">
-                <div class="col-md-6 col-12">
-                    <div class="mb-2">
-                        {{ form_row(form.user1) }}
-                    </div>
-                </div>
+
 
                 <div class="col-md-6 col-12">
                     <div class="mb-2">
-                        {{ form_row(form.user2) }}
-                    </div>
-                </div>
-                <div class="col-md-6 col-12">
-                    <div class="mb-2">
-                        {{ form_row(form.email) }}
-                    </div>
-                </div>
-                <div class="col-md-6 col-12">
-                    <div class="mb-2">
-                        {{ form_row(form.email2) }}
+                        {{ form_row(form.participant1) }}
                     </div>
                 </div>
                 <div class="d-flex justify-content-end gap-1">
-                    {{ form_widget(form.reset) }}
                     {{ form_widget(form.save) }}
                 </div>
             </div>
