@@ -18,6 +18,17 @@
 
 {% block content %}
     <section>
+                            {% for message in app.flashes('notice') %}
+                                <div class="alert alert-warning">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+
+                            {% for message in app.flashes('success') %}
+                                <div class="alert alert-success">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
         <div class="app-calendar overflow-hidden border">
             <div class="row g-0">
 

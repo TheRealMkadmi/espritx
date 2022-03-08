@@ -9,6 +9,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+
 
 class EventType extends AbstractType
 {
@@ -34,9 +36,9 @@ class EventType extends AbstractType
                 'date_widget'=>'single_text',
 
             ])
-            ->add('description')
+            ->add('description',TextareaType::class)
             ->add('allDay')
-            ->add('user')
+           // ->add('user')
         ;
     }
 
