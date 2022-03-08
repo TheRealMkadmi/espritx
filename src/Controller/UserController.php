@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Enum\AccessTypeEnum;
 use App\Form\GroupType;
 use App\Form\PermissionType;
 use App\Form\UserType;
@@ -27,6 +28,7 @@ class UserController extends AbstractController
                       Request                $request,
                       UserRepository         $userRepository): Response
   {
+    $this->denyAccessUnlessGranted(AccessTypeEnum::READ, User::class);
     $dql = <<<DQL
     select u from App\Entity\User u 
     DQL;
@@ -54,6 +56,7 @@ class UserController extends AbstractController
    */
   public function create(Request $request, EntityManagerInterface $entityManager): Response
   {
+    $this->isGranted([AccessTypeEnum::READ()], User::class);
     $user = new User();
     $form = $this->createForm(UserType::class, $user);
     $form->handleRequest($request);

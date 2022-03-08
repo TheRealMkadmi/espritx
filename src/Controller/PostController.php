@@ -11,17 +11,20 @@ use App\Form\EditPostType;
 use App\Form\PostContactType;
 use App\Form\PostType;
 use App\Repository\CommentaireRepository;
+use App\Repository\GroupPostRepository;
 use App\Repository\PostLikeRepository;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
+use Knp\Component\Pager\PaginatorInterface;
 use phpDocumentor\Reflection\Types\This;
 use PhpParser\Node\Expr\Cast\Object_;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -59,13 +62,31 @@ class PostController extends AbstractController
    * @return Response
    * @throws Exception
    */
-  public function afficher_tous_les_Post(PostRepository $repository, Request $request,SerializerInterface $serializer): Response
+  public function afficher_tous_les_Post(PostRepository $repository, Request $request,SerializerInterface $serializer,PaginatorInterface $paginator ): Response
   {
-    $posts = $repository->findAll();
+
+      $totalPubs=$repository->createQueryBuilder('a')
+          // Filter by some parameter if you want
+          ->where('a.isValid != 1 ')
+          ->select('count(a.id)')
+          ->getQuery()
+          ->getSingleScalarResult();
+
+    $donnees = $this->getDoctrine()->getRepository(Post::class)->findBy([],[
+        'created_at'=>'desc'
+    ]);
+    $posts=$paginator->paginate(
+      $donnees, // n3adi les donnees
+    $request->query->getInt('page',1), // num l page
+    10
+    );
+
     //$json=$serializer->serialize($posts,'json',['groups'=>'posts']);
    // dump($json);
    // die;
-    return $this->render('views/content/posts/Admin/allpost.html.twig', ['posts' => $posts]);
+    return $this->render('views/content/posts/Admin/allpost.html.twig', [
+        'pubs'=>$totalPubs,
+        'posts' => $posts]);
   }
 
 
@@ -234,24 +255,40 @@ class PostController extends AbstractController
   /**
    * @Route("/acceuil/user/post",name="acceuil_user_posts")
    */
-  public function afficher_posts(PostRepository $repository, Request $request, CommentaireRepository $commentaireRepository)
+  public function afficher_posts(UserRepository $userRepository,PostRepository $repository, Request $request, CommentaireRepository $commentaireRepository,GroupPostRepository  $groupPostRepository)
   {
     // dd($request->getContent());
     $commentaire = new Commentaire();
     $form = $this->createForm(CommentaireType::class, $commentaire);
-    $posts = $repository->getLatestPosts();
+$limit=10;
+    // les filtres
+      $filters= $request->get("allgroups");
+    //  dd($request);
+  //    dd($filters);
 
+    $posts = $repository->getLatestPosts($limit,$filters);
 
+    $allgroups=$groupPostRepository->findAll();
+      $membre=$userRepository->find($this->getUser());
+
+   $mesgrps=  $membre->getGroupes();
+     //dd($mesgrps);
     $comments = $repository->CommentsMaxQuatre();
 //dd($commentaire);
 
 
     $forms = [];
 
+if($request->get('ajax')){
+    return new JsonResponse([
+        'content'=>$this->renderView('views/content/posts/User/contentPosts.html.twig', ['mes_groups'=>$mesgrps,'comments' => $comments, 'posts' => $posts, 'form' => $form->createView()
+        ])
+
+    ]);
+}
 
 
-
-    return $this->render('views/content/posts/User/acceuilposts.html.twig', ['comments' => $comments, 'posts' => $posts, 'form' => $form->createView()]);
+    return $this->render('views/content/posts/User/acceuilposts.html.twig', ['mes_groups'=>$mesgrps,'allgroups'=>$allgroups,'comments' => $comments, 'posts' => $posts, 'form' => $form->createView()]);
 
 
   }
@@ -630,6 +667,15 @@ public function deletePost_Json(NormalizerInterface $normalizer,$id){
     $em->flush();
     $content=$normalizer->normalize($post,'json',['groups'=>'post:read']);
     return new Response("Post bien eté supprimé".json_encode($content));
+}
+
+    /**
+
+     * @Route("/stats", name="stats")
+     */
+public function statistiques(){
+    return  $this->render('views/content/posts/Admin/stats.html.twig');
+
 }
 
 

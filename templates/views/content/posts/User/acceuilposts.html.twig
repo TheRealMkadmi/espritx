@@ -5,6 +5,8 @@
 {% block page_style %}
 
   <style>
+      @import url("https://fonts.googleapis.com/css?family=Rubik:300,400,500,700&display=swap");
+
       .profile-likes {
           fill: #ea5455;
           stroke: #ea5455
@@ -273,8 +275,137 @@
       }
 
 
-  </style>
+      .container{margin-top:20px}
+      .fa-spin-fast{-webkit-animation:fa-spin-fast .1s infinite linear;animation:fa-spin-fast 0.1s infinite linear}
+      @-webkit-keyframes fa-spin-fast{0%{-webkit-transform:rotate(0);transform:rotate(0)}
+          100%{-webkit-transform:rotate(180deg);transform:rotate(180deg)}}
+      @keyframes fa-spin-fast{0%{-webkit-transform:rotate(0);transform:rotate(0)}
+          100%{-webkit-transform:rotate(180deg);transform:rotate(180deg)}}
+      .material-card{position:relative;height:0;padding-bottom:calc(100% - 16px);margin-bottom:6.6em}
+      .material-card h2{position:absolute;top:calc(100% - 16px);left:0;width:100%;padding:10px 16px 10px 20px;height:82px;color:#fff;font-size:1.4em;line-height:1.6em;margin:0;z-index:10;-webkit-transition:all .3s;-moz-transition:all .3s;-ms-transition:all .3s;-o-transition:all .3s;transition:all .3s;box-shadow: 0 2px 20px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);}
+      .material-card h2 span{display:block}
+      .material-card h2 strong{font-weight:300;display:block;font-size:.76em}
+      .material-card h2:after,.material-card h2:before{content:' ';position:absolute;left:0;top:-16px;width:0;border:8px solid;-webkit-transition:all .3s;-moz-transition:all .3s;-ms-transition:all .3s;-o-transition:all .3s;transition:all .3s}
+      .material-card h2:after{top:auto;bottom:0}
+      @media screen and (max-width:20px){.material-card.mc-active{padding-bottom:0;height:auto}
+      }
+      .material-card.mc-active h2{top:0;padding:10px 16px 10px 90px}
+      .material-card.mc-active h2:before{top:0}
+      .material-card.mc-active h2:after{bottom:-16px}
+      .material-card .mc-content{position:absolute;right:0;top:0;bottom:16px;left:16px;-webkit-transition:all .3s;-moz-transition:all .3s;-ms-transition:all .3s;-o-transition:all .3s;transition:all .3s;box-shadow:0 2px 20px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);}
+      .material-card .mc-btn-action{position:absolute;right:16px;top:15px;-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;border:5px solid;width:54px;height:54px;line-height:46px;text-align:center;color:#fff!important;cursor:pointer;z-index:20;-webkit-transition:all .3s;-moz-transition:all .3s;-ms-transition:all .3s;-o-transition:all .3s;transition:all .3s}
+      .material-card .mc-btn-action:hover{box-shadow:0 0px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);transition:all 0.3s ease;-webkit-transition:all 0.3s ease;-moz-transition:all 0.3s ease;-ms-transition:all 0.3s ease;-o-transition:all 0.3s ease;}
+      .material-card.mc-active .mc-btn-action{top:62px;box-shadow:0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);}
+      .material-card .mc-description{position:absolute;top:100%;right:30px;left:30px;bottom:54px;overflow:hidden;opacity:0;-webkit-transition:all 0.4s;-moz-transition:all 0.4s;-ms-transition:all 0.4s;-o-transition:all 0.4s;transition:all 0.4s}
+      .material-card .mc-footer{height:0;overflow:hidden;-webkit-transition:all .3s;-moz-transition:all .3s;-ms-transition:all .3s;-o-transition:all .3s;transition:all .3s}
+      .material-card .mc-footer a{font-size:10px;color:#fff;line-height:36px;text-decoration:none;top:200px;border-radius:10%;}
+      .material-card .mc-footer a:nth-child(1){-webkit-transition:all .1s;-moz-transition:all .1s;-ms-transition:all .1s;-o-transition:all .1s;transition:all .1s}
+      .material-card .mc-footer a:nth-child(2){-webkit-transition:all .2s;-moz-transition:all .2s;-ms-transition:all .2s;-o-transition:all .2s;transition:all .2s}
+      .material-card .mc-footer a:nth-child(3){-webkit-transition:all .3s;-moz-transition:all .3s;-ms-transition:all .3s;-o-transition:all .3s;transition:all .3s}
+      .material-card .mc-footer a:nth-child(4){-webkit-transition:all .4s;-moz-transition:all .4s;-ms-transition:all .4s;-o-transition:all .4s;transition:all .4s}
+      .material-card .mc-footer a:nth-child(5){-webkit-transition:all .5s;-moz-transition:all .5s;-ms-transition:all .5s;-o-transition:all .5s;transition:all .5s}
+      .material-card .img-container{overflow:hidden;position:absolute;left:0;top:0;width:100%;height:100%;z-index:3;-webkit-transition:all .3s;-moz-transition:all .3s;-ms-transition:all .3s;-o-transition:all .3s;transition:all .3s;}
+      .material-card.mc-active .img-container{-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;left:0;top:12px;width:55px;height:55px;z-index:20}
+      .img-fluid{max-width:100%}
+      .material-card.mc-active .mc-content{padding-top:5.6em}
+      @media screen and (max-width:100px){.material-card.mc-active .mc-content{position:relative;margin-right:16px}
+      }
+      .material-card.mc-active .mc-description{top:50px;padding-top:5.6em;opacity:1;text-align:left;}
+      @media screen and (max-width:100px){.material-card.mc-active .mc-description{position:relative;top:auto;right:auto;left:auto;padding:50px 30px 70px 30px;bottom:0}
+      }
+      .material-card.mc-active .mc-footer{overflow:visible;position:absolute;top:calc(100% - 16px);left:7px;right:0;height:72px;display:flex;align-items:center;justify-content:center;    box-shadow:0 2px 20px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);}
+      .material-card.mc-active .mc-footer a{top:0;border:2px solid #e8eaf6;}
+      .material-card.mc-active .mc-footer h4{top:27px;left:20px;font-weight:400;}
+      .material-card.Red h2{background-color: #9c80b9
+      }
+      .material-card.Red h2:after{border-top-color: #4d266c;border-right-color: #791385;border-bottom-color:transparent;border-left-color:transparent}
+      .material-card.Red h2:before{border-top-color:transparent;border-right-color: #701786;border-bottom-color: #ad35dc;border-left-color:transparent}
+      .material-card.Red.mc-active h2:before{border-top-color:transparent;border-right-color: #493962;border-bottom-color: #382544;border-left-color:transparent}
+      .material-card.Red.mc-active h2:after{border-top-color: #a387ad;border-right-color: #9b72a4;border-bottom-color:transparent;border-left-color:transparent}
+      .material-card.Red .mc-btn-action{background-color: #703d7e
+      }
+      .material-card.Red .mc-btn-action:hover{background-color: #a951d2
+      }
+      .material-card.Red .mc-footer h4{color: #8f359d
+      }
+      .material-card.Red .mc-footer a{background-color: #824b8f
+      }
+      .material-card.Red.mc-active .mc-content{background-color:#e7b3ba45}
+      .material-card.Red.mc-active .mc-footer{background-color:#dc354552}
+      .material-card.Red.mc-active .mc-btn-action{border-color:#FCE4EC}
+      .material-card.Blue-Grey h2{background-color:#607d8b}
+      .material-card.Blue-Grey h2:after{border-top-color:#607d8b;border-right-color:#607d8b;border-bottom-color:transparent;border-left-color:transparent}
+      .material-card.Blue-Grey h2:before{border-top-color:transparent;border-right-color:#263238;border-bottom-color:#263238;border-left-color:transparent}
+      .material-card.Blue-Grey.mc-active h2:before{border-top-color:transparent;border-right-color:#607d8b;border-bottom-color:#607d8b;border-left-color:transparent}
+      .material-card.Blue-Grey.mc-active h2:after{border-top-color:#263238;border-right-color:#263238;border-bottom-color:transparent;border-left-color:transparent}
+      .material-card.Blue-Grey .mc-btn-action{background-color:#607d8b}
+      .material-card.Blue-Grey .mc-btn-action:hover{background-color:#263238}
+      .material-card.Blue-Grey .mc-footer h4{color:#263238}
+      .material-card.Blue-Grey .mc-footer a{background-color:#263238}
+      .material-card.Blue-Grey.mc-active .mc-content{background-color:#eceff1}
+      .material-card.Blue-Grey.mc-active .mc-footer{background-color:#cfd8dc}
+      .material-card.Blue-Grey.mc-active .mc-btn-action{border-color:#eceff1}
+      .material-card.Pink h2{background-color: #a097a8
+      }
+      .material-card.Pink h2:after{border-top-color: #6c577a;border-right-color: #91719b;border-bottom-color:transparent;border-left-color:transparent}
+      .material-card.Pink h2:before{border-top-color:transparent;border-right-color: #6f5177;border-bottom-color: #a38cbe;border-left-color:transparent}
+      .material-card.Pink.mc-active h2:before{border-top-color:transparent;border-right-color: #452f52;border-bottom-color: #654d79;border-left-color:transparent}
+      .material-card.Pink.mc-active h2:after{border-top-color: #4e3757;border-right-color: #936b9d;border-bottom-color:transparent;border-left-color:transparent}
+      .material-card.Pink .mc-btn-action{background-color: #81618c
+      }
+      .material-card.Pink .mc-btn-action:hover{background-color: #614b7c
+      }
+      .material-card.Pink .mc-footer h4{color: #683e73
+      }
+      .material-card.Pink .mc-footer a{background-color: #7d4ea9
+      }
+      .material-card.Pink.mc-active .mc-content{background-color:#fce4ec}
+      .material-card.Pink.mc-active .mc-footer{background-color:#f8bbd0}
+      .material-card.Pink.mc-active .mc-btn-action{border-color:#fce4ec}
+      .material-card.Purple h2{background-color:#9c27b0}
+      .material-card.Purple h2:after{border-top-color:#9c27b0;border-right-color:#9c27b0;border-bottom-color:transparent;border-left-color:transparent}
+      .material-card.Purple h2:before{border-top-color:transparent;border-right-color:#4a148c;border-bottom-color:#4a148c;border-left-color:transparent}
+      .material-card.Purple.mc-active h2:before{border-top-color:transparent;border-right-color:#9c27b0;border-bottom-color:#9c27b0;border-left-color:transparent}
+      .material-card.Purple.mc-active h2:after{border-top-color: #8772a1;border-right-color: #796196;border-bottom-color:transparent;border-left-color:transparent}
+      .material-card.Purple .mc-btn-action{background-color:#9c27b0}
+      .material-card.Purple .mc-btn-action:hover{background-color: #695385
+      }
+      .material-card.Purple .mc-footer h4{color: #9277b4
+      }
+      .material-card.Purple .mc-footer a{background-color: #6f46a1
+      }
+      .material-card.Purple.mc-active .mc-content{background-color:#f3e5f5}
+      .material-card.Purple.mc-active .mc-footer{background-color:#e1bee7}
+      .material-card.Purple.mc-active .mc-btn-action{border-color:#f3e5f5}
+      .material-card.Deep-Purple h2{background-color:#673ab7}
+      .material-card.Deep-Purple h2:after{border-top-color:#673ab7;border-right-color:#673ab7;border-bottom-color:transparent;border-left-color:transparent}
+      .material-card.Deep-Purple h2:before{border-top-color:transparent;border-right-color:#311b92;border-bottom-color:#311b92;border-left-color:transparent}
+      .material-card.Deep-Purple.mc-active h2:before{border-top-color:transparent;border-right-color:#673ab7;border-bottom-color:#673ab7;border-left-color:transparent}
+      .material-card.Deep-Purple.mc-active h2:after{border-top-color:#311b92;border-right-color:#311b92;border-bottom-color:transparent;border-left-color:transparent}
+      .material-card.Deep-Purple .mc-btn-action{background-color:#673ab7}
+      .material-card.Deep-Purple .mc-btn-action:hover{background-color:#311b92}
+      .material-card.Deep-Purple .mc-footer h4{color:#311b92}
+      .material-card.Deep-Purple .mc-footer a{background-color:#311b92}
+      .material-card.Deep-Purple.mc-active .mc-content{background-color:#ede7f6}
+      .material-card.Deep-Purple.mc-active .mc-footer{background-color:#d1c4e9}
+      .material-card.Deep-Purple.mc-active .mc-btn-action{border-color:#ede7f6}
 
+      body{background-color:#eceff1;color:#37474f;font-family:'Rubik', sans-serif !important;font-weight:300;font-size:14px}
+      h1,h2,h3{font-weight:200}
+      h2{font-weight:100!important;text-transform:uppercase;letter-spacing:2px;color:#212529}
+      .ripple{position:relative;overflow:hidden;transform:translate3d(0,0,0)}
+      .ripple:after{content:"";display:block;position:absolute;width:100px;height:20px;top:0;left:0;pointer-events:none;background-image:radial-gradient(circle,#000 10%,transparent 10.01%);background-repeat:no-repeat;background-position:50%;transform:scale(10,10);opacity:0;transition:transform .5s,opacity 1s}
+      .ripple:active:after{transform:scale(0,0);opacity:.2;transition:0s}
+      .material-card h2{text-align:left;font-size:16px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;white-space:nowrap;}
+      @media(min-width:100px) and (max-width:100px){.material-card.mc-active .img-container{top:20px;width:45px;height:45px;}.material-card h2{font-size:12px;}.material-card.mc-active h2{padding:10px 16px 10px 70px;}.material-card.mc-active .mc-footer h4{top:-32px;}.material-card .mc-btn-action{width:48px;height:48px;line-height:39px;right:12px;}
+      }
+
+
+
+
+
+  </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -299,7 +430,6 @@
 
 
 
-
   <div class="alert alert-success px-1 py-2">
     {% for message in app.flashes('info') %}
       {{ message }}
@@ -318,139 +448,169 @@
 
   {% endfor %}
 
-  {% for post in posts %}
-    {% if post.isDeleted == 0 %}
 
-      <div style="margin-left: 200px" class="row">
-        <div class="col-8">
-          <div class="card card-apply-job">
-            <div class="card-body">
-              <div class="d-flex flex-row justify-content-between align-items-center mb-2">
-                <div class="d-flex">
-                  {% include "views/content/_partials/_fragments/user-avatar.html.twig" with {'user': post.user} %}
-                  <div class="user-info ms-1">
-                    <h5 class="mb-0">{{ post.user.firstName ~ " " ~ post.user.lastName }}</h5>
-                    <small class="text-muted">{{ post.createdAt|date("d-m-Y H:M:s") }}</small>
-                  </div>
-                </div>
-                <div class="d-flex">
-                  <span class="badge rounded-pill badge-light-primary">Lost & Found</span>
-                  <div class="heading-elements">
-                    <ul class="list-inline mb-0">
-                      <li>
-                        <a href="{{ path('editpost', {'id': post.id}) }}"><i data-feather="chevron-down"></i></a>
-                      </li>
-                      <li>
-                        <a href="{{ path('changedelete_post', {'id': post.id}) }}"><i data-feather="x"></i></a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <h5 id="titre" class="apply-job-title">{{ post.title }}</h5>
 
-              <p class="card-text mb-2">
-                {{ post.content }}
-              </p>
-{% if post.longitude != null  and post .latitude != null %}
-                <div class="col-md-6 thumbnail">
-                    <div id="{{ post.id }}" class="map1" style="height: 200px; width:600px"></div>
-                    <div  class="test">
-                        <input id="tableau1" type="hidden" value="{{ post.longitude }}"/>
-                        <input id="tableau2" type="hidden" value="{{ post.latitude }}"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div style="   display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;">
+        <span style="height: 30px" class="badge badge-light-primary"><br/><br/><br/>Mes groupes</span><br/>
+        {% for group in app.user.groupPosts %}
+            {% if group.isValid ==1 %}
+
+  {#  {% if app.user.id is same as group.user.id %} #}
+
+
+        <div class="col-lg-2">
+                    <article class="material-card Red">
+                        <h2>
+                            <span>{{  group.nomGroupe }}</span>
+                            <strong>
+                                <i class="fa fa-fw fa-magic"></i>
+                              {{ group.user.firstName  }}
+                            </strong>
+                        </h2>
+                        <div class="mc-content">
+                            <div class="img-container">
+                                <img class="img-fluid" src="{{ asset('/uploads/brochures/'~group.image) }}" alt="{{ group.image }}" draggable="false" oncontextmenu="return false;" />
+
+                            </div>
+                            <div style="height: 100%" class=" mc-description">
+{{ group.but }}
+                            </div>
+                        </div>
+                        <a class="mc-btn-action ripple">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                        <div  class="mc-footer">
+
+                            <a  href="{{ path('newpost_group', {'id': group.id}) }}"  >
+Ajouter
+
+                            </a>
+
+                            <a href="{{ path('quitter_membre_group', {'id': group.id,'idU':app.user.id}) }}"  >
+                                Quitter
+
+                            </a>
+                            <a href="{{ path('newpost_group', {'id': group.id}) }}" >
+                                Ajouter
+
+                            </a>
+                        </div>
+                    </article>
+                </div>
+
+{% endif %}
+
+    {% endfor %}
+    </div>
+<br/>
+    <div style="   display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;">
+        <span style="height: 30px" class="badge badge-light-primary"><br/><br/><br/>Rejoignez nous !!</span><br/>
+            {% for group  in allgroups %}
+
+
+{% if group.isValid ==1 %}
+              {% if app.user.id != group.user.id  %}
+
+
+            <div class="col-lg-2">
+                <article class="material-card Red">
+                    <h2>
+                        <span>{{  group.nomGroupe }}</span>
+                        <strong>
+                            <i class="fa fa-fw fa-magic"></i>
+                            {{ group.user.firstName  }}
+                        </strong>
+                    </h2>
+                    <div class="mc-content">
+                        <div class="img-container">
+                            <img class="img-fluid" src="{{ asset('/uploads/brochures/'~group.image) }}" alt="{{ group.image }}" draggable="false" oncontextmenu="return false;" />
+
+                        </div>
+                        <div style="height: 100%" class="mc-description">
+                            {{ group.but }}
+                        </div>
                     </div>
+                    <a class="mc-btn-action ripple">
+                        <i class="fa fa-bars"></i>
                     </a>
-                </div>
-    {% endif %}
-
-              <img class="img-fluid my-1" src="{{ asset('/uploads/brochures/'~post.image) }}" alt="{{ post.image }}"/>
-              <!-- Likes -->
-              <div class="row d-flex justify-content-start align-items-center flex-wrap pb-50">
-                <div class="col-sm-6 d-flex justify-content-between justify-content-sm-start mb-2">
-                  <a href="{{ path('post_like',{'id':post.id}) }}"
-                     class="d-flex align-items-center text-muted text-nowrap js-like">
-                    {% if app.user and post.isLikedByUser(app.user) %}
-                      <i class="fa fa-thumbs-up"></i>
-                    {% else %}
-                      <i class="fa fa-thumbs-o-up"></i>
-                    {% endif %}
-                    <span class="js-likes">{{ post.likes | length }}</span>
-                  </a>
-                </div>
-
-                <!-- share and like count and icons -->
-                <div class="col-sm-6 d-flex justify-content-between justify-content-sm-end align-items-center mb-2">
-                  <a href="{{ path('singlepost',{'id':post.id}) }}" class="text-nowrap">
-                    <i data-feather="message-square" class="text-body font-medium-3 me-50"></i>
-                    <span class="text-muted me-1">{{ post.commentaires | length }}</span>
-                  </a>
-                </div>
-                <!-- share and like count and icons -->
-              </div>
+                    <div  class="mc-footer">
 
 
-              <!-- comments -->
-              {% for comment in post.commentaires %}
-                <div class="d-flex align-items-start mb-1">
-                  <div class="avatar mt-25 me-75">
-                    {% include "views/content/_partials/_fragments/user-avatar.html.twig" with {'user': comment.user} %}
-                  </div>
-                  <div class="profile-user-info w-100">
-                    <div class="d-flex align-items-center justify-content-between">
-                      <h6 class="mb-0">{{ comment.user.firstName ~ " " ~ comment.user.lastName }}</h6>
+                        <a  href="{{ path('new_membre_group', {'id': group.id,'idU':app.user.id}) }}"  >
+                            Rejoindre
 
-                      <ul class="list-inline mb-0">
-                        <li>
-                          <a href="{{ path('editcomment', {'id': comment.id}) }}"><i class="text-body font-medium-3"
-                                                                                     data-feather="edit"></i></a>
-                        </li>
-                        <li>
-                          <a href="{{ path('delete_commnt_user', {'id': comment.id}) }}"><i
-                                class="text-body font-medium-3" data-feather="x"></i></a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <i data-feather="heart" class="text-body font-medium-3"></i>
-                            <span class="align-middle text-muted">34</span>
-                          </a>
-                        </li>
-                      </ul>
+                        </a>
+                        <div class="user-info ms-1">
+
+                            <small class="badge-dark">{{ group.membre | length  }} membres</small>
+                        </div>
+
+
                     </div>
-                    <small>{{ comment.content }}</small>
-                  </div>
-                </div>
-              {% endfor %}
-
-              <!--/ comments -->
-
-              <!-- comment box -->
-              <form name="form" method="get" id="{{ post.id }}" action="{{ path('newcomment',{'id':post.id}) }}"
-                    class="comment">
-                <fieldset class="mb-75">
-                  <textarea class="form-control" name="aa" id="aa" rows="3" placeholder="Add Comment"></textarea>
-                </fieldset>
-                <!--/ comment box -->
-                <button type="submit" class="btn btn-sm btn-primary">Post Comment</button>
-                <p id="m" style="font-size: small;margin-left: 10px"></p>
-              </form>
+                </article>
             </div>
-          </div>
-        </div>
-        <div class="col-3">
-          <div class="card">
-            <div class="card-body">
-              <div class="card-title">Contacter l'annonceur</div>
-              <div class="card-text">
-                Numéro de telephone: {{ post.user.phonenumber }} <br>
-                Email: {{ post.user.email }}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    {% endif %}
 
-  {% endfor %}
+
+{% endif %}
+
+{% endif %}
+        {% endfor %}
+
+    </div>
+    <br/>
+<br/>
+    <div class="col-xs1">
+        <p>Rechercher des publications dans tes groupes !!</p>
+        <form id="filters">
+
+            {% for group in allgroups %}
+                <p><input type="checkbox" name="allgroups[]" id="group{{ group.id }}" value="{{ group.id }}" >
+                    <label for="group{{ group.id }}">{{ group.nomGroupe }}</label>
+                </p>
+            {% endfor %}
+
+
+
+        </form>
+
+
+    </div>
+    <div class="col-xs1 col-sm4" id="content" >
+        {% include "views/content/posts/User/contentPosts.html.twig" %}
+
+
+    </div>
+
 {% endblock %}
 
 
@@ -494,16 +654,16 @@
               // console.log(likess);
 
               if (icone.classList.contains('fa')) {
-                  icone.classList.replace('fa', 'fas');
+                  icone.classList.replace('fa', 'fa-o');
 
               } else {
-                  icone.classList.replace('fas', 'fa');
+                  icone.classList.replace('fa-o', 'fa');
               }
 
               // si il'ya une erreur
           }).catch(function (error) {
               if (error.response.status === 403) {
-                  window.alert('pardon!! vous ne pouvez pas liker un article si vous n\'etes pas connecté! ');
+                  window.alert('pardon!! vous ne pouvez pas liker un post si vous n\'etes pas connecté! ');
               }
           })
 
@@ -547,7 +707,8 @@
               console.log(error)
           })
         {% if app.user %}
-          document.getElementById("m").innerHTML = "Ajouté a l'instant  par {{ app.user.firstName |upper }} <br/>" + inputVal;
+          document.getElementById("m").innerHTML = "Commentaire ajoutée avec succées ! <br/>" + inputVal;
+          window.alert('votre commentaire est bien ajoutée ');
         {% endif %}
       }
 
@@ -586,13 +747,168 @@
                 });
             }
         }
+
+
+
+        const ReadMore = (() => {
+            let s;
+
+            return {
+
+                settings() {
+                    return {
+                        content: document.querySelectorAll('.js-read-more'),
+                        originalContentArr: [],
+                        truncatedContentArr: [],
+                        moreLink: "Voir plus",
+                        lessLink: "Voir moins",
+
+
+                    }
+                },
+
+                init() {
+                    s = this.settings();
+                    this.bindEvents();
+                },
+
+                bindEvents() {
+                    ReadMore.truncateText();
+                },
+
+               // ne7seb 9adeh 3andi men kelma
+                countWords(str) {
+                    return str.split(/\s+/).length;
+                },
+
+                // nombre des mots ili bch nchoufhom 9bal tronc
+                ellipseContent(str, wordsNum) {
+                    return str.split(/\s+/).slice(0, wordsNum).join(' ') + ' ...';
+
+                },
+
+              // n9asem text
+                truncateText() {
+
+                    for (let i = 0; i < s.content.length; i++) {
+                        //console.log(s.content)
+                        const originalContent = s.content[i].innerHTML;
+                        const numberOfWords = s.content[i].dataset.rmWords;
+                        const truncateContent = ReadMore.ellipseContent(originalContent, numberOfWords);
+                        const originalContentWords = ReadMore.countWords(originalContent);
+
+                        s.originalContentArr.push(originalContent);
+                        s.truncatedContentArr.push(truncateContent);
+
+
+                        if (numberOfWords < originalContentWords) {
+                            s.content[i].innerHTML = s.truncatedContentArr[i];
+                            let self = i;
+                            ReadMore.createLink(self)
+                        }
+                    }
+                    ReadMore.handleClick(s.content);
+                },
+
+                //
+                createLink(index) {
+                    const linkWrap = document.createElement('span');
+
+                    linkWrap.className = 'read-more__link-wrap';
+
+                    linkWrap.innerHTML = `<a id="read-more_${index}" class="read-more__link" style="cursor:pointer;">${s.moreLink}</a>`;
+
+                    // Inset created link
+                    s.content[index].parentNode.insertBefore(linkWrap, s.content[index].nextSibling);
+
+                },
+
+              //
+                handleClick(el) {
+                    const readMoreLink = document.querySelectorAll('.read-more__link');
+
+                    for (let j = 0, l = readMoreLink.length; j < l; j++) {
+
+                        readMoreLink[j].addEventListener('click', function() {
+
+                            const moreLinkID = this.getAttribute('id');
+                            let index = moreLinkID.split('_')[1];
+
+                            el[index].classList.toggle('is-expanded');
+
+                            if (this.dataset.clicked !== 'true') {
+                                el[index].innerHTML = s.originalContentArr[index];
+                                this.innerHTML = s.lessLink;
+                                this.dataset.clicked = true;
+                            } else {
+                                el[index].innerHTML = s.truncatedContentArr[index];
+                                this.innerHTML = s.moreLink;
+                                this.dataset.clicked = false;
+                            }
+                        });
+                    }
+                },
+
+               // lkol
+                openAll() {
+                    const instances = document.querySelectorAll('.read-more__link');
+                    for (let i = 0; i < instances.length; i++) {
+                        content[i].innerHTML = s.truncatedContentArr[i];
+                        instances[i].innerHTML = s.moreLink;
+                    }
+                }
+            }
+        })();
+
+        ReadMore.init()
+
     </script>
 
     <script
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDch6NmhxtcdIgcCRjZbblh5z16CK-a2Jo&callback=initMap&libraries=&v=weekly"
             async
     ></script>
-
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+
+    <script>
+        // mes groupes
+        $(function() {
+            $('.material-card > .mc-btn-action').click(function () {
+                var card = $(this).parent('.material-card');
+                var icon = $(this).children('i');
+                icon.addClass('fa-spin-fast');
+
+                if (card.hasClass('mc-active')) {
+                    card.removeClass('mc-active');
+
+                    window.setTimeout(function() {
+                        icon
+                            .removeClass('fa-arrow-left ripple')
+                            .removeClass('fa-spin-fast')
+                            .addClass('fa-bars');
+
+                    }, 800);
+                } else {
+                    card.addClass('mc-active');
+
+                    window.setTimeout(function() {
+                        icon
+                            .removeClass('fa-bars')
+                            .removeClass('fa-spin-fast')
+                            .addClass('fa-arrow-left ripple');
+
+                    }, 800);
+                }
+            });
+        });
+
+
+    </script>
+<script src="{{ asset('js/filters.js') }}">
+    // filtrage recherche
+</script>
 {% endblock %}

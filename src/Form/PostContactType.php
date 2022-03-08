@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Form;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
@@ -26,7 +27,7 @@ class PostContactType extends AbstractType
                     'class'=>'form-control'
                 ]
             ])
-            ->add('message',null,[
+            ->add('message',CKEditorType::class,[
                 'label'=>'Votre message'
             ])
 

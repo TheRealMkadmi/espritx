@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Fields;
 use App\Entity\Service;
 use App\Repository\ServiceRepository;
 use App\Form\ServiceType;
@@ -17,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ServiceController extends AbstractController
 {
-    /***
+    /**
      * @Route("/", name="service")
      */
     public function Services(ServiceRepository $Repo): Response

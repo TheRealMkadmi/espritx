@@ -12,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class SerRequestType extends AbstractBootstrapType
 {
@@ -19,15 +21,22 @@ class SerRequestType extends AbstractBootstrapType
     {
         $builder
             ->add('Title')
-            ->add('Description',TextareaType::class)
-            ->add('Email',EmailType::class)
-            ->add('Picture',FileType::class)
-            ->add('Attachements',FileType::class)
-            ->add('Type',EntityType::class,
-            ['class'=>Service::class,
-                'choice_label'=>'Name'])
-            ->add('Envoyer',SubmitType::class)
-        ;
+            ->add('Description', TextareaType::class)
+            ->add('Email', EmailType::class)
+            ->add('PictureFile', VichImageType::class, [
+                'allow_delete' => true,
+                'delete_label' => "Delete?",
+                'image_uri' => false,
+                'download_uri' => false,])
+            ->add('AttachementsFile', VichFileType::class, [
+                'allow_delete' => true,
+                'delete_label' => "Delete?",
+                'download_uri' => true,
+            ])
+            ->add('Type', EntityType::class,
+                ['class' => Service::class,
+                    'choice_label' => 'Name'])
+            ->add('Envoyer', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
