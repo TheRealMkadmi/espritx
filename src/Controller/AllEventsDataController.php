@@ -88,9 +88,8 @@ class AllEventsDataController extends AbstractController
      */
     public function indexCall(CallRepository $rep)
     {
-        $user = $this->getUser();
+        $calls = $this->getUser()->getCalls()->toArray();
         
-        $calls = $rep->findAll();
         
         $rdvs = [];
         foreach ($calls as $call) {
