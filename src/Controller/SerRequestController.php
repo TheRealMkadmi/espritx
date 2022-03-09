@@ -9,11 +9,16 @@ use App\Repository\ServiceRepository;
 use App\Repository\ServiceRequestRepository;
 use BotMan\BotMan\Drivers\DriverManager;
 use BotMan\Drivers\Web\WebDriver;
+use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -78,6 +83,7 @@ class SerRequestController extends AbstractController
         $f = $this->createForm(SerRequestType::class, $serreq);
         $f->handleRequest($request);
         if ($f->isSubmitted() && $f->isValid()) {
+            $serreq->setRequester($this->getUser());
             $em->persist($serreq);
             $em->flush();
             return $this->redirectToRoute('SerivceReq_User', [], Response::HTTP_SEE_OTHER);
@@ -107,14 +113,9 @@ class SerRequestController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('SerivceReq_User', [], Response::HTTP_SEE_OTHER);
         }
-        $pageConfigs = [
-            'mainLayoutType' => 'horizontal',
-            'pageHeader' => false
-        ];
         return $this->render('views/content/apps/administrativeService/Requests/request-service-form.html.twig', [
             'serreq' => $serreq,
             'form' => $form->createView(),
-            'pageConfigs' => $pageConfigs,
         ]);
     }
 
@@ -146,5 +147,37 @@ class SerRequestController extends AbstractController
             "Attachment" => true
         ]);
         return new Response();
+    }
+
+    /**
+     * @Route ("/{id}/Respond", name="SerivceReq_Respond")
+     */
+    public function RespondServiceRequest(EntityManagerInterface $em, Request $request, ServiceRequest $serreq)
+    {
+        $form = $this->createForm(SerRequestType::class, $serreq);
+        $form->add('RequestResponse',TextareaType::class);
+        $form->add('Status',ChoiceType::class, [
+           'choices'=>[
+               'Hold' => 'processing',
+               'Deny' => 'denied',
+               'Done' => 'complete',
+           ]
+        ]);
+        $form->remove('Title');
+        $form->remove('PictureFile');
+        $form->remove('AttachementsFile');
+        $form->remove('Type');
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($serreq->getStatus() != "unseen"){
+                $serreq->setRespondedAt(new DateTimeImmutable());
+            }
+            $em->flush();
+            return $this->redirectToRoute('ser_requests', [], Response::HTTP_SEE_OTHER);
+        }
+        return $this->render('views/content/apps/administrativeService/Requests/request-service-answer.html.twig', [
+            'serreq' => $serreq,
+            'form' => $form->createView(),
+        ]);
     }
 }

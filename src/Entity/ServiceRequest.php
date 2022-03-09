@@ -30,7 +30,7 @@ class ServiceRequest
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
-    private $RespondedAt;
+    private $RespondedAt=null;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
@@ -73,7 +73,7 @@ class ServiceRequest
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups ("Request")
      */
-    private $Status = "Unseen";
+    private $Status = "unseen";
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -109,9 +109,7 @@ class ServiceRequest
      * )
      * @var File|null
      * @Assert\File(
-     *     maxSize = "5M",
-     *     mimeTypes = {"application/jpg", "application/x-jpeg", "application/png", "application/x-png"},
-     *     mimeTypesMessage = "Please upload a valid Image (Only JPEG, JPG and PNG are allowed)"
+     *     maxSize = "5M"
      * )
      */
     private ?File $PictureFile = null;
