@@ -45,22 +45,23 @@ class ChannelRepository extends ServiceEntityRepository
         }
     }
 
-    // /**
-    //  * @return Channel[] Returns an array of Channel objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+      * @return Channel[] Returns an array of Channel objects
+      */
+
+    public function findByIds($value1,$value2)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+           ->where(':id1 MEMBER OF c.participants')
+            ->andWhere(':id2 MEMBER OF c.participants')
+            ->setParameter("id1", $value1)
+            ->setParameter("id2", $value2)
             ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getSingleScalarResult();
+
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Channel

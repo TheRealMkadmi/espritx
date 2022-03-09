@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Enum\AccessType;
+use App\Form\ChannelType;
 use App\Form\GroupType;
 use App\Form\PermissionType;
 use App\Form\UserType;
@@ -137,6 +138,18 @@ class UserController extends AbstractController
     $result = $autocompleteService->getAutocompleteResults($request, PermissionType::class);
     return new JsonResponse($result);
   }
+
+    /**
+     * @param Request $request
+     * @param AutocompleteService $autocompleteService
+     * @return JsonResponse
+     * @Route("/autocomplete/chat", name="ajax_autocomplete_chat_permission_form")
+     */
+    public function ajax_autocomplete_chat_form(Request $request, AutocompleteService $autocompleteService): JsonResponse
+    {
+        $result = $autocompleteService->getAutocompleteResults($request, ChannelType::class);
+        return new JsonResponse($result);
+    }
 
   /**
    * @param Request $request
