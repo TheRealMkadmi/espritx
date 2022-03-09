@@ -57,7 +57,7 @@ class EventController extends AbstractController
             //$data->getUser()->getLastname()
             $entityManager->persist($event);
             $entityManager->flush();
-            $this->mailer->sendNewEventEmail("zicou98@gmail.com",["event"=>$event]);
+            $this->mailer->sendNewEventEmail($userEmail,["event"=>$event]);
             $this->addFlash('success', 'Les membres d\'esprit sont notifies par un mail !');
             $this->addFlash('success', 'Evenement ajouté avec succée !');
             return $this->redirectToRoute('all_events_data');
