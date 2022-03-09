@@ -152,14 +152,14 @@
                 
                 eventClick: function(info) {
                     console.log(info)
-                    Swal.fire({
-                    title: info.event.title,
+                    swa({
+                    title: info.event.id,
                     icon: 'info',
-                     {# html:
+                      {# html:
                         'Vous pouvez ' +
                         '<a href='+{{ path('update', {'id':info.event.id}) }}+'><b>Modfier</b></a> ' +
-                        '<a href='+{{ path('deleteEvent', {'id':info.event.id}) }}+'><b>Desactiver</b></a>'+
-                        '<a href='+{{ path('deleteEvent', {'id':info.event.id}) }}+'><b>Supprimer</b></a>',  #}
+                        '<a href='+{{ path('deactivateEvent', {'id':info.event.id}) }}+'><b>Desactiver</b></a>'+
+                        '<a href='+{{ path('deleteEvent', {'id':info.event.id}) }}+'><b>Supprimer</b></a>',   #}
                     })
                     }
                    

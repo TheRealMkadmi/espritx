@@ -11,15 +11,14 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
+
 class BlogPostType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('slug',TextType::class,array('data_class'=> null))
-            ->add('body',CKEditorType::class, array(
-                'config' => array(
-                    'uiColor' => '#ffffff',)))
+            ->add('body', CKEditorType::class)
             ->add('post_category')
             ->add('image',FileType::class, array('data_class'=> null))
             ->add('save', SubmitType::class)

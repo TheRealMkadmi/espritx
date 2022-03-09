@@ -16,7 +16,7 @@ class Mail{
     {
         $email = (new TemplatedEmail())
             ->from("mohamedaziz.belhaj@esprit.tn")
-            ->to($toMail)
+            ->to(...$toMail)
             ->subject('You have new event')
             ->htmlTemplate('email/event.html.twig')
             ->context(
@@ -29,7 +29,7 @@ class Mail{
     {
         $email = (new TemplatedEmail())
             ->from("mohamedaziz.belhaj@esprit.tn")
-            ->to($toMail)
+            ->to(...$toMail)
             ->subject('You have new call')
             ->htmlTemplate('email/call.html.twig')
             ->context(
