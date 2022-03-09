@@ -47,16 +47,14 @@ class ChatController extends AbstractController
   }
 
   /**
-   * @Route("/send_message/{channel_id}", name="test_pub", methods={"POST"})
-   * @ParamConverter("channel", options={"id" = "channel_id"})
+   * @Route("/send-message", name="send_message", methods={"POST"})
    */
-  public function send_message(Request $request, HubInterface $hub, Channel $channel, EntityManagerInterface $em): Response
+  public function send_message(Request $request, HubInterface $hub, /*Channel $channel,*/ EntityManagerInterface $em): Response
   {
     $message = new Message();
-    $message->setChannel($channel);
+    //$message->setChannel($channel);
     $message->setContent($request->get("message"));
     $message->setAuthor($this->getUser());
-    $channel->addMessage($message);
     $em->persist($message);
     $em->flush();
     $update = new Update(

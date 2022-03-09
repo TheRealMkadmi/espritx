@@ -270,13 +270,4 @@ $(window).on('resize', function () {
     }
 });
 
-// Add message to chat - function call on form submit
-function enterChat(source) {
-    var message = $('.message').val();
-    if (/\S/.test(message)) {
-        var html = '<div class="chat-content">' + '<p>' + message + '</p>' + '</div>';
-        $('.chat:last-child .chat-body').append(html);
-        $('.message').val('');
-        $('.user-chats').scrollTop($('.user-chats > .chats').height());
-    }
-}
+

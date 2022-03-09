@@ -101,7 +101,8 @@
                   <div class="chat chat-left">
                     <div class="chat-avatar">
                               <span class="avatar box-shadow-1 cursor-pointer">
-                              <img src="{{ asset('images/portrait/small/avatar-s-7.jpg') }}" alt="avatar" height="36" width="36"/>
+                              <img src="{{ asset('images/portrait/small/avatar-s-7.jpg') }}" alt="avatar" height="36"
+                                   width="36"/>
                               </span>
                     </div>
                     <div class="chat-body">
@@ -140,7 +141,8 @@
                   <div class="chat chat-left">
                     <div class="chat-avatar">
                               <span class="avatar box-shadow-1 cursor-pointer">
-                              <img src="{{ asset('images/portrait/small/avatar-s-7.jpg') }}" alt="avatar" height="36" width="36"/>
+                              <img src="{{ asset('images/portrait/small/avatar-s-7.jpg') }}" alt="avatar" height="36"
+                                   width="36"/>
                               </span>
                     </div>
                     <div class="chat-body">
@@ -175,7 +177,8 @@
                   <div class="chat chat-left">
                     <div class="chat-avatar">
                               <span class="avatar box-shadow-1 cursor-pointer">
-                              <img src="{{ asset('images/portrait/small/avatar-s-7.jpg') }}" alt="avatar" height="36" width="36"/>
+                              <img src="{{ asset('images/portrait/small/avatar-s-7.jpg') }}" alt="avatar" height="36"
+                                   width="36"/>
                               </span>
                     </div>
                     <div class="chat-body">
@@ -311,14 +314,30 @@
 {% endblock %}
 {% block page_script %}
   <!-- Page js files -->
+
   <script src="{{ asset('js/scripts/pages/app-chat.js') }}"></script>
   <script>
-      const eventSource = new EventSource('https://45-79-249-222.ip.linodeusercontent.com/.well-known/mercure?topic=' + encodeURIComponent('http://example.com/books/1'));
-      eventSource.onmessage = event => {
+      // On message send
+      function enterChat(source) {
+          var message = $('.message').val();
           if (/\S/.test(message)) {
               var html = '<div class="chat-content">' + '<p>' + message + '</p>' + '</div>';
               $('.chat:last-child .chat-body').append(html);
               $('.message').val('');
+              $('.user-chats').scrollTop($('.user-chats > .chats').height());
+          }
+          $.post("{{ url('send_message') }}", function (data) {
+              console.log("it worked!")
+          });
+      }
+
+      // On message reception
+      const eventSource = new EventSource('https://45-79-249-222.ip.linodeusercontent.com/.well-known/mercure?topic=' + encodeURIComponent('http://example.com/books/1'));
+      eventSource.onmessage = event => {
+          let data = JSON.parse(event.data);
+          if (/\S/.test(data.message)) {
+              var html = '<div class="chat-content">' + '<p>' + data.message + '</p>' + '</div>';
+              $('.chat:last-child .chat-body').append(html);
               $('.user-chats').scrollTop($('.user-chats > .chats').height());
           }
           console.log(JSON.parse(event.data.message));
