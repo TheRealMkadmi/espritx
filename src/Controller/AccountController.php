@@ -73,4 +73,11 @@ class AccountController extends AbstractController
             'resetForm'=>$form->createView(),
         ]);
     }
+    /**
+     * @Route("/me", name="acc_per")
+     */
+    public function MyAccount():Response
+    {
+        return $this->render('views/content/pages/page-profile.html.twig');
+    }
 }

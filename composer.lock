@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "79cad44a870eb56e64aef5511c2e7253",
+    "content-hash": "cd1c7ab3c8f4188fcba738215af6dd56",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -7490,71 +7490,6 @@
             "time": "2022-02-17T14:14:36+00:00"
         },
         {
-            "name": "symfony/mailchimp-mailer",
-            "version": "v4.4.37",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/mailchimp-mailer.git",
-                "reference": "022294c1f34f27e13c88c8f9ce4dd63dc3fe5aa4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mailchimp-mailer/zipball/022294c1f34f27e13c88c8f9ce4dd63dc3fe5aa4",
-                "reference": "022294c1f34f27e13c88c8f9ce4dd63dc3fe5aa4",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1.3",
-                "symfony/mailer": "^4.4|^5.0"
-            },
-            "require-dev": {
-                "symfony/http-client": "^4.3|^5.0"
-            },
-            "type": "symfony-bridge",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Mailer\\Bridge\\Mailchimp\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Mailchimp Mailer Bridge",
-            "homepage": "https://symfony.com",
-            "support": {
-                "source": "https://github.com/symfony/mailchimp-mailer/tree/v4.4.37"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2022-01-02T09:41:36+00:00"
-        },
-        {
             "name": "symfony/mailer",
             "version": "v4.4.38",
             "source": {
@@ -10852,16 +10787,16 @@
         },
         {
             "name": "symfonycasts/verify-email-bundle",
-            "version": "v1.9.0",
+            "version": "v1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SymfonyCasts/verify-email-bundle.git",
-                "reference": "1b843f75398f2ab44b1d282945988d635b87f561"
+                "reference": "7b9b1f59093dd260afa91eb6b3a220906a0fe0e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SymfonyCasts/verify-email-bundle/zipball/1b843f75398f2ab44b1d282945988d635b87f561",
-                "reference": "1b843f75398f2ab44b1d282945988d635b87f561",
+                "url": "https://api.github.com/repos/SymfonyCasts/verify-email-bundle/zipball/7b9b1f59093dd260afa91eb6b3a220906a0fe0e2",
+                "reference": "7b9b1f59093dd260afa91eb6b3a220906a0fe0e2",
                 "shasum": ""
             },
             "require": {
@@ -10895,9 +10830,9 @@
             "description": "Simple, stylish Email Verification for Symfony",
             "support": {
                 "issues": "https://github.com/SymfonyCasts/verify-email-bundle/issues",
-                "source": "https://github.com/SymfonyCasts/verify-email-bundle/tree/v1.9.0"
+                "source": "https://github.com/SymfonyCasts/verify-email-bundle/tree/v1.10.0"
             },
-            "time": "2022-02-23T14:33:41+00:00"
+            "time": "2022-03-08T22:08:27+00:00"
         },
         {
             "name": "tetranz/select2entity-bundle",
@@ -14389,5 +14324,5 @@
         "ext-iconv": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.2.0"
 }
