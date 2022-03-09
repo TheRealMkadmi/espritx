@@ -326,8 +326,17 @@
               $('.message').val('');
               $('.user-chats').scrollTop($('.user-chats > .chats').height());
           }
-          $.post("{{ url('send_message') }}", function (data) {
-              console.log("it worked!")
+          $.ajax({
+              type: "POST",
+              url: "{{ url('send_message') }}",
+              async: false,
+              data: JSON.stringify({
+                  "message": message
+              }),
+              contentType: "application/json",
+              complete: function (data) {
+                  console.log(data);
+              }
           });
       }
 
