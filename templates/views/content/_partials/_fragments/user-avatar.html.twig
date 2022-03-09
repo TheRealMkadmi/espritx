@@ -11,9 +11,8 @@ But hey, gotta KISS. #El3olba.
       <span class="avatar-status-{{ user.activeNow ? "online" : "offline" }}"></span>
     </div>
   {% else %}
-    <div
-        class="avatar {{ initialsAvatarColor(user) }} {{ (size is defined and size is not null) ? "avatar-" ~ size : "" }}">
-      <span class="avatar-content">{{ user.firstName|first|upper~user.lastName|first|upper }}</span>
+    <div class="avatar {{ initialsAvatarColor(user) }} {{ (size is defined and size is not null) ? "avatar-" ~ size : "" }}">
+      <span class="avatar-content avatar-content me-auto ms-auto mt-auto mb-auto">{{ user.firstName|first|upper~user.lastName|first|upper }}</span>
       <span class="avatar-status-{{ user.activeNow ? "online" : "offline" }}"></span>
     </div>
   {% endif %}

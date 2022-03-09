@@ -1,1 +1,551 @@
-$((function(){"use strict";var t=$("#basic-alert"),n=$("#with-title"),o=$("#footer-alert"),i=$("#html-alert"),e=$("#position-top-start"),s=$("#position-top-end"),a=$("#position-bottom-start"),l=$("#position-bottom-end"),c=$("#bounce-in-animation"),r=$("#fade-in-animation"),u=$("#flip-x-animation"),m=$("#tada-animation"),f=$("#shake-animation"),b=$("#type-success"),h=$("#type-error"),g=$("#type-warning"),p=$("#type-info"),w=$("#custom-image"),d=$("#auto-close"),S=$("#outside-click"),y=$("#prompt-function"),B=$("#ajax-request"),C=$("#confirm-text"),k=$("#confirm-color"),x="../../../app-assets/";"laravel"===$("body").attr("data-framework")&&(x=$("body").attr("data-asset-path")),t.length&&t.on("click",(function(){Swal.fire({title:"Any fool can use a computer",customClass:{confirmButton:"btn btn-primary"},buttonsStyling:!1})})),n.length&&n.on("click",(function(){Swal.fire({title:"The Internet?,",text:"That thing is still around?",customClass:{confirmButton:"btn btn-primary"},buttonsStyling:!1})})),o.length&&o.on("click",(function(){Swal.fire({icon:"error",title:"Oops...",text:"Something went wrong!",footer:"<a href>Why do I have this issue?</a>",customClass:{confirmButton:"btn btn-primary"},buttonsStyling:!1})})),i.length&&i.on("click",(function(){Swal.fire({title:"<strong>HTML <u>example</u></strong>",icon:"info",html:'You can use <b>bold text</b>, <a href="https://pixinvent.com/" target="_blank">links</a> and other HTML tags',showCloseButton:!0,showCancelButton:!0,focusConfirm:!1,confirmButtonText:feather.icons["thumbs-up"].toSvg({class:"font-medium-1 me-50"})+"Great!",confirmButtonAriaLabel:"Thumbs up, great!",cancelButtonText:feather.icons["thumbs-down"].toSvg({class:"font-medium-1"}),cancelButtonAriaLabel:"Thumbs down",customClass:{confirmButton:"btn btn-primary",cancelButton:"btn btn-outline-danger ms-1"},buttonsStyling:!1})})),e.length&&e.on("click",(function(){Swal.fire({position:"top-start",icon:"success",title:"Your work has been saved",showConfirmButton:!1,timer:1500,customClass:{confirmButton:"btn btn-primary"},buttonsStyling:!1})})),s.length&&s.on("click",(function(){Swal.fire({position:"top-end",icon:"success",title:"Your work has been saved",showConfirmButton:!1,timer:1500,customClass:{confirmButton:"btn btn-primary"},buttonsStyling:!1})})),a.length&&a.on("click",(function(){Swal.fire({position:"bottom-start",icon:"success",title:"Your work has been saved",showConfirmButton:!1,timer:1500,customClass:{confirmButton:"btn btn-primary"},buttonsStyling:!1})})),l.length&&l.on("click",(function(){Swal.fire({position:"bottom-end",icon:"success",title:"Your work has been saved",showConfirmButton:!1,timer:1500,customClass:{confirmButton:"btn btn-primary"},buttonsStyling:!1})})),c.length&&c.on("click",(function(){Swal.fire({title:"Bounce In Animation",customClass:{confirmButton:"btn btn-primary"},showClass:{popup:"animate__animated animate__bounceIn"},buttonsStyling:!1})})),r.length&&r.on("click",(function(){Swal.fire({title:"Fade In Animation",customClass:{confirmButton:"btn btn-primary"},showClass:{popup:"animate__animated animate__fadeIn"},buttonsStyling:!1})})),u.length&&u.on("click",(function(){Swal.fire({title:"Flip In Animation",customClass:{confirmButton:"btn btn-primary"},showClass:{popup:"animate__animated animate__flipInX"},buttonsStyling:!1})})),m.length&&m.on("click",(function(){Swal.fire({title:"Tada Animation",customClass:{confirmButton:"btn btn-primary"},showClass:{popup:"animate__animated animate__tada"},buttonsStyling:!1})})),f.length&&f.on("click",(function(){Swal.fire({title:"Shake Animation",customClass:{confirmButton:"btn btn-primary"},showClass:{popup:"animate__animated animate__shakeX"},buttonsStyling:!1})})),b.length&&b.on("click",(function(){Swal.fire({title:"Good job!",text:"You clicked the button!",icon:"success",customClass:{confirmButton:"btn btn-primary"},buttonsStyling:!1})})),h.length&&h.on("click",(function(){Swal.fire({title:"Error!",text:" You clicked the button!",icon:"error",customClass:{confirmButton:"btn btn-primary"},buttonsStyling:!1})})),g.length&&g.on("click",(function(){Swal.fire({title:"Warning!",text:" You clicked the button!",icon:"warning",customClass:{confirmButton:"btn btn-primary"},buttonsStyling:!1})})),p.length&&p.on("click",(function(){Swal.fire({title:"Info!",text:"You clicked the button!",icon:"info",customClass:{confirmButton:"btn btn-primary"},buttonsStyling:!1})})),w.length&&w.on("click",(function(){Swal.fire({title:"Sweet!",text:"Modal with a custom image.",imageUrl:x+"images/slider/04.jpg",imageWidth:400,imageHeight:200,imageAlt:"Custom image",customClass:{confirmButton:"btn btn-primary"},buttonsStyling:!1})})),d.length&&d.on("click",(function(){var t;Swal.fire({title:"Auto close alert!",html:"I will close in <b></b> milliseconds.",timer:2e3,timerProgressBar:!0,didOpen:()=>{Swal.showLoading(),t=setInterval((()=>{const t=Swal.getHtmlContainer();if(t){const n=t.querySelector("b");n&&(n.textContent=Swal.getTimerLeft())}}),100)},willClose:()=>{clearInterval(t)}}).then((t=>{t.dismiss===Swal.DismissReason.timer&&console.log("I was closed by the timer")}))})),S.length&&S.on("click",(function(){Swal.fire({title:"Click outside to close!",text:"This is a cool message!",customClass:{confirmButton:"btn btn-primary"},buttonsStyling:!1})})),y.length&&y.on("click",(function(){const t=["1","2","3"],n=Swal.mixin({confirmButtonText:"Forward",cancelButtonText:"Back",progressSteps:t,input:"text",inputAttributes:{required:!0},validationMessage:"This field is required"});!async function(){const o=[];let i;for(i=0;i<t.length;){const e=await new n({title:"Question "+t[i],showCancelButton:i>0,currentProgressStep:i});e.value?(o[i]=e.value,i++):"cancel"===e.dismiss&&i--}Swal.fire(JSON.stringify(o))}()})),B.length&&B.on("click",(function(){Swal.fire({title:"Search for a GitHub user",input:"text",customClass:{confirmButton:"btn btn-primary",cancelButton:"btn btn-outline-danger ms-1"},buttonsStyling:!1,inputAttributes:{autocapitalize:"off"},showCancelButton:!0,confirmButtonText:"Look up",showLoaderOnConfirm:!0,preConfirm:t=>fetch(`//api.github.com/users/${t}`).then((t=>{if(!t.ok)throw new Error(t.statusText);return t.json()})).catch((t=>{Swal.showValidationMessage(`Request failed: ${t}`)}))}).then((t=>{t.isConfirmed&&Swal.fire({title:t.value.login+"'s avatar",imageUrl:t.value.avatar_url,customClass:{confirmButton:"btn btn-primary"}})}))})),C.length&&C.on("click",(function(){Swal.fire({title:"Are you sure?",text:"You won't be able to revert this!",icon:"warning",showCancelButton:!0,confirmButtonText:"Yes, delete it!",customClass:{confirmButton:"btn btn-primary",cancelButton:"btn btn-outline-danger ms-1"},buttonsStyling:!1}).then((function(t){t.value&&Swal.fire({icon:"success",title:"Deleted!",text:"Your file has been deleted.",customClass:{confirmButton:"btn btn-success"}})}))})),k.length&&k.on("click",(function(){Swal.fire({title:"Are you sure?",text:"You won't be able to revert this!",icon:"warning",showCancelButton:!0,confirmButtonText:"Yes, delete it!",customClass:{confirmButton:"btn btn-primary",cancelButton:"btn btn-outline-danger ms-1"},buttonsStyling:!1}).then((function(t){t.value?Swal.fire({icon:"success",title:"Deleted!",text:"Your file has been deleted.",customClass:{confirmButton:"btn btn-success"}}):t.dismiss===Swal.DismissReason.cancel&&Swal.fire({title:"Cancelled",text:"Your imaginary file is safe :)",icon:"error",customClass:{confirmButton:"btn btn-success"}})}))}))}));
+/*=========================================================================================
+	File Name: ext-component-sweet-alerts.js
+	Description: A beautiful replacement for javascript alerts
+	----------------------------------------------------------------------------------------
+	Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+	Author: Pixinvent
+	Author URL: hhttp://www.themeforest.net/user/pixinvent
+==========================================================================================*/
+$(function () {
+    'use strict';
+
+    var basicAlert = $('#basic-alert');
+    var withTitle = $('#with-title');
+    var withFooter = $('#footer-alert');
+    var htmlAlert = $('#html-alert');
+
+    var positionTopStart = $('#position-top-start');
+    var positionTopEnd = $('#position-top-end');
+    var positionBottomStart = $('#position-bottom-start');
+    var positionBottomEnd = $('#position-bottom-end');
+
+    var bounceIn = $('#bounce-in-animation');
+    var fadeIn = $('#fade-in-animation');
+    var flipX = $('#flip-x-animation');
+    var tada = $('#tada-animation');
+    var shake = $('#shake-animation');
+
+    var success = $('#type-success');
+    var error = $('#type-error');
+    var warning = $('#type-warning');
+    var info = $('#type-info');
+
+    var customImage = $('#custom-image');
+    var autoClose = $('#auto-close');
+    var outsideClick = $('#outside-click');
+    var question = $('#prompt-function');
+    var ajax = $('#ajax-request');
+
+    var confirmText = $('#confirm-text');
+    var confirmColor = $('#confirm-color');
+
+    var assetPath = '../../../app-assets/';
+    if ($('body').attr('data-framework') === 'laravel') {
+        assetPath = $('body').attr('data-asset-path');
+    }
+
+    //--------------- Basic Examples ---------------
+
+    // Basic
+    if (basicAlert.length) {
+        basicAlert.on('click', function () {
+            Swal.fire({
+                title: 'Any fool can use a computer',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false
+            });
+        });
+    }
+
+    // With Title
+    if (withTitle.length) {
+        withTitle.on('click', function () {
+            Swal.fire({
+                title: 'The Internet?,',
+                text: 'That thing is still around?',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false
+            });
+        });
+    }
+
+    // With Footer
+    if (withFooter.length) {
+        withFooter.on('click', function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+                footer: '<a href>Why do I have this issue?</a>',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false
+            });
+        });
+    }
+
+    // HTML Alert
+    if (htmlAlert.length) {
+        htmlAlert.on('click', function () {
+            Swal.fire({
+                title: '<strong>HTML <u>example</u></strong>',
+                icon: 'info',
+                html:
+                    'You can use <b>bold text</b>, ' +
+                    '<a href="https://pixinvent.com/" target="_blank">links</a> ' +
+                    'and other HTML tags',
+                showCloseButton: true,
+                showCancelButton: true,
+                focusConfirm: false,
+                confirmButtonText: feather.icons['thumbs-up'].toSvg({ class: 'font-medium-1 me-50' }) + 'Great!',
+                confirmButtonAriaLabel: 'Thumbs up, great!',
+                cancelButtonText: feather.icons['thumbs-down'].toSvg({ class: 'font-medium-1' }),
+                cancelButtonAriaLabel: 'Thumbs down',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-outline-danger ms-1'
+                },
+                buttonsStyling: false
+            });
+        });
+    }
+
+    //--------------- Position ---------------
+
+    // Top Start
+    if (positionTopStart.length) {
+        positionTopStart.on('click', function () {
+            Swal.fire({
+                position: 'top-start',
+                icon: 'success',
+                title: 'Your work has been saved',
+                showConfirmButton: false,
+                timer: 1500,
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false
+            });
+        });
+    }
+
+    // Top End
+    if (positionTopEnd.length) {
+        positionTopEnd.on('click', function () {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Your work has been saved',
+                showConfirmButton: false,
+                timer: 1500,
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false
+            });
+        });
+    }
+
+    // Bottom Start
+    if (positionBottomStart.length) {
+        positionBottomStart.on('click', function () {
+            Swal.fire({
+                position: 'bottom-start',
+                icon: 'success',
+                title: 'Your work has been saved',
+                showConfirmButton: false,
+                timer: 1500,
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false
+            });
+        });
+    }
+
+    // Bottom End
+    if (positionBottomEnd.length) {
+        positionBottomEnd.on('click', function () {
+            Swal.fire({
+                position: 'bottom-end',
+                icon: 'success',
+                title: 'Your work has been saved',
+                showConfirmButton: false,
+                timer: 1500,
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false
+            });
+        });
+    }
+
+    //--------------- Animations ---------------
+
+    // Bounce In
+    if (bounceIn.length) {
+        bounceIn.on('click', function () {
+            Swal.fire({
+                title: 'Bounce In Animation',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                showClass: {
+                    popup: 'animate__animated animate__bounceIn'
+                },
+                buttonsStyling: false
+            });
+        });
+    }
+
+    // Fade In
+    if (fadeIn.length) {
+        fadeIn.on('click', function () {
+            Swal.fire({
+                title: 'Fade In Animation',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn'
+                },
+                buttonsStyling: false
+            });
+        });
+    }
+
+    // FlipX
+    if (flipX.length) {
+        flipX.on('click', function () {
+            Swal.fire({
+                title: 'Flip In Animation',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                showClass: {
+                    popup: 'animate__animated animate__flipInX'
+                },
+                buttonsStyling: false
+            });
+        });
+    }
+
+    // Tada
+    if (tada.length) {
+        tada.on('click', function () {
+            Swal.fire({
+                title: 'Tada Animation',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                showClass: {
+                    popup: 'animate__animated animate__tada'
+                },
+                buttonsStyling: false
+            });
+        });
+    }
+
+    // Shake
+    if (shake.length) {
+        shake.on('click', function () {
+            Swal.fire({
+                title: 'Shake Animation',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                showClass: {
+                    popup: 'animate__animated animate__shakeX'
+                },
+                buttonsStyling: false
+            });
+        });
+    }
+
+    //--------------- Types ---------------
+
+    // Success
+    if (success.length) {
+        success.on('click', function () {
+            Swal.fire({
+                title: 'Good job!',
+                text: 'You clicked the button!',
+                icon: 'success',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false
+            });
+        });
+    }
+
+    // Error
+    if (error.length) {
+        error.on('click', function () {
+            Swal.fire({
+                title: 'Error!',
+                text: ' You clicked the button!',
+                icon: 'error',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false
+            });
+        });
+    }
+
+    // Warning
+    if (warning.length) {
+        warning.on('click', function () {
+            Swal.fire({
+                title: 'Warning!',
+                text: ' You clicked the button!',
+                icon: 'warning',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false
+            });
+        });
+    }
+
+    // Info
+    if (info.length) {
+        info.on('click', function () {
+            Swal.fire({
+                title: 'Info!',
+                text: 'You clicked the button!',
+                icon: 'info',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false
+            });
+        });
+    }
+
+    //--------------- Options ---------------
+
+    // Custom Image
+    if (customImage.length) {
+        customImage.on('click', function () {
+            Swal.fire({
+                title: 'Sweet!',
+                text: 'Modal with a custom image.',
+                imageUrl: assetPath + 'images/slider/04.jpg',
+                imageWidth: 300,
+                imageHeight: 300,
+                imageAlt: 'Custom image',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false
+            });
+        });
+    }
+
+    // Auto Close
+    if (autoClose.length) {
+        autoClose.on('click', function () {
+            var timerInterval;
+            Swal.fire({
+                title: 'Auto close alert!',
+                html: 'I will close in <b></b> milliseconds.',
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading();
+                    timerInterval = setInterval(() => {
+                        const content = Swal.getHtmlContainer();
+                        if (content) {
+                            const b = content.querySelector('b');
+                            if (b) {
+                                b.textContent = Swal.getTimerLeft();
+                            }
+                        }
+                    }, 100);
+                },
+                willClose: () => {
+                    clearInterval(timerInterval);
+                }
+            }).then(result => {
+                /* Read more about handling dismissals below */
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    console.log('I was closed by the timer');
+                }
+            });
+        });
+    }
+
+    // Click Outside
+    if (outsideClick.length) {
+        outsideClick.on('click', function () {
+            Swal.fire({
+                title: 'Click outside to close!',
+                text: 'This is a cool message!',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false
+            });
+        });
+    }
+
+    // Question
+    if (question.length) {
+        question.on('click', function () {
+            /* global Swal */
+
+            const steps = ['1', '2', '3'];
+            const swalQueueStep = Swal.mixin({
+                confirmButtonText: 'Forward',
+                cancelButtonText: 'Back',
+                progressSteps: steps,
+                input: 'text',
+                inputAttributes: {
+                    required: true
+                },
+                validationMessage: 'This field is required'
+            });
+
+            async function backAndForth() {
+                const values = [];
+                let currentStep;
+
+                for (currentStep = 0; currentStep < steps.length; ) {
+                    const result = await new swalQueueStep({
+                        title: 'Question ' + steps[currentStep],
+                        showCancelButton: currentStep > 0,
+                        currentProgressStep: currentStep
+                    });
+
+                    if (result.value) {
+                        values[currentStep] = result.value;
+                        currentStep++;
+                    } else if (result.dismiss === 'cancel') {
+                        currentStep--;
+                    }
+                }
+
+                Swal.fire(JSON.stringify(values));
+            }
+
+            backAndForth();
+        });
+    }
+
+    // Ajax
+    if (ajax.length) {
+        ajax.on('click', function () {
+            Swal.fire({
+                title: 'Search for a GitHub user',
+                input: 'text',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-outline-danger ms-1'
+                },
+                buttonsStyling: false,
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Look up',
+                showLoaderOnConfirm: true,
+                preConfirm: login => {
+                    return fetch(`//api.github.com/users/${login}`)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(response.statusText);
+                            }
+                            return response.json();
+                        })
+                        .catch(error => {
+                            Swal.showValidationMessage(`Request failed: ${error}`);
+                        });
+                }
+            }).then(result => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: '' + result.value.login + "'s avatar",
+                        imageUrl: result.value.avatar_url,
+                        customClass: { confirmButton: 'btn btn-primary' }
+                    });
+                }
+            });
+        });
+    }
+
+    //--------------- Confirm Options ---------------
+
+    // Confirm Text
+    if (confirmText.length) {
+        confirmText.on('click', function () {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-outline-danger ms-1'
+                },
+                buttonsStyling: false
+            }).then(function (result) {
+                if (result.value) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Deleted!',
+                        text: 'Your file has been deleted.',
+                        customClass: {
+                            confirmButton: 'btn btn-success'
+                        }
+                    });
+                }
+            });
+        });
+    }
+
+    // Confirm Color
+    if (confirmColor.length) {
+        confirmColor.on('click', function () {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-outline-danger ms-1'
+                },
+                buttonsStyling: false
+            }).then(function (result) {
+                if (result.value) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Deleted!',
+                        text: 'Your file has been deleted.',
+                        customClass: {
+                            confirmButton: 'btn btn-success'
+                        }
+                    });
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire({
+                        title: 'Cancelled',
+                        text: 'Your imaginary file is safe :)',
+                        icon: 'error',
+                        customClass: {
+                            confirmButton: 'btn btn-success'
+                        }
+                    });
+                }
+            });
+        });
+    }
+});

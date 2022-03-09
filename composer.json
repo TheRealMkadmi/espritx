@@ -19,6 +19,7 @@
         "doctrine/orm": "^2.11",
         "dompdf/dompdf": "^1.2",
         "elao/enum": "^1.17",
+        "endroid/qr-code-bundle": "^4.0",
         "friendsofsymfony/ckeditor-bundle": "^2.4",
         "friendsofsymfony/rest-bundle": "3.3.0",
         "gedmo/doctrine-extensions": "^3.5",
@@ -89,7 +90,8 @@
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
             "symfony/flex": true,
-            "phpstan/extension-installer": true
+            "phpstan/extension-installer": true,
+            "endroid/installer": true
         },
         "preferred-install": {
             "*": "dist"

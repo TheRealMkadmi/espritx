@@ -477,17 +477,17 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
     return array_unique($perms);
   }
   //</editor-fold>
+  //<editor-fold desc="Commentaires">
+  /**
+   * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="user")
+   */
+  private $commentaires;
+  //</editor-fold>
   //<editor-fold desc="Posts">
   /**
    * @ORM\OneToMany(targetEntity=Post::class, mappedBy="user", orphanRemoval=true)
    */
   private Collection $posts;
-
-
-  /**
-   * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="user")
-   */
-  private $commentaires;
 
   /**
    * @return Collection|Post[]
@@ -563,16 +563,6 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
    */
   private ?string $identityDocumentNumber = null;
 
-
-  /**
-   * @ORM\OneToMany(targetEntity=Event::class, mappedBy="user")
-   */
-  private $events;
-
-  /**
-   * @ORM\ManyToMany(targetEntity=Call::class, mappedBy="users")
-   */
-  private $calls;
 
   public function getIdentityDocumentNumber(): ?string
   {
@@ -652,26 +642,6 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   private $serviceRequests;
 
   /**
-   * @ORM\OneToMany(targetEntity=Call::class, mappedBy="user")
-   */
-  private $UserCall;
-
-  /**
-   * @ORM\OneToMany(targetEntity=PostCategory::class, mappedBy="user")
-   */
-  private $postCategories;
-
-  /**
-   * @ORM\OneToMany(targetEntity=GroupPost::class, mappedBy="user", orphanRemoval=true)
-   */
-  private $groupPosts;
-
-  /**
-   * @ORM\ManyToMany(targetEntity=GroupPost::class, mappedBy="membre", orphanRemoval=true)
-   */
-  private $groupes;
-
-  /**
    * @return Collection<int, ServiceRequest>
    */
   public function getServiceRequests(): Collection
@@ -700,7 +670,12 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
 
     return $this;
   }
-
+  //</editor-fold>
+  //<editor-fold desc="Events">
+  /**
+   * @ORM\OneToMany(targetEntity=Event::class, mappedBy="user")
+   */
+  private $events;
   /**
    * @return Collection<int, Event>
    */
@@ -730,7 +705,12 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
 
     return $this;
   }
-
+  //</editor-fold>
+  //<editor-fold desc="Calls">
+  /**
+   * @ORM\ManyToMany(targetEntity=Call::class, mappedBy="users")
+   */
+  private $calls;
   /**
    * @return Collection<int, Call>
    */
@@ -757,21 +737,12 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
 
     return $this;
   }
-
-
   //</editor-fold>
-
-  public function isEqualTo(UserInterface $user)
-  {
-    return $this->getUsername() === $user->getUsername();
-    // do we add check for password; or delegate the username uniqueness constraint to the database?
-  }
-
-  public function __toString(): string
-  {
-    return $this->email;
-  }
-
+  //<editor-fold desc="User Call">
+  /**
+   * @ORM\OneToMany(targetEntity=Call::class, mappedBy="user")
+   */
+  private $UserCall;
   /**
    * @return Collection<int, Call>
    */
@@ -801,7 +772,12 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
 
     return $this;
   }
-
+  //</editor-fold>
+  //<editor-fold desc="Post Categories">
+  /**
+   * @ORM\OneToMany(targetEntity=PostCategory::class, mappedBy="user")
+   */
+  private $postCategories;
   /**
    * @return Collection<int, PostCategory>
    */
@@ -831,7 +807,12 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
 
     return $this;
   }
-
+  //</editor-fold>
+  //<editor-fold desc="Group posts">
+  /**
+   * @ORM\OneToMany(targetEntity=GroupPost::class, mappedBy="user", orphanRemoval=true)
+   */
+  private $groupPosts;
   /**
    * @return Collection<int, GroupPost>
    */
@@ -861,7 +842,12 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
 
     return $this;
   }
-
+  //</editor-fold>
+  //<editor-fold desc="Groupe">
+  /**
+   * @ORM\ManyToMany(targetEntity=GroupPost::class, mappedBy="membre", orphanRemoval=true)
+   */
+  private $groupes;
   /**
    * @return Collection<int, GroupPost>
    */
@@ -888,5 +874,33 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
 
     return $this;
   }
+  //</editor-fold>
+  //<editor-fold desc="About">
+  /**
+   * @ORM\Column(type="string", length=255, nullable=true)
+   */
+  private $about;
+  public function getAbout(): ?string
+  {
+      return $this->about;
+  }
 
+  public function setAbout(?string $about): self
+  {
+      $this->about = $about;
+
+      return $this;
+  }
+  //</editor-fold>
+
+  public function isEqualTo(UserInterface $user)
+  {
+    return $this->getUsername() === $user->getUsername();
+    // do we add check for password; or delegate the username uniqueness constraint to the database?
+  }
+
+  public function __toString(): string
+  {
+    return $this->email;
+  }
 }

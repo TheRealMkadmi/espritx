@@ -18,13 +18,6 @@ class UserFixtures extends AbstractFixtureEx implements DependentFixtureInterfac
 {
   public const LOADED_USER_FIXTURES = "loaded_users";
 
-
-  public function __construct(
-    private UserPasswordEncoderInterface $passwordEncoder
-  )
-  {
-  }
-
   public function load(ObjectManager $manager): void
   {
     /** @var Collection<Group> $groups */
@@ -33,24 +26,23 @@ class UserFixtures extends AbstractFixtureEx implements DependentFixtureInterfac
     $testing_users = new ArrayCollection();
     /** @var Group $group */
     foreach ($groups as $group) {
-      //for ($i = 0; $i < 5; $i++) {
-      $user = new User();
-      $user->addGroup($group);
-      $user->setFirstName($generator->firstName);
-      $user->setLastName($generator->lastName);
-      $user->setEmail("test_" . $group->getGroupType()->slufigy() . "_" . $generator->unique()->randomNumber(2) . "@esprit.tn");
-      if ($group->getGroupType() === GroupType::STUDENT())
-        $user->setClass("3A" . $generator->randomNumber(2));
-      $user->setPhoneNumber("+216" . $generator->randomNumber(8));
-      $user->setUserStatus(UserStatus::ACTIVE());
-      $user->setIdentityType(DocumentIdentityTypeEnum::Random());
-      $user->setIdentityDocumentNumber($generator->randomNumber(8));
-      $user->setPassword($this->passwordEncoder->encodePassword(
-        $user, '12345'
-      ));
-      $manager->persist($user);
-      $testing_users->add($user);
-      //}
+      for ($i = 0; $i < 1; $i++) {
+        $user = new User();
+        $user->addGroup($group);
+        $user->setFirstName($generator->firstName);
+        $user->setLastName($generator->lastName);
+        $user->setEmail("test_" . $group->getGroupType()->slufigy() . "_" . $generator->unique()->randomNumber(2) . "@esprit.tn");
+        if ($group->getGroupType() === GroupType::STUDENT())
+          $user->setClass("3A" . $generator->randomNumber(2));
+        $user->setPhoneNumber("+216" . $generator->randomNumber(8));
+        $user->setUserStatus(UserStatus::ACTIVE());
+        $user->setIdentityType(DocumentIdentityTypeEnum::Random());
+        $user->setIdentityDocumentNumber($generator->randomNumber(8));
+        $user->setPlainPassword("12345");
+        $user->setAbout($generator->realText(254));
+        $manager->persist($user);
+        $testing_users->add($user);
+      }
     }
     $manager->flush();
     $this->addReferenceArray(self::LOADED_USER_FIXTURES, $testing_users);
