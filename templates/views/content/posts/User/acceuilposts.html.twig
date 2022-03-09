@@ -461,6 +461,70 @@
 
 
 
+    <div style="float: right" class="blog-recent-posts mt-3">
+        <h6 class="section-label">Postes recentes</h6>
+
+
+        {% for p in recentP %}
+
+            {% if p.isValid ==1 %}
+
+                <div class="mt-75">
+                    <div class="d-flex mb-2">
+                        <a href="{{ path('singlepost',{'id':p.id}) }}" class="me-2">
+                          {#   <img
+                                    class="rounded"
+                                    src="{{ asset('/uploads/brochures/'~p.images[0]) }}"
+                                    width="100"
+                                    height="70"
+                                    alt="Recent Post Pic"
+                            />
+
+                            #}
+                        </a>
+                        <div class="blog-info">
+                            <h6 class="blog-recent-post-title">
+                                <a href="{{ path('singlepost',{'id':p.id}) }}" class="text-body-heading">{{ p.title }}</a>
+                            </h6>
+                            <div class="text-muted mb-0">{{ p.createdAt|date("d-M-Y ") }} </div>
+                        </div>
+                    </div>
+
+                </div>
+            {% endif %}
+
+        {% endfor %}
+
+            <h6 class="section-label">Mes groupes</h6>
+
+            <div class="mt-1">
+
+                {% for group in app.user.groupPosts %}
+                {% if group.isValid ==1 %}
+                <div class="d-flex justify-content-start align-items-center mb-75">
+                    <a href="#" class="me-75">
+                        <div class="avatar bg-light-primary rounded">
+                            <div class="avatar-content">
+                                <img class="img-fluid" src="{{ asset('/uploads/brochures/'~group.image) }}" alt="{{ group.image }}" draggable="false" oncontextmenu="return false;" />
+
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="blog-category-title text-body">{{  group.nomGroupe }}</div>
+                    </a>
+                </div>
+       {% endif %}
+{% endfor %}
+
+
+            </div>
+        </div>
+
+
+
+
+    <!--/ Categories -->
 
 
 
@@ -469,10 +533,8 @@
 
 
 
-
-
-
-    <div style="   display: flex;
+  {#
+  <div  style="   display: flex;
   flex-wrap: wrap;
   list-style: none;
   margin: 0;
@@ -482,8 +544,7 @@
             {% if group.isValid ==1 %}
 
   {#  {% if app.user.id is same as group.user.id %} #}
-
-
+{#
         <div class="col-lg-2">
                     <article class="material-card Red">
                         <h2>
@@ -527,7 +588,9 @@ Ajouter
 {% endif %}
 
     {% endfor %}
-    </div>
+  {#  </div>
+#}
+
 <br/>
     <div style="   display: flex;
   flex-wrap: wrap;
@@ -590,6 +653,10 @@ Ajouter
     <br/>
 <br/>
     <div class="col-xs1">
+
+
+
+
         <p>Rechercher des publications dans tes groupes !!</p>
         <form id="filters">
 
@@ -911,4 +978,7 @@ Ajouter
 <script src="{{ asset('js/filters.js') }}">
     // filtrage recherche
 </script>
+
+
+
 {% endblock %}

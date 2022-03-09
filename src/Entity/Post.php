@@ -107,12 +107,7 @@ class Post
      */
     private $likes;
 
-    /**
-     * @Assert\NotBlank
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups("post:read")
-     */
-    private $image;
+
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -134,10 +129,18 @@ class Post
      */
     private $groupPost;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="post",cascade={"persist"},cascade={"remove"})
+     */
+    private $images;
+
+
+
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
         $this->likes = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
 
@@ -339,17 +342,7 @@ class Post
             return $this->getPost();
     }
 */
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
 
-    public function setImage(?string $image): self
-    {
-        $this->image = $image;
-
-        return $this;
-    }
 
     /**
      * @return mixed
@@ -403,6 +396,36 @@ class Post
     public function setGroupPost(?GroupPost $groupPost): self
     {
         $this->groupPost = $groupPost;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Images>
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Images $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Images $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getPost() === $this) {
+                $image->setPost(null);
+            }
+        }
 
         return $this;
     }

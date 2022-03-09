@@ -26,11 +26,13 @@ class PostType extends AbstractType
               'label' => 'Ecrire ....',
           ])
            // ->add('image', FileType::class, array('label' => 'Image(image)'))
-            ->add('image', FileType::class, array(
-                'label' => 'Charger une image ',
-                'required' => false,
-               'data_class' => null
-            ))
+
+            ->add('images', FileType::class,[
+                'label' => false,
+                'multiple' => true,
+                'mapped' => false,
+                'required' => false
+            ])
            // ->add('created_at')
          //   ->add('active')
          //   ->add('user')
