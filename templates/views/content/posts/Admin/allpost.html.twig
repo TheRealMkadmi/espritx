@@ -64,6 +64,9 @@
                                 Contenue
                             </th>
                             <th>
+                                Images
+                            </th>
+                            <th>
                                 date de creation
                             </th>
 
@@ -97,6 +100,23 @@
                                 </td>
 
                                 <td><small class="emp_post text-muted">{{ post.content }}</small></td>
+<td>
+                                {% for image in post.images  %}
+                                    <figure itemprop="associatedMedia" itemscope
+                                            itemtype="http://schema.org/ImageObject">
+                                        <a href="{{ asset('/uploads/brochures/'~image.name) }}"
+                                           itemprop="contentUrl" data-size="964x1024">
+                                            <div class="inner">
+                                                <img class="rounded"
+                                                     src="{{ asset('/uploads/brochures/'~image.name) }}"
+                                                     style="width: 50px;height: 50px;"
+                                                     itemprop="thumbnail" alt="Image description"/>
+                                            </div>
+                                        </a>
+                                    </figure>
+                                {% endfor %}
+</td>
+
                                 <td><small class="emp_post text-muted">{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</small></td>
                                 <td>
                                     <div class="d-flex">
@@ -145,7 +165,7 @@
 
         <script>
             $("#MyButton").click(function() {
-            alert('Actualiser les alertes ?');
+            alert('Actualiser ?');
             $("#refreshDivID").load("#refreshDivID .reloaded-divs > *");
         });
 

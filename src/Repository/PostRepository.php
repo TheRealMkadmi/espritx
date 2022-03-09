@@ -99,4 +99,20 @@ $qb->andWhere('b.groupPost IN (:grps)')
 
         $query = $queryBuilder->getQuery();
         return $query->getResult();}
+
+    public function PostsMaxQuatre()
+    {
+
+
+        $queryBuilder = $this->createQueryBuilder('o')
+        ->select('o')
+            ->orderBy('o.created_at','DESC')
+            ->setMaxResults(4);
+
+        $query = $queryBuilder->getQuery();
+        return $query->getResult();}
+
 }
+
+
+

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Commentaire;
+use App\Entity\Images;
 use App\Entity\Post;
 use App\Entity\PostLike;
 use App\Entity\User;
@@ -106,21 +107,47 @@ class PostController extends AbstractController
       $now = new \DateTimeImmutable('now');
       $post = new Post();
       $form1 = $this->createForm(PostType::class, $post);
+
       $form1->handleRequest($request);
 
       $em = $this->getDoctrine()->getManager();
       if (($form1->isSubmitted() && $form1->isValid())) {
+
+
+          $images = $form1->get('images')->getData();
+
+          // On boucle sur les images
+          foreach($images as $image){
+              // On génère un nouveau nom de fichier
+              $fichier = md5(uniqid()).'.'.$image->guessExtension();
+
+              // On copie le fichier dans le dossier uploads
+              $image->move(
+                  $this->getParameter('imagesPost_directory'),
+                  $fichier
+              );
+
+              // On crée l'image dans la base de données
+              $img = new Images();
+              $img->setName($fichier);
+              $post->addImage($img);
+          }
+
+
           $a = $request->request->get('markers1');
           $b = $request->request->get('markers2');
           $post->setLongitude($a);
           $post->setLatitude($b);
-        $file = $form1->get('image')->getData();
+     /*   $file = $form1->get('image')->getData();
         $fileName = md5(uniqid()) . '.' . $file->guessExtension();
         $file->move(
           $this->getParameter('imagesPost_directory'),
           $fileName
+
+
         );
-        $post->setImage($fileName);
+      */
+       // $post->setImage($fileName);
         $post->setIsValid(0);
         $post->setIsDeleted(0);
 
@@ -128,9 +155,10 @@ class PostController extends AbstractController
         $post->setUpdatedAt($now);
 
         $post->setUser($repository->find($this->getUser()->getId()));
+        $em->persist($img );
         $em->persist($post);
         $em->flush();
-        $request->getSession()->getFlashBag()->add("info", "Publication ajoutée ");
+        $request->getSession()->getFlashBag()->add("info", "Publication ajoutée! mùais doit etre approuvée ar notre admin ");
 
 
         // $this->addFlash("info", "Publication ajoutée ");
@@ -187,11 +215,12 @@ class PostController extends AbstractController
       //   new File($this->getParameter('uploads/brochures').'/'.$post->getImage())
       //);
       $post->setUpdatedAt(new \DateTimeImmutable('now'));
+      $post->setIsValid(0);
       $post->setUser($repository->find($this->getUser()->getId()));
       $em->persist($post);
 
       $em->flush();
-        $request->getSession()->getFlashBag()->add("info", "Publication modifiée ");
+        $request->getSession()->getFlashBag()->add("info", "Publication bien modifiée! mais doit etre approuvée par notre admin ! ");
       return $this->redirectToRoute("acceuil_user_posts");
     }
     return $this->render('views/content/posts/User/editPost.html.twig', ['form' => $form1->createView()]);
@@ -261,13 +290,14 @@ class PostController extends AbstractController
     $commentaire = new Commentaire();
     $form = $this->createForm(CommentaireType::class, $commentaire);
 $limit=10;
+$limit2=4;
     // les filtres
       $filters= $request->get("allgroups");
     //  dd($request);
   //    dd($filters);
 
     $posts = $repository->getLatestPosts($limit,$filters);
-
+$recentP=$repository->PostsMaxQuatre();
     $allgroups=$groupPostRepository->findAll();
       $membre=$userRepository->find($this->getUser());
 
@@ -281,16 +311,16 @@ $limit=10;
 
 if($request->get('ajax')){
     return new JsonResponse([
-        'content'=>$this->renderView('views/content/posts/User/contentPosts.html.twig', ['mes_groups'=>$mesgrps,'comments' => $comments, 'posts' => $posts, 'form' => $form->createView()
+        'content'=>$this->renderView('views/content/posts/User/contentPosts.html.twig', ['recentP'=>$recentP,'mes_groups'=>$mesgrps,'comments' => $comments, 'posts' => $posts, 'form' => $form->createView()
         ])
 
     ]);
 }
 
 
-    return $this->render('views/content/posts/User/acceuilposts.html.twig', ['mes_groups'=>$mesgrps,'allgroups'=>$allgroups,'comments' => $comments, 'posts' => $posts, 'form' => $form->createView()]);
+    return $this->render('views/content/posts/User/acceuilposts.html.twig', ['recentP'=>$recentP,'mes_groups'=>$mesgrps,'allgroups'=>$allgroups,'comments' => $comments, 'posts' => $posts, 'form' => $form->createView()]);
 
-
+//     return $this->render('views/content/pages/page-profile.html.twig', ['mes_groups'=>$mesgrps,'allgroups'=>$allgroups,'comments' => $comments, 'posts' => $posts, 'form' => $form->createView()]);
   }
 /////////////////////////////////////////////////////////////////////////////////////////////// Commentaires /////////////////////////////////
 ///
@@ -678,5 +708,28 @@ public function statistiques(){
 
 }
 
+    /**
+     * @Route("/supprime/image/{id}", name="post_delete_image")
+     */
+    public function Supprimerimages (Images $image, Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
 
+        // On vérifie si le token est valide
+        if ($this->isCsrfTokenValid('delete' . $image->getId(), $data['_token'])) {
+            // On récupère le nom de l'image
+            $nom = $image->getName();
+            // On supprime le fichier
+            unlink($this->getParameter('images_directory') . '/' . $nom);
+
+            // On supprime l'entrée de la base
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($image);
+            $em->flush();
+
+            // On répond en json
+            return new JsonResponse(['success' => 1]);
+        }
+
+}
 }

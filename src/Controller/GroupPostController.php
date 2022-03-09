@@ -126,7 +126,7 @@ class GroupPostController extends AbstractController
                 $post->setUser($repository->find($this->getUser()->getId()));
                 $em->persist($post);
                 $em->flush();
-                $request->getSession()->getFlashBag()->add("info", "Publication ajoutée ");
+                $request->getSession()->getFlashBag()->add("info", "Publication ajoutée ! mais doit etre approuvée par notre admin .");
 
 
                 // $this->addFlash("info", "Publication ajoutée ");

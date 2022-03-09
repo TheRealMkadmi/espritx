@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=GroupPostRepository::class)
@@ -21,6 +23,13 @@ class GroupPost
     private $id;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 15,
+     *      minMessage = "le nom de votre groupe doit avoir au moins {{ limit }} caracteres ",
+     *      maxMessage = "le nom de votre groupe ne doit pas depasser  {{ limit }} caracteres"
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private $nomGroupe;
@@ -37,6 +46,9 @@ class GroupPost
     private $posts;
 
     /**
+     * @Assert\NotBlank
+     *
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $image;
@@ -63,6 +75,12 @@ class GroupPost
     private $isDeleted;
 
     /**
+     *@Assert\Length(
+     *      min = 5,
+     *      max = 2000,
+     *      minMessage = "le but de votre groupe doit avoir au moins {{ limit }} caracteres ",
+     *      maxMessage = "le but de votre groupe ne doit pas depasser  {{ limit }} caracteres"
+     * )
      * @ORM\Column(type="text")
      */
     private $but;

@@ -62,7 +62,7 @@ class CallController extends AbstractController
             //dd($userCall);
             $entityManager->persist($call);
             $entityManager->flush();
-            $this->mailer->sendNewCallEmail("zicou@gmail.com",["call"=>$call]);
+            $this->mailer->sendNewCallEmail($userCall,["call"=>$call]);
             $this->addFlash('success', 'Les membres du call sont notifies par un mail !');
             $this->addFlash('notice', 'call ajouté avec succée !');
             return $this->redirectToRoute('indexCall');

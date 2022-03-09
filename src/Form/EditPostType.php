@@ -27,6 +27,12 @@ class EditPostType extends AbstractType
                 'help' => "merci d'accepter les regles d'utilisation",
                 'label' => 'Ecrire ....',
             ])
+            ->add('images', FileType::class,[
+                'label' => false,
+                'multiple' => true,
+                'mapped' => false,
+                'required' => false
+            ])
 
 
 
