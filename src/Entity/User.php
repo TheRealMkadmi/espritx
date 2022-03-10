@@ -62,6 +62,8 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
     $this->groupes = new ArrayCollection();
     $this->contacts = new ArrayCollection();
     $this->contacted_by = new ArrayCollection();
+    $this->messages = new ArrayCollection();
+    $this->channels = new ArrayCollection();
 
   }
 
@@ -490,7 +492,6 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
    * @ORM\OneToMany(targetEntity=Post::class, mappedBy="user", orphanRemoval=true)
    */
   private Collection $posts;
-
   /**
    * @return Collection|Post[]
    */
@@ -740,6 +741,16 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
     return $this;
   }
   //</editor-fold>
+  public function isEqualTo(UserInterface $user)
+  {
+    return $this->getUsername() === $user->getUsername();
+    // do we add check for password; or delegate the username uniqueness constraint to the database?
+  }
+
+  public function __toString(): string
+  {
+    return $this->email;
+  }
   //<editor-fold desc="User Call">
   /**
    * @ORM\OneToMany(targetEntity=Call::class, mappedBy="user")
@@ -876,6 +887,67 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
 
     return $this;
   }
+
+  /**
+   * @return Collection<int, Message>
+   */
+  public function getMessages(): Collection
+  {
+      return $this->messages;
+  }
+
+  public function addMessage(Message $message): self
+  {
+      if (!$this->messages->contains($message)) {
+          $this->messages[] = $message;
+          $message->setAuthor($this);
+      }
+
+      return $this;
+  }
+
+  public function removeMessage(Message $message): self
+  {
+      if ($this->messages->removeElement($message)) {
+          // set the owning side to null (unless already changed)
+          if ($message->getAuthor() === $this) {
+              $message->setAuthor(null);
+          }
+      }
+
+      return $this;
+  }
+
+  /**
+   * @ORM\ManyToMany(targetEntity=Channel::class, mappedBy="participants")
+   */
+  private $channels;
+  /**
+   * @return Collection<int, Channel>
+   */
+  public function getChannels(): Collection
+  {
+      return $this->channels;
+  }
+
+  public function addChannel(Channel $channel): self
+  {
+      if (!$this->channels->contains($channel)) {
+          $this->channels[] = $channel;
+          $channel->addParticipant($this);
+      }
+
+      return $this;
+  }
+
+  public function removeChannel(Channel $channel): self
+  {
+      if ($this->channels->removeElement($channel)) {
+          $channel->removeParticipant($this);
+      }
+
+      return $this;
+  }
   //</editor-fold>
   //<editor-fold desc="About">
   /**
@@ -897,18 +969,6 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
       return $this;
   }
   //</editor-fold>
-
-  public function isEqualTo(UserInterface $user)
-  {
-    return $this->getUsername() === $user->getUsername();
-    // do we add check for password; or delegate the username uniqueness constraint to the database?
-  }
-
-  public function __toString(): string
-  {
-    return $this->email;
-  }
-
 
   //<editor-fold desc="Contacts">
   /**

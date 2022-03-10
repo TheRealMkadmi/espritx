@@ -20,7 +20,12 @@ class TestController extends AbstractController
 
         return $this->render('index.html.twig', ['pageConfigs' => $pageConfigs]);
     }
-
+    /**
+     * @Route("/testuas",name="testuas")
+     */
+    public function testuas(){
+        return $this->render('views/content/_partials/_modals/modal-add-new-address.html.twig');
+    }
     // invoice list App
     /**
      * @Route("/app/invoice/list",name="app-invoice-list")

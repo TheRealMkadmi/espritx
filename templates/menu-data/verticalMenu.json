@@ -209,13 +209,13 @@
       "slug": "",
       "submenu": [
         {
-          "url": "conversation",
+          "_url": "conversation",
           "name": "Conversations",
           "icon": "circle",
           "slug": ""
         },
         {
-          "url": "message_show",
+          "_url": "message_show",
           "name": "Messages",
           "icon": "circle",
           "slug": ""
