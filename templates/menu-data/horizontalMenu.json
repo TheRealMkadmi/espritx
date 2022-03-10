@@ -26,7 +26,6 @@
       "icon": "message-circle",
       "slug": ""
     },
-
     {
       "name": "Calendar",
       "icon": "calendar",
@@ -35,9 +34,22 @@
     {
       "name": "Blog",
       "icon": "book-open",
-      "slug": ""
+      "slug": "",
+      "submenu": [
+        {
+          "url": "blog_post",
+          "name": "Visit",
+          "icon": "circle",
+          "slug": ""
+        },
+        {
+          "url": "newblogpost",
+          "name": "Create New",
+          "icon": "circle",
+          "slug": ""
+        }
+      ]
     },
-
     {
       "name": "Resources",
       "icon": "folder",

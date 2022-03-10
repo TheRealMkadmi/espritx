@@ -21,7 +21,6 @@
         }
       ]
     },
-
     {
       "navheader": "My Account",
       "slug": ""
@@ -51,7 +50,6 @@
       "icon": "rotate-cw",
       "slug": "Session-reload"
     },
-
     {
       "navheader": "User Management",
       "slug": ""
@@ -94,7 +92,6 @@
         }
       ]
     },
-
     {
       "navheader": "Groups Management",
       "slug": ""
@@ -111,7 +108,6 @@
       "icon": "file-text",
       "slug": "Posts"
     },
-
     {
       "navheader": "Calendar Management",
       "slug": ""
@@ -141,7 +137,6 @@
         }
       ]
     },
-
     {
       "navheader": "Services Management",
       "slug": ""
@@ -170,7 +165,6 @@
       "icon": "save",
       "slug": "app-file-manager"
     },
-
     {
       "navheader": "Contact",
       "slug": ""
@@ -181,6 +175,29 @@
       "icon": "folder",
       "slug": "Contact",
       "newTab": true
+    },
+    {
+      "navheader": "Forum",
+      "slug": ""
+    },
+    {
+      "name": "Post Categories",
+      "icon": "folder",
+      "slug": "",
+      "submenu": [
+        {
+          "url": "post_category",
+          "name": "View All",
+          "icon": "circle",
+          "slug": ""
+        },
+        {
+          "url": "newpostcategory",
+          "name": "Create New",
+          "icon": "circle",
+          "slug": ""
+        }
+      ]
     },
     {
       "navheader": "Communication",

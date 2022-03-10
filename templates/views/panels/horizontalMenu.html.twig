@@ -1,19 +1,19 @@
 {# {% set configData = Helper::applClasses()  %} #}
 {# Horizontal Menu #}
 <div class="horizontal-menu-wrapper">
-    <div class="header-navbar navbar-expand-sm navbar navbar-horizontal
+  <div class="header-navbar navbar-expand-sm navbar navbar-horizontal
   {{ configData['horizontalMenuClass'] }}
   {{ (configData['theme'] == 'dark') ? 'navbar-dark' : 'navbar-light' }}
   navbar-shadow menu-border
   {{ (configData['layoutWidth'] == 'boxed' and configData['horizontalMenuType']  == 'navbar-floating') ? 'container-xxl' : '' }}"
-         role="navigation"
-         data-menu="menu-wrapper"
-         data-menu-type="floating-nav">
-        <div class="navbar-header">
-            <ul class="nav navbar-nav flex-row">
-                <li class="nav-item me-auto">
-                    {# {{path('/')}} #}
-                    <a class="navbar-brand" href="#">
+       role="navigation"
+       data-menu="menu-wrapper"
+       data-menu-type="floating-nav">
+    <div class="navbar-header">
+      <ul class="nav navbar-nav flex-row">
+        <li class="nav-item me-auto">
+          {# {{path('/')}} #}
+          <a class="navbar-brand" href="#">
             <span class="brand-logo">
               <svg viewbox="0 0 139 95" version="1.1" xmlns="http://www.w3.org/2000/svg"
                    xmlns:xlink="http://www.w3.org/1999/xlink" height="24">
@@ -47,42 +47,38 @@
                 </g>
               </svg>
             </span>
-                        <h2 class="brand-text mb-0">Vuexy</h2>
-                    </a>
-                </li>
-                <li class="nav-item nav-toggle">
-                    <a class="nav-link modern-nav-toggle pe-0" data-bs-toggle="collapse">
-                        <i class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="shadow-bottom"></div>
-        <!-- Horizontal menu content-->
-        <div class="navbar-container main-menu-content" data-menu="menu-container">
-            <ul class="nav navbar-nav justify-content-center" id="main-menu-navigation" data-menu="menu-navigation">
-                {% set menuItems = menuData.horizontalMenuData %}
-                {% if menuItems is defined %}
-                    {% for menu in menuItems.menu %}
-                        {# {% set custom_classes="" %}
-                                {% if menu.classlist is defined %}
-                                    {% set custom_classes=menu.classlist %}
-                                {% endif %} #}
-                        <li class="nav-item {{ (menu.submenu is defined) ? 'dropdown' : "" }} {{ (menu.classlist is defined) ? menu.classlist : "" }} {{ (app.request.get('_route') == menu.slug) ? 'active' : '' }}"
-                                {{ (menu.submenu is defined) ? 'data-menu=dropdown' : "" }}>
-                            <a href="{{ (menu.url is defined)? url(menu.url):'#' }}"
-                               class="nav-link d-flex align-items-center {% if menu.submenu is defined %}{{ 'dropdown-toggle' }}{% endif %}"
-                               target="{{ (menu.newTab is defined) ? '_blank':'_self' }}" {% if menu.submenu is defined %}{{ 'data-bs-toggle=dropdown' }}{% endif %}>
-                                <i data-feather="{{ menu.icon }}"></i>
-                                <span>{{ menu.name }}</span>
-                            </a>
-                            {% if menu.submenu is defined %}
-                                {{ include('views/panels/horizontalSubmenu.html.twig', {'menu' : menu.submenu}) }}
-                            {% endif %}
-                        </li>
-                    {% endfor %}
-                {% endif %}
-            </ul>
-        </div>
+            <h2 class="brand-text mb-0">Vuexy</h2>
+          </a>
+        </li>
+        <li class="nav-item nav-toggle">
+          <a class="nav-link modern-nav-toggle pe-0" data-bs-toggle="collapse">
+            <i class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i>
+          </a>
+        </li>
+      </ul>
     </div>
+    <div class="shadow-bottom"></div>
+    <!-- Horizontal menu content-->
+    <div class="navbar-container main-menu-content" data-menu="menu-container">
+      <ul class="nav navbar-nav justify-content-center" id="main-menu-navigation" data-menu="menu-navigation">
+        {% set menuItems = menuData.horizontalMenuData %}
+        {% if menuItems is defined %}
+          {% for menu in menuItems.menu %}
+            <li class="nav-item {{ (menu.submenu is defined) ? 'dropdown' : "" }} {{ (menu.classlist is defined) ? menu.classlist : "" }} {{ (app.request.get('_route') == menu.slug) ? 'active' : '' }}"
+                {{ (menu.submenu is defined) ? 'data-menu=dropdown' : "" }}>
+              <a href="{{ (menu.url is defined)? url(menu.url):'#' }}"
+                 class="nav-link d-flex align-items-center {% if menu.submenu is defined %}{{ 'dropdown-toggle' }}{% endif %}"
+                 target="{{ (menu.newTab is defined) ? '_blank':'_self' }}" {% if menu.submenu is defined %}{{ 'data-bs-toggle=dropdown' }}{% endif %}>
+                <i data-feather="{{ menu.icon }}"></i>
+                <span>{{ menu.name }}</span>
+              </a>
+              {% if menu.submenu is defined %}
+                {{ include('views/panels/horizontalSubmenu.html.twig', {'menu' : menu.submenu}) }}
+              {% endif %}
+            </li>
+          {% endfor %}
+        {% endif %}
+      </ul>
+    </div>
+  </div>
 </div>
