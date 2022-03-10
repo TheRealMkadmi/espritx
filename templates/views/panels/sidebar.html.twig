@@ -1,54 +1,56 @@
 {# {% set configData = Helper::applClasses()%} #}
 
-<div class="main-menu menu-fixed {{ ((configData['theme'] == 'dark') or (configData['theme'] == 'semi-dark')) ? 'menu-dark' : 'menu-light' }} menu-accordion menu-shadow"
-     data-scroll-to-active="true">
-    <div class="navbar-header">
-        <ul class="nav navbar-nav flex-row">
-            <li class="nav-item me-auto">
-                <a class="navbar-brand" href="#">
+<div
+    class="main-menu menu-fixed {{ ((configData['theme'] == 'dark') or (configData['theme'] == 'semi-dark')) ? 'menu-dark' : 'menu-light' }} menu-accordion menu-shadow"
+    data-scroll-to-active="true">
+  <div class="navbar-header">
+    <ul class="nav navbar-nav flex-row">
+      <li class="nav-item me-auto">
+        <a class="navbar-brand" href="#">
           <span class="brand-logo">
                 <img class="img-fluid" src="{{ asset('images/pages/Logo.png') }}" alt="Logo"/>
           </span>
-                    <h2 class="brand-text">EspritX</h2>
-                </a>
-            </li>
-            <li class="nav-item nav-toggle">
-                <a class="nav-link modern-nav-toggle pe-0" data-toggle="collapse">
-                    <i class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i>
-                    <i class="d-none d-xl-block collapse-toggle-icon font-medium-4 text-primary" data-feather="disc"
-                       data-ticon="disc"></i>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div class="shadow-bottom"></div>
-    <div class="main-menu-content">
-        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            {% set menuItems = menuData.verticalMenuData %}
-            {% for menu in menuItems.menu %}
-                {% if menu.navheader is defined %}
-                    <li class="navigation-header">
-                        <span>{{ menu.navheader }}</span>
-                        <i data-feather="more-horizontal"></i>
-                    </li>
-                {% else %}
-                    <li class="nav-item {{ (menu.classlist is defined) ? menu.classlist : "" }} {{ (app.request.get('_route') == menu.slug) ? 'active' : '' }}">
-                        <a href="{{(menu.url is defined)? url(menu.url):'javascript:void(0)'}}"
-                           class="d-flex align-items-center" target="{{ (menu.newTab is defined) ? '_blank':'_self' }}">
-                            <i data-feather="{{ menu.icon }}"></i>
-                            <span class="menu-title text-truncate">{{ menu.name }}</span>
-                            {% if menu.badge is defined %}
-                                <span class="{{ (menu.badgeClass is defined) ? menu.badgeClass : "badge rounded-pill badge-light-primary ms-auto me-1" }}">{{ menu.badge }}</span>
-                            {% endif %}
-                        </a>
-                        {% if menu.submenu is defined %}
-                            {{ include('views/panels/submenu.html.twig', {'menu' : menu.submenu} ) }}
-                        {% endif %}
-                    </li>
-                {% endif %}
-            {% endfor %}
+          <h2 class="brand-text">EspritX</h2>
+        </a>
+      </li>
+      <li class="nav-item nav-toggle">
+        <a class="nav-link modern-nav-toggle pe-0" data-toggle="collapse">
+          <i class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i>
+          <i class="d-none d-xl-block collapse-toggle-icon font-medium-4 text-primary" data-feather="disc"
+             data-ticon="disc"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="shadow-bottom"></div>
+  <div class="main-menu-content">
+    <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+      {% set menuItems = menuData.verticalMenuData %}
+      {% for menu in menuItems.menu %}
+        {% if menu.navheader is defined %}
+          <li class="navigation-header">
+            <span>{{ menu.navheader }}</span>
+            <i data-feather="more-horizontal"></i>
+          </li>
+        {% else %}
+          <li class="nav-item {{ (menu.classlist is defined) ? menu.classlist : "" }} {{ (app.request.get('_route') == menu.slug) ? 'active' : '' }}">
+            <a href="{{ (menu.url is defined)? url(menu.url):'javascript:void(0)' }}"
+               class="d-flex align-items-center" target="{{ (menu.newTab is defined) ? '_blank':'_self' }}">
+              <i data-feather="{{ menu.icon }}"></i>
+              <span class="menu-title text-truncate">{{ menu.name }}</span>
+              {% if menu.badge is defined %}
+                <span
+                    class="{{ (menu.badgeClass is defined) ? menu.badgeClass : "badge rounded-pill badge-light-primary ms-auto me-1" }}">{{ menu.badge }}</span>
+              {% endif %}
+            </a>
+            {% if menu.submenu is defined %}
+              {{ include('views/panels/submenu.html.twig', {'menu' : menu.submenu} ) }}
+            {% endif %}
+          </li>
+        {% endif %}
+      {% endfor %}
 
-            {# Foreach menu item starts
+      {# Foreach menu item starts
       {% if menuData[0] is defined %}
       {% for menu in menuData[0].menu %}
       {% if menu.navheader is defined %}
@@ -82,8 +84,8 @@
       {% endfor %}
       {% endif %}
       {# Foreach menu item ends #}
-        </ul>
-    </div>
+    </ul>
+  </div>
 </div>
 <!-- END: Main Menu-.
 

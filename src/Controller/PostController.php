@@ -29,6 +29,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -298,7 +299,7 @@ class PostController extends AbstractController
     //    dd($filters);
 
     $posts = $repository->getLatestPosts($limit, $filters);
-    $recentP = $repository->PostsMaxQuatre();
+    $recentP = $repository->PostsMaxQuatre($limit2);
     $allgroups = $groupPostRepository->findAll();
     $membre = $userRepository->find($this->getUser());
 
@@ -515,59 +516,28 @@ class PostController extends AbstractController
    * @param Request $request
    * @return Response
    */
-  public function singlepost($id, PostRepository $repository, Request $request, \Swift_Mailer $mailer): Response
+  public function singlepost($id, PostRepository $repository, Request $request, MailerInterface $mailer): Response
   {
     $pub = $repository->find($id);
     $commentaire = new Commentaire();
     $form = $this->createForm(CommentaireType::class, $commentaire);
-
-
     $formcontact = $this->createForm(PostContactType::class);
-
-
     $contact = $formcontact->handleRequest($request);
-
     if ($formcontact->isSubmitted() && $formcontact->isValid()) {
-
-      // hadharna l mail
-
-
-      $message = (new \Swift_Message('Hello Email'))
-        ->setFrom($contact->get('email')->getData())
-        ->setTo($pub->getUser()->getEmail())
-        ->setBody(
-          $this->renderView(
-          // templates/emails/registration.html.twig
-            'views/content/posts/email/contact_post.html.twig',
-            [
-              'post' => $pub,
-              'mail' => $contact->get('email')->getData(),
-              'message' => $contact->get('message')->getData()
-            ]
-          ),
-          'text/html'
-        );
-
-
-      /*   $email = (new TemplatedEmail())
-             ->from($contact->get('email')->getData())
-             ->to($pub->getUser()->getEmail())
-             ->subject('Contact au sujet de votre post "' . $pub->getTitle() . '"')
-             ->htmlTemplate('views/content/posts/email/contact_post.html.twig')
-             ->context([
-                 'post' => $pub,
-                 'mail' => $contact->get('email')->getData(),
-                 'message' => $contact->get('message')->getData()
-             ]);*/
-      // nab3eth l mail
-      $mailer->send($message);
-      // on confirme et on redirige
+      $email = (new TemplatedEmail())
+        ->from(new Address($contact->get('email')->getData(), 'ESPRITx'))
+        ->to($pub->getUser()->getEmail())
+        ->subject('Your post has received a comment!')
+        ->htmlTemplate('views/content/posts/email/contact_post.html.twig')
+        ->context([
+          'post' => $pub,
+          'mail' => $contact->get('email')->getData(),
+          'message' => $contact->get('message')->getData()
+        ]);
+      $mailer->send($email);
       $this->addFlash('message', 'Votre email a bien envoyé ');
       return $this->redirectToRoute('singlepost', ['id' => $pub->getId()]);
-
     }
-
-
     return $this->render('views/content/posts/User/SinglPost.html.twig', ['formContact' => $formcontact->createView(), 'post' => $pub, 'form' => $form->createView()]);
   }
 
@@ -730,6 +700,17 @@ class PostController extends AbstractController
       // On répond en json
       return new JsonResponse(['success' => 1]);
     }
+
+  }
+
+  /**
+   * @Route ("/user/{id}/posts", name="user_posts")
+   */
+  public function ShowUsersPosts($id, PostRepository $postRepository, UserRepository $userRepository)
+  {
+    $user = $userRepository->find($id);
+    $posts = $postRepository->findBy(['user' => $user]);
+    dd($posts);
 
   }
 }

@@ -6,6 +6,7 @@ use App\Entity\Commentaire;
 use App\Entity\Group;
 use App\Entity\Permission;
 use App\Entity\Post;
+use App\Entity\PostCategory;
 use App\Entity\Service;
 use App\Entity\ServiceRequest;
 use App\Entity\User;
@@ -64,6 +65,7 @@ class AccessControlFixtures extends AbstractFixtureEx
           $this->aclService->GrantAccess(AccessType::EDIT(), Commentaire::class, $group);
           $this->aclService->GrantAccess(AccessType::READ(), User::class, $group);
           $this->aclService->GrantAccess(AccessType::READ(), Service::class, $group, "user.getGroups().contains(object.getRecipient())");
+          $this->aclService->GrantAccess(AccessType::get(AccessType::CREATE | AccessType::DELETE | AccessType::READ), PostCategory::class, $group);
           break;
         case GroupType::SITE_STAFF():
           $this->aclService->GrantAccess(AccessType::MANAGE(), User::class, $group);
@@ -73,6 +75,7 @@ class AccessControlFixtures extends AbstractFixtureEx
           $this->aclService->GrantAccess(AccessType::EDIT(), Commentaire::class, $group);
           $this->aclService->GrantAccess(AccessType::READ_CREATE_DELETE(), Post::class, $group);
           $this->aclService->GrantAccess(AccessType::EDIT(), Post::class, $group);
+          $this->aclService->GrantAccess(AccessType::get(AccessType::CREATE | AccessType::DELETE | AccessType::READ), PostCategory::class, $group);
           break;
         default:
           break;
