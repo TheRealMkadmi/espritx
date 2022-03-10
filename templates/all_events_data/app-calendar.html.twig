@@ -143,7 +143,7 @@
                     end:'dayGridMonth,timeGridWeek'
                 },
                 events: {{ event | raw }} ,
-                editable: true,
+                editable: false,
                 eventResizableFromStart: true,
                 selectable:true,
                 
@@ -156,7 +156,6 @@
                         info.event.extendedProps.description +' <br>'+
                         'Vous pouvez ' +
                         '<a href="/event/'+info.event.id+'/edit"><b>Modfier</b></a> <br>' +
-                        '<a href="/event/'+info.event.id+'/deactivate"><b>Desactiver</b></a> <br>'+
                         '<a href="/event/'+info.event.id+'/delete"><b>Supprimer</b></a> <br>', 
                     })
                     }

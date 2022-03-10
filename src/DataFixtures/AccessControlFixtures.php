@@ -2,7 +2,9 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Call;
 use App\Entity\Commentaire;
+use App\Entity\Event;
 use App\Entity\Group;
 use App\Entity\Permission;
 use App\Entity\Post;
@@ -46,6 +48,9 @@ class AccessControlFixtures extends AbstractFixtureEx
           $this->aclService->GrantAccess(AccessType::READ_CREATE(), Commentaire::class, $group);
           $this->aclService->GrantAccess(AccessType::EDIT(), Commentaire::class, $group, "object.getUser() == user");
           $this->aclService->GrantAccess(AccessType::READ(), User::class, $group, "object.getId() == user.getId()");
+          $this->aclService->GrantAccess(AccessType::READ(), Event::class, $group);
+          $this->aclService->GrantAccess(AccessType::READ(), Call::class, $group, "object.getUser() == user or object.getUsers().contains(user)");
+          $this->aclService->GrantAccess(AccessType::MANAGE(), Call::class, $group, "object.getUser() == user");
           break;
         case GroupType::TEACHERS():
           $this->aclService->GrantAccess(AccessType::READ_CREATE(), Post::class, $group);
@@ -54,7 +59,10 @@ class AccessControlFixtures extends AbstractFixtureEx
           $this->aclService->GrantAccess(AccessType::EDIT(), Commentaire::class, $group);
           $this->aclService->GrantAccess(AccessType::CREATE(), ServiceRequest::class, $group);
           $this->aclService->GrantAccess(AccessType::READ_EDIT(), ServiceRequest::class, $group);
+          $this->aclService->GrantAccess(AccessType::READ(), Event::class, $group);
+          $this->aclService->GrantAccess(AccessType::MANAGE(), Event::class, $group, "object.getUser() == user");
           $this->aclService->GrantAccess(AccessType::READ(), User::class, $group, "object.getId() == user.getId()");
+          $this->aclService->GrantAccess(AccessType::MANAGE(), Call::class, $group, "object.getUser() == user");
           break;
         case GroupType::FACULTY_STAFF():
           $this->aclService->GrantAccess(AccessType::READ_CREATE(), ServiceRequest::class, $group);
@@ -66,6 +74,10 @@ class AccessControlFixtures extends AbstractFixtureEx
           $this->aclService->GrantAccess(AccessType::READ(), User::class, $group);
           $this->aclService->GrantAccess(AccessType::READ(), Service::class, $group, "user.getGroups().contains(object.getRecipient())");
           $this->aclService->GrantAccess(AccessType::get(AccessType::CREATE | AccessType::DELETE | AccessType::READ), PostCategory::class, $group);
+          $this->aclService->GrantAccess(AccessType::READ(), Event::class, $group);
+          $this->aclService->GrantAccess(AccessType::MANAGE(), Event::class, $group, "object.getUser() == user");
+          $this->aclService->GrantAccess(AccessType::READ(), Call::class, $group, "object.getUser() == user or object.getUsers().contains(user)");
+          $this->aclService->GrantAccess(AccessType::MANAGE(), Call::class, $group, "object.getUser() == user");
           break;
         case GroupType::SITE_STAFF():
           $this->aclService->GrantAccess(AccessType::MANAGE(), User::class, $group);
@@ -76,6 +88,8 @@ class AccessControlFixtures extends AbstractFixtureEx
           $this->aclService->GrantAccess(AccessType::READ_CREATE_DELETE(), Post::class, $group);
           $this->aclService->GrantAccess(AccessType::EDIT(), Post::class, $group);
           $this->aclService->GrantAccess(AccessType::get(AccessType::CREATE | AccessType::DELETE | AccessType::READ), PostCategory::class, $group);
+          $this->aclService->GrantAccess(AccessType::MANAGE(), Event::class, $group);
+          $this->aclService->GrantAccess(AccessType::MANAGE(), Call::class, $group);
           break;
         default:
           break;
@@ -87,7 +101,8 @@ class AccessControlFixtures extends AbstractFixtureEx
     $this->addReferenceArray(self::LOADED_ROLE_FIXTURES, $testing_groups);
   }
 
-  private function GrantUserRelatedPermissions(Group $group){
+  private function GrantUserRelatedPermissions(Group $group)
+  {
 
   }
 }

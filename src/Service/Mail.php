@@ -28,7 +28,7 @@ class Mail{
     public function sendNewCallEmail($toMail , array $var)
     {
         $email = (new TemplatedEmail())
-            ->from("mohamedaziz.belhaj@esprit.tn")
+            ->from("postmaster@espritx.xyz")
             ->to(...$toMail)
             ->subject('You have new call')
             ->htmlTemplate('email/call.html.twig')
@@ -40,7 +40,7 @@ class Mail{
 
     public function sendDeactivatedEventEmail($toMail, array $var){
         $email = (new TemplatedEmail())
-            ->from("mohamedaziz.belhaj@esprit.tn")
+            ->from("postmaster@espritx.xyz")
             ->to(...$toMail)
             ->subject('An event has been deactivated')
             ->htmlTemplate('email/deactivatedevent.html.twig')
@@ -52,10 +52,10 @@ class Mail{
 
     public function sendDeactivatedCallEmail($toMail, array $var){
         $email = (new TemplatedEmail())
-            ->from("mohamedaziz.belhaj@esprit.tn")
+            ->from("postmaster@espritx.xyz")
             ->to(...$toMail)
             ->subject('A call has been deactivated')
-            ->htmlTemplate('email/deactivatedevent.html.twig')
+            ->htmlTemplate('email/deactivatedcall.html.twig')
             ->context(
                 $var
             );

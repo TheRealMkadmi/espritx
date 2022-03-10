@@ -106,10 +106,7 @@ class Event
      */
     private $user;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $status;
+
 
     public function getAllDay(): ?bool
     {
@@ -135,15 +132,5 @@ class Event
         return $this;
     }
 
-    public function getStatus(): ?bool
-    {
-        return $this->status;
-    }
 
-    public function setStatus(bool $status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
 }

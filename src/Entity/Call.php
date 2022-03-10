@@ -56,10 +56,7 @@ class Call
      */
     private $user;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $status;
+
 
     public function __construct()
     {
@@ -155,15 +152,5 @@ class Call
         return $this;
     }
 
-    public function getStatus(): ?bool
-    {
-        return $this->status;
-    }
 
-    public function setStatus(bool $status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
 }

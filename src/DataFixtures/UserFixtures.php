@@ -26,7 +26,7 @@ class UserFixtures extends AbstractFixtureEx implements DependentFixtureInterfac
     $testing_users = new ArrayCollection();
     /** @var Group $group */
     foreach ($groups as $group) {
-      for ($i = 0; $i < 1; $i++) {
+      for ($i = 0; $i < 10; $i++) {
         $user = new User();
         $user->addGroup($group);
         $user->setFirstName($generator->firstName);
