@@ -53,7 +53,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
 
     $this->events = new ArrayCollection();
     $this->calls = new ArrayCollection();
-
+    $this->identityType = DocumentIdentityTypeEnum::UNKNOWN();
     $this->avatar = new EmbeddedFile();
     $this->serviceRequests = new ArrayCollection();
     $this->UserCall = new ArrayCollection();
