@@ -41,10 +41,10 @@
                         <div class="active-chat {{ (currentchannel.id != -1) ? "" : "d-none" }}">
                             <!-- Chat Header -->
                             {% if currentchannel.id!=-1 %}
-                               {% set selecteduser=currentchannel.participants.0 %}
-                            {% for parts in currentchannel.participants %}
-                                {% if parts != app.user %}{% set selecteduser = parts %}{% endif %}
-                            {% endfor %}
+                                {% set selecteduser=currentchannel.participants.0 %}
+                                {% for parts in currentchannel.participants %}
+                                    {% if parts != app.user %}{% set selecteduser = parts %}{% endif %}
+                                {% endfor %}
                             {% endif %}
                             <div class="chat-navbar">
                                 <header class="chat-header">
@@ -52,10 +52,12 @@
                                         <div class="sidebar-toggle d-block d-lg-none me-1">
                                             <i data-feather="menu" class="font-medium-5"></i>
                                         </div>
-                                        {% if currentchannel.id!=-1 %}    <div class="avatar avatar-border user-profile-toggle m-0 me-1">
-                                            {% include "views/content/_partials/_fragments/user-avatar.html.twig" with {'user': selecteduser} %}
-                                        </div> {% endif %}
-                                        {% if currentchannel.id!=-1 %}     <h6 class="mb-0">{{ selecteduser.firstName ~ " " ~ selecteduser.lastName }}</h6> {% endif %}
+                                        {% if currentchannel.id!=-1 %}
+                                            <div class="avatar avatar-border user-profile-toggle m-0 me-1">
+                                                {% include "views/content/_partials/_fragments/user-avatar.html.twig" with {'user': selecteduser} %}
+                                            </div> {% endif %}
+                                        {% if currentchannel.id!=-1 %}     <h6
+                                                class="mb-0">{{ selecteduser.firstName ~ " " ~ selecteduser.lastName }}</h6> {% endif %}
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <i data-feather="phone-call"
@@ -91,135 +93,24 @@
                             <!-- User Chat messages -->
                             <div class="user-chats">
                                 <div class="chats">
-                                    <div class="chat">
-                                        <div class="chat-avatar">
-                              <span class="avatar box-shadow-1 cursor-pointer">
-                              <img
-                                      src="{{ asset('images/portrait/small/avatar-s-11.jpg') }}"
-                                      alt="avatar"
-                                      height="36"
-                                      width="36"
-                              />
-                              </span>
-                                        </div>
-                                        <div class="chat-body">
-                                            <div class="chat-content">
-                                                <p>How can we help? We're here for you! 😄</p>
+                                    {# todo process if empty #}
+
+                                    {% for block in partitionChatMessages(messages) %}
+                                        {% set block_author = (block|first).author %}
+                                        <div class="chat {{ (block_author != app.user) ? "chat-left" : "" }}">
+                                            <div class="chat-avatar ">
+                                                {% include "views/content/_partials/_fragments/user-avatar.html.twig" with {'user': block_author } %}
+                                            </div>
+                                            <div class="chat-body">
+                                                {% for message in block %}
+                                                    <div class="chat-content">
+                                                        <p>{{ message.content }}</p>
+                                                    </div>
+
+                                                {% endfor %}
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="chat chat-left">
-                                        <div class="chat-avatar">
-                              <span class="avatar box-shadow-1 cursor-pointer">
-                              <img src="{{ asset('images/portrait/small/avatar-s-7.jpg') }}" alt="avatar" height="36"
-                                   width="36"/>
-                              </span>
-                                        </div>
-                                        <div class="chat-body">
-                                            <div class="chat-content">
-                                                <p>Hey John, I am looking for the best admin template.</p>
-                                                <p>Could you please help me to find it out? 🤔</p>
-                                            </div>
-                                            <div class="chat-content">
-                                                <p>It should be Bootstrap 4 compatible.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="divider">
-                                        <div class="divider-text">Yesterday</div>
-                                    </div>
-                                    <div class="chat">
-                                        <div class="chat-avatar">
-                              <span class="avatar box-shadow-1 cursor-pointer">
-                              <img
-                                      src="{{ asset('images/portrait/small/avatar-s-11.jpg') }}"
-                                      alt="avatar"
-                                      height="36"
-                                      width="36"
-                              />
-                              </span>
-                                        </div>
-                                        <div class="chat-body">
-                                            <div class="chat-content">
-                                                <p>Absolutely!</p>
-                                            </div>
-                                            <div class="chat-content">
-                                                <p>Vuexy admin is the responsive bootstrap 4 admin template.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="chat chat-left">
-                                        <div class="chat-avatar">
-                              <span class="avatar box-shadow-1 cursor-pointer">
-                              <img src="{{ asset('images/portrait/small/avatar-s-7.jpg') }}" alt="avatar" height="36"
-                                   width="36"/>
-                              </span>
-                                        </div>
-                                        <div class="chat-body">
-                                            <div class="chat-content">
-                                                <p>Looks clean and fresh UI. 😃</p>
-                                            </div>
-                                            <div class="chat-content">
-                                                <p>It's perfect for my next project.</p>
-                                            </div>
-                                            <div class="chat-content">
-                                                <p>How can I purchase it?</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="chat">
-                                        <div class="chat-avatar">
-                              <span class="avatar box-shadow-1 cursor-pointer">
-                              <img
-                                      src="{{ asset('images/portrait/small/avatar-s-11.jpg') }}"
-                                      alt="avatar"
-                                      height="36"
-                                      width="36"
-                              />
-                              </span>
-                                        </div>
-                                        <div class="chat-body">
-                                            <div class="chat-content">
-                                                <p>Thanks, from ThemeForest.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="chat chat-left">
-                                        <div class="chat-avatar">
-                              <span class="avatar box-shadow-1 cursor-pointer">
-                              <img src="{{ asset('images/portrait/small/avatar-s-7.jpg') }}" alt="avatar" height="36"
-                                   width="36"/>
-                              </span>
-                                        </div>
-                                        <div class="chat-body">
-                                            <div class="chat-content">
-                                                <p>I will purchase it for sure. 👍</p>
-                                            </div>
-                                            <div class="chat-content">
-                                                <p>Thanks.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="chat">
-                                        <div class="chat-avatar">
-                              <span class="avatar box-shadow-1 cursor-pointer">
-                              <img
-                                      src="{{ asset('images/portrait/small/avatar-s-11.jpg') }}"
-                                      alt="avatar"
-                                      height="36"
-                                      width="36"
-                              />
-                              </span>
-                                        </div>
-                                        <div class="chat-body">
-                                            <div class="chat-content">
-                                                <p>Great, Feel free to get in touch on</p>
-                                            </div>
-                                            <div class="chat-content">
-                                                <p>https://pixinvent.ticksy.com/</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                             <!-- User Chat messages -->

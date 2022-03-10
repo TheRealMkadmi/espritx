@@ -28,12 +28,12 @@ class ChatController extends AbstractController
      * @Route("/", name="chat_index")
      */
     public function index()
-    {
+    {$messages=$this->getDoctrine()->getRepository(Message::class)->findAll();
         $channels = $this->getUser()->getChannels();
         $channel = new Channel();
         $channel->setId(-1);
         return $this->render("views/content/apps/chat/app-chat-ajax.html.twig", [
-            "channels" => $channels ?? [], "curuser" => $this->getUser(),"currentchannel"=>$channel
+            "channels" => $channels ?? [], "curuser" => $this->getUser(),"currentchannel"=>$channel, "messages"=>$messages
         ]);
     }
 
@@ -64,6 +64,7 @@ class ChatController extends AbstractController
      */
     public function showConversation(Request $request, Channel $channel): Response
     {
+        $messages=$this->getDoctrine()->getRepository(Message::class)->findByChannel($channel->getId());
         $user = $this->getUser();
         $channels = $user->getChannels();
         if(!$channel->getParticipants()->contains($user))
@@ -71,7 +72,8 @@ class ChatController extends AbstractController
         return $this->render("views/content/apps/chat/app-chat-ajax.html.twig", [
             "channels" => $channels,
             "curuser" => $user,
-            "currentchannel" => $channel
+            "currentchannel" => $channel,
+            "messages"=>$messages
         ]);
     }
 
