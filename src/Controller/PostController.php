@@ -298,7 +298,7 @@ class PostController extends AbstractController
     //    dd($filters);
 
     $posts = $repository->getLatestPosts($limit, $filters);
-    $recentP = $repository->PostsMaxQuatre();
+    $recentP = $repository->PostsMaxQuatre($limit2);
     $allgroups = $groupPostRepository->findAll();
     $membre = $userRepository->find($this->getUser());
 
@@ -732,4 +732,13 @@ class PostController extends AbstractController
     }
 
   }
+  /**
+   * @Route ("/user/{id}/posts", name="user_posts")
+   */
+  public function ShowUsersPosts($id,PostRepository $postRepository,UserRepository $userRepository){
+      $user=$userRepository->find($id);
+      $posts=$postRepository->findBy(['user'=>$user]);
+      dd($posts);
+
+}
 }

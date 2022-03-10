@@ -130,7 +130,7 @@ class Post
     private $groupPost;
 
     /**
-     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="post",cascade={"persist"},cascade={"remove"})
+     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="post",cascade={"remove"},cascade={"persist"})
      */
     private $images;
 

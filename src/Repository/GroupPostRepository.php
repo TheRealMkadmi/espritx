@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Commentaire;
 use App\Entity\GroupPost;
 use App\Entity\Post;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -86,8 +88,4 @@ class GroupPostRepository extends ServiceEntityRepository
         $em->flush();
         return $groupPost;
     }
-
-
-
-
 }
