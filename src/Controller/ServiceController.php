@@ -93,6 +93,8 @@ class ServiceController extends AbstractController
         return $this->render('views/content/apps/administrativeService/Requests/Affiche.html.twig', [
             'breadcrumbs' => [
                 ["name" => "Management"],
+                ["name" => "All Services"],
+                ["name" => $ser->getName(), "link" => ""],
             ],
             'SerReq' => $SerReq,
             'ser'=>$ser,

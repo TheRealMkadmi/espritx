@@ -18,7 +18,7 @@
         <!-- list and filter start -->
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Manage requests {{ ser.Name }}</h4>
+                <h4 class="card-title">Manage requests [{{ ser.Name }}]</h4>
             </div>
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-1">
@@ -28,20 +28,27 @@
                     <a class="btn btn-primary waves-effect waves-float waves-light" href="{{ url('ser_requests') }}">Show All</a>
                 </div>
                 <div class="table-responsive row">
-                    <table class="table table-hover">
+                    <table class="table">
                         <thead>
                         <tr>
                             <th>
-                                {{ 'Title' }}
+                                Title
+                                <sub >
+                                    Creation date
+                                </sub>
                             </th>
 
                             <th>
-                                {{ 'Type' }}
+                                Sender
                             </th>
 
                             <th>
                                 Status
+                                <sub class="sorted">
+                                    Last response date
+                                </sub>
                             </th>
+
 
                             <th>Actions</th>
                         </tr>
@@ -51,12 +58,16 @@
                             <tr>
                                 <td>
                                     <!-- BEGIN: Title and creation date-->
-                                    <div class="d-flex justify-content-left align-items-center">
-                                        <div class="d-flex flex-column">
+
+                                    <a href="{{ url("SerivceReq_Show", {id: requests.id}) }}">
+                                        <div class="d-flex justify-content-left align-items-center">
+                                            <div class="d-flex flex-column">
                                                 <span class="fw-bolder fs-6">{{ requests.Title }}</span>
-                                            {#  <small class="emp_post text-muted">{{ requests.Created_At }}</small>#}
+
+                                                <small class="emp_post text-muted">{{ requests.createdAt|date('Y-m-d H:i:s') }}</small>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </a>
                                     <!-- END: requests Title and Creation date-->
                                 </td>
                                 <td>
@@ -67,15 +78,27 @@
                                     </div>
                                 </td>
                                 <td>
+                                    <div class="d-flex justify-content-left align-items-center">
+                                        <div class="d-flex flex-column">
+                                            <span class="fw-bolder fs-6">{{ requests.Requester.firstName~" "~requests.Requester.lastName }}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
                                     <!-- BEGIN: requestStatus -->
-                                    {{ include('views/content/_partials/_fragments/user-status-pill.html.twig', {'userstatus': requests.Status}) }}
+                                    {{ include('views/content/apps/administrativeService/Requests/request-status-pill.html.twig', {'requeststatus': requests.Status}) }}
+                                    {% if requests.RespondedAt is not null %}
+                                        <small class="emp_post text-muted">{{ requests.RespondedAt|date('Y-m-d H:i:s') }}</small>
+                                    {% endif %}
                                     <!-- END: requestStatus -->
                                 </td>
                                 <td>
                                     <div class="d-flex">
-                                        <a href="{{ url("SerivceReq_Edit", {id: requests.id}) }}">
-                                            <i data-feather="edit-2" class="me-50"></i>
-                                        </a>
+                                        {% if (requests.Status != 'complete') %}
+                                            <a href="{{ url("SerivceReq_Respond", {id: requests.id}) }}">
+                                                <i data-feather="edit-2" class="me-50"></i>
+                                            </a>
+                                        {% endif %}
                                         <a href="{{ url("SerivceReq_Del", {id: requests.id}) }}">
                                             <i data-feather="trash" class="me-50"></i>
                                         </a>

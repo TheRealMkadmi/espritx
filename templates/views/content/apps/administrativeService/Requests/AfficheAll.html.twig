@@ -28,20 +28,31 @@
                     <a class="btn btn-primary waves-effect waves-float waves-light" href="{{ url('SerivceReq_Add') }}">Add</a>
                 </div>
                 <div class="table-responsive row">
-                    <table class="table table-hover">
+                    <table class="table">
                         <thead>
                         <tr>
                             <th{% if pagination.isSorted('sr.Title') %} class="sorted"{% endif %}>
                                 {{ knp_pagination_sortable(pagination, 'Title', 'sr.Title') }}
-                            </th>
-
-                            <th{% if pagination.isSorted('sr.Type') %} class="sorted"{% endif %}>
-                                {{ knp_pagination_sortable(pagination, 'Type', 'sr.Type') }}
+                                <sub {% if pagination.isSorted('sr.createdAt') %}class="sorted"{% endif %}>
+                                    {{ knp_pagination_sortable(pagination, 'Creation Date', 'sr.createdAt') }}
+                                </sub>
                             </th>
 
                             <th>
-                                Status
+                                Type
                             </th>
+
+                            <th>
+                                Sender
+                            </th>
+
+                            <th{% if pagination.isSorted('sr.Status') %} class="sorted"{% endif %}>
+                                {{ knp_pagination_sortable(pagination, 'Status', 'sr.Status') }}
+                                <sub {% if pagination.isSorted('sr.RespondedAt') %}class="sorted"{% endif %}>
+                                    {{ knp_pagination_sortable(pagination, 'Last Response Date', 'sr.RespondedAt') }}
+                                </sub>
+                            </th>
+
 
                             <th>Actions</th>
                         </tr>
@@ -52,21 +63,28 @@
                                 <td>
                                     <!-- BEGIN: Title and creation date-->
 
-                                    <a href="{{ url("SerivceReq_Edit", {id: requests.id}) }}">
-                                    <div class="d-flex justify-content-left align-items-center">
-                                        <div class="d-flex flex-column">
+                                    <a href="{{ url("SerivceReq_Show", {id: requests.id}) }}">
+                                        <div class="d-flex justify-content-left align-items-center">
+                                            <div class="d-flex flex-column">
                                                 <span class="fw-bolder fs-6">{{ requests.Title }}</span>
 
-                                             <small class="emp_post text-muted">{{ requests.createdAt|date('Y-m-d H:i:s') }}</small>
+                                                <small class="emp_post text-muted">{{ requests.createdAt|date('Y-m-d H:i:s') }}</small>
+                                            </div>
                                         </div>
-                                    </div>
                                     </a>
                                     <!-- END: requests Title and Creation date-->
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-left align-items-center">
                                         <div class="d-flex flex-column">
-                                                <span class="fw-bolder fs-6">{{ requests.Type }}</span>
+                                            <span class="fw-bolder fs-6">{{ requests.Type }}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-left align-items-center">
+                                        <div class="d-flex flex-column">
+                                            <span class="fw-bolder fs-6">{{ requests.Requester.firstName~" "~requests.Requester.lastName }}</span>
                                         </div>
                                     </div>
                                 </td>
@@ -74,21 +92,19 @@
                                     <!-- BEGIN: requestStatus -->
                                     {{ include('views/content/apps/administrativeService/Requests/request-status-pill.html.twig', {'requeststatus': requests.Status}) }}
                                     {% if requests.RespondedAt is not null %}
-                                    <small class="emp_post text-muted">{{ requests.RespondedAt|date('Y-m-d H:i:s') }}</small>
+                                        <small class="emp_post text-muted">{{ requests.RespondedAt|date('Y-m-d H:i:s') }}</small>
                                     {% endif %}
                                     <!-- END: requestStatus -->
                                 </td>
                                 <td>
                                     <div class="d-flex">
-                                        <a href="{{ url("SerivceReq_Edit", {id: requests.id}) }}">
-                                            <i data-feather="edit-2" class="me-50"></i>
-                                        </a>
+                                        {% if (requests.Status != 'complete') %}
+                                            <a href="{{ url("SerivceReq_Respond", {id: requests.id}) }}">
+                                                <i data-feather="edit-2" class="me-50"></i>
+                                            </a>
+                                        {% endif %}
                                         <a href="{{ url("SerivceReq_Del", {id: requests.id}) }}">
                                             <i data-feather="trash" class="me-50"></i>
-                                        </a>
-
-                                        <a href="{{ url("SerivceReq_Print", {id: requests.id}) }}">
-                                            <i data-feather="printer" class="me-50"></i>
                                         </a>
                                     </div>
                                 </td>

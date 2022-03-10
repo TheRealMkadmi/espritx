@@ -69,6 +69,7 @@ class SerRequestController extends AbstractController
         return $this->render('views/content/apps/administrativeService/Requests/AfficheAll.html.twig', [
             'breadcrumbs' => [
                 ["name" => "Management"],
+                ["name" => "All Services", "link" => ""]
             ],
             'pagination' => $pagination,
         ]);
@@ -178,6 +179,38 @@ class SerRequestController extends AbstractController
         return $this->render('views/content/apps/administrativeService/Requests/request-service-answer.html.twig', [
             'serreq' => $serreq,
             'form' => $form->createView(),
+            'role'=>"EDIT",
+        ]);
+    }
+
+    /**
+     * @Route ("/{id}/Show", name="SerivceReq_Show")
+     */
+
+    public function ShowServiceRequest(EntityManagerInterface $em, Request $request, ServiceRequest $serreq)
+    {
+        $form = $this->createForm(SerRequestType::class, $serreq);
+        $form->add('RequestResponse',TextareaType::class);
+        $form->remove('Title');
+        $form->remove('PictureFile');
+        $form->remove('AttachementsFile');
+        $form->remove('Type');
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($serreq->getStatus() != "unseen"){
+                $serreq->setRespondedAt(new DateTimeImmutable());
+            }
+            $em->flush();
+            return $this->redirectToRoute('ser_requests', [], Response::HTTP_SEE_OTHER);
+        }
+        return $this->render('views/content/apps/administrativeService/Requests/request-service-answer.html.twig', [
+            'breadcrumbs' => [
+                ["name" => $serreq->getRequester()],
+                ["name" => $serreq->getType(), "link" => ""]
+            ],
+            'serreq' => $serreq,
+            'form' => $form->createView(),
+            'role'=>"VIEW",
         ]);
     }
 }
