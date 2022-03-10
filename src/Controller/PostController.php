@@ -63,31 +63,31 @@ class PostController extends AbstractController
    * @return Response
    * @throws Exception
    */
-  public function afficher_tous_les_Post(PostRepository $repository, Request $request,SerializerInterface $serializer,PaginatorInterface $paginator ): Response
+  public function afficher_tous_les_Post(PostRepository $repository, Request $request, SerializerInterface $serializer, PaginatorInterface $paginator): Response
   {
 
-      $totalPubs=$repository->createQueryBuilder('a')
-          // Filter by some parameter if you want
-          ->where('a.isValid != 1 ')
-          ->select('count(a.id)')
-          ->getQuery()
-          ->getSingleScalarResult();
+    $totalPubs = $repository->createQueryBuilder('a')
+      // Filter by some parameter if you want
+      ->where('a.isValid != 1 ')
+      ->select('count(a.id)')
+      ->getQuery()
+      ->getSingleScalarResult();
 
-    $donnees = $this->getDoctrine()->getRepository(Post::class)->findBy([],[
-        'created_at'=>'desc'
+    $donnees = $this->getDoctrine()->getRepository(Post::class)->findBy([], [
+      'created_at' => 'desc'
     ]);
-    $posts=$paginator->paginate(
+    $posts = $paginator->paginate(
       $donnees, // n3adi les donnees
-    $request->query->getInt('page',1), // num l page
-    10
+      $request->query->getInt('page', 1), // num l page
+      10
     );
 
     //$json=$serializer->serialize($posts,'json',['groups'=>'posts']);
-   // dump($json);
-   // die;
+    // dump($json);
+    // die;
     return $this->render('views/content/posts/Admin/allpost.html.twig', [
-        'pubs'=>$totalPubs,
-        'posts' => $posts]);
+      'pubs' => $totalPubs,
+      'posts' => $posts]);
   }
 
 
@@ -114,40 +114,40 @@ class PostController extends AbstractController
       if (($form1->isSubmitted() && $form1->isValid())) {
 
 
-          $images = $form1->get('images')->getData();
+        $images = $form1->get('images')->getData();
 
-          // On boucle sur les images
-          foreach($images as $image){
-              // On génère un nouveau nom de fichier
-              $fichier = md5(uniqid()).'.'.$image->guessExtension();
+        // On boucle sur les images
+        foreach ($images as $image) {
+          // On génère un nouveau nom de fichier
+          $fichier = md5(uniqid()) . '.' . $image->guessExtension();
 
-              // On copie le fichier dans le dossier uploads
-              $image->move(
-                  $this->getParameter('imagesPost_directory'),
-                  $fichier
-              );
+          // On copie le fichier dans le dossier uploads
+          $image->move(
+            $this->getParameter('imagesPost_directory'),
+            $fichier
+          );
 
-              // On crée l'image dans la base de données
-              $img = new Images();
-              $img->setName($fichier);
-              $post->addImage($img);
-          }
-
-
-          $a = $request->request->get('markers1');
-          $b = $request->request->get('markers2');
-          $post->setLongitude($a);
-          $post->setLatitude($b);
-     /*   $file = $form1->get('image')->getData();
-        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
-        $file->move(
-          $this->getParameter('imagesPost_directory'),
-          $fileName
+          // On crée l'image dans la base de données
+          $img = new Images();
+          $img->setName($fichier);
+          $post->addImage($img);
+        }
 
 
-        );
-      */
-       // $post->setImage($fileName);
+        $a = $request->request->get('markers1');
+        $b = $request->request->get('markers2');
+        $post->setLongitude($a);
+        $post->setLatitude($b);
+        /*   $file = $form1->get('image')->getData();
+           $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+           $file->move(
+             $this->getParameter('imagesPost_directory'),
+             $fileName
+
+
+           );
+         */
+        // $post->setImage($fileName);
         $post->setIsValid(0);
         $post->setIsDeleted(0);
 
@@ -155,7 +155,7 @@ class PostController extends AbstractController
         $post->setUpdatedAt($now);
 
         $post->setUser($repository->find($this->getUser()->getId()));
-        $em->persist($img );
+        $em->persist($img);
         $em->persist($post);
         $em->flush();
         $request->getSession()->getFlashBag()->add("info", "Publication ajoutée! mùais doit etre approuvée ar notre admin ");
@@ -186,8 +186,9 @@ class PostController extends AbstractController
     // uniqid(), which is based on timestamps
     return md5(uniqid());
   }
-////////////////////Modifuer Post ////////////////////////////////////
-/// En tant qu'utilisateur, je veux modifier une publication.
+
+  ////////////////////Modifuer Post ////////////////////////////////////
+  /// En tant qu'utilisateur, je veux modifier une publication.
   /**
    * @Route("/post/edit/{id}", name="editpost")
    * @param Request $request
@@ -206,10 +207,10 @@ class PostController extends AbstractController
     // dd($post);
     $em = $this->getDoctrine()->getManager();
     if (($form1->isSubmitted() && $form1->isValid())) {
-        $a = $request->request->get('markers1');
-        $b = $request->request->get('markers2');
-        $post->setLongitude($a);
-        $post->setLatitude($b);
+      $a = $request->request->get('markers1');
+      $b = $request->request->get('markers2');
+      $post->setLongitude($a);
+      $post->setLatitude($b);
 
       // $post->setImage(
       //   new File($this->getParameter('uploads/brochures').'/'.$post->getImage())
@@ -220,7 +221,7 @@ class PostController extends AbstractController
       $em->persist($post);
 
       $em->flush();
-        $request->getSession()->getFlashBag()->add("info", "Publication bien modifiée! mais doit etre approuvée par notre admin ! ");
+      $request->getSession()->getFlashBag()->add("info", "Publication bien modifiée! mais doit etre approuvée par notre admin ! ");
       return $this->redirectToRoute("acceuil_user_posts");
     }
     return $this->render('views/content/posts/User/editPost.html.twig', ['form' => $form1->createView()]);
@@ -233,10 +234,10 @@ class PostController extends AbstractController
   /**
    * @Route("/user/post/changedelete/{id}",name="changedelete_post")
    */
-  public function supprimer_Post_user(Post $post, PostRepository $postRepository,Request $request)
+  public function supprimer_Post_user(Post $post, PostRepository $postRepository, Request $request)
   {
     $post = $postRepository->changeDelete($post);
-      $request->getSession()->getFlashBag()->add("info", "Publication supprimée");
+    $request->getSession()->getFlashBag()->add("info", "Publication supprimée");
     return $this->redirectToRoute('acceuil_user_posts');
     // return $this->json(["message"=>"success","value"=>$post->getIsDeleted()]);
   }
@@ -284,41 +285,41 @@ class PostController extends AbstractController
   /**
    * @Route("/acceuil/user/post",name="acceuil_user_posts")
    */
-  public function afficher_posts(UserRepository $userRepository,PostRepository $repository, Request $request, CommentaireRepository $commentaireRepository,GroupPostRepository  $groupPostRepository)
+  public function afficher_posts(UserRepository $userRepository, PostRepository $repository, Request $request, CommentaireRepository $commentaireRepository, GroupPostRepository $groupPostRepository)
   {
     // dd($request->getContent());
     $commentaire = new Commentaire();
     $form = $this->createForm(CommentaireType::class, $commentaire);
-$limit=10;
-$limit2=4;
+    $limit = 10;
+    $limit2 = 4;
     // les filtres
-      $filters= $request->get("allgroups");
+    $filters = $request->get("allgroups");
     //  dd($request);
-  //    dd($filters);
+    //    dd($filters);
 
-    $posts = $repository->getLatestPosts($limit,$filters);
-$recentP=$repository->PostsMaxQuatre();
-    $allgroups=$groupPostRepository->findAll();
-      $membre=$userRepository->find($this->getUser());
+    $posts = $repository->getLatestPosts($limit, $filters);
+    $recentP = $repository->PostsMaxQuatre();
+    $allgroups = $groupPostRepository->findAll();
+    $membre = $userRepository->find($this->getUser());
 
-   $mesgrps=  $membre->getGroupes();
-     //dd($mesgrps);
+    $mesgrps = $membre->getGroupes();
+    //dd($mesgrps);
     $comments = $repository->CommentsMaxQuatre();
 //dd($commentaire);
 
 
     $forms = [];
 
-if($request->get('ajax')){
-    return new JsonResponse([
-        'content'=>$this->renderView('views/content/posts/User/contentPosts.html.twig', ['recentP'=>$recentP,'mes_groups'=>$mesgrps,'comments' => $comments, 'posts' => $posts, 'form' => $form->createView()
+    if ($request->get('ajax')) {
+      return new JsonResponse([
+        'content' => $this->renderView('views/content/posts/User/contentPosts.html.twig', ['recentP' => $recentP, 'mes_groups' => $mesgrps, 'comments' => $comments, 'posts' => $posts, 'form' => $form->createView()
         ])
 
-    ]);
-}
+      ]);
+    }
 
 
-    return $this->render('views/content/posts/User/acceuilposts.html.twig', ['recentP'=>$recentP,'mes_groups'=>$mesgrps,'allgroups'=>$allgroups,'comments' => $comments, 'posts' => $posts, 'form' => $form->createView()]);
+    return $this->render('views/content/posts/User/acceuilposts.html.twig', ['recentP' => $recentP, 'mes_groups' => $mesgrps, 'allgroups' => $allgroups, 'comments' => $comments, 'posts' => $posts, 'form' => $form->createView()]);
 
 //     return $this->render('views/content/pages/page-profile.html.twig', ['mes_groups'=>$mesgrps,'allgroups'=>$allgroups,'comments' => $comments, 'posts' => $posts, 'form' => $form->createView()]);
   }
@@ -514,42 +515,38 @@ if($request->get('ajax')){
    * @param Request $request
    * @return Response
    */
-  public function singlepost($id, PostRepository $repository, Request $request,\Swift_Mailer $mailer): Response
+  public function singlepost($id, PostRepository $repository, Request $request, \Swift_Mailer $mailer): Response
   {
     $pub = $repository->find($id);
     $commentaire = new Commentaire();
     $form = $this->createForm(CommentaireType::class, $commentaire);
 
 
-      $formcontact= $this->createForm(PostContactType::class);
+    $formcontact = $this->createForm(PostContactType::class);
 
 
+    $contact = $formcontact->handleRequest($request);
+
+    if ($formcontact->isSubmitted() && $formcontact->isValid()) {
+
+      // hadharna l mail
 
 
-      $contact= $formcontact->handleRequest($request);
-
-     if($formcontact->isSubmitted() && $formcontact->isValid()) {
-
-         // hadharna l mail
-
-
-         $message = (new \Swift_Message('Hello Email'))
-             ->setFrom($contact->get('email')->getData())
-             ->setTo($pub->getUser()->getEmail())
-             ->setBody(
-                 $this->renderView(
-                 // templates/emails/registration.html.twig
-                     'views/content/posts/email/contact_post.html.twig',
-                     [
-                         'post' => $pub,
-                         'mail' => $contact->get('email')->getData(),
-                         'message' => $contact->get('message')->getData()
-                     ]
-                 ),
-                 'text/html'
-             );
-
-
+      $message = (new \Swift_Message('Hello Email'))
+        ->setFrom($contact->get('email')->getData())
+        ->setTo($pub->getUser()->getEmail())
+        ->setBody(
+          $this->renderView(
+          // templates/emails/registration.html.twig
+            'views/content/posts/email/contact_post.html.twig',
+            [
+              'post' => $pub,
+              'mail' => $contact->get('email')->getData(),
+              'message' => $contact->get('message')->getData()
+            ]
+          ),
+          'text/html'
+        );
 
 
       /*   $email = (new TemplatedEmail())
@@ -562,174 +559,177 @@ if($request->get('ajax')){
                  'mail' => $contact->get('email')->getData(),
                  'message' => $contact->get('message')->getData()
              ]);*/
-         // nab3eth l mail
-         $mailer->send($message);
-         // on confirme et on redirige
-         $this->addFlash('message','Votre email a bien envoyé ');
-         return $this->redirectToRoute('singlepost',['id'=>$pub->getId()]);
+      // nab3eth l mail
+      $mailer->send($message);
+      // on confirme et on redirige
+      $this->addFlash('message', 'Votre email a bien envoyé ');
+      return $this->redirectToRoute('singlepost', ['id' => $pub->getId()]);
 
-     }
+    }
 
 
-
-    return $this->render('views/content/posts/User/SinglPost.html.twig', ['formContact'=>$formcontact->createView(),'post' => $pub, 'form' => $form->createView()]);
+    return $this->render('views/content/posts/User/SinglPost.html.twig', ['formContact' => $formcontact->createView(), 'post' => $pub, 'form' => $form->createView()]);
   }
 
 
   ////////////////////////////////////// ///////////////////////////////   API /////////////////// //////////////////  //////////////
 
-    /**
-     * @Route("api/post/all", name="postall_api")
-     * @return Response
-     * @throws Exception
-     */
-    public function api_tous_les_Post(PostRepository $repository,NormalizerInterface $normalizer): Response
-    {
-        $posts = $repository->findAll();
-        $jsoncontent=$normalizer->normalize($posts,'json',['groups'=>'post:read']);
-        return new Response(json_encode(($jsoncontent)));
+  /**
+   * @Route("api/post/all", name="postall_api")
+   * @return Response
+   * @throws Exception
+   */
+  public function api_tous_les_Post(PostRepository $repository, NormalizerInterface $normalizer): Response
+  {
+    $posts = $repository->findAll();
+    $jsoncontent = $normalizer->normalize($posts, 'json', ['groups' => 'post:read']);
+    return new Response(json_encode(($jsoncontent)));
 
-    }
-    /**
-     * @Route ("api/addPost",name="addpost_api")
-     */
+  }
 
-    public function addPost_api(Request $request,NormalizerInterface $normalizer){
-        $now = new \DateTimeImmutable('now');
-        $donnees=json_decode($request->getContent());
-        $em=$this->getDoctrine()->getManager();
-        $post=new Post();
-        $post->setIsValid(0);
-        $post->setIsDeleted(0);
+  /**
+   * @Route ("api/addPost",name="addpost_api")
+   */
 
-        $post->setCreatedAt($now);
-        $post->setUpdatedAt($now);
-$user=$this->getDoctrine()->getRepository(User::class)->find(2);
-        $post->setUser($user);
-        $post->setTitle($donnees->title);
-        $post->setContent($donnees->content);
-
-        $em->persist($post);
-        $em->flush();
-//$jsoncontent=$normalizer->normalize($post,'json',['groups'=>'post:read']);
-
-        return new Response('post ajouté');
-
-    }
-
-/*
-    public function addPost_api(Request $request,SerializerInterface $serializer,EntityManagerInterface $entityManager){
-
-        $content=$request->getContent();
-
-        $data=$serializer->deserialize($content,Post::class,'json');
-        $entityManager->persist($data);
-        $entityManager->flush();
-        return new Response('post ajouté');
-
-    }
-*/
-    /**
-     * @param Request $request
-     * @param $id
-     * @param NormalizerInterface $normalizer
-     * @Route("/api/post/{id}" , name="api_post_id")
-     */
-
-
-    public function Post_By_Id_JSON(Request $request,$id,NormalizerInterface $normalizer){
-        $em=$this->getDoctrine()->getManager();
-        $post=$em->getRepository(Post::class)->find($id);
-        $jsoncontent=$normalizer->normalize($post,'json',['groups'=>'post:read']);
-        return new Response(json_encode(($jsoncontent)));
-    }
-
-    /**
-     * @param Request $request
-     * @param NormalizerInterface $normalizer
-     * @param $id
-
-     */
-
-
-    /**
-     * @param Request $request
-     * @param NormalizerInterface $normalizer
-     * @param $id
-     * @return Response
-     * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
-     * @Route("/api/updatePost/{id}",name="api_post_update")
-     */
-public function Update_Post_Json(Request $request,NormalizerInterface $normalizer,$id){
+  public function addPost_api(Request $request, NormalizerInterface $normalizer)
+  {
     $now = new \DateTimeImmutable('now');
-    $em= $this->getDoctrine()->getManager();
-    $post=$em->getRepository(Post::class)->find($id);
+    $donnees = json_decode($request->getContent());
+    $em = $this->getDoctrine()->getManager();
+    $post = new Post();
     $post->setIsValid(0);
     $post->setIsDeleted(0);
 
     $post->setCreatedAt($now);
     $post->setUpdatedAt($now);
-    $user=$this->getDoctrine()->getRepository(User::class)->find(2);
+    $user = $this->getDoctrine()->getRepository(User::class)->find(2);
+    $post->setUser($user);
+    $post->setTitle($donnees->title);
+    $post->setContent($donnees->content);
+
+    $em->persist($post);
+    $em->flush();
+//$jsoncontent=$normalizer->normalize($post,'json',['groups'=>'post:read']);
+
+    return new Response('post ajouté');
+
+  }
+
+  /*
+      public function addPost_api(Request $request,SerializerInterface $serializer,EntityManagerInterface $entityManager){
+
+          $content=$request->getContent();
+
+          $data=$serializer->deserialize($content,Post::class,'json');
+          $entityManager->persist($data);
+          $entityManager->flush();
+          return new Response('post ajouté');
+
+      }
+  */
+  /**
+   * @param Request $request
+   * @param $id
+   * @param NormalizerInterface $normalizer
+   * @Route("/api/post/{id}" , name="api_post_id")
+   */
+
+
+  public function Post_By_Id_JSON(Request $request, $id, NormalizerInterface $normalizer)
+  {
+    $em = $this->getDoctrine()->getManager();
+    $post = $em->getRepository(Post::class)->find($id);
+    $jsoncontent = $normalizer->normalize($post, 'json', ['groups' => 'post:read']);
+    return new Response(json_encode(($jsoncontent)));
+  }
+
+  /**
+   * @param Request $request
+   * @param NormalizerInterface $normalizer
+   * @param $id
+   */
+
+
+  /**
+   * @param Request $request
+   * @param NormalizerInterface $normalizer
+   * @param $id
+   * @return Response
+   * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
+   * @Route("/api/updatePost/{id}",name="api_post_update")
+   */
+  public function Update_Post_Json(Request $request, NormalizerInterface $normalizer, $id)
+  {
+    $now = new \DateTimeImmutable('now');
+    $em = $this->getDoctrine()->getManager();
+    $post = $em->getRepository(Post::class)->find($id);
+    $post->setIsValid(0);
+    $post->setIsDeleted(0);
+
+    $post->setCreatedAt($now);
+    $post->setUpdatedAt($now);
+    $user = $this->getDoctrine()->getRepository(User::class)->find(2);
     $post->setUser($user);
     $post->setTitle($request->get('title'));
     $post->setContent($request->get('content'));
     $em->flush();
-    $content=$normalizer->normalize($post,'json',['groups'=>'post:read']);
-    return new Response("Post bien modifié".json_encode($content));
+    $content = $normalizer->normalize($post, 'json', ['groups' => 'post:read']);
+    return new Response("Post bien modifié" . json_encode($content));
 
 
-}
+  }
 
-    /**
-     * @param Request $request
-     * @param NormalizerInterface $normalizer
-     * @param $id
-     * Route("/api/DeletePost/{id}",name="api_delete_post", methods={"DELETE"})
-     * @return Response
-     * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
-     */
+  /**
+   * @param Request $request
+   * @param NormalizerInterface $normalizer
+   * @param $id
+   * Route("/api/DeletePost/{id}",name="api_delete_post", methods={"DELETE"})
+   * @return Response
+   * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
+   */
 
-public function deletePost_Json(NormalizerInterface $normalizer,$id){
+  public function deletePost_Json(NormalizerInterface $normalizer, $id)
+  {
 
-    $em=$this->getDoctrine()->getManager();
-    $post=$em->getRepository(Post::class)->find($id);
+    $em = $this->getDoctrine()->getManager();
+    $post = $em->getRepository(Post::class)->find($id);
     $em->remove($post);
     $em->flush();
-    $content=$normalizer->normalize($post,'json',['groups'=>'post:read']);
-    return new Response("Post bien eté supprimé".json_encode($content));
-}
+    $content = $normalizer->normalize($post, 'json', ['groups' => 'post:read']);
+    return new Response("Post bien eté supprimé" . json_encode($content));
+  }
 
-    /**
+  /**
+   * @Route("/stats", name="stats")
+   */
+  public function statistiques()
+  {
+    return $this->render('views/content/posts/Admin/stats.html.twig');
 
-     * @Route("/stats", name="stats")
-     */
-public function statistiques(){
-    return  $this->render('views/content/posts/Admin/stats.html.twig');
+  }
 
-}
+  /**
+   * @Route("/supprime/image/{id}", name="post_delete_image")
+   */
+  public function Supprimerimages(Images $image, Request $request)
+  {
+    $data = json_decode($request->getContent(), true);
 
-    /**
-     * @Route("/supprime/image/{id}", name="post_delete_image")
-     */
-    public function Supprimerimages (Images $image, Request $request)
-    {
-        $data = json_decode($request->getContent(), true);
+    // On vérifie si le token est valide
+    if ($this->isCsrfTokenValid('delete' . $image->getId(), $data['_token'])) {
+      // On récupère le nom de l'image
+      $nom = $image->getName();
+      // On supprime le fichier
+      unlink($this->getParameter('images_directory') . '/' . $nom);
 
-        // On vérifie si le token est valide
-        if ($this->isCsrfTokenValid('delete' . $image->getId(), $data['_token'])) {
-            // On récupère le nom de l'image
-            $nom = $image->getName();
-            // On supprime le fichier
-            unlink($this->getParameter('images_directory') . '/' . $nom);
+      // On supprime l'entrée de la base
+      $em = $this->getDoctrine()->getManager();
+      $em->remove($image);
+      $em->flush();
 
-            // On supprime l'entrée de la base
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($image);
-            $em->flush();
+      // On répond en json
+      return new JsonResponse(['success' => 1]);
+    }
 
-            // On répond en json
-            return new JsonResponse(['success' => 1]);
-        }
-
-}
+  }
 }

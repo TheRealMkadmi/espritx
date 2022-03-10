@@ -60,6 +60,8 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
     $this->postCategories = new ArrayCollection();
     $this->groupPosts = new ArrayCollection();
     $this->groupes = new ArrayCollection();
+    $this->contacts = new ArrayCollection();
+    $this->contacted_by = new ArrayCollection();
 
   }
 
@@ -880,6 +882,9 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
    * @ORM\Column(type="string", length=255, nullable=true)
    */
   private $about;
+
+
+
   public function getAbout(): ?string
   {
       return $this->about;
@@ -903,4 +908,67 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   {
     return $this->email;
   }
+
+
+  //<editor-fold desc="Contacts">
+  /**
+   * @ORM\ManyToMany(targetEntity=User::class, inversedBy="contacted_by")
+   */
+  private $contacts;
+  /**
+   * @return Collection<int, self>
+   */
+  public function getContacts(): Collection
+  {
+      return $this->contacts;
+  }
+
+  public function addContact(self $contact): self
+  {
+      if (!$this->contacts->contains($contact)) {
+          $this->contacts[] = $contact;
+      }
+
+      return $this;
+  }
+
+  public function removeContact(self $contact): self
+  {
+      $this->contacts->removeElement($contact);
+
+      return $this;
+  }
+  //</editor-fold>
+  //<editor-fold desc="Contacted By">
+  /**
+   * @ORM\ManyToMany(targetEntity=User::class, mappedBy="contacts")
+   */
+  private $contacted_by;
+  /**
+   * @return Collection<int, self>
+   */
+  public function getContactedBy(): Collection
+  {
+      return $this->contacted_by;
+  }
+
+  public function addContactedBy(self $contactedBy): self
+  {
+      if (!$this->contacted_by->contains($contactedBy)) {
+          $this->contacted_by[] = $contactedBy;
+          $contactedBy->addContact($this);
+      }
+
+      return $this;
+  }
+
+  public function removeContactedBy(self $contactedBy): self
+  {
+      if ($this->contacted_by->removeElement($contactedBy)) {
+          $contactedBy->removeContact($this);
+      }
+
+      return $this;
+  }
+  //</editor-fold>
 }

@@ -79,16 +79,25 @@
                     </li>
                     <li class="nav-item">
                       <a class="nav-link fw-bold" id="show-qc-qr" href="#">
-                        <span class="d-none d-md-block">Show QuickConeect™ Code</span>
+                        <span class="d-none d-md-block">Show QuickConnect™ Code</span>
                         <i data-feather="info" class="d-block d-md-none"></i>
                       </a>
                     </li>
                   </ul>
                   <!-- edit button -->
-                  <button class="btn btn-primary">
-                    <i data-feather="edit" class="d-block d-md-none"></i>
-                    <span class="fw-bold d-none d-md-block">Add Contact</span>
-                  </button>
+                  {% if user != app.user %}
+                    {% if user in app.user.contacts %}
+                      <a href="{{ url("remove_contact", {"id" : user.id}) }}" class="btn btn-primary add-contact-btn">
+                        <i data-feather="edit" class="d-block d-md-none"></i>
+                        <span class="fw-bold d-none d-md-block">Remove Contact</span>
+                      </a>
+                    {% else %}
+                      <a href="{{ url("add_contact", {"id" : user.id}) }}" class="btn btn-primary add-contact-btn">
+                        <i data-feather="edit" class="d-block d-md-none"></i>
+                        <span class="fw-bold d-none d-md-block">Add Contact</span>
+                      </a>
+                    {% endif %}
+                  {% endif %}
                 </div>
               </div>
               <!--/ collapse  -->
@@ -141,75 +150,30 @@
           <!-- suggestion pages -->
           <div class="card">
             <div class="card-body profile-suggestion">
-              <h5 class="mb-2">Suggested Pages</h5>
+              <h5 class="mb-2">Suggested Contacts</h5>
               <!-- user suggestions -->
-              <div class="d-flex justify-content-start align-items-center mb-1">
-                <div class="avatar me-1">
-                  <img src="{{ asset('images/avatars/12-small.png') }}" alt="avatar img" height="40" width="40"/>
+              {% for contact in makeFriendSuggestions(user) %}
+                <div class="d-flex justify-content-start align-items-center mb-1">
+                  {% include "views/content/_partials/_fragments/user-avatar.html.twig" with {'user': contact} %}
+                  <div class="ms-1 profile-user-info">
+                    <h6 class="mb-0">{{ contact.firstName ~ " " ~ contact.lastName }}</h6>
+                    {% set commonFriendsNumber = countCommonContacts(app.user, contact) %}
+                    {% if commonFriendsNumber > 0 %}
+                      <small class="text-muted"> {{ commonFriendsNumber }} Mutual Friends</small>
+                    {% endif %}                  </div>
+                  {% if user in app.user.contacts %}
+                    <a href="{{ url('remove_contact', {"id": contact.id}) }}"
+                       class="btn btn-primary btn-icon btn-sm ms-auto">
+                      <i data-feather="user-x"></i>
+                    </a>
+                  {% else %}
+                    <a href="{{ url('add_contact', {"id": contact.id}) }}"
+                       class="btn btn-primary btn-icon btn-sm ms-auto">
+                      <i data-feather="user-plus"></i>
+                    </a>
+                  {% endif %}
                 </div>
-                <div class="profile-user-info">
-                  <h6 class="mb-0">Peter Reed</h6>
-                  <small class="text-muted">Company</small>
-                </div>
-                <div class="profile-star ms-auto"><i data-feather="star" class="font-medium-3"></i></div>
-              </div>
-              <!-- user suggestions -->
-              <div class="d-flex justify-content-start align-items-center mb-1">
-                <div class="avatar me-1">
-                  <img src="{{ asset('images/avatars/1-small.png') }}" alt="avatar" height="40" width="40"/>
-                </div>
-                <div class="profile-user-info">
-                  <h6 class="mb-0">Harriett Adkins</h6>
-                  <small class="text-muted">Company</small>
-                </div>
-                <div class="profile-star ms-auto"><i data-feather="star" class="font-medium-3"></i></div>
-              </div>
-              <!-- user suggestions -->
-              <div class="d-flex justify-content-start align-items-center mb-1">
-                <div class="avatar me-1">
-                  <img src="{{ asset('images/avatars/10-small.png') }}" alt="avatar" height="40" width="40"/>
-                </div>
-                <div class="profile-user-info">
-                  <h6 class="mb-0">Juan Weaver</h6>
-                  <small class="text-muted">Company</small>
-                </div>
-                <div class="profile-star ms-auto"><i data-feather="star" class="font-medium-3"></i></div>
-              </div>
-              <!-- user suggestions -->
-              <div class="d-flex justify-content-start align-items-center mb-1">
-                <div class="avatar me-1">
-                  <img src="{{ asset('images/avatars/3-small.png') }}" alt="avatar img" height="40" width="40"/>
-                </div>
-                <div class="profile-user-info">
-                  <h6 class="mb-0">Claudia Chandler</h6>
-                  <small class="text-muted">Company</small>
-                </div>
-                <div class="profile-star ms-auto"><i data-feather="star" class="font-medium-3"></i></div>
-              </div>
-              <!-- user suggestions -->
-              <div class="d-flex justify-content-start align-items-center mb-1">
-                <div class="avatar me-1">
-                  <img src="{{ asset('images/avatars/5-small.png') }}" alt="avatar img" height="40" width="40"/>
-                </div>
-                <div class="profile-user-info">
-                  <h6 class="mb-0">Earl Briggs</h6>
-                  <small class="text-muted">Company</small>
-                </div>
-                <div class="profile-star ms-auto">
-                  <i data-feather="star" class="profile-favorite font-medium-3"></i>
-                </div>
-              </div>
-              <!-- user suggestions -->
-              <div class="d-flex justify-content-start align-items-center">
-                <div class="avatar me-1">
-                  <img src="{{ asset('images/avatars/6-small.png') }}" alt="avatar img" height="40" width="40"/>
-                </div>
-                <div class="profile-user-info">
-                  <h6 class="mb-0">Jonathan Lyons</h6>
-                  <small class="text-muted">Beauty Store</small>
-                </div>
-                <div class="profile-star ms-auto"><i data-feather="star" class="font-medium-3"></i></div>
-              </div>
+              {% endfor %}
             </div>
           </div>
           <!--/ suggestion pages -->
@@ -823,403 +787,84 @@
 
         <!-- right profile info section -->
         <div class="col-lg-3 col-12 order-3">
-          <!-- latest profile pictures -->
+          <!-- social circles -->
           <div class="card">
             <div class="card-body">
-              <h5 class="mb-0">Latest Photos</h5>
-              <div class="row">
-                <div class="col-md-4 col-6 profile-latest-img">
-                  <a href="#">
-                    <img
-                        src="{{ asset('images/profile/user-uploads/user-13.jpg') }}"
-                        class="img-fluid rounded"
-                        alt="avatar img"
-                    />
-                  </a>
-                </div>
-                <div class="col-md-4 col-6 profile-latest-img">
-                  <a href="#">
-                    <img
-                        src="{{ asset('images/profile/user-uploads/user-02.jpg') }}"
-                        class="img-fluid rounded"
-                        alt="avatar img"
-                    />
-                  </a>
-                </div>
-                <div class="col-md-4 col-6 profile-latest-img">
-                  <a href="#">
-                    <img
-                        src="{{ asset('images/profile/user-uploads/user-03.jpg') }}"
-                        class="img-fluid rounded"
-                        alt="avatar img"
-                    />
-                  </a>
-                </div>
-                <div class="col-md-4 col-6 profile-latest-img">
-                  <a href="#">
-                    <img
-                        src="{{ asset('images/profile/user-uploads/user-04.jpg') }}"
-                        class="img-fluid rounded"
-                        alt="avatar img"
-                    />
-                  </a>
-                </div>
-                <div class="col-md-4 col-6 profile-latest-img">
-                  <a href="#">
-                    <img
-                        src="{{ asset('images/profile/user-uploads/user-05.jpg') }}"
-                        class="img-fluid rounded"
-                        alt="avatar img"
-                    />
-                  </a>
-                </div>
-                <div class="col-md-4 col-6 profile-latest-img">
-                  <a href="#">
-                    <img
-                        src="{{ asset('images/profile/user-uploads/user-06.jpg') }}"
-                        class="img-fluid rounded"
-                        alt="avatar img"
-                    />
-                  </a>
-                </div>
-                <div class="col-md-4 col-6 profile-latest-img">
-                  <a href="#">
-                    <img
-                        src="{{ asset('images/profile/user-uploads/user-07.jpg') }}"
-                        class="img-fluid rounded"
-                        alt="avatar img"
-                    />
-                  </a>
-                </div>
-                <div class="col-md-4 col-6 profile-latest-img">
-                  <a href="#">
-                    <img
-                        src="{{ asset('images/profile/user-uploads/user-08.jpg') }}"
-                        class="img-fluid rounded"
-                        alt="avatar img"
-                    />
-                  </a>
-                </div>
-                <div class="col-md-4 col-6 profile-latest-img">
-                  <a href="#">
-                    <img
-                        src="{{ asset('images/profile/user-uploads/user-09.jpg') }}"
-                        class="img-fluid rounded"
-                        alt="avatar img"
-                    />
-                  </a>
-                </div>
-              </div>
+              <h5 class="mb-1">Circles</h5>
+              {% if user.groupes|length > 0 %}
+                {% for groupe in user.groupes %}
+                  <div class="flex">
+                    <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
+                      {% for group_member in groupe.membre.slice(0,2) %}
+                        <li
+                            data-bs-toggle="tooltip"
+                            data-popup="tooltip-custom"
+                            data-bs-placement="top"
+                            title="{{ group_member.firstName~' '~group_member.lastName }}"
+                            class="avatar-sm pull-up"
+                        >
+                          {% include "views/content/_partials/_fragments/user-avatar.html.twig" with {'user': group_member} %}
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                  <a href="#"><span>{{ groupe.nomGroupe }}</span></a>
+                {% endfor %}
+              {% else %}
+                <span>This user doesn't seem very social, or just hates groups. <a
+                      href="#">Maybe them for a chat?</a></span>
+              {% endif %}
             </div>
           </div>
-          <!--/ latest profile pictures -->
+          <!-- /social circles -->
 
-          <!-- suggestion -->
+          <!-- contacts -->
           <div class="card">
             <div class="card-body">
-              <h5>Suggestions</h5>
-              <div class="d-flex justify-content-start align-items-center mt-2">
-                <div class="avatar me-75">
-                  <img
-                      src="{{ asset('images/portrait/small/avatar-s-9.jpg') }}"
-                      alt="avatar"
-                      height="40"
-                      width="40"
-                  />
-                </div>
-                <div class="profile-user-info">
-                  <h6 class="mb-0">Peter Reed</h6>
-                  <small class="text-muted">6 Mutual Friends</small>
-                </div>
-                <button type="button" class="btn btn-primary btn-icon btn-sm ms-auto">
-                  <i data-feather="user-plus"></i>
-                </button>
-              </div>
-              <div class="d-flex justify-content-start align-items-center mt-1">
-                <div class="avatar me-75">
-                  <img
-                      src="{{ asset('images/portrait/small/avatar-s-6.jpg') }}"
-                      alt="avtar img holder"
-                      height="40"
-                      width="40"
-                  />
-                </div>
-                <div class="profile-user-info">
-                  <h6 class="mb-0">Harriett Adkins</h6>
-                  <small class="text-muted">3 Mutual Friends</small>
-                </div>
-                <button type="button" class="btn btn-primary btn-sm btn-icon ms-auto">
-                  <i data-feather="user-plus"></i>
-                </button>
-              </div>
-              <div class="d-flex justify-content-start align-items-center mt-1">
-                <div class="avatar me-75">
-                  <img
-                      src="{{ asset('images/portrait/small/avatar-s-7.jpg') }}"
-                      alt="avatar"
-                      height="40"
-                      width="40"
-                  />
-                </div>
-                <div class="profile-user-info">
-                  <h6 class="mb-0">Juan Weaver</h6>
-                  <small class="text-muted">1 Mutual Friends</small>
-                </div>
-                <button type="button" class="btn btn-sm btn-primary btn-icon ms-auto">
-                  <i data-feather="user-plus"></i>
-                </button>
-              </div>
-              <div class="d-flex justify-content-start align-items-center mt-1">
-                <div class="avatar me-75">
-                  <img
-                      src="{{ asset('images/portrait/small/avatar-s-8.jpg') }}"
-                      alt="avatar img"
-                      height="40"
-                      width="40"
-                  />
-                </div>
-                <div class="profile-user-info">
-                  <h6 class="mb-0">Claudia Chandler</h6>
-                  <small class="text-muted">16 Mutual Friends</small>
-                </div>
-                <button type="button" class="btn btn-sm btn-primary btn-icon ms-auto">
-                  <i data-feather="user-plus"></i>
-                </button>
-              </div>
-              <div class="d-flex justify-content-start align-items-center mt-1">
-                <div class="avatar me-75">
-                  <img
-                      src="{{ asset('images/portrait/small/avatar-s-1.jpg') }}"
-                      alt="avatar img"
-                      height="40"
-                      width="40"
-                  />
-                </div>
-                <div class="profile-user-info">
-                  <h6 class="mb-0">Earl Briggs</h6>
-                  <small class="text-muted">4 Mutual Friends</small>
-                </div>
-                <button type="button" class="btn btn-sm btn-primary btn-icon ms-auto">
-                  <i data-feather="user-plus"></i>
-                </button>
-              </div>
-              <div class="d-flex justify-content-start align-items-center mt-1">
-                <div class="avatar me-75">
-                  <img
-                      src="{{ asset('images/portrait/small/avatar-s-10.jpg') }}"
-                      alt="avatar img"
-                      height="40"
-                      width="40"
-                  />
-                </div>
-                <div class="profile-user-info">
-                  <h6 class="mb-0">Jonathan Lyons</h6>
-                  <small class="text-muted">25 Mutual Friends</small>
-                </div>
-                <button type="button" class="btn btn-sm btn-primary btn-icon ms-auto">
-                  <i data-feather="user-plus"></i>
-                </button>
-              </div>
+              <h5>Contacts</h5>
+              {% if user.contacts|length > 0 %}
+                {% for contact in user.contacts.slice(0, 10) %}
+                  <div class="d-flex justify-content-start align-items-center mt-2 me-1">
+                    {% include "views/content/_partials/_fragments/user-avatar.html.twig" with {'user': contact} %}
+                    <div class="profile-user-info">
+                      <h6 class="mb-0">{{ contact.firstName ~ " " ~ contact.lastName }}</h6>
+                      {% set commonContactsNumber = countCommonContacts(app.user, contact) %}
+                      {% if commonContactsNumber > 0 %}
+                        <small class="text-muted"> {{ commonContactsNumber }} Mutual Friends</small>
+                      {% endif %}
+                    </div>
+                    {% if user in app.user.contacts %}
+                      <a href="{{ url('remove_contact', {"id": contact.id}) }}"
+                         class="btn btn-primary btn-icon btn-sm ms-auto">
+                        <i data-feather="user-x"></i>
+                      </a>
+                    {% else %}
+                      <a href="{{ url('add_contact', {"id": contact.id}) }}"
+                         class="btn btn-primary btn-icon btn-sm ms-auto">
+                        <i data-feather="user-plus"></i>
+                      </a>
+                    {% endif %}
+                  </div>
+                {% endfor %}
+              {% else %}
+                <span>No one here.. Maybe they're just a rockstar?</span>
+              {% endif %}
             </div>
           </div>
           <!--/ suggestion -->
+        </div>
+        <!--/ right profile info section -->
+      </div>
 
-          <!-- polls card -->
-          <div class="card">
-            <div class="card-body">
-              <h5 class="mb-1">Polls</h5>
-              <p class="card-text mb-0">Who is the best actor in Marvel Cinematic Universe?</p>
-
-              <!-- polls -->
-              <div class="profile-polls-info mt-2">
-                <!-- custom radio -->
-                <div class="d-flex justify-content-between">
-                  <div class="form-check">
-                    <input type="radio" id="bestActorPoll1" name="bestActorPoll" class="form-check-input"/>
-                    <label class="form-check-label" for="bestActorPoll1">RDJ</label>
-                  </div>
-                  <div class="text-end">82%</div>
-                </div>
-                <!--/ custom radio -->
-
-                <!-- progressbar -->
-                <div class="progress progress-bar-primary my-50">
-                  <div
-                      class="progress-bar"
-                      role="progressbar"
-                      aria-valuenow="58"
-                      aria-valuemin="58"
-                      aria-valuemax="100"
-                  "
-                  >
-                </div>
-              </div>
-              <!--/ progressbar -->
-
-              <!-- avatar group with tooltip -->
-              <div class="avatar-group my-1">
-                <div
-                    data-bs-toggle="tooltip"
-                    data-popup="tooltip-custom"
-                    data-bs-placement="bottom"
-                    title="Tonia Seabold"
-                    class="avatar pull-up"
-                >
-                  <img
-                      src="{{ asset('images/portrait/small/avatar-s-12.jpg') }}"
-                      alt="Avatar"
-                      height="26"
-                      width="26"
-                  />
-                </div>
-                <div
-                    data-bs-toggle="tooltip"
-                    data-popup="tooltip-custom"
-                    data-bs-placement="bottom"
-                    title="Carissa Dolle"
-                    class="avatar pull-up"
-                >
-                  <img
-                      src="{{ asset('images/portrait/small/avatar-s-5.jpg') }}"
-                      alt="Avatar"
-                      height="26"
-                      width="26"
-                  />
-                </div>
-                <div
-                    data-bs-toggle="tooltip"
-                    data-popup="tooltip-custom"
-                    data-bs-placement="bottom"
-                    title="Kelle Herrick"
-                    class="avatar pull-up"
-                >
-                  <img
-                      src="{{ asset('images/portrait/small/avatar-s-9.jpg') }}"
-                      alt="Avatar"
-                      height="26"
-                      width="26"
-                  />
-                </div>
-                <div
-                    data-bs-toggle="tooltip"
-                    data-popup="tooltip-custom"
-                    data-bs-placement="bottom"
-                    title="Len Bregantini"
-                    class="avatar pull-up"
-                >
-                  <img
-                      src="{{ asset('images/portrait/small/avatar-s-10.jpg') }}"
-                      alt="Avatar"
-                      height="26"
-                      width="26"
-                  />
-                </div>
-                <div
-                    data-bs-toggle="tooltip"
-                    data-popup="tooltip-custom"
-                    data-bs-placement="bottom"
-                    title="John Doe"
-                    class="avatar pull-up"
-                >
-                  <img
-                      src="{{ asset('images/portrait/small/avatar-s-11.jpg') }}"
-                      alt="Avatar"
-                      height="26"
-                      width="26"
-                  />
-                </div>
-              </div>
-              <!--/ avatar group with tooltip -->
-            </div>
-
-            <div class="profile-polls-info mt-2">
-              <div class="d-flex justify-content-between">
-                <!-- custom radio -->
-                <div class="form-check">
-                  <input type="radio" id="bestActorPoll2" name="bestActorPoll" class="form-check-input"/>
-                  <label class="form-check-label" for="bestActorPoll2">Chris Hemswort</label>
-                </div>
-                <!--/ custom radio -->
-                <div class="text-end">67%</div>
-              </div>
-              <!-- progressbar -->
-              <div class="progress progress-bar-primary my-50">
-                <div
-                    class="progress-bar"
-                    role="progressbar"
-                    aria-valuenow="16"
-                    aria-valuemin="16"
-                    aria-valuemax="100"
-                "
-                >
-              </div>
-            </div>
-            <!--/ progressbar -->
-
-            <!-- avatar group with tooltips -->
-            <div class="avatar-group mt-1">
-              <div
-                  data-bs-toggle="tooltip"
-                  data-popup="tooltip-custom"
-                  data-bs-placement="bottom"
-                  title="Liliana Pecor"
-                  class="avatar pull-up"
-              >
-                <img
-                    src="{{ asset('images/portrait/small/avatar-s-9.jpg') }}"
-                    alt="Avatar"
-                    height="26"
-                    width="26"
-                />
-              </div>
-              <div
-                  data-bs-toggle="tooltip"
-                  data-popup="tooltip-custom"
-                  data-bs-placement="bottom"
-                  title="Kasandra NaleVanko"
-                  class="avatar pull-up"
-              >
-                <img
-                    src="{{ asset('images/portrait/small/avatar-s-1.jpg') }}"
-                    alt="Avatar"
-                    height="26"
-                    width="26"
-                />
-              </div>
-              <div
-                  data-bs-toggle="tooltip"
-                  data-popup="tooltip-custom"
-                  data-bs-placement="bottom"
-                  title="Jonathan Lyons"
-                  class="avatar pull-up"
-              >
-                <img
-                    src="{{ asset('images/portrait/small/avatar-s-8.jpg') }}"
-                    alt="Avatar"
-                    height="26"
-                    width="26"
-                />
-              </div>
-            </div>
-            <!--/ avatar group with tooltips-->
-          </div>
-          <!--/ polls -->
+      <!-- reload button -->
+      <div class="row">
+        <div class="col-12 text-center">
+          <button type="button" class="btn btn-sm btn-primary block-element border-0 mb-1">Load More</button>
         </div>
       </div>
-      <!--/ polls card -->
-  </div>
-  <!--/ right profile info section -->
-  </div>
-
-  <!-- reload button -->
-  <div class="row">
-    <div class="col-12 text-center">
-      <button type="button" class="btn btn-sm btn-primary block-element border-0 mb-1">Load More</button>
-    </div>
-  </div>
-  <!--/ reload button -->
-  </section>
-  <!--/ profile info section -->
+      <!--/ reload button -->
+    </section>
+    <!--/ profile info section -->
   </div>
 {% endblock %}
 

@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
@@ -32,26 +34,36 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     $this->_em->flush();
   }
 
-  public function getCountByStatus(){
+  public function getCountByStatus()
+  {
     $res = $this->createQueryBuilder('u')
       ->groupBy("u.userStatus")
       ->select("u.userStatus as status, COUNT(u) as cnt")
       ->getQuery()
       ->getResult();
     $ret = [];
-    foreach ($res as $user_status){
+    foreach ($res as $user_status) {
       $ret[strtolower((string)$user_status["status"])] = $user_status["cnt"];
     }
     $ret["total"] = array_sum(array_values($ret));
     return $ret;
   }
-    public function findbyId($value): ?User
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.id = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-            ;
+
+  /**
+   * @param User $user1
+   * @param User $user2
+   * @return User[]
+   */
+  public function getCommonContacts(User $user1, User $user2): array
+  {
+    return array_intersect($user1->getContacts()->toArray(), $user2->getContacts()->toArray());
+  }
+
+  public function makeFriendSuggestions(User $user){
+    $pool = [];
+    foreach ($user->getGroups() as $group){
+      $pool = array_merge($group->getMembers()->toArray(), $pool);
     }
+    return $pool;
+  }
 }
