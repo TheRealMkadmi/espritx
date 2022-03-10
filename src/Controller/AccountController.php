@@ -76,6 +76,15 @@ class AccountController extends AbstractController
   }
 
   /**
+   * @Route("/me", name="show_my_profile")
+   */
+  public function show_user_account(Request $request): Response
+  {
+    return $this->render('views/content/pages/page-profile.html.twig', [
+      "user" => $this->getUser()
+    ]);
+  }
+  /**
    * @Route("/profile/{id}", name="show_user_profile")
    * @ParamConverter("user", class="App\Entity\User")
    */
