@@ -28,12 +28,13 @@ class ChatController extends AbstractController
      * @Route("/", name="chat_index")
      */
     public function index()
-    {$messages=$this->getDoctrine()->getRepository(Message::class)->findAll();
+    {
+        $messages = $this->getDoctrine()->getRepository(Message::class)->findAll();
         $channels = $this->getUser()->getChannels();
         $channel = new Channel();
         $channel->setId(-1);
         return $this->render("views/content/apps/chat/app-chat-ajax.html.twig", [
-            "channels" => $channels ?? [], "curuser" => $this->getUser(),"currentchannel"=>$channel, "messages"=>$messages
+            "channels" => $channels ?? [], "curuser" => $this->getUser(), "currentchannel" => $channel, "messages" => $messages
         ]);
     }
 
@@ -52,7 +53,7 @@ class ChatController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('chat_index', [], Response::HTTP_SEE_OTHER);
         }
-        return $this->render("views/content/apps/chat/ChannelForm.html.twig", [
+        return $this->render("views/content/apps/Conversation/ConvForm.html.twig", [
             "channels" => $channels ?? [], 'form' => $form->createView(),
         ]);
     }
@@ -64,16 +65,16 @@ class ChatController extends AbstractController
      */
     public function showConversation(Request $request, Channel $channel): Response
     {
-        $messages=$this->getDoctrine()->getRepository(Message::class)->findByChannel($channel->getId());
+        $messages = $this->getDoctrine()->getRepository(Message::class)->findByChannel($channel->getId());
         $user = $this->getUser();
         $channels = $user->getChannels();
-        if(!$channel->getParticipants()->contains($user))
+        if (!$channel->getParticipants()->contains($user))
             throw new AccessDeniedException("User $user is not part of this channel.");
         return $this->render("views/content/apps/chat/app-chat-ajax.html.twig", [
             "channels" => $channels,
             "curuser" => $user,
             "currentchannel" => $channel,
-            "messages"=>$messages
+            "messages" => $messages
         ]);
     }
 
@@ -90,9 +91,8 @@ class ChatController extends AbstractController
         $em->persist($message);
         $em->flush();
         $update = new Update(
-            'conversation-11',
-            json_encode(['status' => 'OutOfStock'], JSON_THROW_ON_ERROR)
-        );
+            "http://example.com/books/1",
+            json_encode(['status' => 'OutOfStock'], JSON_THROW_ON_ERROR));
         $hub->publish($update);
         return new Response('published!');
     }
@@ -104,11 +104,10 @@ class ChatController extends AbstractController
     {
         $update = new Update(
             'http://example.com/books/1',
-            json_encode(['status' => 'OutOfStock'], JSON_THROW_ON_ERROR)
+            json_encode(['status' => 'OutOfStock'])
         );
-
-        $hub->publish($update);
-
+        $res = $hub->publish($update);
+        dd($res);
         return new Response('published!');
     }
 }

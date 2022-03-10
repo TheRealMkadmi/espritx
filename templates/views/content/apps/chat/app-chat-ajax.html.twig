@@ -96,6 +96,7 @@
                                     {# todo process if empty #}
 
                                     {% for block in partitionChatMessages(messages) %}
+
                                         {% set block_author = (block|first).author %}
                                         <div class="chat {{ (block_author != app.user) ? "chat-left" : "" }}">
                                             <div class="chat-avatar ">
@@ -244,7 +245,7 @@
         }
 
         // On message reception
-        const eventSource = new EventSource('https://45-79-249-222.ip.linodeusercontent.com/.well-known/mercure?topic=' + encodeURIComponent('http://example.com/books/1'));
+        const eventSource = new EventSource('https://45-79-249-222.ip.linodeusercontent.com/.well-known/mercure?topic=' + encodeURIComponent('conversation-1'));
         eventSource.onmessage = event => {
             let data = JSON.parse(event.data);
             if (/\S/.test(data.message)) {

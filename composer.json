@@ -90,7 +90,8 @@
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
             "symfony/flex": true,
-            "phpstan/extension-installer": true
+            "phpstan/extension-installer": true,
+            "endroid/installer": true
         },
         "preferred-install": {
             "*": "dist"
