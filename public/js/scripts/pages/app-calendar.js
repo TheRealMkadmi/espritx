@@ -63,7 +63,6 @@ var direction = "ltr", assetPath = "../../../app-assets/";
                     templateResult: x,
                     templateSelection: x,
                     escapeMarkup: function (e) {
-                        return e
                     }
                 })
         }

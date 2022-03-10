@@ -227,20 +227,23 @@
                 //     })
                 // }
                 eventClick: function(info) {
-                   
+                    console.log(info)
                     Swal.fire({
                     title: info.event.title,
                     icon: 'info',
-                   {#  html:
+                     html:
+                         info.event.extendedProps.description +' <br>'+
                         'Vous pouvez ' +
-                        '<a href="{{ path('updatecall', {'id':info.event.id}) }}"><b>Modfier</b></a> ' +
-                        '<a href="{{ path('deleteCall', {'id':info.event.id}) }}"><b>Supprimer</b></a>', #}
+                        '<a href="/call/'+info.event.id+'/edit"><b>Modfier</b></a> <br>' +
+                        '<a href="/call/'+info.event.id+'/deactivate"><b>Desactiver</b></a> <br>'+
+                        '<a href="/call/'+info.event.id+'/delete"><b>Supprimer</b></a> <br>', 
                     })
                     }
                    
 
             })
             console.log(calendar)
+            let today = new Date()
             calendar.on('eventChange',(e)=> {
                 console.log("event change",e)
                 let url = `/api/${e.event.id}/editcall`
@@ -251,10 +254,14 @@
                     "end": e.event.end,
                     
                 }
+                if(donnees.start > today){
                 console.log("Call to put in the calendar",donnees)
                 let xhr = new XMLHttpRequest
                 xhr.open("PUT",url)
-                xhr.send(JSON.stringify(donnees))
+                xhr.send(JSON.stringify(donnees))}
+                else{
+                    Swal.fire('Check start date again')
+                }
             })
             // lets try
 

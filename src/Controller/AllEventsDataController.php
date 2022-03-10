@@ -8,6 +8,8 @@ use App\Entity\Event;
 use App\Repository\CallRepository;
 use App\Repository\EventRepository;
 use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,9 +51,7 @@ class AllEventsDataController extends AbstractController
      */
     public function majEvent(?Event $event, Request $request)
     {
-        
         $donnees = json_decode($request->getContent());
-        
 
         if (
             isset($donnees->title) && !empty($donnees->title) &&
@@ -110,36 +110,10 @@ class AllEventsDataController extends AbstractController
         ]);
     }
 
-     /**
-     * @Route("app/calendar/Mycalls", name="Mycalls")
-     */
-    public function MyCalls(CallRepository $rep)
-    {
-        $user = $this->getUser();
-        dd($user);
-        $calls = $rep->findAll();
-        
-        $rdvs = [];
-        foreach ($calls as $call) {
-            $rdvs[] = [
-                'id' => $call->getId(),
-                'start' => $call->getStart()->format('Y-m-d H:i:s'),
-                'end' => $call->getEnd()->format('Y-m-d H:i:s'),
-                'title' => $call->getTitle(),
-                'description' => $call->getDescription(),
-
-            ];
-        }
-
-        $data = json_encode($rdvs);
-        dd($data);
-        return $this->render('call/index.html.twig', [
-            'call' => $data
-        ]);
-    }
+    
 
     /**
-     * @Route("/api/{id}/editcall", name="api_event_edit",methods={"PUT"})
+     * @Route("/api/{id}/editcall", name="api_call_edit",methods={"PUT"})
      */
     public function majCall(?Call $call, Request $request)
     {
@@ -172,13 +146,45 @@ class AllEventsDataController extends AbstractController
     }
 
     /**
-     * @Route("/app/calendar/backoffice", name="backoffice")
+     * @Route("/app/calendar/backoffice/call", name="backofficeCall")
      */
-    function backOffice(CallRepository $call, EventRepository $event)
+    function backOffice(CallRepository $callEntity, EntityManagerInterface $em, PaginatorInterface $paginator,Request $request)
     {
-        $dataEvent = $event->findAll();
-        $dataCall = $call->findAll();
-        return $this->render('all_events_data/backoffice.html.twig', compact('dataEvent', 'dataCall'));
+      /*   $dataEvent = $event->findAll();
+        $dataCall = $call->findAll(); */
+
+        $dql = <<<DQL
+    select tel from App\Entity\Call tel
+    DQL;
+        $query = $em->createQuery($dql);
+
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            5);
+          //  dd($pagination);
+        return $this->render('all_events_data/backofficeCall.html.twig', compact('pagination'));
+    }
+
+    /**
+     * @Route("/app/calendar/backoffice/event", name="backofficeEvent")
+     */
+    function backOfficeEvent( EntityManagerInterface $em, PaginatorInterface $paginator,Request $request)
+    {
+      /*   $dataEvent = $event->findAll();
+        $dataCall = $call->findAll(); */
+
+        $dql = <<<DQL
+    select tel from App\Entity\Event tel
+    DQL;
+        $query = $em->createQuery($dql);
+
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            5);
+          //  dd($pagination);
+        return $this->render('all_events_data/backofficeEvent.html.twig', compact('pagination'));
     }
 
     /**

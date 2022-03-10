@@ -52,9 +52,7 @@ class EventController extends AbstractController
         }
        // dd($userEmail);
         if ($form->isSubmitted() && $form->isValid()) {
-            $data=$form->getData();
-            //$data->getUser()->getFirstname()
-            //$data->getUser()->getLastname()
+           
             $entityManager->persist($event);
             $entityManager->flush();
             $this->mailer->sendNewEventEmail($userEmail,["event"=>$event]);
@@ -76,13 +74,10 @@ class EventController extends AbstractController
     public function edit($id, Request $request, EventRepository $rep)
     {
         $event = $rep->find($id);
-        $user = $this->getUser();
+        
         $form1 = $this->createForm(EventType::class, $event);
         $form1->handleRequest($request);
-        if($user->getId()!=$event->getUser()->getId()){
-            $this->addFlash('notice', 'U cant change this bro till u become the owner !');
-            return $this->redirectToRoute('all_events_data');
-        } 
+        
         $em = $this->getDoctrine()->getManager();
         if (($form1->isSubmitted() && $form1->isValid())) {
 
@@ -105,19 +100,16 @@ class EventController extends AbstractController
     public function supprimer($id)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $user = $this->getUser();
+        
         $event = $entityManager->getRepository(Event::class)->find($id);
-        if($user->getId()!=$event->getUser()->getId()){
-            $this->addFlash('notice', 'U cant delete this bro till u become the owner !');
-            return $this->redirectToRoute('all_events_data');
-        }
+        
         if($event->getStatus()==true){
         $entityManager->remove($event);
         $this->addFlash('success', 'Evenement bien été supprimée.');
         $entityManager->flush();
         }
         else{
-            $this->addFlash('success', 'Evenement ne peut pas etre supprimer q.apres desactivation.');    
+            $this->addFlash('danger', 'Evenement ne peut pas etre supprimer q\'apres desactivation.');    
         }
         return $this->redirectToRoute('all_events_data');
     }
@@ -126,16 +118,20 @@ class EventController extends AbstractController
      * @Route("/{id}/deactivate", name="deactivateEvent")
      */
 
-    public function annuler($id){
+    public function annuler($id,UserRepository $userRep){
         $entityManager = $this->getDoctrine()->getManager();
-        $user = $this->getUser();
+        
         $event = $entityManager->getRepository(Event::class)->find($id);
-        if($user->getId()!=$event->getUser()->getId()){
-            $this->addFlash('notice', 'U cant deactivate this bro till u become the owner !');
-            return $this->redirectToRoute('all_events_data');
+        
+        $users=$userRep->findAll();
+       // dd($users);
+        $userEmail = [];
+        foreach($users as $u){
+            $userEmail[] =$u->getEmail();
         }
         $event->setstatus(true);
-        $this->addFlash('success', 'Evenement bien été desactivé.');
+        $this->mailer->sendDeactivatedEventEmail($userEmail,["event"=>$event]);
+        $this->addFlash('success', 'Evenement bien desactivé.');
         $entityManager->flush();
         return $this->redirectToRoute('all_events_data');
         
@@ -146,6 +142,8 @@ class EventController extends AbstractController
      */
     public function supprimerEvent($id)
     {
+        //$this->denyAccessUnlessGranted([AccessType::READ], ServiceRequest::class);
+
         $entityManager = $this->getDoctrine()->getManager();
 
         $event = $entityManager->getRepository(Event::class)->find($id);
@@ -157,6 +155,22 @@ class EventController extends AbstractController
         return $this->redirectToRoute('backoffice');
 
 
+    }
+
+    /**
+     * @Route("/{id}/deleteAdmin", name="deleteEventback")
+     */
+    public function supprimercall($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $event = $entityManager->getRepository(Event::class)->find($id);
+        $entityManager->remove($event);
+        $this->addFlash('success', 'Call bien été supprimée.');
+
+
+        $entityManager->flush();
+        return $this->redirectToRoute('backofficeCall');
     }
 
 }

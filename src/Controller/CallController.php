@@ -6,6 +6,7 @@ use App\Entity\Call;
 use App\Form\CallType;
 use App\Form\EventType;
 use App\Repository\CallRepository;
+use App\Repository\UserRepository;
 use App\Service\Mail;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,28 +39,20 @@ class CallController extends AbstractController
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-
-        $user = $this->getUser();
-        // savoir si le user est connecté ou nn
-
-        /*  if (!$user){
-            $this->addFlash('notice', 'U R NOT CONNECTED !');
-            return $this->redirectToRoute('indexCall');
-        }  */
         $call = new Call();
         $call->setUser($this->getUser());
+        $call->setstatus(false);
         $form = $this->createForm(CallType::class, $call);
         $form->handleRequest($request);
         
         $userCall =[];
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $users=$call->getUsers();
             //dd($users);
             foreach($users as $u){
                 $userCall[] =$u->getEmail();
             }
-            //dd($userCall);
             $entityManager->persist($call);
             $entityManager->flush();
             $this->mailer->sendNewCallEmail($userCall,["call"=>$call]);
@@ -80,19 +73,7 @@ class CallController extends AbstractController
     public function edit($id, Request $request, CallRepository $rep)
     {
         $call = $rep->find($id);
-          $user = $this->getUser();
-        // savoir si le user est connecté ou nn
-
-        if (!$user){
-            $this->addFlash('notice', 'U R NOT CONNECTED !');
-            return $this->redirectToRoute('indexCall');
-        } 
-        if($user->getId()!=$call->getUser()->getId()){
-            $this->addFlash('notice', 'U cant change this bro till u be the owner !');
-            return $this->redirectToRoute('indexCall');
-        } 
-
-
+        
         $form1 = $this->createForm(CallType::class, $call);
         $form1->handleRequest($request);
 
@@ -102,7 +83,7 @@ class CallController extends AbstractController
             $em->persist($call);
 
             $em->flush();
-            $this->addFlash('notice', 'call modifie avec succée !');
+            $this->addFlash('notice', 'call modifie avec succées !');
             return $this->redirectToRoute("indexCall");
         }
         return $this->render('call/edit.html.twig', [
@@ -111,35 +92,43 @@ class CallController extends AbstractController
         ]);
     }
 
+    public function annuler($id,UserRepository $userRep){
+        $entityManager = $this->getDoctrine()->getManager();
+        
+        $call = $entityManager->getRepository(Call::class)->find($id);
+        
+        $users=$userRep->findAll();
+        $userEmail = [];
+        foreach($users as $u){
+            $userEmail[] =$u->getEmail();
+        }
+        $call->setstatus(true);
+        $this->mailer->sendDeactivatedCallEmail($userEmail,["call"=>$call]);
+        $this->addFlash('success', 'Evenement bien été desactivé.');
+        $entityManager->flush();
+        return $this->redirectToRoute('indexCall');
+        
+    }
+
     /**
      * @Route("/{id}/delete", name="deleteCall")
      */
     public function supprimer($id)
     {
 
-
         $entityManager = $this->getDoctrine()->getManager();
 
         $call = $entityManager->getRepository(Call::class)->find($id);
-
-        
-        $user = $this->getUser();
-        // savoir si le user est connecté ou nn
-
-        if (!$user){
-            $this->addFlash('notice', 'U R NOT CONNECTED !');
-            return $this->redirectToRoute('indexCall');
-        } 
-        if($user->getId()!=$call->getUser()->getId()){
-            $this->addFlash('notice', 'U cant delete this bro till u become the owner !');
-            return $this->redirectToRoute('indexCall');
-        }
-        
+            
+        if($call->geteStatus()==true){
         $entityManager->remove($call);
         $this->addFlash('success', 'Call bien été supprimée.');
-
-
         $entityManager->flush();
+        }
+        else{
+            $this->addFlash('danger', 'Call ne peut pas etre supprimer q\'apres desactivation.');    
+        }
+
         return $this->redirectToRoute('indexCall');
     }
 
@@ -156,6 +145,6 @@ class CallController extends AbstractController
 
 
         $entityManager->flush();
-        return $this->redirectToRoute('backoffice');
+        return $this->redirectToRoute('backofficeCall');
     }
 }

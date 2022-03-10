@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\ChangePasswordFormType;
 use App\Form\UserType;
+use App\Repository\EventRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Endroid\QrCode\Builder\BuilderInterface;
@@ -78,10 +79,26 @@ class AccountController extends AbstractController
   /**
    * @Route("/me", name="show_my_profile")
    */
-  public function show_user_account(Request $request): Response
+  public function show_user_account(Request $request,EventRepository $eventRepository): Response
   {
+    $events = $eventRepository->findAll();
+
+    $rdvs = [];
+    foreach ($events as $event) {
+        $rdvs[] = [
+            'id' => $event->getId(),
+            'start' => $event->getStart()->format('Y-m-d H:i:s'),
+            'end' => $event->getEnd()->format('Y-m-d H:i:s'),
+            'title' => $event->getTitle(),
+            'description' => $event->getDescription(),
+            'allDay' => $event->getAllDay(),
+        ];
+    }
+
+    $data = json_encode($rdvs);
     return $this->render('views/content/pages/page-profile.html.twig', [
-      "user" => $this->getUser()
+      "user" => $this->getUser(),
+      'event' => $data,
     ]);
   }
   /**
