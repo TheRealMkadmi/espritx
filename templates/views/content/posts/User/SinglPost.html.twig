@@ -376,7 +376,171 @@
                             <p class="card-text mb-2">
                                 {{ post.content }}
                             </p>
-                            <img class="img-fluid my-2" src="{{ asset('/uploads/brochures/'~post.image) }}" alt="{{ post.image }}"/>
+                            <div class="inner">
+                                {% if post.images | length == 4 %}
+                                    <div class="my-gallery" itemscope>
+                                        <figure itemprop="associatedMedia" itemscope>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <figure itemprop="associatedMedia" itemscope>
+                                                            <a href="{{ asset('/uploads/brochures/'~post.images[0]) }}"
+                                                               itemprop="contentUrl" data-size="964x1024">
+                                                                <img class="inner rounded"
+                                                                     src="{{ asset('/uploads/brochures/'~post.images[0]) }}"
+                                                                     style="width: 280px;height: 200px;margin-left: 20px"
+                                                                     itemprop="thumbnail" alt="Image description"/>
+                                                            </a>
+                                                        </figure>
+                                                    </td>
+                                                    <td>
+                                                        <figure itemprop="associatedMedia" itemscope>
+                                                            <a href="{{ asset('/uploads/brochures/'~post.images[1]) }}"
+                                                               itemprop="contentUrl" data-size="964x1024">
+                                                                <img class="inner rounded"
+                                                                     src="{{ asset('/uploads/brochures/'~post.images[1]) }}"
+                                                                     style="width: 280px;height: 200px;margin-left: 150px"
+                                                                     itemprop="thumbnail" alt="Image description"/>
+                                                            </a>
+                                                        </figure>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <figure itemprop="associatedMedia" itemscope>
+                                                            <a href="{{ asset('/uploads/brochures/'~post.images[2]) }}"
+                                                               itemprop="contentUrl" data-size="964x1024">
+                                                                <img class="inner rounded"
+                                                                     src="{{ asset('/uploads/brochures/'~post.images[2]) }}"
+                                                                     style="width: 280px;height: 200px;margin-left: 20px"
+                                                                     itemprop="thumbnail" alt="Image description"/>
+                                                            </a>
+                                                        </figure>
+                                                    </td>
+                                                    <td>
+                                                        <figure itemprop="associatedMedia" itemscope>
+                                                            <a href="{{ asset('/uploads/brochures/'~post.images[3]) }}"
+                                                               itemprop="contentUrl" data-size="1000x1024">
+                                                                <img class="inner rounded"
+                                                                     src="{{ asset('/uploads/brochures/'~post.images[3]) }}"
+                                                                     style="width: 280px;height: 200px;margin-left: 150px"
+                                                                     itemprop="thumbnail" alt="Image description"/>
+                                                            </a>
+                                                        </figure>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </figure>
+                                    </div>
+                                {% endif %}
+                                {% if post.images | length == 3 %}
+                                    <div class="my-gallery" itemscope>
+                                        <figure itemprop="associatedMedia" itemscope>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <figure itemprop="associatedMedia" itemscope>
+                                                            <a href="{{ asset('/uploads/brochures/'~post.images[0]) }}"
+                                                               itemprop="contentUrl" data-size="964x1024">
+                                                                <img class="inner rounded"
+                                                                     src="{{ asset('/uploads/brochures/'~post.images[0]) }}"
+                                                                     style="width: 170px;height: 100px;margin-left: 20px"
+                                                                     itemprop="thumbnail" alt="Image description"/>
+                                                            </a>
+                                                        </figure>
+                                                    </td>
+                                                    <td>
+                                                        <figure itemprop="associatedMedia" itemscope>
+                                                            <a href="{{ asset('/uploads/brochures/'~post.images[1]) }}"
+                                                               itemprop="contentUrl" data-size="964x1024">
+                                                                <img class="inner rounded"
+                                                                     src="{{ asset('/uploads/brochures/'~post.images[1]) }}"
+                                                                     style="width: 50px;height: 50px;margin-left: 40px"
+                                                                     itemprop="thumbnail" alt="Image description"/>
+                                                            </a>
+                                                        </figure>
+                                                    </td>
+
+                                                    <td colspan="2">
+                                                        <figure itemprop="associatedMedia" itemscope
+                                                                itemtype="http://schema.org/ImageObject">
+                                                            <a href="{{ asset('/uploads/brochures/'~post.images[2]) }}"
+                                                               itemprop="contentUrl" data-size="964x1024">
+                                                                <img class="inner rounded"
+                                                                     src="{{ asset('/uploads/brochures/'~post.images[2]) }}"
+                                                                     style="width: 50px;height: 50px;margin-left: 60px"
+                                                                     itemprop="thumbnail" alt="Image description"/>
+                                                            </a>
+                                                        </figure>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </figure>
+                                    </div>
+                                {% endif %}
+
+
+                                {% if post.images | length == 2 %}
+                                    <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                                        <figure itemprop="associatedMedia" itemscope
+                                                itemtype="http://schema.org/ImageObject">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <figure itemprop="associatedMedia" itemscope
+                                                                itemtype="http://schema.org/ImageObject">
+                                                            <a href="{{ asset('/uploads/brochures/'~post.images[0]) }}"
+                                                               itemprop="contentUrl" data-size="964x1024">
+                                                                <div class="inner">
+                                                                    <img class="inner rounded"
+                                                                         src="{{ asset('/uploads/brochures/'~post.images[0]) }}"
+                                                                         style="width: 50px;height: 50px;margin-left: 7px"
+                                                                         itemprop="thumbnail" alt="Image description"/>
+                                                                </div>
+                                                            </a>
+                                                        </figure>
+                                                    </td>
+                                                    <td>
+                                                        <figure itemprop="associatedMedia" itemscope
+                                                                itemtype="http://schema.org/ImageObject">
+                                                            <a href="{{ asset('/uploads/brochures/'~post.images[1]) }}"
+                                                               itemprop="contentUrl" data-size="964x1024">
+                                                                <div class="inner">
+                                                                    <img class="rounded"
+                                                                         src="{{ asset('/uploads/brochures/'~post.images[1]) }}"
+                                                                         style="width: 50px;height: 50px;margin-left: 130px"
+                                                                         itemprop="thumbnail" alt="Image description"/>
+                                                                </div>
+                                                            </a>
+                                                        </figure>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </figure>
+                                    </div>
+                                {% endif %}
+
+                                {% if post.images | length == 1 %}
+                                    <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                                        <figure itemprop="associatedMedia" itemscope
+                                                itemtype="http://schema.org/ImageObject">
+
+                                            <a href="{{ asset('/uploads/brochures/'~post.images[0]) }}"
+                                               itemprop="contentUrl" data-size="1024x1024">
+                                                <img class="rounded"
+                                                     src="{{ asset('/uploads/brochures/'~post.images[0]) }}"
+                                                     style="margin-left: 50px"
+                                                     itemprop="thumbnail" alt="Image description"/>
+                                            </a>
+
+                                        </figure>
+                                    </div>
+                                {% endif %}
+
+                                <br/>
+
+
+                            </div>
                             <!-- Likes -->
                             <div class="row d-flex justify-content-start align-items-center flex-wrap pb-50">
                                 <div class="col-sm-6 d-flex justify-content-between justify-content-sm-start mb-2">
