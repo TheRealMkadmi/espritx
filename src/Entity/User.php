@@ -944,6 +944,8 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
    * @ORM\ManyToMany(targetEntity=User::class, mappedBy="contacts")
    */
   private $contacted_by;
+
+
   /**
    * @return Collection<int, self>
    */
@@ -971,4 +973,25 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
       return $this;
   }
   //</editor-fold>
+
+  //<editor-fold desc="Google ID">
+  /**
+   * @ORM\Column(type="string", length=255, nullable=true)
+   */
+  private $googleId;
+
+  public function getGoogleId(): ?string
+  {
+      return $this->googleId;
+  }
+
+  public function setGoogleId(?string $googleId): self
+  {
+      $this->googleId = $googleId;
+
+      return $this;
+  }
+  //</editor-fold>
+
+
 }
