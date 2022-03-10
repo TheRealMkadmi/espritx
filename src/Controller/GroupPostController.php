@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Commentaire;
 use App\Entity\GroupPost;
+use App\Entity\Images;
 use App\Entity\Post;
+use App\Form\CommentaireType;
 use App\Form\GroupPostType;
+use App\Form\PostContactType;
 use App\Form\PostType;
 use App\Repository\GroupPostRepository;
 use App\Repository\PostGroupRepository;
@@ -105,18 +109,34 @@ class GroupPostController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
             if (($form1->isSubmitted() && $form1->isValid())) {
+
+                $images = $form1->get('images')->getData();
+
+                // On boucle sur les images
+                foreach ($images as $image) {
+                    // On génère un nouveau nom de fichier
+                    $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+
+                    // On copie le fichier dans le dossier uploads
+                    $image->move(
+                        $this->getParameter('imagesPost_directory'),
+                        $fichier
+                    );
+
+                    // On crée l'image dans la base de données
+                    $img = new Images();
+                    $img->setName($fichier);
+                    $post->addImage($img);
+                }
+
+
                 $groupPost = $groupPostRepository->find($id);
                 $a = $request->request->get('markers1');
                 $b = $request->request->get('markers2');
                 $post->setLongitude($a);
                 $post->setLatitude($b);
-                $file = $form1->get('image')->getData();
-                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
-                $file->move(
-                    $this->getParameter('imagesPost_directory'),
-                    $fileName
-                );
-                $post->setImage($fileName);
+
+
                 $post->setIsValid(0);
                 $post->setIsDeleted(0);
 
@@ -124,7 +144,10 @@ class GroupPostController extends AbstractController
                 $post->setUpdatedAt($now);
                 $post->setGroupPost($groupPost );
                 $post->setUser($repository->find($this->getUser()->getId()));
+
                 $em->persist($post);
+                $em->persist($img);
+                $groupPost->addPost($post);
                 $em->flush();
                 $request->getSession()->getFlashBag()->add("info", "Publication ajoutée ! mais doit etre approuvée par notre admin .");
 
@@ -270,6 +293,19 @@ class GroupPostController extends AbstractController
 
     }
 
+    /**
+     * @Route("/group/{id}", name="singleGroup")
 
+     * @param Request $request
+     * @return Response
+     */
+    public function singleGroup($id,GroupPostRepository $repository, Request $request): Response
+    {
+        $group= $repository->find($id);
+        $membres=$group->getMembre();
+        return $this->render('views/content/posts/GroupPost/SingleGroup.html.twig', [ 'membres'=>$membres,'group' => $group,
+            "user" => $this->getUser()
+            ]);
+    }
 
 }

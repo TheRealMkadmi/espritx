@@ -505,8 +505,10 @@
                     <a href="#" class="me-75">
                         <div class="avatar bg-light-primary rounded">
                             <div class="avatar-content">
-                                <img class="img-fluid" src="{{ asset('/uploads/brochures/'~group.image) }}" alt="{{ group.image }}" draggable="false" oncontextmenu="return false;" />
+                                <a  href="{{ path('singleGroup', {'id': group.id}) }}"  >
 
+                                <img class="img-fluid" src="{{ asset('/uploads/brochures/'~group.image) }}" alt="{{ group.image }}" draggable="false" oncontextmenu="return false;" />
+                                </a>
                             </div>
                         </div>
                     </a>
@@ -605,7 +607,7 @@ Ajouter
               {% if app.user.id != group.user.id  %}
 
 
-            <div class="col-lg-2">
+            <div class="col-lg-3">
                 <article class="material-card Red">
                     <h2>
                         <span>{{  group.nomGroupe }}</span>
@@ -661,9 +663,11 @@ Ajouter
         <form id="filters">
 
             {% for group in allgroups %}
+                {% if group.isValid ==1 %}
                 <p><input type="checkbox" name="allgroups[]" id="group{{ group.id }}" value="{{ group.id }}" >
                     <label for="group{{ group.id }}">{{ group.nomGroupe }}</label>
                 </p>
+                {% endif %}
             {% endfor %}
 
 

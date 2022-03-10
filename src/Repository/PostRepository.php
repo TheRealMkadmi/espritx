@@ -98,7 +98,10 @@ $qb->andWhere('b.groupPost IN (:grps)')
             ->setMaxResults(4);
 
         $query = $queryBuilder->getQuery();
-        return $query->getResult();}
+        return $query->getResult();
+
+
+    }
 
     public function PostsMaxQuatre()
     {
