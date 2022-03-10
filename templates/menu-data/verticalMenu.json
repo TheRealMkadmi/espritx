@@ -113,7 +113,7 @@
       "slug": ""
     },
     {
-      "__url__": "#",
+      "url": "backofficeEvent",
       "name": "Calendar",
       "icon": "calendar",
       "slug": "app-calendar"
