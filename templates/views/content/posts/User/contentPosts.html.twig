@@ -27,6 +27,27 @@
             {% endif %}
             <!--/ post img -->
             <div class="row card-text">
+                <div class="col-sm-6 d-flex justify-content-between justify-content-sm-start mb-2">
+                    <a href="{{ path('post_like',{'id':post.id}) }}"
+                       class="d-flex align-items-center text-muted text-nowrap js-like">
+                        {% if app.user and post.isLikedByUser(app.user) %}
+                            <i class="fa fa-thumbs-up"></i>
+                        {% else %}
+                            <i class="fa fa-thumbs-down"></i>
+                        {% endif %}
+                        <span class="js-likes">{{ post.likes | length }}</span>
+                    </a>
+                </div>
+
+                <!-- share and like count and icons -->
+                <div class="col-sm-6 d-flex justify-content-between justify-content-sm-end align-items-center mb-2">
+                    <a href="{{ path('singlepost',{'id':post.id}) }}" class="text-nowrap">
+                        <i data-feather="message-square" class="text-body font-medium-3 me-50"></i>
+                        <span class="js-comments text-muted me-1">{{ post.commentaires | length }}</span>
+                    </a>
+                </div>
+            </div>
+            <div class="row card-text">
                 {% for comment in post.commentaires %}
                         <div class="avatar mt-25 me-75">
                             {% include "views/content/_partials/_fragments/user-avatar.html.twig" with {'user': comment.user} %}
@@ -52,9 +73,46 @@
                             <small>{{ comment.content }}</small>
                         </div>
                 {% endfor %}
+                <div class="row card-text">
+                <form name="form" method="get" id="{{ post.id }}" action="{{ path('newcomment',{'id':post.id}) }}"
+                      class="comment">
+                    <fieldset class="mb-75">
+                        <textarea class="form-control" name="aa" id="aa" rows="3" placeholder="Add Comment"></textarea>
+                    </fieldset>
+                    <!--/ comment box -->
+                    <button id="MyButton" type="submit" class="btn btn-sm btn-primary">Commenter ..</button>
+                    <p id="m" style="font-size: small;margin-left: 10px"></p>
+                </form>
+                </div>
 
             </div>
 
         </div>
     </div>
 {% endfor %}
+
+{% block vendor_script %}
+    <script src="{{ asset('vendors/js/extensions/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ asset('vendors/js/extensions/polyfill.min.js') }}"></script>
+{% endblock %}
+
+{% block page_script %}
+    <script src="{{ asset('js/scripts/pages/page-profile.js') }}"></script>
+    <script>
+        $("#show-qc-qr").on('click', function () {
+            Swal.fire({
+                title: '{{ user.firstName ~ " " ~ user.lastName }}',
+                text: 'Scan this QR code on your device.',
+                imageUrl: '{{ url('make_quick_code', {"id": user.id}) }}',
+                imageWidth: 200,
+                imageHeight: 200,
+                imageAlt: '{{ user.firstName ~ " " ~ user.lastName }}',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false
+            });
+        });
+    </script>
+{% endblock %}
+
