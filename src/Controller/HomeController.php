@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 // ...
+use App\Form\CommentaireType;
 use App\Repository\ChannelRepository;
 use App\Repository\CommentaireRepository;
 use App\Repository\EventRepository;

@@ -28,7 +28,7 @@ class Fields
     private $Type;
 
     /**
-     * @ORM\Column(type="boolean", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     private $Required;
 
@@ -77,14 +77,14 @@ class Fields
         return $this;
     }
 
-    public function getRequiry(): ?string
+    public function getRequired(): ?string
     {
         return $this->Required;
     }
 
-    public function setRequiry(string $Required): self
+    public function setRequired(string $Required): self
     {
-        $this->Requiry = $Required;
+        $this->Required = $Required;
 
         return $this;
     }
