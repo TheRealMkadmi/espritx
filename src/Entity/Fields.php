@@ -38,6 +38,11 @@ class Fields
      */
     private $service;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $Answer;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,6 +97,18 @@ class Fields
     public function setService(?Service $service): self
     {
         $this->service = $service;
+
+        return $this;
+    }
+
+    public function getAnswer(): ?string
+    {
+        return $this->Answer;
+    }
+
+    public function setAnswer(?string $Answer): self
+    {
+        $this->Answer = $Answer;
 
         return $this;
     }
