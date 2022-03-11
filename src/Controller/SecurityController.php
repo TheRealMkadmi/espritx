@@ -20,11 +20,11 @@ class SecurityController extends AbstractController
     $user = $this->getUser();
     if ($user) {
       foreach ($user->getGroups() as $group) {
-        if ($group->getGroupType() === GroupType::STUDENT()) {
+        if ($group->getGroupType() === GroupType::STUDENT() || $group->getGroupType() === GroupType::TEACHERS()) {
           return $this->redirectToRoute('show_my_profile');
         }
       }
-      return $this->redirectToRoute('dashboard-analytics');
+      return $this->redirectToRoute('app_admin_home');
     }
     $error = $authenticationUtils->getLastAuthenticationError();
     $lastUsername = $authenticationUtils->getLastUsername();
