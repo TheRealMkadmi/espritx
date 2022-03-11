@@ -25,7 +25,6 @@ class AllEventsDataController extends AbstractController
    */
   public function index(EventRepository $eventRepository)
   {
-    $this->denyAccessUnlessGranted(AccessType::READ, Event::class);
     $events = $eventRepository->findAll();
     $rdvs = [];
     foreach ($events as $event) {
