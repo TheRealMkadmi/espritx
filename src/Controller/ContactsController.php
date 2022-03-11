@@ -21,17 +21,23 @@ class ContactsController extends AbstractController
    */
   public function add_contact(Request $request, User $user, NotificationService $notificationService, EntityManagerInterface $em)
   {
+
     /** @var User $current_user */
     $current_user = $this->getUser();
     $current_user->addContact($user);
-    $notificationService->notifyUser($user,
+    $notificationService->notifyUser(
+      $user,
       $this->getUser()->getFirstName() . " " . $this->getUser()->getLastName() . " has added you as a contact!",
       "How about you go say hi?",
       $this->generateUrl("show_user_profile", ["id" => $this->getUser()->getId()]
       )
     );
     $em->flush();
-    return $this->redirect($request->getUri());
+    if ($request->query->has("redirect_uri")) {
+      return $this->redirect($request->query->get("redirect_uri"));
+    } else {
+      return $this->generateUrl("show_my_profile");
+    }
   }
 
   /**
@@ -40,9 +46,12 @@ class ContactsController extends AbstractController
    */
   public function remove_contact(Request $request, User $user, EntityManagerInterface $em)
   {
-
     $this->getUser()->removeContact($user);
     $em->flush();
-    return $this->redirect($request->getUri());
+    if ($request->query->has("redirect_uri")) {
+      return $this->redirect($request->query->get("redirect_uri"));
+    } else {
+      return $this->generateUrl("show_my_profile");
+    }
   }
 }

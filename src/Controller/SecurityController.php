@@ -19,9 +19,9 @@ class SecurityController extends AbstractController
     /** @var User $user */
     $user = $this->getUser();
     if ($user) {
-      foreach ($user->getGroups() as $group){
-        if($group->getGroupType() == GroupType::STUDENT()){
-          return $this->redirectToRoute('postall');
+      foreach ($user->getGroups() as $group) {
+        if ($group->getGroupType() === GroupType::STUDENT()) {
+          return $this->redirectToRoute('show_my_profile');
         }
       }
       return $this->redirectToRoute('dashboard-analytics');

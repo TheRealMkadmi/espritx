@@ -92,12 +92,14 @@
                   <!-- edit button -->
                   {% if user != app.user %}
                     {% if user in app.user.contacts %}
-                      <a href="{{ url("remove_contact", {"id" : user.id}) }}" class="btn btn-primary add-contact-btn">
+                      <a href="{{ url("remove_contact", {"id" : user.id}) }}?redirect_uri={{ url("show_user_profile", {"id": user.id}) }}"
+                         class="btn btn-primary add-contact-btn">
                         <i data-feather="edit" class="d-block d-md-none"></i>
                         <span class="fw-bold d-none d-md-block">Remove Contact</span>
                       </a>
                     {% else %}
-                      <a href="{{ url("add_contact", {"id" : user.id}) }}" class="btn btn-primary add-contact-btn">
+                      <a href="{{ url("add_contact", {"id" : user.id}) }}?redirect_uri={{ url("show_user_profile", {"id": user.id}) }}"
+                         class="btn btn-primary add-contact-btn">
                         <i data-feather="edit" class="d-block d-md-none"></i>
                         <span class="fw-bold d-none d-md-block">Add Contact</span>
                       </a>
@@ -168,12 +170,12 @@
                     {% endif %}
                   </div>
                   {% if user in app.user.contacts %}
-                    <a href="{{ url('remove_contact', {"id": contact.id}) }}"
+                    <a href="{{ url('remove_contact', {"id": contact.id}) }}?redirect_uri={{ url('show_user_profile', {"id": user.id}) }}"
                        class="btn btn-primary btn-icon btn-sm ms-auto">
                       <i data-feather="user-x"></i>
                     </a>
                   {% else %}
-                    <a href="{{ url('add_contact', {"id": contact.id}) }}"
+                    <a href="{{ url('add_contact', {"id": contact.id}) }}?redirect_uri={{ url('show_user_profile', {"id": user.id}) }}"
                        class="btn btn-primary btn-icon btn-sm ms-auto">
                       <i data-feather="user-plus"></i>
                     </a>
@@ -183,116 +185,57 @@
             </div>
           </div>
           <!--/ suggestion pages -->
-
-          <!-- twitter feed card -->
-          <div class="card">
-            <div class="card-body">
-              <h5>Twitter Feeds</h5>
-              <!-- twitter feed -->
-              <div class="profile-twitter-feed mt-1">
-                <div class="d-flex justify-content-start align-items-center mb-1">
-                  <div class="avatar me-1">
-                    <img src="{{ asset('images/avatars/5-small.png') }}" alt="avatar img" height="40" width="40"/>
-                  </div>
-                  <div class="profile-user-info">
-                    <h6 class="mb-0">Gertrude Stevens</h6>
-                    <a href="#">
-                      <small class="text-muted">@tiana59</small>
-                      <i data-feather="check-circle"></i>
-                    </a>
-                  </div>
-                  <div class="profile-star ms-auto">
-                    <i data-feather="star" class="font-medium-3"></i>
-                  </div>
-                </div>
-                <p class="card-text mb-50">I love cookie chupa chups sweet tart apple pie ⭐️ chocolate bar.</p>
-                <a href="#">
-                  <small>#design #fasion</small>
-                </a>
-              </div>
-              <!-- twitter feed -->
-              <div class="profile-twitter-feed mt-2">
-                <div class="d-flex justify-content-start align-items-center mb-1">
-                  <div class="avatar me-1">
-                    <img src="{{ asset('images/avatars/12-small.png') }}" alt="avatar img" height="40" width="40"/>
-                  </div>
-                  <div class="profile-user-info">
-                    <h6 class="mb-0">Lura Jones</h6>
-                    <a href="#">
-                      <small class="text-muted">@tiana59</small>
-                      <i data-feather="check-circle"></i>
-                    </a>
-                  </div>
-                  <div class="profile-star ms-auto">
-                    <i data-feather="star" class="font-medium-3 profile-favorite"></i>
-                  </div>
-                </div>
-                <p class="card-text mb-50">Halvah I love powder jelly I love cheesecake cotton candy. 😍</p>
-                <a href="#">
-                  <small>#vuejs #code #coffeez</small>
-                </a>
-              </div>
-              <!-- twitter feed -->
-              <div class="profile-twitter-feed mt-2">
-                <div class="d-flex justify-content-start align-items-center mb-1">
-                  <div class="avatar me-1">
-                    <img src="{{ asset('images/avatars/1-small.png') }}" alt="avatar img" height="40" width="40"/>
-                  </div>
-                  <div class="profile-user-info">
-                    <h6 class="mb-0">Norman Gross</h6>
-                    <a href="#">
-                      <small class="text-muted">@tiana59</small>
-                      <i data-feather="check-circle"></i>
-                    </a>
-                  </div>
-                  <div class="profile-star ms-auto">
-                    <i data-feather="star" class="font-medium-3"></i>
-                  </div>
-                </div>
-                <p class="card-text mb-50">Candy jelly beans powder brownie biscuit. Jelly marzipan oat cake cake.</p>
-                <a href="#">
-                  <small>#sketch #uiux #figma</small>
-                </a>
-              </div>
-            </div>
-          </div>
-          <!--/ twitter feed card -->
         </div>
         <!--/ left profile info section -->
 
         <!-- center profile info section -->
         <div class="col-lg-6 col-12 order-1 order-lg-2">
           <!-- post 1 -->
-          {% for post in user.posts|slice(0,5) %}
-            <div class="card">
-              <div class="card-body">
-                <div class="d-flex justify-content-start align-items-center mb-1">
-                  <!-- avatar -->
-                  {% include "views/content/_partials/_fragments/user-avatar.html.twig" with {'user': user} %}
-                  <!--/ avatar -->
-                  <div class="ms-1 profile-user-info">
-                    <h6 class="mb-0">{{ user.firstName ~ ' ' ~ user.lastName }}</h6>
-                    <small class="text-muted">{{ post.createdAt|date("F j Y, g:i a") }}</small>
-                  </div>
-                </div>
-                <p class="card-text">
-                  {{ post.content|u.truncate(128, '...') }}
-                </p>
-                <!-- post img -->
-                {% if post.images|length > 0 %}
-                  {% set img = post.images|first %}
-                  <img
-                      class="img-fluid rounded mb-75"
-                      src="{{ asset('uploads/brochures/' ~ img.name) }}"
-                      alt="avatar img"
-                  />
-                {% endif %}
-                <!--/ post img -->
+          {% if user.posts|length > 0 %}
 
-                <a href="{{ url("singlepost", {"id": post.id}) }}" class="mt-1"><span class="text-primary">See more...</span></a>
+            {% for post in user.posts|slice(0,5) %}
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-start align-items-center mb-1">
+                    <!-- avatar -->
+                    {% include "views/content/_partials/_fragments/user-avatar.html.twig" with {'user': user} %}
+                    <!--/ avatar -->
+                    <div class="ms-1 profile-user-info">
+                      <h6 class="mb-0">{{ user.firstName ~ ' ' ~ user.lastName }}</h6>
+                      <small class="text-muted">{{ post.createdAt|date("F j Y, g:i a") }}</small>
+                    </div>
+                  </div>
+                  <p class="card-text">
+                    {{ post.content|u.truncate(128, '...') }}
+                  </p>
+                  <a href="{{ url("singlepost", {"id": post.id}) }}" class="mt-2">
+                    <span class="text-primary">See more...</span>
+                  </a>
+                  <!-- post img -->
+                  {% if post.images|length > 0 %}
+                    {% set img = post.images|first %}
+                    <img
+                        class="img-fluid rounded mb-75"
+                        src="{{ asset('uploads/brochures/' ~ img.name) }}"
+                        alt="avatar img"
+                    />
+                  {% endif %}
+                  <!--/ post img -->
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Uhm... Nothing (yet?)</h4>
+              </div>
+              <div class="card-body">
+                <p class="card-text">
+                  <span>{{ user.firstName ~ ' ' ~ user.lastName }} still hasn't published anything, or you're not allowed to see what they posted.</span>
+                </p>
               </div>
             </div>
-          {% endfor %}
+          {% endif %}
         </div>
         <!--/ center profile info section -->
 
@@ -304,7 +247,7 @@
               <h5 class="mb-1">Circles</h5>
               {% if user.groupes|length > 0 %}
                 {% for groupe in user.groupes %}
-                  <div class="flex">
+                  <div class="d-flex">
                     <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
                       {% for group_member in groupe.membre.slice(0,2) %}
                         <li
@@ -318,8 +261,8 @@
                         </li>
                       {% endfor %}
                     </ul>
+                    <a href="{{ url("singleGroup", {"id":groupe.id }) }}"><span>{{ groupe.nomGroupe }}</span></a>
                   </div>
-                  <a href="{{ url("singleGroup", {"id":groupe.id }) }}"><span>{{ groupe.nomGroupe }}</span></a>
                 {% endfor %}
               {% else %}
                 <span>This user doesn't seem very social, or just hates groups. <a
@@ -345,12 +288,12 @@
                       {% endif %}
                     </div>
                     {% if user in app.user.contacts %}
-                      <a href="{{ url('remove_contact', {"id": contact.id}) }}"
+                      <a href="{{ url('remove_contact', {"id": contact.id}) }}?redirect_uri={{ url("show_user_profile", {"id": user.id}) }}"
                          class="btn btn-primary btn-icon btn-sm ms-auto">
                         <i data-feather="user-x"></i>
                       </a>
                     {% else %}
-                      <a href="{{ url('add_contact', {"id": contact.id}) }}"
+                      <a href="{{ url('add_contact', {"id": contact.id}) }}?redirect_uri={{ url("show_user_profile", {"id": user.id}) }}"
                          class="btn btn-primary btn-icon btn-sm ms-auto">
                         <i data-feather="user-plus"></i>
                       </a>
