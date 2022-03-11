@@ -92,12 +92,14 @@
                   <!-- edit button -->
                   {% if user != app.user %}
                     {% if user in app.user.contacts %}
-                      <a href="{{ url("remove_contact", {"id" : user.id}) }}" class="btn btn-primary add-contact-btn">
+                      <a href="{{ url("remove_contact", {"id" : user.id}) }}?redirect_uri={{ url("show_user_profile", {"id": user.id}) }}"
+                         class="btn btn-primary add-contact-btn">
                         <i data-feather="edit" class="d-block d-md-none"></i>
                         <span class="fw-bold d-none d-md-block">Remove Contact</span>
                       </a>
                     {% else %}
-                      <a href="{{ url("add_contact", {"id" : user.id}) }}" class="btn btn-primary add-contact-btn">
+                      <a href="{{ url("add_contact", {"id" : user.id}) }}?redirect_uri={{ url("show_user_profile", {"id": user.id}) }}"
+                         class="btn btn-primary add-contact-btn">
                         <i data-feather="edit" class="d-block d-md-none"></i>
                         <span class="fw-bold d-none d-md-block">Add Contact</span>
                       </a>
@@ -168,12 +170,12 @@
                     {% endif %}
                   </div>
                   {% if user in app.user.contacts %}
-                    <a href="{{ url('remove_contact', {"id": contact.id}) }}"
+                    <a href="{{ url('remove_contact', {"id": contact.id}) }}?redirect_uri={{ url('show_user_profile', {"id": user.id}) }}"
                        class="btn btn-primary btn-icon btn-sm ms-auto">
                       <i data-feather="user-x"></i>
                     </a>
                   {% else %}
-                    <a href="{{ url('add_contact', {"id": contact.id}) }}"
+                    <a href="{{ url('add_contact', {"id": contact.id}) }}?redirect_uri={{ url('show_user_profile', {"id": user.id}) }}"
                        class="btn btn-primary btn-icon btn-sm ms-auto">
                       <i data-feather="user-plus"></i>
                     </a>
@@ -278,6 +280,9 @@
                 <p class="card-text">
                   {{ post.content|u.truncate(128, '...') }}
                 </p>
+                <a href="{{ url("singlepost", {"id": post.id}) }}" class="mt-2">
+                  <span class="text-primary">See more...</span>
+                </a>
                 <!-- post img -->
                 {% if post.images|length > 0 %}
                   {% set img = post.images|first %}
@@ -288,8 +293,6 @@
                   />
                 {% endif %}
                 <!--/ post img -->
-
-                <a href="{{ url("singlepost", {"id": post.id}) }}" class="mt-1"><span class="text-primary">See more...</span></a>
               </div>
             </div>
           {% endfor %}
@@ -304,7 +307,7 @@
               <h5 class="mb-1">Circles</h5>
               {% if user.groupes|length > 0 %}
                 {% for groupe in user.groupes %}
-                  <div class="flex">
+                  <div class="d-flex">
                     <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
                       {% for group_member in groupe.membre.slice(0,2) %}
                         <li
@@ -318,8 +321,8 @@
                         </li>
                       {% endfor %}
                     </ul>
+                    <a href="{{ url("singleGroup", {"id":groupe.id }) }}"><span>{{ groupe.nomGroupe }}</span></a>
                   </div>
-                  <a href="{{ url("singleGroup", {"id":groupe.id }) }}"><span>{{ groupe.nomGroupe }}</span></a>
                 {% endfor %}
               {% else %}
                 <span>This user doesn't seem very social, or just hates groups. <a
@@ -345,12 +348,12 @@
                       {% endif %}
                     </div>
                     {% if user in app.user.contacts %}
-                      <a href="{{ url('remove_contact', {"id": contact.id}) }}"
+                      <a href="{{ url('remove_contact', {"id": contact.id}) }}?redirect_uri={{ url("show_user_profile", {"id": user.id}) }}"
                          class="btn btn-primary btn-icon btn-sm ms-auto">
                         <i data-feather="user-x"></i>
                       </a>
                     {% else %}
-                      <a href="{{ url('add_contact', {"id": contact.id}) }}"
+                      <a href="{{ url('add_contact', {"id": contact.id}) }}?redirect_uri={{ url("show_user_profile", {"id": user.id}) }}"
                          class="btn btn-primary btn-icon btn-sm ms-auto">
                         <i data-feather="user-plus"></i>
                       </a>

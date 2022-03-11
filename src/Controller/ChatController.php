@@ -33,19 +33,35 @@ class ChatController extends AbstractController
         $channels = $this->getUser()->getChannels();
         $channel = new Channel();
         $channel->setId(-1);
-        return $this->render("views/content/apps/chat/app-chat-raw.html.twig", [
+        return $this->render("views/content/apps/chat/app-chat-ajax.html.twig", [
             "channels" => $channels ?? [], "curuser" => $this->getUser(), "currentchannel" => $channel, "messages" => $messages
         ]);
     }
 
-    /**
-     * @Route("/create-channel", name="create_channel_ajax", methods={"GET", "POST"})
-     */
-    public function createChannel(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $channel = new Channel();
-        $form = $this->createForm(ChannelType::class, $channel);
-        $form->handleRequest($request);
+  /**
+   * @Route("/chat-with-user/{id}", name="chat_with_user")
+   */
+  public function chat_with_user(Request $request, User $user, ChannelRepository $channelRepository, EntityManagerInterface $entityManager): Response
+  {
+    $channel = $channelRepository->findByIds($this->getUser(), $user);
+    if ($channel == null) {
+      $channel = new Channel();
+      $channel->addParticipant($this->getUser());
+      $channel->addParticipant($user);
+      $entityManager->persist($channel);
+      $entityManager->flush();
+    }
+    return $this->redirectToRoute("chat_show", ["id" => $channel->getId()]);
+  }
+
+  /**
+   * @Route("/create-channel", name="create_channel_ajax", methods={"GET", "POST"})
+   */
+  public function createChannel(Request $request, EntityManagerInterface $entityManager): Response
+  {
+    $channel = new Channel();
+    $form = $this->createForm(ChannelType::class, $channel);
+    $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $channel->addParticipant($this->getUser());
@@ -74,7 +90,8 @@ class ChatController extends AbstractController
             "channels" => $channels,
             "curuser" => $user,
             "currentchannel" => $channel,
-            "messages" => $messages
+            "messages" => $messages,
+            "current_user_avatar_markup" => $this->renderView("views/content/_partials/_fragments/user-avatar.html.twig", ['user' => $this->getUser()])
         ]);
     }
 
@@ -91,8 +108,13 @@ class ChatController extends AbstractController
         $em->persist($message);
         $em->flush();
         $update = new Update(
-            "http://example.com/books/1",
-            json_encode(['status' => 'OutOfStock'], JSON_THROW_ON_ERROR));
+            "conversation-" . $channel->getId(),
+            json_encode([
+                'id' => $request->get("id"),
+                'message' => $request->get("message"),
+                'avatar_markup' => $this->renderView("views/content/_partials/_fragments/user-avatar.html.twig", ['user' => $this->getUser()])
+            ], JSON_THROW_ON_ERROR)
+        );
         $hub->publish($update);
         return new Response('published!');
     }
