@@ -60,9 +60,9 @@
                                                 class="mb-0">{{ selecteduser.firstName ~ " " ~ selecteduser.lastName }}</h6> {% endif %}
                                     </div>
                                     <div class="d-flex align-items-center">
-                                        <a href="{{ url('notif_video',{"id":selecteduser.id})}}">    <i data-feather="phone-call"
-                                           class="cursor-pointer d-sm-block d-none font-medium-2 me-1"></i></a>
-                                      <i data-feather="video"
+                                        <i data-feather="phone-call"
+                                           class="cursor-pointer d-sm-block d-none font-medium-2 me-1"></i>
+                                        <i data-feather="video"
                                            class="cursor-pointer d-sm-block d-none font-medium-2 me-1"></i>
                                         <i data-feather="search"
                                            class="cursor-pointer d-sm-block d-none font-medium-2"></i>
@@ -91,49 +91,7 @@
                             </div>
                             <!--/ Chat Header -->
                             <!-- User Chat messages -->
-                            <div class="user-chats">
-                                <div class="chats">
-                                    {% if messages|length > 0 %}
-                                        {% for block in partitionChatMessages(messages) %}
-                                            {% set block_author = (block|first).author %}
-                                            <div class="chat {{ (block_author != app.user) ? "chat-left" : "" }}">
-                                                <div class="chat-avatar" data-avatar-owner="{{ block_author.id }}">
-                                                    {% include "views/content/_partials/_fragments/user-avatar.html.twig" with {'user': block_author } %}
-                                                </div>
-                                                <div class="chat-body">
-                                                    {% for message in block %}
-                                                        <div class="chat-content">
-                                                            <p>{{ message.content }}</p>
-                                                        </div>
-                                                    {% endfor %}
-                                                </div>
-                                            </div>
-                                        {% endfor %}
-                                    {% else %}
-                                        <div class="chat"></div>
-                                    {% endif %}
-                                </div>
-                            </div>
                             <!-- User Chat messages -->
-                            <!-- Submit Chat form -->
-                            <form class="chat-app-form" action="javascript:void(0);" onsubmit="enterChat();">
-                                <div class="input-group input-group-merge me-1 form-send-message">
-                                    <span class="speech-to-text input-group-text"><i data-feather="mic"
-                                                                                     class="cursor-pointer"></i></span>
-                                    <input type="text" class="form-control message"
-                                           placeholder="Type your message or use speech to text"/>
-                                    <span class="input-group-text">
-                        <label for="attach-doc" class="attachment-icon form-label mb-0">
-                        <i data-feather="image" class="cursor-pointer text-secondary"></i>
-                        <input type="file" id="attach-doc" hidden/> </label
-                        ></span>
-                                </div>
-                                <button type="button" class="btn btn-primary send" onclick="enterChat();">
-                                    <i data-feather="send" class="d-lg-none"></i>
-                                    <span class="d-none d-lg-block">Send</span>
-                                </button>
-                            </form>
-                            <!--/ Submit Chat form -->
                         </div>
                         <!--/ Active Chat -->
                     </section>
@@ -222,92 +180,5 @@
     <!-- Page js files -->
 
     <script src="{{ asset('js/scripts/pages/app-chat.js') }}"></script>
-    <script>
-        let current_user_avatar_markup = `{{ current_user_avatar_markup|raw }}`
 
-        // On message send
-        function enterChat(source) {
-            var message = $('.message').val();
-            if (/\S/.test(message)) {
-                let is_last_message_foreign = $(".chats .chat").last().length > 0 && $(".chats .chat").last()[0].classList.contains("chat-left");
-                if (is_last_message_foreign) {
-                    let html = `<div class="chat">
-                                <div class="chat-avatar" data-avatar-owner="34">
-                                ` + current_user_avatar_markup + `</div> <div class="chat-body"><div class="chat-content">
-                <p>` + message + `</p>
-            </div>
-        </div>
-    </div>`;
-
-                    $('.chats').append(html);
-                    $('.message').val('');
-                    $('.user-chats').scrollTop($('.user-chats > .chats').height());
-                }
-                /* if last meassage aal limin wena reciever */
-                if (!is_last_message_foreign) {
-                    let html = `<div class="chat-content">
-                        <p>` + message + `</p>
-                         </div>`;
-
-                    if($('.chats .chat .chat-body').last().length > 0){
-                        $('.chats .chat .chat-body').last().eq(0).append(html);
-                    } else {
-                        $('.chats .chat').last().eq(0).append(`<div class="chat-body">` + html + `<div>`);
-                    }
-
-                    $('.message').val('');
-                    $('.user-chats').scrollTop($('.user-chats > .chats').height());
-                }
-            }{#
-            $.ajax({
-                type: "POST",
-                url: "{{ url('send_message', {"channel": currentchannel.id}) }}",
-                async: true,
-                data: JSON.stringify({
-                    "id": {{ app.user.id }},
-                    "message": message
-                }),
-                contentType: "application/json",
-                complete: function (data) {
-                    console.log(data);
-                }
-            }); #}
-        }
-
-        // On message reception
-        const eventSource = new EventSource('https://45-79-249-222.ip.linodeusercontent.com/.well-known/mercure?topic=' + encodeURIComponent('conversation-{{ currentchannel.id }}'));
-        eventSource.onmessage = event => {
-            let data = JSON.parse(event.data);
-            let message = data.message;
-            if (data.id == {{ app.user.id }})
-                return;
-            if (/\S/.test(message)) {
-                let is_last_message_foreign = $(".chats .chat").last()[0].classList.contains("chat-left");
-                if (is_last_message_foreign) {
-                    let html = `<div class="chat-content">
-                        <p>` + message + `</p>
-                         </div>`;
-
-                    $('.chats .chat-left .chat-body').last().eq(0).append(html);
-                    $('.message').val('');
-                    $('.user-chats').scrollTop($('.user-chats > .chats').height());
-                } else {
-                    let html = `<div class="chat chat-left">
-                                <div class="chat-avatar" data-avatar-owner="34">
-                                ` + data.avatar_markup + `
-                                </div>
-                              <div class="chat-body">
-                            <div class="chat-content">
-                            <p>` + message + `</p>
-                          </div>
-                          </div>
-                          </div>`;
-
-                    $('.chats').append(html);
-                    $('.message').val('');
-                    $('.user-chats').scrollTop($('.user-chats > .chats').height());
-                }
-            }
-        }
-    </script>
 {% endblock %}
