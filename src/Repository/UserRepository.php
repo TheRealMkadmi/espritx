@@ -54,12 +54,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
    * @param User $user2
    * @return User[]
    */
-  public function getCommonContacts(User $user1, User $user2): array
+  public function getCommonContacts(User $user1, User $user2): array/*toDO */
   {
-    return array_intersect($user1->getContacts()->toArray(), $user2->getContacts()->toArray());
+      return $this->createQueryBuilder('u')
+          ->where(':user1 MEMBER OF u.contacts')
+          ->andWhere(':user2 MEMBER OF u.contacts')
+          ->setParameter('user1',$user1)
+          ->setParameter('user2',$user2)
+          ->getQuery()
+          ->getResult()
+          ;
   }
 
-  public function makeFriendSuggestions(User $user, int $limit = 10)
+  public function makeFriendSuggestions(User $user, int $limit = 10)/*toDO */
   {
     $pool = [];
     foreach ($user->getGroups() as $group) {
