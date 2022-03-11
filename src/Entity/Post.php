@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Entity;
-
+use Mgilet\NotificationBundle\Annotation\Notifiable;
+use Mgilet\NotificationBundle\NotifiableInterface;
 use App\Repository\PostRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,6 +11,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
@@ -130,7 +133,7 @@ class Post
     private $groupPost;
 
     /**
-     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="post",cascade={"remove"},cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="post",orphanRemoval=true)
      */
     private $images;
 

@@ -4,7 +4,10 @@ namespace App\Entity;
 
 use App\Repository\ImagesRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Doctrine\Common\Collections\ArrayCollection;
+use Mgilet\NotificationBundle\Annotation\Notifiable;
+use Mgilet\NotificationBundle\NotifiableInterface;
 /**
  * @ORM\Entity(repositoryClass=ImagesRepository::class)
  */
@@ -23,7 +26,7 @@ class Images
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Post::class, inversedBy="images" )
+     * @ORM\ManyToOne(targetEntity=Post::class, inversedBy="images" ,cascade={"remove"} )
      */
     private $post;
 
