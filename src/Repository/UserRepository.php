@@ -59,11 +59,13 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     return array_intersect($user1->getContacts()->toArray(), $user2->getContacts()->toArray());
   }
 
-  public function makeFriendSuggestions(User $user){
+  public function makeFriendSuggestions(User $user, int $limit = 10)
+  {
     $pool = [];
-    foreach ($user->getGroups() as $group){
+    foreach ($user->getGroups() as $group) {
       $pool = array_merge($group->getMembers()->toArray(), $pool);
     }
-    return $pool;
+    shuffle($pool);
+    return array_slice($pool, 0, $limit);
   }
 }

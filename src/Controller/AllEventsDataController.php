@@ -52,7 +52,7 @@ class AllEventsDataController extends AbstractController
    */
   public function majEvent(?Event $event, Request $request)
   {
-    $this->denyAccessUnlessGranted(AccessType::EDIT(), $event);
+    $this->denyAccessUnlessGranted(AccessType::EDIT, $event);
     $donnees = json_decode($request->getContent());
 
     if (

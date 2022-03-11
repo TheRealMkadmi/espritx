@@ -455,13 +455,24 @@
 
 
 
+    <!--/ Basic example section -->
+
+
+    <!--/ Sweet alert Positions -->
+
+    <!-- SweetAlert Animations -->
+
+    <!--/ SweetAlert Animations -->
+
+    <!-- Types section -->
 
 
 
 
 
 
-    <div style="float: right" class="blog-recent-posts mt-3">
+
+    <div style="float: right; margin: 6px" class=" blog-recent-posts mt-5">
         <h6 class="section-label">Postes recentes</h6>
 
 
@@ -472,15 +483,7 @@
                 <div class="mt-75">
                     <div class="d-flex mb-2">
                         <a href="{{ path('singlepost',{'id':p.id}) }}" class="me-2">
-                          {#   <img
-                                    class="rounded"
-                                    src="{{ asset('/uploads/brochures/'~p.images[0]) }}"
-                                    width="100"
-                                    height="70"
-                                    alt="Recent Post Pic"
-                            />
 
-                            #}
                         </a>
                         <div class="blog-info">
                             <h6 class="blog-recent-post-title">
@@ -503,16 +506,9 @@
                 {% if group.isValid ==1 %}
                 <div class="d-flex justify-content-start align-items-center mb-75">
                     <a href="#" class="me-75">
-                        <div class="avatar bg-light-primary rounded">
-                            <div class="avatar-content">
-                                <a  href="{{ path('singleGroup', {'id': group.id}) }}"  >
 
-                                <img class="img-fluid" src="{{ asset('/uploads/brochures/'~group.image) }}" alt="{{ group.image }}" draggable="false" oncontextmenu="return false;" />
-                                </a>
-                            </div>
-                        </div>
                     </a>
-                    <a href="#">
+                    <a  href="{{ path('singleGroup', {'id': group.id}) }}"  >
                         <div class="blog-category-title text-body">{{  group.nomGroupe }}</div>
                     </a>
                 </div>
@@ -599,7 +595,28 @@ Ajouter
   list-style: none;
   margin: 0;
   padding: 0;">
-        <span style="height: 30px" class="badge badge-light-primary"><br/><br/><br/>Rejoignez nous !!</span><br/>
+
+
+        <div style="margin-left: 1000px" >
+            <a href="{{ url('newpost') }}" class="btn btn-outline-primary" >Creer une publication</a>
+        </div>
+
+
+        <br/>
+        <br/>
+
+        <br/>
+
+    </div>
+
+        <a href="{{ url('newgroup') }}" class="btn btn-outline-primary" >Creer un groupe</a>
+    <br/>
+    <br/>
+    <br/>
+
+        <span style="height: 30px" class="badge badge-light-primary">Rejoignez nous !!</span><br/>
+
+
             {% for group  in allgroups %}
 
 
@@ -654,28 +671,110 @@ Ajouter
     </div>
     <br/>
 <br/>
+
+
+    {% for group  in allgroups %}
+
+
+    {% if group.isValid ==1 %}
+    {% if app.user.id != group.user.id  %}
+    <div class="col-lg-2 col-md-6 col-3">
+        <div class="card card-profile">
+            <img
+                    src="{{asset('images/banner/banner-12.jpg')}}"
+                    class="img-fluid card-img-top"
+                    alt="Profile Cover Photo"
+            />
+            <div class="card-body">
+                <div class="profile-image-wrapper">
+                    <div class="profile-image">
+                        <div class="avatar">
+                            <img src="{{ asset('/uploads/brochures/'~group.image) }}" alt="Profile Picture" />
+                        </div>
+                    </div>
+                </div>
+                <h3>{{  group.nomGroupe }}</h3>
+                <span class="badge badge-light-primary profile-badge">        {{ group.user.firstName  }}</span>
+                <h6 class="text-muted">  {{ group.but }}</h6>
+                <div>
+                    <h6 class="text-muted fw-bolder">Membres</h6>
+                    <h3 class="mb-0">{{ group.membre | length  }} </h3>
+                </div>
+
+                <hr class="mb-2" />
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+                        <a style="margin: 2px"  class="badge badge-light-primary profile-badge" href="{{ path('new_membre_group', {'id': group.id,'idU':app.user.id}) }}"  >
+                            Rejoindre
+
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endif %}
+
+    {% endif %}
+    {% endfor %}
+
     <div class="col-xs1">
 
 
+        <section class="col-5" id="vuexy-checkbox-color">
 
 
-        <p>Rechercher des publications dans tes groupes !!</p>
-        <form id="filters">
+            <div class="col-9">
 
-            {% for group in allgroups %}
-                {% if group.isValid ==1 %}
-                <p><input type="checkbox" name="allgroups[]" id="group{{ group.id }}" value="{{ group.id }}" >
-                    <label for="group{{ group.id }}">{{ group.nomGroupe }}</label>
-                </p>
-                {% endif %}
-            {% endfor %}
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+
+                            <h4 class="card-title">Groupes</h4>
+
+                            <div style="float: left" class="card-body">
+                                <p class="card-text mb-0">
+                                    Cherchez dedans tes <code>groupes</code>
+
+                                </p>
+                                <div class="demo-inline-spacing">
+                                    <form   id="filters">
+
+                                        {% for group in allgroups %}
+                                            {% if group.isValid ==1 %}
+                                                <p><input type="checkbox" name="allgroups[]" id="group{{ group.id }}"
+                                                          value="{{ group.id }}">
+                                                    <label for="group{{ group.id }}">{{ group.nomGroupe }}</label>
+                                                </p>
+                                            {% endif %}
+                                        {% endfor %}
+
+
+                                    </form>
+                                </div>
+                            </div>
 
 
 
-        </form>
 
 
-    </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+        </div>
+
+
+
+
+
+
+
+
+
     <div class="col-xs1 col-sm4" id="content" >
         {% include "views/content/posts/User/contentPosts.html.twig" %}
 
@@ -683,11 +782,14 @@ Ajouter
     </div>
 
 {% endblock %}
-
+{% block vendor_script %}
+    <script src="{{ asset('vendors/js/extensions/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ asset('vendors/js/extensions/polyfill.min.js') }}"></script>
+{% endblock %}
 
 {% block page_script %}
 
-
+    <script src="{{ asset('js/scripts/extensions/ext-component-sweet-alerts.js') }}"></script>
 
 
 

@@ -26,12 +26,12 @@ class UserFixtures extends AbstractFixtureEx implements DependentFixtureInterfac
     $testing_users = new ArrayCollection();
     /** @var Group $group */
     foreach ($groups as $group) {
-      for ($i = 0; $i < 10; $i++) {
+      for ($i = 0; $i < 70; $i++) {
         $user = new User();
         $user->addGroup($group);
         $user->setFirstName($generator->firstName);
         $user->setLastName($generator->lastName);
-        $user->setEmail("test_" . $group->getGroupType()->slufigy() . "_" . $generator->unique()->randomNumber(2) . "@esprit.tn");
+        $user->setEmail("test_" . $group->getGroupType()->slufigy() . "_" . $generator->unique()->randomNumber(3) . "@esprit.tn");
         if ($group->getGroupType() === GroupType::STUDENT())
           $user->setClass("3A" . $generator->randomNumber(2));
         $user->setPhoneNumber("+216" . $generator->randomNumber(8));
@@ -40,12 +40,19 @@ class UserFixtures extends AbstractFixtureEx implements DependentFixtureInterfac
         $user->setIdentityDocumentNumber($generator->randomNumber(8));
         $user->setPlainPassword("12345");
         $user->setAbout($generator->realText(254));
+        $user->setCreatedAt($generator->dateTimeBetween("-10 days"));
         $manager->persist($user);
         $testing_users->add($user);
       }
     }
     $manager->flush();
     $this->addReferenceArray(self::LOADED_USER_FIXTURES, $testing_users);
+    /** @var User $testing_user */
+    foreach ($testing_users as $testing_user){
+      $testing_user->addContact($this->getSingleRandomItem(self::LOADED_USER_FIXTURES));
+      $manager->persist($testing_user);
+    }
+    $manager->flush();
   }
 
   public function getDependencies()
