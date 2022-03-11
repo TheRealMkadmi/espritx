@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Group;
+use App\Enum\AccessType;
 use App\Form\GroupType;
 use App\Form\PermissionType;
 use App\Form\UserType;
@@ -28,6 +29,7 @@ class GroupController extends AbstractController
    */
   public function create(EntityManagerInterface $entityManager, Request $request): Response
   {
+    $this->denyAccessUnlessGranted(AccessType::CREATE, Group::class);
     $group = new Group();
     $form = $this->createForm(GroupType::class, $group);
     $form->handleRequest($request);
@@ -78,6 +80,7 @@ class GroupController extends AbstractController
    */
   public function index(GroupRepository $groupRepository): Response
   {
+    $this->denyAccessUnlessGranted(AccessType::READ, Group::class);
 
     return $this->render('views/content/apps/rolesPermission/role/app-access-roles.html.twig', [
       'breadcrumbs' => [
@@ -93,6 +96,8 @@ class GroupController extends AbstractController
    */
   public function edit(Request $request, Group $group, EntityManagerInterface $entityManager): Response
   {
+    $this->denyAccessUnlessGranted(AccessType::EDIT, Group::class);
+
     $form = $this->createForm(GroupType::class, $group);
     $form->handleRequest($request);
 
@@ -131,6 +136,8 @@ class GroupController extends AbstractController
    */
   public function delete(Request $request, Group $group, EntityManagerInterface $entityManager, GroupRepository $groupRepository): Response
   {
+    $this->denyAccessUnlessGranted(AccessType::DELETE, Group::class);
+
     if ($this->isCsrfTokenValid('delete' . $group->getId(), $request->query->get('_token'))) {
       if (count($group->getProvidedServices()) > 0) {
         return $this->render('views/content/apps/rolesPermission/role/app-access-roles.html.twig', [

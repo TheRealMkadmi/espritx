@@ -120,7 +120,7 @@
                       {% include "views/content/_partials/_fragments/user-avatar.html.twig" with {'user': user} %}
                     </div>
                     <div class="d-flex flex-column">
-                      <a href="https://pixinvent.com/demo/vuexy-bootstrap-laravel-admin-template/demo-1/app/user/view/account"
+                      <a href="{{ url("show_user_profile", {"id": user.id}) }}"
                          class="user_name text-truncate text-body">
                         <span class="fw-bolder fs-6">{{ user.firstName ~ " " ~ user.lastName }}</span>
                       </a>

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Permission;
+use App\Enum\AccessType;
 use App\Form\GroupType;
 use App\Form\PermissionType;
 use App\Form\UserType;
@@ -26,6 +27,7 @@ class PermissionController extends AbstractController
    */
   public function index(EntityManagerInterface $em, PaginatorInterface $paginator, Request $request): Response
   {
+    $this->denyAccessUnlessGranted(AccessType::READ, Permission::class);
     $dql = <<<DQL
     select p from App\Entity\Permission p 
     DQL;
@@ -74,6 +76,8 @@ class PermissionController extends AbstractController
    */
   public function create(Request $request, EntityManagerInterface $entityManager): Response
   {
+    $this->denyAccessUnlessGranted(AccessType::CREATE, Permission::class);
+
     $permission = new Permission();
     $form = $this->createForm(PermissionType::class, $permission);
     $form->handleRequest($request);
@@ -100,6 +104,8 @@ class PermissionController extends AbstractController
    */
   public function show(Permission $permission): Response
   {
+    $this->denyAccessUnlessGranted(AccessType::READ, $permission);
+
     return $this->render('permission/show.html.twig', [
       'permission' => $permission,
     ]);
@@ -110,6 +116,8 @@ class PermissionController extends AbstractController
    */
   public function edit(Request $request, Permission $permission, EntityManagerInterface $entityManager): Response
   {
+    $this->denyAccessUnlessGranted(AccessType::READ, $permission);
+
     $form = $this->createForm(PermissionType::class, $permission);
     $form->handleRequest($request);
 
@@ -134,11 +142,11 @@ class PermissionController extends AbstractController
    */
   public function delete(Request $request, Permission $permission, EntityManagerInterface $entityManager): Response
   {
+    $this->denyAccessUnlessGranted(AccessType::DELETE, $permission);
     if ($this->isCsrfTokenValid('delete-perm' . $permission->getId(), $request->query->get('_token'))) {
       $entityManager->remove($permission);
       $entityManager->flush();
     }
-
     return $this->redirectToRoute('permission_index', [], Response::HTTP_SEE_OTHER);
   }
 }

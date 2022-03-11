@@ -66,6 +66,7 @@
         "symfonycasts/verify-email-bundle": "^1.8",
         "tetranz/select2entity-bundle": "^3.1",
         "twig/extra-bundle": "^2.12|^3.0",
+        "twig/string-extra": "^3.3",
         "twig/twig": "^2.12|^3.0",
         "twilio/sdk": "^6.35",
         "vich/uploader-bundle": "^1.19"
@@ -122,8 +123,7 @@
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
             "ckeditor:install": "symfony-cmd",
-            "doctrine:schema:update --force": "symfony-cmd",
-            "doctrine:fixtures:load -n": "symfony-cmd"
+            "doctrine:schema:update --force": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"

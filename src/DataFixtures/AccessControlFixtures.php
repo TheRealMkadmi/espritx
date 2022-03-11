@@ -63,6 +63,7 @@ class AccessControlFixtures extends AbstractFixtureEx
           $this->aclService->GrantAccess(AccessType::MANAGE(), Event::class, $group, "object.getUser() == user");
           $this->aclService->GrantAccess(AccessType::READ(), User::class, $group, "object.getId() == user.getId()");
           $this->aclService->GrantAccess(AccessType::MANAGE(), Call::class, $group, "object.getUser() == user");
+          $this->aclService->GrantAccess(AccessType::READ(), Group::class, $group);
           break;
         case GroupType::FACULTY_STAFF():
           $this->aclService->GrantAccess(AccessType::READ_CREATE(), ServiceRequest::class, $group);
@@ -78,11 +79,13 @@ class AccessControlFixtures extends AbstractFixtureEx
           $this->aclService->GrantAccess(AccessType::MANAGE(), Event::class, $group, "object.getUser() == user");
           $this->aclService->GrantAccess(AccessType::READ(), Call::class, $group, "object.getUser() == user or object.getUsers().contains(user)");
           $this->aclService->GrantAccess(AccessType::MANAGE(), Call::class, $group, "object.getUser() == user");
+          $this->aclService->GrantAccess(AccessType::READ(), Permission::class, $group);
+          $this->aclService->GrantAccess(AccessType::READ(), Group::class, $group);
+
           break;
         case GroupType::SITE_STAFF():
           $this->aclService->GrantAccess(AccessType::MANAGE(), User::class, $group);
-          $this->aclService->GrantAccess(AccessType::READ_CREATE_EDIT(), Group::class, $group);
-          $this->aclService->GrantAccess(AccessType::MANAGE(), Permission::class, $group);
+          $this->aclService->GrantAccess(AccessType::MANAGE(), Group::class, $group);
           $this->aclService->GrantAccess(AccessType::READ_CREATE_DELETE(), Commentaire::class, $group);
           $this->aclService->GrantAccess(AccessType::EDIT(), Commentaire::class, $group);
           $this->aclService->GrantAccess(AccessType::READ_CREATE_DELETE(), Post::class, $group);
@@ -90,6 +93,7 @@ class AccessControlFixtures extends AbstractFixtureEx
           $this->aclService->GrantAccess(AccessType::get(AccessType::CREATE | AccessType::DELETE | AccessType::READ), PostCategory::class, $group);
           $this->aclService->GrantAccess(AccessType::MANAGE(), Event::class, $group);
           $this->aclService->GrantAccess(AccessType::MANAGE(), Call::class, $group);
+          $this->aclService->GrantAccess(AccessType::MANAGE(), Permission::class, $group);
           break;
         default:
           break;

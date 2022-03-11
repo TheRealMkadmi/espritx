@@ -26,7 +26,7 @@ class UserExtensions extends AbstractExtension
     return count($this->userRepository->getCommonContacts($user1, $user2));
   }
 
-  public function makeFriendSuggestions(User $user): array
+  public function makeFriendSuggestions(User $user, int $limit = 10): array
   {
     return $this->userRepository->makeFriendSuggestions($user);
   }

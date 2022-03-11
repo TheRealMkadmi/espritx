@@ -26,12 +26,12 @@ class UserFixtures extends AbstractFixtureEx implements DependentFixtureInterfac
     $testing_users = new ArrayCollection();
     /** @var Group $group */
     foreach ($groups as $group) {
-      for ($i = 0; $i < 10; $i++) {
+      for ($i = 0; $i < 70; $i++) {
         $user = new User();
         $user->addGroup($group);
         $user->setFirstName($generator->firstName);
         $user->setLastName($generator->lastName);
-        $user->setEmail("test_" . $group->getGroupType()->slufigy() . "_" . $generator->unique()->randomNumber(2) . "@esprit.tn");
+        $user->setEmail("test_" . $group->getGroupType()->slufigy() . "_" . $generator->unique()->randomNumber(3) . "@esprit.tn");
         if ($group->getGroupType() === GroupType::STUDENT())
           $user->setClass("3A" . $generator->randomNumber(2));
         $user->setPhoneNumber("+216" . $generator->randomNumber(8));
