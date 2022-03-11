@@ -40,12 +40,19 @@ class UserFixtures extends AbstractFixtureEx implements DependentFixtureInterfac
         $user->setIdentityDocumentNumber($generator->randomNumber(8));
         $user->setPlainPassword("12345");
         $user->setAbout($generator->realText(254));
+        $user->setCreatedAt($generator->dateTimeBetween("-10 days"));
         $manager->persist($user);
         $testing_users->add($user);
       }
     }
     $manager->flush();
     $this->addReferenceArray(self::LOADED_USER_FIXTURES, $testing_users);
+    /** @var User $testing_user */
+    foreach ($testing_users as $testing_user){
+      $testing_user->addContact($this->getSingleRandomItem(self::LOADED_USER_FIXTURES));
+      $manager->persist($testing_user);
+    }
+    $manager->flush();
   }
 
   public function getDependencies()
