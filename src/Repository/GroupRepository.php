@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Group;
+use App\Enum\GroupType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,6 +20,14 @@ class GroupRepository extends ServiceEntityRepository
         parent::__construct($registry, Group::class);
     }
 
+    public function getDefaultGroup(){
+      $res = $this->createQueryBuilder("g")
+        ->where("g.groupType", GroupType::STUDENT())
+        ->getQuery()
+        ->getResult();
+      if(is_array($res)) return $res[0];
+      return $res;
+    }
     // /**
     //  * @return Role[] Returns an array of Role objects
     //  */
