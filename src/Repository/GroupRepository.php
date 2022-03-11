@@ -15,45 +15,45 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class GroupRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, Group::class);
-    }
+  public function __construct(ManagerRegistry $registry)
+  {
+    parent::__construct($registry, Group::class);
+  }
 
-    public function getDefaultGroup(){
-      $res = $this->createQueryBuilder("g")
-        ->where("g.groupType", GroupType::STUDENT())
-        ->getQuery()
-        ->getResult();
-      if(is_array($res)) return $res[0];
-      return $res;
+  public function getDefaultGroup()
+  {
+    $groups = $this->findAll();
+    foreach ($groups as $group){
+      if ($group->getGroupType() === GroupType::STUDENT())
+        return $group;
     }
-    // /**
-    //  * @return Role[] Returns an array of Role objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+  }
+  // /**
+  //  * @return Role[] Returns an array of Role objects
+  //  */
+  /*
+  public function findByExampleField($value)
+  {
+      return $this->createQueryBuilder('r')
+          ->andWhere('r.exampleField = :val')
+          ->setParameter('val', $value)
+          ->orderBy('r.id', 'ASC')
+          ->setMaxResults(10)
+          ->getQuery()
+          ->getResult()
+      ;
+  }
+  */
 
-    /*
-    public function findOneBySomeField($value): ?Role
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+  /*
+  public function findOneBySomeField($value): ?Role
+  {
+      return $this->createQueryBuilder('r')
+          ->andWhere('r.exampleField = :val')
+          ->setParameter('val', $value)
+          ->getQuery()
+          ->getOneOrNullResult()
+      ;
+  }
+  */
 }
