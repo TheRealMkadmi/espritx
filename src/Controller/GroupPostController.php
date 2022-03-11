@@ -148,6 +148,7 @@ class GroupPostController extends AbstractController
                 $em->persist($post);
                 $em->persist($img);
                 $groupPost->addPost($post);
+
                 $em->flush();
                 $request->getSession()->getFlashBag()->add("info", "Publication ajoutée ! mais doit etre approuvée par notre admin .");
 
@@ -303,6 +304,7 @@ class GroupPostController extends AbstractController
     {
         $group= $repository->find($id);
         $membres=$group->getMembre();
+
         return $this->render('views/content/posts/GroupPost/SingleGroup.html.twig', [ 'membres'=>$membres,'group' => $group,
             "user" => $this->getUser()
             ]);
