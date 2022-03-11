@@ -63,4 +63,13 @@ class CommentaireRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function CountByMonth()
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c.created_at','count(c.id) as cnt','MONTH(c.created_at) AS daycreation')
+            ->where('MONTH(c.created_at) BETWEEN 1 AND 6')
+            ->groupBy('daycreation')
+            ->getQuery()
+            ->getResult();
+    }
 }

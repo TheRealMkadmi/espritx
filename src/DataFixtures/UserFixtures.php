@@ -41,6 +41,7 @@ class UserFixtures extends AbstractFixtureEx implements DependentFixtureInterfac
         $user->setPlainPassword("12345");
         $user->setAbout($generator->realText(254));
         $user->setCreatedAt($generator->dateTimeBetween("-10 days"));
+        $user->setlastActivityAt($generator->dateTimeBetween("-10 days"));
         $manager->persist($user);
         $testing_users->add($user);
       }

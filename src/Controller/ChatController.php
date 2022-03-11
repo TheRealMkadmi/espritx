@@ -48,7 +48,6 @@ class ChatController extends AbstractController
         $channel = new Channel();
         $form = $this->createForm(ChannelType::class, $channel);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $channel->addParticipant($this->getUser());
             $entityManager->persist($channel);

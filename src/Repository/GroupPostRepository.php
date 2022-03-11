@@ -88,4 +88,24 @@ class GroupPostRepository extends ServiceEntityRepository
         $em->flush();
         return $groupPost;
     }
+
+    public function CountByDate()
+    {
+        return $this->createQueryBuilder('g')
+            ->select('g.createdAt','count(g.id) as cnt','DAY(g.createdAt) AS daycreation')
+            ->where('DATE_DIFF( CURRENT_DATE(),g.createdAt )<7')
+            ->groupBy('daycreation')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function CountByMonth()
+    {
+        return $this->createQueryBuilder('g')
+            ->select('g.createdAt','count(g.id) as cnt','MONTH(g.createdAt) AS daycreation')
+            ->where('MONTH(g.createdAt) BETWEEN 1 AND 6')
+            ->groupBy('daycreation')
+            ->getQuery()
+            ->getResult();
+    }
 }

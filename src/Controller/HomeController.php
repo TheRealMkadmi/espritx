@@ -3,9 +3,13 @@
 namespace App\Controller;
 
 // ...
+use App\Repository\ChannelRepository;
 use App\Repository\CommentaireRepository;
+use App\Repository\EventRepository;
 use App\Repository\GroupPostRepository;
+use App\Repository\MessageRepository;
 use App\Repository\PostRepository;
+use App\Repository\ServiceRequestRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,13 +64,51 @@ class HomeController extends AbstractController
     /**
      * @Route("/admin/home", name="app_admin_home", methods={"GET"})
      */
-  public function showAdmin(): Response
-  {
-      $pageConfigs = [
-          'mainLayoutType' => 'vertical',
-          'pageHeader' => false];
+    public function showAdmin(MessageRepository $messageRepository,
+                              ChannelRepository $channelRepository,
+                              UserRepository $userRepository,
+                              GroupPostRepository $groupPostRepository,
+                              ServiceRequestRepository $requestRepository,
+                              CommentaireRepository $commentaireRepository,
+                              EventRepository $eventRepository): Response
+    {
+      $user=$this->getUser();
 
+      $users=$userRepository->CountByDate();
+      $us=$userRepository->CountByActivity();
+      $use=$userRepository->count([]);
+
+      $groups=$groupPostRepository->CountByDate();
+      $gr=$groupPostRepository->count([]);
+      $groups_Monthly=$groupPostRepository->CountByMonth();
+      $comm=$commentaireRepository->CountByMonth();
+
+      $ch=$channelRepository->count([]);
+      $msg=$messageRepository->count([]);
+
+      $sr=$requestRepository->count([]);
+      $sr_unseen=$requestRepository->findBy(['Status'=>'unseen']);
+      $sr_success=$requestRepository->findBy(['Status'=>'success']);
+      //$sr_response=$requestRepository->findByResponseTime()[0];
+
+        $event=$eventRepository->Last4Events();
       return $this->render('views/content/dashboard/dashboard-analytics.html.twig',
-          ['pageConfigs' => $pageConfigs]);
+          [
+              'user'=>$user,
+              'users_per_day' => array_column($users, "cnt"),
+              'users_last_activity'=> array_column($us, "cnt"),
+              'users'=>$use,
+              'groups_per_day' => array_column($groups, "cnt"),
+              'groups'=>$gr,
+              'disc'=>$ch,
+              'msg'=>$msg,
+              'sr'=>$sr,
+              'sr_unseen'=>$sr_unseen,
+              'sr_success'=>$sr_success,
+              //'sr_response'=> $sr_response
+              'groups_month'=> array_column($groups_Monthly, "cnt"),
+              'comm_month'=> array_column($comm, "cnt"),
+              'events'=>$event,]
+      );
   }
 }

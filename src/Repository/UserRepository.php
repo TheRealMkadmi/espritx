@@ -73,11 +73,20 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
   public function CountByDate()
   {
       return $this->createQueryBuilder('u')
-          ->select('count(u.id)','DAY(u.createdAt) AS daycreation')
-          ->where('u.createdAt BETWEEN :n7days AND :today')
-          ->setParameter('now', '\'CURRENT_TIMESTAMP()\'')
+          ->select('u.createdAt','count(u.id) as cnt','DAY(u.createdAt) AS daycreation')
+          ->where('DATE_DIFF( CURRENT_DATE(),u.createdAt )<7')
           ->groupBy('daycreation')
           ->getQuery()
           ->getResult();
   }
+
+    public function CountByActivity()
+    {
+        return $this->createQueryBuilder('u')
+            ->select('count(u.lastActivityAt) as cnt','DAY(u.lastActivityAt) AS lastactivity')
+            ->where('DATE_DIFF( CURRENT_DATE(),u.lastActivityAt )<7')
+            ->groupBy('lastactivity')
+            ->getQuery()
+            ->getResult();
+    }
 }
