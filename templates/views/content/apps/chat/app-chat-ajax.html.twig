@@ -99,7 +99,7 @@
 
                                         {% set block_author = (block|first).author %}
                                         <div class="chat {{ (block_author != app.user) ? "chat-left" : "" }}">
-                                            <div class="chat-avatar ">
+                                            <div class="chat-avatar" data-avatar-owner="{{ block_author.id }}">
                                                 {% include "views/content/_partials/_fragments/user-avatar.html.twig" with {'user': block_author } %}
                                             </div>
                                             <div class="chat-body">
@@ -107,7 +107,6 @@
                                                     <div class="chat-content">
                                                         <p>{{ message.content }}</p>
                                                     </div>
-
                                                 {% endfor %}
                                             </div>
                                         </div>
@@ -215,6 +214,8 @@
             </div>
         </div>
     </div>
+
+
 {% endblock %}
 {% block page_script %}
     <!-- Page js files -->
@@ -225,10 +226,42 @@
         function enterChat(source) {
             var message = $('.message').val();
             if (/\S/.test(message)) {
-                var html = '<div class="chat-content">' + '<p>' + message + '</p>' + '</div>';
-                $('.chat:last-child .chat-body').append(html);
-                $('.message').val('');
-                $('.user-chats').scrollTop($('.user-chats > .chats').height());
+                let is_last_message_foreign = $(".chats .chat").last()[0].classList.contains("chat-left");
+                /* if last measage aal lisar wena sender */
+
+                {# Todo wahib add avatar and  mercure #}
+
+                if (is_last_message_foreign) {
+                    let html = `<div class="chat">
+                                <div class="chat-avatar" data-avatar-owner="34">
+                                <div class="avatar-wrapper">
+                                <div class="avatar bg-light-info">
+                    <span class="avatar-content avatar-content me-auto ms-auto mt-auto mb-auto">HM</span>
+                    <span class="avatar-status-online"></span>
+                </div>
+            </div>
+        </div>
+        <div class="chat-body">
+            <div class="chat-content">
+                <p>` + message + `</p>
+            </div>
+        </div>
+    </div>`;
+
+                    $('.chats').append(html);
+                    $('.message').val('');
+                    $('.user-chats').scrollTop($('.user-chats > .chats').height());
+                }
+                /* if last meassage aal limin wena reciever */
+                if (!is_last_message_foreign) {
+                    let html = `<div class="chat-content">
+                        <p>` + message + `</p>
+                         </div>`;
+
+                    $('.chats .chat .chat-body').last().eq(0).append(html);
+                    $('.message').val('');
+                    $('.user-chats').scrollTop($('.user-chats > .chats').height());
+                }
             }
             $.ajax({
                 type: "POST",
@@ -248,12 +281,40 @@
         const eventSource = new EventSource('https://45-79-249-222.ip.linodeusercontent.com/.well-known/mercure?topic=' + encodeURIComponent('conversation-1'));
         eventSource.onmessage = event => {
             let data = JSON.parse(event.data);
-            if (/\S/.test(data.message)) {
-                var html = '<div class="chat-content">' + '<p>' + data.message + '</p>' + '</div>';
-                $('.chat:last-child .chat-body').append(html);
-                $('.user-chats').scrollTop($('.user-chats > .chats').height());
+            let message = data.message;
+            if (/\S/.test(message)) {
+                let is_last_message_foreign = $(".chats .chat").last()[0].classList.contains("chat-left");
+                if (is_last_message_foreign) {
+                    let html = `<div class="chat-content">
+                        <p>` + message + `</p>
+                         </div>`;
+
+                    $('.chats .chat-left .chat-body').last().eq(0).append(html);
+                    $('.message').val('');
+                    $('.user-chats').scrollTop($('.user-chats > .chats').height());
+                }
+                if (!is_last_message_foreign) {
+                    let html = `<div class="chat chat-left">
+                                <div class="chat-avatar" data-avatar-owner="34">
+                                <div class="avatar-wrapper">
+                                <div class="avatar bg-light-info">
+                    <span class="avatar-content avatar-content me-auto ms-auto mt-auto mb-auto">NH</span>
+                    <span class="avatar-status-online"></span>
+                </div>
+            </div>
+        </div>
+        <div class="chat-body">
+            <div class="chat-content">
+                <p>` + message + `</p>
+            </div>
+        </div>
+    </div>`;
+
+                    $('.chats').append(html);
+                    $('.message').val('');
+                    $('.user-chats').scrollTop($('.user-chats > .chats').height());
+                }
             }
-            console.log(JSON.parse(event.data.message));
         }
     </script>
 {% endblock %}
