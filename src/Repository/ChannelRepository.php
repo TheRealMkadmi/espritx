@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use _PHPStan_d26496e2d\Nette\Neon\Exception;
 use App\Entity\Channel;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -16,59 +18,54 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ChannelRepository extends ServiceEntityRepository
 {
-  public function __construct(ManagerRegistry $registry)
-  {
-    parent::__construct($registry, Channel::class);
-  }
-
-  /**
-   * @throws ORMException
-   * @throws OptimisticLockException
-   */
-  public function add(Channel $entity, bool $flush = true): void
-  {
-    $this->_em->persist($entity);
-    if ($flush) {
-      $this->_em->flush();
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Channel::class);
     }
-  }
 
-  /**
-   * @throws ORMException
-   * @throws OptimisticLockException
-   */
-  public function remove(Channel $entity, bool $flush = true): void
-  {
-    $this->_em->remove($entity);
-    if ($flush) {
-      $this->_em->flush();
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function add(Channel $entity, bool $flush = true): void
+    {
+        $this->_em->persist($entity);
+        if ($flush) {
+            $this->_em->flush();
+        }
     }
-  }
 
-  /**
-   * @return Channel[] Returns an array of Channel objects
-   */
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function remove(Channel $entity, bool $flush = true): void
+    {
+        $this->_em->remove($entity);
+        if ($flush) {
+            $this->_em->flush();
+        }
+    }
 
-  public function findByIds($value1, $value2)
-  {
-    return $this->createQueryBuilder('c')
-      ->where(':id1 MEMBER OF c.participants')
-      ->andWhere(':id2 MEMBER OF c.participants')
-      ->setParameter("id1", $value1)
-      ->setParameter("id2", $value2)
-      ->orderBy('c.id', 'ASC')
-      ->getQuery()
-      ->getSingleResult();
-  }
-  /*
-  public function findOneBySomeField($value): ?Channel
-  {
-      return $this->createQueryBuilder('c')
-          ->andWhere('c.exampleField = :val')
-          ->setParameter('val', $value)
-          ->getQuery()
-          ->getOneOrNullResult()
-      ;
-  }
-  */
+    /**
+     * @return Channel[] Returns an array of Channel objects
+     */
+
+    public function findByIds(User $user1, User $user2) : ?Channel
+    {
+        $array_intersect = array_intersect($user1->getChannels()->toArray(), $user2->getChannels()->toArray());
+        if(count($array_intersect) > 0) return $array_intersect[0];
+        return null;
+    }
+    /*
+    public function findOneBySomeField($value): ?Channel
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.exampleField = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+    */
 }

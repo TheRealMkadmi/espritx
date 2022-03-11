@@ -5,8 +5,10 @@ namespace App\Controller;
 
 use App\Entity\Channel;
 use App\Entity\Message;
+use App\Entity\User;
 use App\Form\ChannelType;
 use App\Form\UserType;
+use App\Repository\ChannelRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,8 +35,13 @@ class ChatController extends AbstractController
         $channels = $this->getUser()->getChannels();
         $channel = new Channel();
         $channel->setId(-1);
-        return $this->render("views/content/apps/chat/app-chat-ajax.html.twig", [
-            "channels" => $channels ?? [], "curuser" => $this->getUser(), "currentchannel" => $channel, "messages" => $messages
+        return $this->render("views/content/apps/chat/app-chat-raw.html.twig", [
+            "channels" => $channels ?? [],
+            "curuser" => $this->getUser(),
+            "currentchannel" => $channel,
+            "messages" => $messages,
+            "current_user_avatar_markup" => $this->renderView("views/content/_partials/_fragments/user-avatar.html.twig", ['user' => $this->getUser()])
+
         ]);
     }
 
