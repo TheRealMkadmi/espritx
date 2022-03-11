@@ -164,17 +164,4 @@ class ChatController extends AbstractController
         $em->flush();
         return $this->redirectToRoute('chat_back', [], Response::HTTP_SEE_OTHER);
     }
-  /**
-   * @Route("/test-pub", name="test_pub")
-   */
-  public function test_pub(Request $request, HubInterface $hub)
-  {
-    $update = new Update(
-      'http://example.com/books/1',
-      json_encode(['status' => 'OutOfStock'])
-    );
-    $res = $hub->publish($update);
-    dd($res);
-    return new Response('published!');
-  }
 }
