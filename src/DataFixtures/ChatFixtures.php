@@ -25,7 +25,7 @@ class ChatFixtures extends AbstractFixtureEx implements DependentFixtureInterfac
   {
     $generator = Factory::create();
     $testing_channels = new ArrayCollection();
-    for ($i = 0; $i < 1; $i++) {
+    for ($i = 0; $i < 10; $i++) {
       $user1 = $this->getSingleRandomItem(UserFixtures::LOADED_USER_FIXTURES);
       $user2 = $this->getSingleRandomItem(UserFixtures::LOADED_USER_FIXTURES);
       while ($user1->getId() === $user2->getId()) {
