@@ -28,7 +28,7 @@ class Fields
     private $Type;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="boolean", length=255)
      */
     private $Required;
 
