@@ -47,4 +47,13 @@ class EventRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function Last4Events()
+    {
+        return $this->createQueryBuilder('e')
+            ->OrderBy('e.start','DESC')
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\GroupRepository;
 use App\Repository\UserRepository;
 use App\Security\LoginFormAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -37,7 +38,8 @@ class RegistrationController extends AbstractController
    */
   public function register(Request                   $request,
                            GuardAuthenticatorHandler $guardHandler,
-                           LoginFormAuthenticator    $authenticator
+                           LoginFormAuthenticator    $authenticator,
+                            GroupRepository $groupRepository
   ): Response
   {
     $user = new User();
@@ -45,6 +47,7 @@ class RegistrationController extends AbstractController
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+      $user->addGroup($groupRepository->getDefaultGroup());
       $this->entityManager->persist($user);
       $this->entityManager->flush();
 
@@ -108,6 +111,6 @@ class RegistrationController extends AbstractController
     // @TODO Change the redirect on success and handle or remove the flash message in your templates
     $this->addFlash('success', 'Your email address has been verified.');
 
-    return $this->redirectToRoute('app_home');
+    return $this->redirectToRoute('show_my_profile');
   }
 }

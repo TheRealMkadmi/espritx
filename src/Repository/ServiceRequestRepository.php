@@ -47,4 +47,11 @@ class ServiceRequestRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findByResponseTime()
+    {
+        return $this->createQueryBuilder('sr')
+            ->select('AVG(DATE_DIFF( sr.createdAt,sr.RespondedAt ))AS cnt')
+            ->getQuery()
+            ->getResult();
+    }
 }

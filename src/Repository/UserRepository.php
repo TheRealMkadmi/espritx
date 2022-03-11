@@ -10,6 +10,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use DoctrineExtensions\Query\Mysql;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -75,4 +76,24 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     shuffle($pool);
     return array_slice($pool, 0, $limit);
   }
+
+  public function CountByDate()
+  {
+      return $this->createQueryBuilder('u')
+          ->select('u.createdAt','count(u.id) as cnt','DAY(u.createdAt) AS daycreation')
+          ->where('DATE_DIFF( CURRENT_DATE(),u.createdAt )<7')
+          ->groupBy('daycreation')
+          ->getQuery()
+          ->getResult();
+  }
+
+    public function CountByActivity()
+    {
+        return $this->createQueryBuilder('u')
+            ->select('count(u.lastActivityAt) as cnt','DAY(u.lastActivityAt) AS lastactivity')
+            ->where('DATE_DIFF( CURRENT_DATE(),u.lastActivityAt )<7')
+            ->groupBy('lastactivity')
+            ->getQuery()
+            ->getResult();
+    }
 }

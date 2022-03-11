@@ -32,6 +32,9 @@ class ServiceRequestsFixtures extends AbstractFixtureEx implements DependentFixt
       $service_type = $this->getSingleRandomItem(ServiceFixtures::LOADED_SERVICE_FIXTURES);
       $service_request->setType($service_type);
 
+      $service_request->setRespondedAt(\DateTimeImmutable::createFromMutable($generator->dateTimeBetween("-10 days")));
+      $service_request->setCreatedAt($generator->dateTimeBetween("-10 days"));
+
       $manager->persist($service_request);
       $service_requests->add($service_request);
     }

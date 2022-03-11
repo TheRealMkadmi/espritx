@@ -8,7 +8,7 @@
       "slug": "",
       "submenu": [
         {
-          "url": "dashboard-analytics",
+          "url": "app_admin_home",
           "name": "Analytics",
           "icon": "circle",
           "slug": "Dashboard-Analytics"
@@ -31,24 +31,12 @@
       "slug": "",
       "submenu": [
         {
-          "__url__": "login",
-          "name": "Logout",
-          "icon": "circle",
-          "slug": ""
-        },
-        {
           "url": "app_forgot_password_request",
           "name": "Reset Password",
           "icon": "circle",
           "slug": ""
         }
       ]
-    },
-    {
-      "url": "login",
-      "name": "Reload Session",
-      "icon": "rotate-cw",
-      "slug": "Session-reload"
     },
     {
       "navheader": "User Management",
@@ -124,13 +112,13 @@
       "slug": "",
       "submenu": [
         {
-          "__url__": "#",
-          "name": "List",
+          "url": "call",
+          "name": "Calls",
           "icon": "circle",
           "slug": "card-basic"
         },
         {
-          "__url__": "#",
+          "url": "addNewEvent",
           "name": "Add",
           "icon": "circle",
           "slug": "card-advance"
@@ -152,18 +140,6 @@
       "name": "Requests",
       "icon": "server",
       "slug": "Service-Requests"
-    },
-    {
-      "__url__": "#",
-      "name": "Responses",
-      "icon": "grid",
-      "slug": "Service-Responses"
-    },
-    {
-      "__url__": "#",
-      "name": "File Manager",
-      "icon": "save",
-      "slug": "app-file-manager"
     },
     {
       "navheader": "Contact",
@@ -209,14 +185,8 @@
       "slug": "",
       "submenu": [
         {
-          "_url": "conversation",
+          "url": "chat_back",
           "name": "Conversations",
-          "icon": "circle",
-          "slug": ""
-        },
-        {
-          "_url": "message_show",
-          "name": "Messages",
           "icon": "circle",
           "slug": ""
         }

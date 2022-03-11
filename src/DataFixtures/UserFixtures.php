@@ -26,7 +26,7 @@ class UserFixtures extends AbstractFixtureEx implements DependentFixtureInterfac
     $testing_users = new ArrayCollection();
     /** @var Group $group */
     foreach ($groups as $group) {
-      for ($i = 0; $i < 5; $i++) {
+      for ($i = 0; $i < 15; $i++) {
         $user = new User();
         $user->addGroup($group);
         $user->setFirstName($generator->firstName);
@@ -41,6 +41,7 @@ class UserFixtures extends AbstractFixtureEx implements DependentFixtureInterfac
         $user->setPlainPassword("12345");
         $user->setAbout($generator->realText(254));
         $user->setCreatedAt($generator->dateTimeBetween("-10 days"));
+        $user->setlastActivityAt($generator->dateTimeBetween("-10 days"));
         $manager->persist($user);
         $testing_users->add($user);
       }

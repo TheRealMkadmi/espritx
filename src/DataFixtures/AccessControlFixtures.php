@@ -64,7 +64,9 @@ class AccessControlFixtures extends AbstractFixtureEx
           $this->aclService->GrantAccess(AccessType::READ(), User::class, $group, "object.getId() == user.getId()");
           $this->aclService->GrantAccess(AccessType::MANAGE(), Call::class, $group, "object.getUser() == user");
           $this->aclService->GrantAccess(AccessType::READ(), Group::class, $group);
+          $this->aclService->GrantAccess(AccessType::READ(), User::class, $group);
           break;
+
         case GroupType::FACULTY_STAFF():
           $this->aclService->GrantAccess(AccessType::READ_CREATE(), ServiceRequest::class, $group);
           $this->aclService->GrantAccess(AccessType::DELETE_EDIT(), ServiceRequest::class, $group, "user.getGroups().contains(object.getType().getResponsible())");
@@ -81,6 +83,7 @@ class AccessControlFixtures extends AbstractFixtureEx
           $this->aclService->GrantAccess(AccessType::MANAGE(), Call::class, $group, "object.getUser() == user");
           $this->aclService->GrantAccess(AccessType::READ(), Permission::class, $group);
           $this->aclService->GrantAccess(AccessType::READ(), Group::class, $group);
+          $this->aclService->GrantAccess(AccessType::MANAGE(), User::class, $group);
 
           break;
         case GroupType::SITE_STAFF():
@@ -94,6 +97,7 @@ class AccessControlFixtures extends AbstractFixtureEx
           $this->aclService->GrantAccess(AccessType::MANAGE(), Event::class, $group);
           $this->aclService->GrantAccess(AccessType::MANAGE(), Call::class, $group);
           $this->aclService->GrantAccess(AccessType::MANAGE(), Permission::class, $group);
+          $this->aclService->GrantAccess(AccessType::MANAGE(), User::class, $group);
           break;
         default:
           break;
