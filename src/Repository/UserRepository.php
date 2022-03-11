@@ -10,6 +10,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use DoctrineExtensions\Query\Mysql;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -65,5 +66,16 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
       $pool = array_merge($group->getMembers()->toArray(), $pool);
     }
     return $pool;
+  }
+
+  public function CountByDate()
+  {
+      return $this->createQueryBuilder('u')
+          ->select('count(u.id)','DAY(u.createdAt) AS daycreation')
+          ->where('u.createdAt BETWEEN :n7days AND :today')
+          ->setParameter('now', '\'CURRENT_TIMESTAMP()\'')
+          ->groupBy('daycreation')
+          ->getQuery()
+          ->getResult();
   }
 }

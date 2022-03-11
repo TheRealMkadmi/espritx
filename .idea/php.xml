@@ -208,6 +208,7 @@
       <path value="$PROJECT_DIR$/../../../../xampp/php/PEAR" />
       <path value="$PROJECT_DIR$/vendor/symfony/mercure-bundle" />
       <path value="$PROJECT_DIR$/vendor/symfony/mercure" />
+      <path value="$PROJECT_DIR$/vendor/beberlei/doctrineextensions" />
     </include_path>
   </component>
   <component name="PhpProjectServersManager">

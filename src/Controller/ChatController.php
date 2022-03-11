@@ -7,7 +7,9 @@ use App\Entity\Channel;
 use App\Entity\Message;
 use App\Form\ChannelType;
 use App\Form\UserType;
+use App\Repository\ChannelRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -109,5 +111,34 @@ class ChatController extends AbstractController
         $res = $hub->publish($update);
         dd($res);
         return new Response('published!');
+    }
+
+    /**
+     * @Route ("/Back/", name="chat_back")
+     */
+    public function backOfficeChat(ChannelRepository $repository, PaginatorInterface $paginator, Request $request)
+    {
+        $chats = $repository->findAll();
+        $paginatedchats = $paginator->paginate(
+            $chats, 1, 10
+        );
+        return $this->render('views/content/apps/chat/app-chat-back.html.twig', [
+            'breadcrumbs' => [
+                ["name" => "Management"],
+                ["name" => "All Chats", "link" => ""]
+            ],
+            'pagination' => $paginatedchats,
+        ]);
+    }
+
+    /**
+     * @Route("/back/channel/delete/{id}", name="chat_delete")
+     * @ParamConverter("channel", class="App\Entity\Channel")
+     */
+    public function delConversation(EntityManagerInterface $em, Channel $channel): Response
+    {
+        $em->remove($channel);
+        $em->flush();
+        return $this->redirectToRoute('chat_back', [], Response::HTTP_SEE_OTHER);
     }
 }

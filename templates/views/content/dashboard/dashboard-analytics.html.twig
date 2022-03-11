@@ -62,7 +62,7 @@
               <i data-feather="users" class="font-medium-5"></i>
             </div>
           </div>
-          <h2 class="fw-bolder mt-1">92.6k</h2>
+          <h2 class="fw-bolder mt-1">{{ users|length }}</h2>
           <p class="card-text">Subscribers Gained</p>
         </div>
         <div id="gained-chart"></div>
@@ -79,8 +79,8 @@
               <i data-feather="package" class="font-medium-5"></i>
             </div>
           </div>
-          <h2 class="fw-bolder mt-1">38.4K</h2>
-          <p class="card-text">Orders Received</p>
+          <h2 class="fw-bolder mt-1">{{ posts|length }}</h2>
+          <p class="card-text">Posts Created</p>
         </div>
         <div id="order-chart"></div>
       </div>
