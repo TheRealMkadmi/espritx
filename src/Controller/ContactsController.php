@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,29 +15,34 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ContactsController extends AbstractController
 {
-  public function __construct(private EntityManagerInterface $entityManager)
-  {
-  }
-
   /**
    * @Route("/add/{id}", name="add_contact")
    * @ParamConverter("user", class="App\Entity\User")
    */
-  public function add_contact(Request $request, User $user)
+  public function add_contact(Request $request, User $user, NotificationService $notificationService, EntityManagerInterface $em)
   {
-    $this->getUser()->addContact($user);
-    $this->entityManager->flush();
-
+    /** @var User $current_user */
+    $current_user = $this->getUser();
+    $current_user->addContact($user);
+    $notificationService->notifyUser($user,
+      $this->getUser()->getFirstName() . " " . $this->getUser()->getLastName() . " has added you as a contact!",
+      "How about you go say hi?",
+      $this->generateUrl("show_user_profile", ["id" => $this->getUser()->getId()]
+      )
+    );
+    $em->flush();
+    return $this->redirect($request->getUri());
   }
 
   /**
-   * @Route("/add/{id}", name="remove_contact")
+   * @Route("/remove/{id}", name="remove_contact")
    * @ParamConverter("user", class="App\Entity\User")
    */
-  public function remove_contact(Request $request, User $user)
+  public function remove_contact(Request $request, User $user, EntityManagerInterface $em)
   {
-    $this->getUser()->removeContact($user);
-    $this->entityManager->flush();
 
+    $this->getUser()->removeContact($user);
+    $em->flush();
+    return $this->redirect($request->getUri());
   }
 }

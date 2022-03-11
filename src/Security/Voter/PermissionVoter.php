@@ -67,9 +67,7 @@ class PermissionVoter implements VoterInterface
             ]);
             if ($result)
               $decision = self::ACCESS_GRANTED;
-          } else {
-            $decision = self::ACCESS_GRANTED;
-          }
+          } // else $decision = self::ACCESS_GRANTED;
         }
         if ($decision === self::ACCESS_GRANTED) return $decision;
       }
