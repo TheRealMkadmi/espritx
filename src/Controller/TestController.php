@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Enum\GroupType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,9 +17,18 @@ class TestController extends AbstractController
      */
     public function index()
     {
-        $pageConfigs = ['pageHeader' => false];
-
-        return $this->render('index.html.twig', ['pageConfigs' => $pageConfigs]);
+        $user = $this->getUser();
+        if ($user) {
+            foreach ($user->getGroups() as $group) {
+                if ($group->getGroupType() === GroupType::STUDENT() || $group->getGroupType() === GroupType::TEACHERS()) {
+                    return $this->redirectToRoute('show_my_profile');
+                }
+            }
+            return $this->redirectToRoute('app_admin_home');
+        }
+        else {
+            return $this->redirectToRoute("login");
+        }
     }
     /**
      * @Route("/testuas",name="testuas")
