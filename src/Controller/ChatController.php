@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Form\ChannelType;
 use App\Form\UserType;
 use App\Repository\ChannelRepository;
+use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -163,5 +164,22 @@ class ChatController extends AbstractController
         $em->remove($channel);
         $em->flush();
         return $this->redirectToRoute('chat_back', [], Response::HTTP_SEE_OTHER);
+    }
+    /**
+     *@Route ("/Back/messages", name="messages_back")
+     */
+    public function showMessages(MessageRepository $repository,PaginatorInterface $paginator, Request $request)
+    {
+        $chats = $repository->findAll();
+        $paginatedchats = $paginator->paginate(
+            $chats, 1, 10
+        );
+        return $this->render('views/content/apps/chat/app-messages-back.html.twig', [
+            'breadcrumbs' => [
+                ["name" => "Management"],
+                ["name" => "All Chats", "link" => ""]
+            ],
+            'pagination' => $paginatedchats,
+        ]);
     }
 }

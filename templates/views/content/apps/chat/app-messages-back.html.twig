@@ -18,33 +18,29 @@
         <!-- list and filter start -->
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Manage chats</h4>
+                <h4 class="card-title">Manage Messages</h4>
             </div>
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-1">
         <span class="card-text">
-          You can view and answer different chats in the table below.
+          You can view and answer different messages of the chats in the table below.
         </span>
-                    <a class="btn btn-primary waves-effect waves-float waves-light" href="{{ url('messages_back') }}">See Messages</a>
+                    <a class="btn btn-primary waves-effect waves-float waves-light" href="{{ url('chat_back') }}">Back to chats</a>
                 </div>
                 <div class="table-responsive row">
                     <table class="table">
                         <thead>
                         <tr>
-                            <th{% if pagination.isSorted('c.created_at') %} class="sorted"{% endif %}>
-                                {{ knp_pagination_sortable(pagination, 'Created At', 'c.created_at') }}
+                            <th{% if pagination.isSorted('m.created_at') %} class="sorted"{% endif %}>
+                                {{ knp_pagination_sortable(pagination, 'Created At', 'm.created_at') }}
                             </th>
 
                             <th>
-                                Participant 1
+                                Author
                             </th>
 
                             <th>
-                                Participant 2
-                            </th>
-
-                            <th{% if pagination.isSorted('c.updated_at') %} class="sorted"{% endif %}>
-                                {{ knp_pagination_sortable(pagination, 'Last active', 'c.updated_at') }}
+                                Conversation
                             </th>
 
 
@@ -63,32 +59,30 @@
                                     </a>
                                     <!-- END: Creation date-->
                                 </td>
-                                {% for person in chat.participants %}
                                 <td>
                                     <div class="d-flex justify-content-left align-items-center">
                                         <div class="d-flex flex-column">
-                                            <span class="fw-bolder fs-6">{{ person.firstName~" "~person.lastName }}</span>
+                                            <span class="fw-bolder fs-6">{{ chat.author.firstName~" "~chat.author.lastName }}</span>
                                         </div>
                                     </div>
                                 </td>
-                                {% endfor %}
                                 <td>
                                     <!-- BEGIN: Creation date-->
                                     <div class="d-flex justify-content-left align-items-center">
-                                        <div class="d-flex flex-column">{{ chat.updatedAt|date('Y-m-d H:i:s') }}
+                                        <div class="d-flex flex-column">{{ chat.channel.id }}
                                         </div>
                                     </div>
                                     </a>
                                     <!-- END: Creation date-->
                                 </td>
                                 <td>
+
+                                </td>
+                                <td>
                                     <div class="d-flex">
                                             <a href="{{ url("chat_show", {id: chat.id}) }}">
                                                 <i data-feather="eye" class="me-50"></i>
                                             </a>
-                                        <a href="{{ url("chat_delete", {id: chat.id}) }}">
-                                            <i data-feather="trash" class="me-50"></i>
-                                        </a>
                                     </div>
                                 </td>
 

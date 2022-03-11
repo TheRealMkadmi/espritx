@@ -7,10 +7,24 @@
       "slug": ""
     },
     {
-      "url": "show_my_profile",
       "name": "Profile",
       "icon": "user",
-      "slug": ""
+      "slug": "",
+
+      "submenu": [
+        {
+          "url": "show_my_profile",
+          "name": "Visit",
+          "icon": "circle",
+          "slug": ""
+        },
+        {
+          "url": "account_settings",
+          "name": "Account Settings",
+          "icon": "circle",
+          "slug": ""
+        }
+      ]
     },
     {
       "name": "Groups",
