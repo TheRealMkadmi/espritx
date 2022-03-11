@@ -24,6 +24,7 @@
     {
       "name": "Chat",
       "icon": "message-circle",
+      "url": "chat_index",
       "slug": ""
     },
     {

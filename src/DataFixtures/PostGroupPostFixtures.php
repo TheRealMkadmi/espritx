@@ -30,7 +30,7 @@ class PostGroupPostFixtures extends AbstractFixtureEx implements DependentFixtur
 
     //// Testing groups
     $testing_groups = new ArrayCollection();
-    for ($i = 0; $i <= 7; $i++) {
+    for ($i = 0; $i <= 3; $i++) {
       $groupPost = new GroupPost();
       $groupPost->setUser($this->getSingleRandomItem(UserFixtures::LOADED_USER_FIXTURES));
       for ($j = 0; $j <= random_int(10, 20); $j++) {
@@ -51,7 +51,7 @@ class PostGroupPostFixtures extends AbstractFixtureEx implements DependentFixtur
     ///// Testing posts
     $testing_posts = new ArrayCollection();
     $testing_pictures = ["content-img-1.jpg", "content-img-2.jpg", "content-img-3.jpg", "content-img-4.jpg"];
-    for ($i = 0; $i <= 50; $i++) {
+    for ($i = 0; $i <= 5; $i++) {
       $post = new Post();
       $post->setUser($this->getSingleRandomItem(UserFixtures::LOADED_USER_FIXTURES));
       $post->setContent($generator->realText(128));
@@ -77,7 +77,7 @@ class PostGroupPostFixtures extends AbstractFixtureEx implements DependentFixtur
 
     ///// Testing comments
     $testing_comments = new ArrayCollection();
-    for ($i = 0; $i <= 100; $i++){
+    for ($i = 0; $i <= 3; $i++){
       $comment = new Commentaire();
       $comment->setCreatedAt(\DateTimeImmutable::createFromMutable($generator->dateTimeBetween("-15 days", 'now')));
       $comment->setContent($generator->realText());
