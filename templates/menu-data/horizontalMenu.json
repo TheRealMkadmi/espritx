@@ -1,11 +1,13 @@
 {
   "menu": [
     {
+      "url": "app_home",
       "name": "Home",
       "icon": "home",
       "slug": ""
     },
     {
+      "url": "show_my_profile",
       "name": "Profile",
       "icon": "user",
       "slug": ""
