@@ -3,10 +3,10 @@
         <div class="card-body">
             <div class="d-flex justify-content-start align-items-center mb-1">
                 <!-- avatar -->
-                {% include "views/content/_partials/_fragments/user-avatar.html.twig" with {'user': user} %}
+                {% include "views/content/_partials/_fragments/user-avatar.html.twig" with {'user': post.user} %}
                 <!--/ avatar -->
                 <div class="ms-1 profile-user-info">
-                    <h6 class="mb-0">{{ user.firstName ~ ' ' ~ user.lastName }}</h6>
+                    <h6 class="mb-0">{{ post.user.firstName ~ ' ' ~ post.user.lastName }}</h6>
                     <small class="text-muted">{{ post.createdAt|date("F j Y, g:i a") }}</small>
                 </div>
             </div>
@@ -72,7 +72,6 @@
 
                             <small>{{ comment.content }}</small>
                         </div>
-                {% endfor %}
                 <div class="row card-text">
                 <form name="form" method="get" id="{{ post.id }}" action="{{ path('newcomment',{'id':post.id}) }}"
                       class="comment">
@@ -101,12 +100,12 @@
     <script>
         $("#show-qc-qr").on('click', function () {
             Swal.fire({
-                title: '{{ user.firstName ~ " " ~ user.lastName }}',
+                title: '{{ post.user.firstName ~ " " ~ post.user.lastName }}',
                 text: 'Scan this QR code on your device.',
-                imageUrl: '{{ url('make_quick_code', {"id": user.id}) }}',
+                imageUrl: '{{ url('make_quick_code', {"id": post.user.id}) }}',
                 imageWidth: 200,
                 imageHeight: 200,
-                imageAlt: '{{ user.firstName ~ " " ~ user.lastName }}',
+                imageAlt: '{{ post.user.firstName ~ " " ~ post.user.lastName }}',
                 customClass: {
                     confirmButton: 'btn btn-primary'
                 },
@@ -116,3 +115,5 @@
     </script>
 {% endblock %}
 
+
+{% endfor %}
