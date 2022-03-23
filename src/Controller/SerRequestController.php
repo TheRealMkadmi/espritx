@@ -7,6 +7,7 @@ use App\Enum\AccessType;
 use App\Form\SerRequestType;
 use App\Repository\ServiceRepository;
 use App\Repository\ServiceRequestRepository;
+use App\Service\NotificationService;
 use BotMan\BotMan\Drivers\DriverManager;
 use BotMan\Drivers\Web\WebDriver;
 use DateTime;
@@ -78,7 +79,7 @@ class SerRequestController extends AbstractController
     /**
      * @Route("/add", name="SerivceReq_Add")
      */
-    public function addServiceRequest(Request $request, EntityManagerInterface $em): Response
+    public function addServiceRequest(Request $request, EntityManagerInterface $em, NotificationService $Notif): Response
     {
         $serreq = new ServiceRequest();
         $f = $this->createForm(SerRequestType::class, $serreq);
@@ -87,6 +88,7 @@ class SerRequestController extends AbstractController
             $serreq->setRequester($this->getUser());
             $em->persist($serreq);
             $em->flush();
+            $Notif->notifyGroup($serreq->getType()->getResponsible(),"New Request","You have received a new service request",null,true);
             return $this->redirectToRoute('SerivceReq_User', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -105,12 +107,13 @@ class SerRequestController extends AbstractController
      * @return Response
      * @Route ("/{id}/edit", name="SerivceReq_Edit")
      */
-    public function ModifServiceRequest(EntityManagerInterface $em, Request $request, ServiceRequest $serreq): Response
+    public function ModifServiceRequest(EntityManagerInterface $em, Request $request, ServiceRequest $serreq,NotificationService $Notif): Response
     {
         // $this->denyAccessUnlessGranted([AccessType::EDIT], $serreq);
         $form = $this->createForm(SerRequestType::class, $serreq);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $Notif->notifyGroup($serreq->getType()->getResponsible(),"Edited Request","A service request has new updates",null,true);
             $em->flush();
             return $this->redirectToRoute('SerivceReq_User', [], Response::HTTP_SEE_OTHER);
         }
@@ -153,7 +156,7 @@ class SerRequestController extends AbstractController
     /**
      * @Route ("/{id}/Respond", name="SerivceReq_Respond")
      */
-    public function RespondServiceRequest(EntityManagerInterface $em, Request $request, ServiceRequest $serreq)
+    public function RespondServiceRequest(EntityManagerInterface $em, Request $request, ServiceRequest $serreq,NotificationService $Notif)
     {
         $form = $this->createForm(SerRequestType::class, $serreq);
         $form->add('RequestResponse',TextareaType::class);
@@ -170,6 +173,7 @@ class SerRequestController extends AbstractController
         $form->remove('Type');
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $Notif->notifyUser($serreq->getRequester(),"Rzquest Response","Your service request has a new response",null,true);
             if ($serreq->getStatus() != "unseen"){
                 $serreq->setRespondedAt(new DateTimeImmutable());
             }

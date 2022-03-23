@@ -80,7 +80,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
   public function CountByDate()
   {
       return $this->createQueryBuilder('u')
-          ->select('u.createdAt','count(u.id) as cnt','DAY(u.createdAt) AS daycreation')
+          ->select('count(u.id) as cnt','DAY(u.createdAt) AS daycreation')
           ->where('DATE_DIFF( CURRENT_DATE(),u.createdAt )<7')
           ->groupBy('daycreation')
           ->getQuery()

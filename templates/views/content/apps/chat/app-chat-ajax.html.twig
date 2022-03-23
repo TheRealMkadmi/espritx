@@ -258,7 +258,7 @@
                     $('.message').val('');
                     $('.user-chats').scrollTop($('.user-chats > .chats').height());
                 }
-            }{#
+            }
             $.ajax({
                 type: "POST",
                 url: "{{ url('send_message', {"channel": currentchannel.id}) }}",
@@ -271,7 +271,7 @@
                 complete: function (data) {
                     console.log(data);
                 }
-            }); #}
+            });
         }
 
         // On message reception

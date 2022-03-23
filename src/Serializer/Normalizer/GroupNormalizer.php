@@ -28,9 +28,9 @@ class GroupNormalizer implements NormalizerInterface, CacheableSupportsMethodInt
   {
     return [
       'id' => $object->getId(),
-      'security_title' => $object->getDisplayName(),
-      'display_name' => $object->getSecurityTitle(),
-      'enjoyable_services' => array_map(static fn (Service $service) => ["id" => $service->getId(), "name" => $service->getName()], $object->getEnjoyableServices())
+      'security_title' => $object->getSecurityTitle(),
+      'display_name' => $object->getDisplayName(),
+      'group_type' => $object->getGroupType()->getReadable()
     ];
   }
 

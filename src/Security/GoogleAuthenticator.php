@@ -6,6 +6,7 @@ use App\Entity\User;
 
 // your user entity
 use App\Enum\UserStatus;
+use App\Repository\GroupRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Client\OAuth2ClientInterface;
 use KnpU\OAuth2ClientBundle\Client\Provider\GoogleClient;
@@ -31,7 +32,8 @@ class GoogleAuthenticator extends SocialAuthenticator
                               private EntityManagerInterface       $em,
                               private RouterInterface              $router,
                               private MailerInterface              $mailer,
-                              private UserPasswordEncoderInterface $userPasswordEncoder)
+                              private UserPasswordEncoderInterface $userPasswordEncoder,
+                              private GroupRepository $repository)
   {
   }
 
@@ -74,6 +76,9 @@ class GoogleAuthenticator extends SocialAuthenticator
       $user->setUserStatus(UserStatus::ACTIVE());
       $password = bin2hex(random_bytes(8));
       $user->setPlainPassword($password);
+      $default_group = $this->repository->getDefaultGroup();
+      $default_group->addMember($user);
+      $this->em->persist($default_group);
       $email = (new TemplatedEmail())
         ->from(new Address('postmaster@espritx.xyz', 'ESPRITx'))
         ->to($user->getEmail())

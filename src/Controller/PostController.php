@@ -275,7 +275,6 @@ class PostController extends AbstractController
     $entityManager->remove($post);
     $this->addFlash('success', 'Publication bien été supprimée.');
 
-
     $entityManager->flush();
     return $this->redirectToRoute('postall');
 

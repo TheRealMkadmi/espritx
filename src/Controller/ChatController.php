@@ -37,7 +37,7 @@ class ChatController extends AbstractController
     $channels = $this->getUser()->getChannels();
     $channel = new Channel();
     $channel->setId(-1);
-    return $this->render("views/content/apps/chat/app-chat-ajax.html.twig", [
+    return $this->render("views/content/apps/chat/app-chat-raw.html.twig", [
       "channels" => $channels ?? [], "curuser" => $this->getUser(), "currentchannel" => $channel, "messages" => $messages
     ]);
   }

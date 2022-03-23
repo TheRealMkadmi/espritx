@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 // ...
+use App\Form\CommentaireType;
 use App\Repository\ChannelRepository;
 use App\Repository\CommentaireRepository;
 use App\Repository\EventRepository;
@@ -16,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Response;
+use App\Entity\Commentaire;
 
 class HomeController extends AbstractController
 {
@@ -57,7 +59,8 @@ class HomeController extends AbstractController
       }
 
 
-      return $this->render('views/content/posts/User/acceuilposts.html.twig', ['recentP' => $recentP, 'mes_groups' => $mesgrps, 'allgroups' => $allgroups, 'comments' => $comments, 'posts' => $posts, 'form' => $form->createView()]);
+      return $this->render('views/content/posts/User/acceuilallposts.html.twig', [      "user" => $this->getUser(),
+          'recentP' => $recentP, 'mes_groups' => $mesgrps, 'allgroups' => $allgroups, 'comments' => $comments, 'posts' => $posts, 'form' => $form->createView()]);
 
   }
 
