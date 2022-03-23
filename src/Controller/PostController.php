@@ -319,7 +319,7 @@ class PostController extends AbstractController
     }
 
 
-    return $this->render('views/content/posts/User/acceuilposts.html.twig', ['recentP' => $recentP, 'mes_groups' => $mesgrps, 'allgroups' => $allgroups, 'comments' => $comments, 'posts' => $posts, 'form' => $form->createView()]);
+    return $this->render('/views/content/posts/User/acceuilposts.html.twig', ['recentP' => $recentP, 'mes_groups' => $mesgrps, 'allgroups' => $allgroups, 'comments' => $comments, 'posts' => $posts, 'form' => $form->createView()]);
 
 //     return $this->render('views/content/pages/page-profile.html.twig', ['mes_groups'=>$mesgrps,'allgroups'=>$allgroups,'comments' => $comments, 'posts' => $posts, 'form' => $form->createView()]);
   }

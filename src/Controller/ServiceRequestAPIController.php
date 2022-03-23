@@ -13,12 +13,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * @Route("request/api")
+ * @Route("/api/request")
  */
-class ServiceRequestAPIController extends AbstractController
+class ServiceRequestAPIController extends AbstractApiController
 {
     /**
-     * @Route("/", name="app_service_request_a_p_i_index", methods={"GET"})
+     * @Route("/", name="app_service_request_api_index", methods={"GET"})
      */
     public function getRequests(ServiceRequestRepository $serviceRequestRepository,SerializerInterface $serializer)
     {
