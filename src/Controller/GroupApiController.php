@@ -19,6 +19,15 @@ use Symfony\Component\HttpFoundation\Response;
 class GroupApiController extends AbstractApiController
 {
   /**
+   * @Route("/", name="group_api_index", methods={"GET"})
+   */
+  public function index_groups(EntityManagerInterface $entityManager)
+  {
+    $groups = $entityManager->getRepository(Group::class)->findAll();
+    return $this->json($groups);
+  }
+  
+  /**
    * @Route("/assignment-lists", name="group_api_combobox_populator", methods={"GET"})
    */
   public function populate_combobox(EntityManagerInterface $entityManager)
