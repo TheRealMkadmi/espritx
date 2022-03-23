@@ -51,7 +51,7 @@ class UserApiController extends AbstractApiController
    */
   public function editUser(Request $request, EntityManagerInterface $em, User $user)
   {
-    $request->request->set("groups", array_map(fn($g) => $g["id"], $request->request->get("groups")));
+    $request->request->set("groups", array_map(static fn($g) => $g["id"], $request->request->get("groups")));
 
     $editForm = $this->buildForm(UserType::class, $user);
     $editForm->submit($request->request->all(), false);

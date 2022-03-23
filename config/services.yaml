@@ -55,4 +55,5 @@ services:
             - { name: 'kernel.event_listener', event: 'security.interactive_login' }
 
     Mgilet\NotificationBundle\Manager\NotificationManager: '@mgilet.notification'
+    Symfony\Bridge\Twig\Extension\HttpFoundationExtension: '@twig.extension.httpfoundation'
 
