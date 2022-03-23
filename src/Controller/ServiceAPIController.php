@@ -15,9 +15,9 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * @Route("/service/api")
+ * @Route("/api/service")
  */
-class ServiceAPIController extends AbstractController
+class ServiceAPIController extends AbstractApiController
 {
     /**
      * @Route("/show", name="app_service_a_p_i_index", methods={"GET"})
@@ -25,9 +25,7 @@ class ServiceAPIController extends AbstractController
     public function getServices(ServiceRepository $serviceRepository,SerializerInterface $serializer)
     {
         $services = $serviceRepository->findAll();
-        $json =$serializer->serialize($services,'json',['groups'=>'Service']);
-        dump($json);
-        die;
+        return $this->json($services);
     }
 
     /**
