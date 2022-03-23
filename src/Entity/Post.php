@@ -133,7 +133,7 @@ class Post
     private $groupPost;
 
     /**
-     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="post",orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="post",orphanRemoval=true,cascade={"persist"})
      */
     private $images;
 
