@@ -18,6 +18,21 @@ security:
       logout:
         path: app_logout
 
+    login:
+      pattern: ^/api/login
+      stateless: true
+      json_login:
+        check_path: /api/login_check # or api_login_check as defined in config/routes.yaml
+        success_handler: lexik_jwt_authentication.handler.authentication_success
+        failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+    api:
+      pattern: ^/api
+      stateless: true
+      guard:
+        authenticators:
+          - lexik_jwt_authentication.jwt_token_authenticator
+
     main:
       pattern: /
       anonymous: lazy
@@ -52,7 +67,6 @@ security:
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
-    - { path: ^/(login|register|resetpassword|forum|connect).*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/(login|register|resetpassword|forum|connect|api/login).*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/.*, role: IS_AUTHENTICATED_REMEMBERED }
-  # - { path: ^/admin, roles: ROLE_ADMIN }
-  # - { path: ^/profile, roles: ROLE_USER }
