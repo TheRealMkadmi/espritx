@@ -137,7 +137,7 @@ class Group
    */
   protected $groupType;
 
-  public function getGroupType(): ?GroupType
+  public function getGroupType(): GroupType
   {
     return $this->groupType;
   }

@@ -16,7 +16,6 @@ use ReflectionClass;
 final class DocumentIdentityTypeEnum extends SimpleChoiceEnum
 {
   use RandomizableEnum;
-
   public const CIN = 'cin';
   public const PASSPORT = 'passport';
   public const UNKNOWN = 'Unknown';

@@ -2,6 +2,8 @@
 
 namespace App\Serializer\Normalizer;
 
+use App\Entity\Group;
+use App\Entity\Permission;
 use App\Entity\User;
 use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -12,33 +14,34 @@ class UserNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
 {
 
   public function __construct(private ObjectNormalizer $normalizer,
-                              private UploaderHelper   $helper)
+                              private UploaderHelper   $helper,
+                              private GroupNormalizer $groupNormalizer)
   {
   }
 
   /**
-   * @param User $object
+   * @param User $user
    * @param $format
    * @param array $context
    * @return array
    * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
    */
-  public function normalize($object, $format = null, array $context = []): array
+  public function normalize($user, $format = null, array $context = []): array
   {
     return [
-      'id' => $object->getId(),
-      'first_name' => $object->getFirstName(),
-      'last_name' => $object->getLastName(),
-      'email' => $object->getEmail(),
-      'class' => $object->getClass(),
-      'userStatus' => $object->getUserStatus(),
-      'groups' => array_map(static fn(\App\Entity\Group $g) => $g->getDisplayName(), $object->getGroups()->toArray()),
-      'individualPermissions' => array_map(static fn(\App\Entity\Permission $g) => $g->getTitle(), $object->getIndividualPermissions()->toArray()),
-      'avatarFile' => ($object->getAvatar() === null) ? $this->helper->asset($object, "avatar") : null,
-      'identityType' => $object->getIdentityType(),
-      'identityDocumentNumber' => $object->getIdentityDocumentNumber(),
-      'phoneNumber' => $object->getPhoneNumber(),
-      'plainPassword' => $object->getPlainPassword()
+      'id' => $user->getId(),
+      'first_name' => $user->getFirstName(),
+      'last_name' => $user->getLastName(),
+      'email' => $user->getEmail(),
+      'class' => $user->getClass(),
+      'userStatus' => $user->getUserStatus(),
+      'groups' => array_map(fn(Group $g) => $this->groupNormalizer->normalize($g), $user->getGroups()->toArray()),
+      'individualPermissions' => array_map(static fn(Permission $g) => $g->getTitle(), $user->getIndividualPermissions()->toArray()),
+      'avatarFile' => ($user->getAvatar() === null) ? $this->helper->asset($user, "avatar") : null,
+      'identityType' => $user->getIdentityType(),
+      'identityDocumentNumber' => $user->getIdentityDocumentNumber(),
+      'phoneNumber' => $user->getPhoneNumber(),
+      'plainPassword' => $user->getPlainPassword()
     ];
   }
 

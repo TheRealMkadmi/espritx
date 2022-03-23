@@ -22,26 +22,27 @@ class UserFixtures extends AbstractFixtureEx implements DependentFixtureInterfac
   {
     /** @var Collection<Group> $groups */
     $groups = $this->getReferenceArray(AccessControlFixtures::LOADED_ROLE_FIXTURES)->toArray();
-    $generator = Factory::create();
+    $faker = Factory::create();
+    $faker->seed(12345);
     $testing_users = new ArrayCollection();
     /** @var Group $group */
     foreach ($groups as $group) {
-      for ($i = 0; $i < 15; $i++) {
+      for ($i = 0; $i < 30; $i++) {
         $user = new User();
         $user->addGroup($group);
-        $user->setFirstName($generator->firstName);
-        $user->setLastName($generator->lastName);
-        $user->setEmail("test_" . $group->getGroupType()->slufigy() . "_" . $generator->unique()->randomNumber(3) . "@esprit.tn");
+        $user->setFirstName($faker->firstName);
+        $user->setLastName($faker->lastName);
+        $user->setEmail("test_" . $group->getGroupType()->slufigy() . "_" . $faker->unique()->randomNumber(3) . "@esprit.tn");
         if ($group->getGroupType() === GroupType::STUDENT())
-          $user->setClass("3A" . $generator->randomNumber(2));
-        $user->setPhoneNumber("+216" . $generator->randomNumber(8));
+          $user->setClass("3A" . $faker->randomNumber(2));
+        $user->setPhoneNumber("+216" . $faker->randomNumber(8));
         $user->setUserStatus(UserStatus::ACTIVE());
         $user->setIdentityType(DocumentIdentityTypeEnum::Random());
-        $user->setIdentityDocumentNumber($generator->randomNumber(8));
+        $user->setIdentityDocumentNumber($faker->randomNumber(8));
         $user->setPlainPassword("12345");
-        $user->setAbout($generator->realText(254));
-        $user->setCreatedAt($generator->dateTimeBetween("-10 days"));
-        $user->setlastActivityAt($generator->dateTimeBetween("-10 days"));
+        $user->setAbout($faker->realText(254));
+        $user->setCreatedAt($faker->dateTimeBetween("-10 days"));
+        $user->setlastActivityAt($faker->dateTimeBetween("-10 days"));
         $manager->persist($user);
         $testing_users->add($user);
       }

@@ -50,6 +50,7 @@ class UserType extends AbstractBootstrapType
   {
     $resolver->setDefaults([
       'data_class' => User::class,
+      'allow_extra_fields' => true
     ]);
   }
 }

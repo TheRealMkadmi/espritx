@@ -6,6 +6,7 @@ use App\Enum\DocumentIdentityTypeEnum;
 use App\Enum\GroupType;
 use App\Enum\UserStatus;
 use App\Repository\UserRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -227,9 +228,8 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   //</editor-fold>
   //<editor-fold desc="Class">
   /**
-   * @Assert\Regex("/^[1-5](A|B|TWIN|SLEAMS)\d{1,3}$/")
+   * @Assert\Regex("/^([1-5](A|B|TWIN|SLEAMS)\d{1,3})|$/")
    * @ORM\Column(type="string", length=255, nullable=true)
-   *
    */
   private $class;
 
@@ -303,14 +303,14 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   /**
    * @ORM\Column(type="datetime", nullable=true)
    */
-  protected ?\DateTime $last_login;
+  protected ?DateTime $last_login;
 
-  public function getLastLogin(): ?\DateTime
+  public function getLastLogin(): ?DateTime
   {
     return $this->last_login;
   }
 
-  public function setLastLogin(\DateTime $time = null)
+  public function setLastLogin(DateTime $time = null)
   {
     $this->last_login = $time;
     return $this;
@@ -320,22 +320,22 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   /**
    * @ORM\Column(name="last_activity_at", type="datetime", nullable=true)
    */
-  protected ?\DateTime $lastActivityAt = null;
+  protected ?DateTime $lastActivityAt = null;
 
-  public function setLastActivityAt(?\DateTime $lastActivityAt): static
+  public function setLastActivityAt(?DateTime $lastActivityAt): static
   {
     $this->lastActivityAt = $lastActivityAt;
     return $this;
   }
 
-  public function getLastActivityAt(): ?\DateTime
+  public function getLastActivityAt(): ?DateTime
   {
     return $this->lastActivityAt;
   }
 
   public function isActiveNow(): bool
   {
-    $delay = new \DateTime('5 minutes ago');
+    $delay = new DateTime('5 minutes ago');
     return ($this->getLastActivityAt() > $delay);
   }
   //</editor-fold>
@@ -361,15 +361,15 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   /**
    * @ORM\Column(type="datetime", nullable=true)
    */
-  protected ?\DateTime $passwordRequestedAt;
+  protected ?DateTime $passwordRequestedAt;
 
-  public function setPasswordRequestedAt(\DateTime $date = null): static
+  public function setPasswordRequestedAt(DateTime $date = null): static
   {
     $this->passwordRequestedAt = $date;
     return $this;
   }
 
-  public function getPasswordRequestedAt(): ?\DateTime
+  public function getPasswordRequestedAt(): ?DateTime
   {
     return $this->passwordRequestedAt;
   }
@@ -483,15 +483,16 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   //</editor-fold>
   //<editor-fold desc="Commentaires">
   /**
-   * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="user")
+   * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="user", cascade={"persist", "remove"})
    */
   private $commentaires;
   //</editor-fold>
   //<editor-fold desc="Posts">
   /**
-   * @ORM\OneToMany(targetEntity=Post::class, mappedBy="user", orphanRemoval=true)
+   * @ORM\OneToMany(targetEntity=Post::class, mappedBy="user", orphanRemoval=true, cascade={"persist", "remove"})
    */
   private Collection $posts;
+
   /**
    * @return Collection|Post[]
    */
@@ -523,7 +524,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   //</editor-fold>
   //<editor-fold desc="Likes">
   /**
-   * @ORM\OneToMany(targetEntity=PostLike::class, mappedBy="user")
+   * @ORM\OneToMany(targetEntity=PostLike::class, mappedBy="user", cascade={"persist", "remove"})
    */
   private $likes;
 
@@ -640,7 +641,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   //</editor-fold>
   //<editor-fold desc="Service Requests">
   /**
-   * @ORM\OneToMany(targetEntity=ServiceRequest::class, mappedBy="Requester", orphanRemoval=true)
+   * @ORM\OneToMany(targetEntity=ServiceRequest::class, mappedBy="Requester", orphanRemoval=true, cascade={"persist", "remove"})
    */
   private $serviceRequests;
 
@@ -676,9 +677,10 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   //</editor-fold>
   //<editor-fold desc="Events">
   /**
-   * @ORM\OneToMany(targetEntity=Event::class, mappedBy="user")
+   * @ORM\OneToMany(targetEntity=Event::class, mappedBy="user", cascade={"persist", "remove"})
    */
   private $events;
+
   /**
    * @return Collection<int, Event>
    */
@@ -714,6 +716,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
    * @ORM\ManyToMany(targetEntity=Call::class, mappedBy="users")
    */
   private $calls;
+
   /**
    * @return Collection<int, Call>
    */
@@ -740,6 +743,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
 
     return $this;
   }
+
   //</editor-fold>
   public function isEqualTo(UserInterface $user)
   {
@@ -752,10 +756,12 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
     return $this->email;
   }
   //<editor-fold desc="User Call">
+
   /**
-   * @ORM\OneToMany(targetEntity=Call::class, mappedBy="user")
+   * @ORM\OneToMany(targetEntity=Call::class, mappedBy="user", cascade={"persist", "remove"})
    */
   private $UserCall;
+
   /**
    * @return Collection<int, Call>
    */
@@ -788,9 +794,10 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   //</editor-fold>
   //<editor-fold desc="Post Categories">
   /**
-   * @ORM\OneToMany(targetEntity=PostCategory::class, mappedBy="user")
+   * @ORM\OneToMany(targetEntity=PostCategory::class, mappedBy="user", cascade={"persist", "remove"})
    */
   private $postCategories;
+
   /**
    * @return Collection<int, PostCategory>
    */
@@ -823,9 +830,10 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   //</editor-fold>
   //<editor-fold desc="Group posts">
   /**
-   * @ORM\OneToMany(targetEntity=GroupPost::class, mappedBy="user", orphanRemoval=true)
+   * @ORM\OneToMany(targetEntity=GroupPost::class, mappedBy="user", orphanRemoval=true, cascade={"persist", "remove"})
    */
   private $groupPosts;
+
   /**
    * @return Collection<int, GroupPost>
    */
@@ -861,6 +869,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
    * @ORM\ManyToMany(targetEntity=GroupPost::class, mappedBy="membre", orphanRemoval=true)
    */
   private $groupes;
+
   /**
    * @return Collection<int, GroupPost>
    */
@@ -887,66 +896,75 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
 
     return $this;
   }
+  //</editor-fold>
+  //<editor-fold desc="Messages">
+  /**
+   * @ORM\OneToMany(targetEntity=Message::class, mappedBy="author", cascade={"persist", "remove"})
+   * @ORM\JoinColumn(nullable=false)
+   */
+  private $messages;
 
   /**
    * @return Collection<int, Message>
    */
   public function getMessages(): Collection
   {
-      return $this->messages;
+    return $this->messages;
   }
 
   public function addMessage(Message $message): self
   {
-      if (!$this->messages->contains($message)) {
-          $this->messages[] = $message;
-          $message->setAuthor($this);
-      }
+    if (!$this->messages->contains($message)) {
+      $this->messages[] = $message;
+      $message->setAuthor($this);
+    }
 
-      return $this;
+    return $this;
   }
 
   public function removeMessage(Message $message): self
   {
-      if ($this->messages->removeElement($message)) {
-          // set the owning side to null (unless already changed)
-          if ($message->getAuthor() === $this) {
-              $message->setAuthor(null);
-          }
+    if ($this->messages->removeElement($message)) {
+      // set the owning side to null (unless already changed)
+      if ($message->getAuthor() === $this) {
+        $message->setAuthor(null);
       }
+    }
 
-      return $this;
+    return $this;
   }
-
+  //</editor-fold>
+  //<editor-fold desc="Channels">
   /**
-   * @ORM\ManyToMany(targetEntity=Channel::class, mappedBy="participants")
+   * @ORM\ManyToMany(targetEntity=Channel::class, mappedBy="participants", cascade={"persist", "remove"})
    */
   private $channels;
+
   /**
    * @return Collection<int, Channel>
    */
   public function getChannels(): Collection
   {
-      return $this->channels;
+    return $this->channels;
   }
 
   public function addChannel(Channel $channel): self
   {
-      if (!$this->channels->contains($channel)) {
-          $this->channels[] = $channel;
-          $channel->addParticipant($this);
-      }
+    if (!$this->channels->contains($channel)) {
+      $this->channels[] = $channel;
+      $channel->addParticipant($this);
+    }
 
-      return $this;
+    return $this;
   }
 
   public function removeChannel(Channel $channel): self
   {
-      if ($this->channels->removeElement($channel)) {
-          $channel->removeParticipant($this);
-      }
+    if ($this->channels->removeElement($channel)) {
+      $channel->removeParticipant($this);
+    }
 
-      return $this;
+    return $this;
   }
   //</editor-fold>
   //<editor-fold desc="About">
@@ -956,47 +974,47 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   private $about;
 
 
-
   public function getAbout(): ?string
   {
-      return $this->about;
+    return $this->about;
   }
 
   public function setAbout(?string $about): self
   {
-      $this->about = $about;
+    $this->about = $about;
 
-      return $this;
+    return $this;
   }
   //</editor-fold>
 
   //<editor-fold desc="Contacts">
   /**
-   * @ORM\ManyToMany(targetEntity=User::class, inversedBy="contacted_by")
+   * @ORM\ManyToMany(targetEntity=User::class, inversedBy="contacted_by", cascade={"persist", "remove"})
    */
   private $contacts;
+
   /**
    * @return Collection<int, self>
    */
   public function getContacts(): Collection
   {
-      return $this->contacts;
+    return $this->contacts;
   }
 
   public function addContact(self $contact): self
   {
-      if (!$this->contacts->contains($contact)) {
-          $this->contacts[] = $contact;
-      }
+    if (!$this->contacts->contains($contact)) {
+      $this->contacts[] = $contact;
+    }
 
-      return $this;
+    return $this;
   }
 
   public function removeContact(self $contact): self
   {
-      $this->contacts->removeElement($contact);
+    $this->contacts->removeElement($contact);
 
-      return $this;
+    return $this;
   }
   //</editor-fold>
   //<editor-fold desc="Contacted By">
@@ -1011,26 +1029,26 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
    */
   public function getContactedBy(): Collection
   {
-      return $this->contacted_by;
+    return $this->contacted_by;
   }
 
   public function addContactedBy(self $contactedBy): self
   {
-      if (!$this->contacted_by->contains($contactedBy)) {
-          $this->contacted_by[] = $contactedBy;
-          $contactedBy->addContact($this);
-      }
+    if (!$this->contacted_by->contains($contactedBy)) {
+      $this->contacted_by[] = $contactedBy;
+      $contactedBy->addContact($this);
+    }
 
-      return $this;
+    return $this;
   }
 
   public function removeContactedBy(self $contactedBy): self
   {
-      if ($this->contacted_by->removeElement($contactedBy)) {
-          $contactedBy->removeContact($this);
-      }
+    if ($this->contacted_by->removeElement($contactedBy)) {
+      $contactedBy->removeContact($this);
+    }
 
-      return $this;
+    return $this;
   }
   //</editor-fold>
 
@@ -1042,14 +1060,14 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
 
   public function getGoogleId(): ?string
   {
-      return $this->googleId;
+    return $this->googleId;
   }
 
   public function setGoogleId(?string $googleId): self
   {
-      $this->googleId = $googleId;
+    $this->googleId = $googleId;
 
-      return $this;
+    return $this;
   }
   //</editor-fold>
 
