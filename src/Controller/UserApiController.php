@@ -7,6 +7,7 @@ use App\Entity\Permission;
 use App\Entity\User;
 use App\Form\ConversationType;
 use App\Form\UserType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\Annotations\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -87,4 +88,17 @@ class UserApiController extends AbstractApiController
     $user = $this->getUser();
     return $this->json($user);
   }
+
+  /**
+   * @Route("/autocomplete_emails", name="user_autocomplete_email", methods={"POST"})
+   */
+  public function user_autocomplete_email(Request $request, UserRepository $userRepository)
+  {
+    $beacon = $request->get("email");
+    $results = $userRepository->searchUsersByEmail($beacon);
+    $filtered = array_column($results, 'email');
+    return $this->json(["values" => $filtered]);
+  }
+
+
 }
