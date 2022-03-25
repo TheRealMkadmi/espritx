@@ -231,7 +231,7 @@
                 <h6>{{ e.title }}</h6>
                 <p>{{ e.description }}</p>
                 <div class="d-flex align-items-center">
-                  {{ include('views/content/apps/administrativeService/Requests/request-status-pill.html.twig', {'userstatus': user.Status}) }}
+                  {{ include('views/content/apps/administrativeService/Requests/request-status-pill.html.twig', {'userstatus': user.getUserStatus}) }}
                   <h6 class="more-info mb-0">{{ e.user.firstName~" "~e.user.lastName }}</h6>
                 </div>
               </div>
