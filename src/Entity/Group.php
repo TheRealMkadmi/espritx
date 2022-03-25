@@ -151,13 +151,12 @@ class Group
 
   //<editor-fold desc="Members">
   /**
-   * @ORM\ManyToMany(targetEntity=User::class, mappedBy="groups", fetch="EAGER")
-   * @Assert\Count(min="1")
+   * @ORM\ManyToMany(targetEntity=User::class, mappedBy="groups")
    */
   private $members;
 
   /**
-   * @return Collection
+   * @return Collection<int, User>
    */
   public function getMembers(): Collection
   {
@@ -170,6 +169,7 @@ class Group
       $this->members[] = $member;
       $member->addGroup($this);
     }
+
     return $this;
   }
 
@@ -178,7 +178,7 @@ class Group
     if ($this->members->removeElement($member)) {
       $member->removeGroup($this);
     }
-    $member->removeGroup($this);
+
     return $this;
   }
   //</editor-fold>
@@ -230,10 +230,13 @@ class Group
     $this->provided_services = $provided_services;
     return $this;
   }
+
   //</editor-fold>
 
   public function __toString(): string
   {
     return $this->display_name;
   }
+
+
 }
