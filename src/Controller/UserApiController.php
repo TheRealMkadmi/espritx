@@ -8,11 +8,13 @@ use App\Entity\User;
 use App\Form\ConversationType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Serializer\Normalizer\UserNormalizer;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\Annotations\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @Route("/api/user")
@@ -48,7 +50,7 @@ class UserApiController extends AbstractApiController
 
   /**
    * @Route("/{id}", name="user_api_edit", methods={"PATCH"})
-   * @ParamConverter("user", class="App\Entity\User")
+   * @ParamConverter("id", class="App\Entity\User")
    */
   public function editUser(Request $request, EntityManagerInterface $em, User $user)
   {
@@ -67,7 +69,7 @@ class UserApiController extends AbstractApiController
 
   /**
    * @Route("/{id}", name="user_api_delete", methods={"DELETE"})
-   * @ParamConverter("user", class="App\Entity\User")
+   * @ParamConverter("id", class="App\Entity\User")
    */
   public function deleteUser(Request $request, EntityManagerInterface $em, User $user)
   {
@@ -100,5 +102,15 @@ class UserApiController extends AbstractApiController
     return $this->json(["values" => $filtered]);
   }
 
-
+  /**
+   * @Route("/fetch_by_email", name="fetch_user_by_email", methods={"GET"})
+   */
+  public function fetch_user(Request $request, UserRepository $userRepository, UserNormalizer $userNormalizer)
+  {
+    $user = $userRepository->findOneBy(["email" => $request->get("email")]);
+    if ($user === null) {
+      throw new NotFoundHttpException("Could not find user with email " . $request->get("email"));
+    }
+    return $this->json($userNormalizer->normalize($user));
+  }
 }

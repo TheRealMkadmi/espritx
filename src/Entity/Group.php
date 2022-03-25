@@ -232,7 +232,6 @@ class Group
   }
   //</editor-fold>
 
-  // public function notifyAllMembers(){}
   public function __toString(): string
   {
     return $this->display_name;

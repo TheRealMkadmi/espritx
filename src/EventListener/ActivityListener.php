@@ -4,6 +4,7 @@ namespace App\EventListener;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\Security\Core\Security;
@@ -13,7 +14,7 @@ class ActivityListener
   protected Security $security;
   protected EntityManager $entityManager;
 
-  public function __construct(Security $security, EntityManager $entityManager)
+  public function __construct(Security $security, EntityManagerInterface $entityManager)
   {
     $this->entityManager = $entityManager;
     $this->security = $security;

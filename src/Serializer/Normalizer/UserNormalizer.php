@@ -15,8 +15,7 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 class UserNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface
 {
 
-  public function __construct(private ObjectNormalizer $normalizer,
-                              private UploaderHelper   $helper,
+  public function __construct(private UploaderHelper   $helper,
                               private GroupNormalizer $groupNormalizer,
                               private HttpFoundationExtension $httpFoundationExtension)
   {

@@ -1069,7 +1069,12 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
 
     return $this;
   }
+
   //</editor-fold>
 
+  public function __debugInfo(): ?array
+  {
+    return [];     // TODO: Implement __debugInfo() method.
+  }
 
 }

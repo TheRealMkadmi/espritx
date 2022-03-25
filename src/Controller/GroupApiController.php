@@ -3,14 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Group;
-use App\Entity\Permission;
-use App\Entity\User;
-use App\Form\ConversationType;
-use App\Form\UserType;
-use App\Repository\UserRepository;
-use App\Serializer\Normalizer\UserNormalizer;
+use App\Form\GroupType;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\Annotations\Route;
+use SebastianBergmann\Type\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,78 +25,59 @@ class GroupApiController extends AbstractApiController
     return $this->json($groups);
   }
 
+
   /**
-   * @Route("/assignment-lists", name="group_api_combobox_populator", methods={"GET"})
+   * @Route("/", name="group_api_add", methods={"POST"})
    */
-  public function populate_combobox(EntityManagerInterface $entityManager)
+  public function add_group(Request $request, EntityManagerInterface $entityManager)
   {
-    $ids = [];
-    $names = [];
+    $form = $this->buildForm(GroupType::class);
+    $form->submit($request->request->all(), false);
+    if (!$form->isSubmitted() || !$form->isValid()) {
+      return $this->respond($form, Response::HTTP_BAD_REQUEST);
+    }
     /** @var Group $group */
-    foreach ($entityManager->getRepository(Group::class)->findAll() as $group) {
-      $ids[] = $group->getId();
-      $names[] = $group->getDisplayName();
-    }
-    return $this->json([
-      "ids" => $ids,
-      "names" => $names
-    ]);
-  }
-
-  /**
-   * @Route("/{id}/users", name="group_users_api_show", methods={"GET"})
-   * @ParamConverter("group", class="App\Entity\Group")
-   */
-  public function get_group_users(Request $request, Group $group)
-  {
-    $members = $group->getMembers();
-    return $this->json($members);
-  }
-
-  /**
-   * @Route("/{id}/users", name="group_users_api_add", methods={"POST"})
-   * @ParamConverter("group", class="App\Entity\Group")
-   */
-  public function add_group_user(Request                $request,
-                                 Group                  $group,
-                                 UserRepository         $userRepository,
-                                 EntityManagerInterface $em,
-                                 UserNormalizer         $userNormalizer
-  )
-  {
-    $matching_criteria = $userRepository->findBy(["email" => $request->get("email")]);
-    if ($matching_criteria === null) {
-      return $this->json(["result" => "User does not exist"]);
-    }
-    if (count($matching_criteria) > 1) {
-      return $this->json(["result" => "Invalid search query. More than 2 users fit the search results."]);
-    }
-    $user = $matching_criteria[0];
-    $members = $group->getMembers();
-    if ($members->contains($user)) {
-      return $this->json(["result" => "User already in group"]);
-    }
-    $group->addMember($user);
-    $em->flush();
-    return $this->json(["result" => "User added successfully", "user" => $userNormalizer->normalize($user)]);
-  }
-
-  /**
-   * @Route("/{gid}/users/{uid}", name="group_users_api_delete", methods={"DELETE"})
-   * @ParamConverter("group", class="App\Entity\Group", options={"gid" = "id"})
-   * @ParamConverter("user", class="App\Entity\User", options={"uid" = "id"})
-   */
-  public function delete_group_user(Request $request,
-                                    Group $group,
-                                    User $user,
-                                    EntityManagerInterface $entityManager)
-  {
-    $members = $group->getMembers();
-    if (!$members->contains($user)) {
-      return $this->json(["result" => "User is not in group"]);
-    }
-    $group->removeMember($user);
+    $group = $form->getData();
+    $entityManager->persist($group);
     $entityManager->flush();
-    return $this->json(["result" => "User removed successfully"]);
+    return $this->respond($group);
+  }
+
+  /**
+   * @Route("/{id}", name="group_api_edit", methods={"PATCH"})
+   * @ParamConverter("id", class="App\Entity\Group")
+   */
+  public function edit_group(Request $request, EntityManagerInterface $em, Group $group)
+  {
+    try{
+      $editForm = $this->buildForm(GroupType::class, $group);
+      $request->request->set("members", array_map(static fn($u) => $u["id"], $request->get("members")));
+      $editForm->submit($request->request->all(), false);
+      if (!$editForm->isSubmitted() || !$editForm->isValid()) {
+        return $this->respond($editForm, Response::HTTP_BAD_REQUEST);
+      }
+      /** @var Group $group */
+      $group = $editForm->getData();
+      $em->flush();
+      return $this->respond($group);
+    } catch (Exception $e){
+      dd($e);
+    }
+
+  }
+
+  /**
+   * @Route("/{id}", name="user_api_delete", methods={"DELETE"})
+   * @ParamConverter("id", class="App\Entity\Group")
+   */
+  public function delete_group(Request $request, EntityManagerInterface $em, Group $user)
+  {
+    try {
+      $em->remove($user);
+      $em->flush();
+      return $this->json(["status" => true]);
+    } catch (\Exception $e) {
+      return $this->json(["status" => false, "message" => $e->getMessage()], 500);
+    }
   }
 }
