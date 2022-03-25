@@ -2,14 +2,19 @@
 
 namespace App\Controller;
 
+use App\Entity\Group;
 use App\Entity\Service;
 use App\Form\Service1Type;
 use App\Form\ServiceType;
 use App\Repository\ServiceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -26,18 +31,6 @@ class ServiceAPIController extends AbstractApiController
     {
         $services = $serviceRepository->findAll();
         return $this->json($services);
-    }
-
-    /**
-     * @Route("/new", name="app_service_a_p_i_new", methods={"GET", "POST"})
-     */
-    public function new(Request $request, EntityManagerInterface $entityManager,SerializerInterface $serializer): Response
-    {
-        $service=$request->getContent();
-        $data=$serializer->deserialize($service,Service::class,'json');
-        $entityManager->persist($data);
-        $entityManager->flush();
-        return new Response("Service added successfully!");
     }
 
     /**
@@ -62,5 +55,25 @@ class ServiceAPIController extends AbstractApiController
             $entityManager->flush();
         }
         return new Response("Service deleted successfully!");
+    }
+
+    /**
+     * @Route("/add/", name="add_api_service", methods={"POST"})
+     */
+    public function add(Request $request,ServiceRepository $repository, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $Name = $data['Name'];
+        $Responsible = $entityManager->getRepository(Group::class)->find($data['Responsible']['id']);
+        $Recipients = $data['Recipient'];
+
+        if (empty($Name) || empty($Responsible) || empty($Recipients)) {
+            throw new NotFoundHttpException('Expecting mandatory parameters!');
+        }
+
+        $repository->saveService($Name, $Responsible, $Recipients);
+
+        return new JsonResponse(['status' => 'Service created!'], Response::HTTP_CREATED);
     }
 }
