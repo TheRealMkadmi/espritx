@@ -62,7 +62,7 @@ class ServiceRepository extends ServiceEntityRepository
             ->setResponsible($Responsible);
         for ($i=0;$i<count($Recipients);$i++) {
             $em=$this->getEntityManager();
-            $Recipient = $em->getRepository(Group::class)->find($Recipients[$i]['id']);
+            $Recipient = $em->getRepository(Group::class)->findOneBy(['display_name'=>$Recipients[$i]]);
             $newService->addRecipient($Recipient);
         }
         $this->manager->persist($newService);

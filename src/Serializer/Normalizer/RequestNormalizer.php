@@ -33,7 +33,7 @@ class RequestNormalizer implements NormalizerInterface, CacheableSupportsMethodI
             'RespondedAt' => $request->getRespondedAt(),
             'Title' => $request->getTitle(),
             'Description' => $request->getDescription(),
-            'Type' => $request->getType()->getId(),
+            'Type' => $request->getType()->getName(),
             'Status' => $request->getStatus(),
             'Response' => $request->getRequestResponse(),
             'Picture' => $request->getPicture(),

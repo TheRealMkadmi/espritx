@@ -25,7 +25,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 class ServiceAPIController extends AbstractApiController
 {
     /**
-     * @Route("/show", name="app_service_a_p_i_index", methods={"GET"})
+     * @Route("/show", name="app_service_api_index", methods={"GET"})
      */
     public function getServices(ServiceRepository $serviceRepository,SerializerInterface $serializer)
     {
@@ -65,7 +65,7 @@ class ServiceAPIController extends AbstractApiController
         $data = json_decode($request->getContent(), true);
 
         $Name = $data['Name'];
-        $Responsible = $entityManager->getRepository(Group::class)->find($data['Responsible']['id']);
+        $Responsible = $entityManager->getRepository(Group::class)->findOneBy(['display_name'=>$data['Responsible']]);
         $Recipients = $data['Recipient'];
 
         if (empty($Name) || empty($Responsible) || empty($Recipients)) {
