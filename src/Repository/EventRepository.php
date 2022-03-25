@@ -56,4 +56,17 @@ class EventRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findByStart($value)
+    {
+        $date= substr($value,0,10);
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.start LIKE :date')
+            ->setParameter('date',$date.'%') 
+            ->addOrderBy('e.start')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
 }
