@@ -396,24 +396,13 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   //<editor-fold desc="Groups">
   /**
    * @ORM\ManyToMany(targetEntity=Group::class, inversedBy="members")
-   * @Assert\Count(min="1", minMessage="User must be at least part of one group.")
    */
-  private ArrayCollection|array|PersistentCollection $groups;
-
-  public function isPartOfGroupType(GroupType $groupType): bool
-  {
-    /** @var Group $group */
-    foreach ($this->groups as $group) {
-      if ($group->getGroupType() === $groupType)
-        return true;
-    }
-    return false;
-  }
+  private $groups;
 
   /**
-   * @return Collection|Group[]
+   * @return Collection<int, Group>
    */
-  public function getGroups(): Collection|array
+  public function getGroups(): Collection
   {
     return $this->groups;
   }
@@ -422,15 +411,14 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   {
     if (!$this->groups->contains($group)) {
       $this->groups[] = $group;
-      $group->addMember($this);
     }
+
     return $this;
   }
 
   public function removeGroup(Group $group): self
   {
     $this->groups->removeElement($group);
-    $group->removeMember($this);
     return $this;
   }
   //</editor-fold>
@@ -1058,6 +1046,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
    */
   private $googleId;
 
+
   public function getGoogleId(): ?string
   {
     return $this->googleId;
@@ -1069,7 +1058,14 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
 
     return $this;
   }
+
   //</editor-fold>
+
+  public function __debugInfo(): ?array
+  {
+    return [];     // TODO: Implement __debugInfo() method.
+  }
+
 
 
 }

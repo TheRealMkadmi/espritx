@@ -5,6 +5,8 @@ namespace App\Serializer\Normalizer;
 use App\Entity\Group;
 use App\Entity\Permission;
 use App\Entity\User;
+use Symfony\Bridge\Twig\Extension\HttpFoundationExtension;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -13,9 +15,9 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 class UserNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface
 {
 
-  public function __construct(private ObjectNormalizer $normalizer,
-                              private UploaderHelper   $helper,
-                              private GroupNormalizer $groupNormalizer)
+  public function __construct(private UploaderHelper   $helper,
+                              private GroupNormalizer $groupNormalizer,
+                              private HttpFoundationExtension $httpFoundationExtension)
   {
   }
 
@@ -37,7 +39,7 @@ class UserNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
       'userStatus' => $user->getUserStatus(),
       'groups' => array_map(fn(Group $g) => $this->groupNormalizer->normalize($g), $user->getGroups()->toArray()),
       'individualPermissions' => array_map(static fn(Permission $g) => $g->getTitle(), $user->getIndividualPermissions()->toArray()),
-      'avatarFile' => ($user->getAvatar() === null) ? $this->helper->asset($user, "avatar") : null,
+      'avatarFile' => ($user->getAvatar()?->getName() !== null) ? $this->httpFoundationExtension->generateAbsoluteUrl($this->helper->asset($user, "avatarFile")): null,
       'identityType' => $user->getIdentityType(),
       'identityDocumentNumber' => $user->getIdentityDocumentNumber(),
       'phoneNumber' => $user->getPhoneNumber(),

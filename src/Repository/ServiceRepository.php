@@ -2,8 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Group;
 use App\Entity\Service;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -14,9 +17,12 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ServiceRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $manager;
+
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $manager)
     {
         parent::__construct($registry, Service::class);
+        $this->manager = $manager;
     }
 
     // /**
@@ -47,4 +53,19 @@ class ServiceRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function saveService($Name, $Responsible, $Recipients)
+    {
+        $newService = new Service();
+
+        $newService
+            ->setName($Name)
+            ->setResponsible($Responsible);
+        for ($i=0;$i<count($Recipients);$i++) {
+            $em=$this->getEntityManager();
+            $Recipient = $em->getRepository(Group::class)->findOneBy(['display_name'=>$Recipients[$i]]);
+            $newService->addRecipient($Recipient);
+        }
+        $this->manager->persist($newService);
+        $this->manager->flush();
+    }
 }

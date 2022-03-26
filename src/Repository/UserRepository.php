@@ -20,7 +20,7 @@ use DoctrineExtensions\Query\Mysql;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
-  public function __construct(ManagerRegistry $registry)
+  public function __construct(ManagerRegistry $registry, private EntityManagerInterface $em)
   {
     parent::__construct($registry, User::class);
   }
@@ -57,14 +57,13 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
    */
   public function getCommonContacts(User $user1, User $user2): array/*toDO */
   {
-      return $this->createQueryBuilder('u')
-          ->where(':user1 MEMBER OF u.contacts')
-          ->andWhere(':user2 MEMBER OF u.contacts')
-          ->setParameter('user1',$user1)
-          ->setParameter('user2',$user2)
-          ->getQuery()
-          ->getResult()
-          ;
+    return $this->createQueryBuilder('u')
+      ->where(':user1 MEMBER OF u.contacts')
+      ->andWhere(':user2 MEMBER OF u.contacts')
+      ->setParameter('user1', $user1)
+      ->setParameter('user2', $user2)
+      ->getQuery()
+      ->getResult();
   }
 
   public function makeFriendSuggestions(User $user, int $limit = 10)/*toDO */
@@ -79,21 +78,30 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
   public function CountByDate()
   {
-      return $this->createQueryBuilder('u')
-          ->select('count(u.id) as cnt','DAY(u.createdAt) AS daycreation')
-          ->where('DATE_DIFF( CURRENT_DATE(),u.createdAt )<7')
-          ->groupBy('daycreation')
-          ->getQuery()
-          ->getResult();
+    return $this->createQueryBuilder('u')
+      ->select('count(u.id) as cnt', 'DAY(u.createdAt) AS daycreation')
+      ->where('DATE_DIFF( CURRENT_DATE(),u.createdAt )<7')
+      ->groupBy('daycreation')
+      ->getQuery()
+      ->getResult();
   }
 
-    public function CountByActivity()
-    {
-        return $this->createQueryBuilder('u')
-            ->select('count(u.lastActivityAt) as cnt','DAY(u.lastActivityAt) AS lastactivity')
-            ->where('DATE_DIFF( CURRENT_DATE(),u.lastActivityAt )<7')
-            ->groupBy('lastactivity')
-            ->getQuery()
-            ->getResult();
-    }
+  public function CountByActivity()
+  {
+    return $this->createQueryBuilder('u')
+      ->select('count(u.lastActivityAt) as cnt', 'DAY(u.lastActivityAt) AS lastactivity')
+      ->where('DATE_DIFF( CURRENT_DATE(),u.lastActivityAt )<7')
+      ->groupBy('lastactivity')
+      ->getQuery()
+      ->getResult();
+  }
+
+  public function searchUsersByEmail(string $email)
+  {
+    return $this->em->createQuery(<<<DQL
+  select u.email from App\Entity\User u
+  where u.email LIKE '%$email%' 
+DQL
+    )->getArrayResult();
+  }
 }

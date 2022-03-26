@@ -151,13 +151,12 @@ class Group
 
   //<editor-fold desc="Members">
   /**
-   * @ORM\ManyToMany(targetEntity=User::class, mappedBy="groups", fetch="EAGER")
-   * @Assert\Count(min="1")
+   * @ORM\ManyToMany(targetEntity=User::class, mappedBy="groups",cascade={"persist", "remove"})
    */
   private $members;
 
   /**
-   * @return Collection
+   * @return Collection<int, User>
    */
   public function getMembers(): Collection
   {
@@ -170,6 +169,7 @@ class Group
       $this->members[] = $member;
       $member->addGroup($this);
     }
+
     return $this;
   }
 
@@ -178,13 +178,13 @@ class Group
     if ($this->members->removeElement($member)) {
       $member->removeGroup($this);
     }
-    $member->removeGroup($this);
+
     return $this;
   }
   //</editor-fold>
   //<editor-fold desc="Services Enjoyed By Group">
   /**
-   * @ORM\ManyToMany(targetEntity=Service::class, mappedBy="Recipient")
+   * @ORM\ManyToMany(targetEntity=Service::class, mappedBy="Recipient", cascade={"persist", "remove"})
    * @Assert\Count(min="1", minMessage="A group must at least receive one service.")
    */
   private $enjoyable_services;
@@ -209,7 +209,7 @@ class Group
   //</editor-fold>
   //<editor-fold desc="Services Provided By Group">
   /**
-   * @ORM\OneToMany(targetEntity=Service::class, mappedBy="Responsible")
+   * @ORM\OneToMany(targetEntity=Service::class, mappedBy="Responsible",cascade={"persist", "remove"})
    */
   private $provided_services;
 
@@ -230,11 +230,13 @@ class Group
     $this->provided_services = $provided_services;
     return $this;
   }
+
   //</editor-fold>
 
-  // public function notifyAllMembers(){}
   public function __toString(): string
   {
     return $this->display_name;
   }
+
+
 }

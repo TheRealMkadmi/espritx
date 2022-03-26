@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Group;
+use App\Entity\Service;
 use App\Entity\ServiceRequest;
 use App\Form\ServiceRequestType;
+use App\Repository\ServiceRepository;
 use App\Repository\ServiceRequestRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,23 +17,60 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * @Route("request/api")
+ * @Route("/api/request")
  */
-class ServiceRequestAPIController extends AbstractController
+class ServiceRequestAPIController extends AbstractApiController
 {
     /**
-     * @Route("/", name="app_service_request_a_p_i_index", methods={"GET"})
+     * @Route("/showAll", name="app_service_request_api_index", methods={"GET"})
      */
-    public function getRequests(ServiceRequestRepository $serviceRequestRepository,SerializerInterface $serializer)
+    public function getRequests(ServiceRequestRepository $serviceRequestRepository)
     {
-        $services = $serviceRequestRepository->findAll();
-        $json =$serializer->serialize($services,'json',['groups'=>'Request']);
-        dump($json);
-        die;
+        $requests = $serviceRequestRepository->findAll();
+        return $this->json($requests);
     }
 
     /**
-     * @Route("/new", name="app_service_request_a_p_i_new", methods={"GET", "POST"})
+     * @Route("/showUser", name="app_service_request_api_user", methods={"GET"})
+     */
+    public function getUserRequests(ServiceRequestRepository $serviceRequestRepository)
+    {
+        $requests = $serviceRequestRepository->findBy(["Requester"=>$this->getUser()]);
+        return $this->json($requests);
+    }
+
+    /**
+     * @Route("/showService", name="app_service_request_api_service", methods={"GET"})
+     */
+    public function getServiceRequests(ServiceRequestRepository $serviceRequestRepository,Request $request,EntityManagerInterface $entityManager)
+    {
+        $data = json_decode($request->getContent(), true);
+        $ser=$entityManager->getRepository(Service::class)->find($data['id']);
+        $requests = $serviceRequestRepository->findBy(["Type"=>$ser]);
+        return $this->json($requests);
+    }
+
+    /**
+     * @Route("/showGroup", name="app_service_request_api_group", methods={"GET"})
+     */
+    public function getGroupRequests(ServiceRepository $serviceRepository)
+    {
+        $requests=new ArrayCollection();
+        $UserGroup = $this->getUser()->getGroups();
+        for ($i=0;$i<count($UserGroup);$i++) {
+            $services=$serviceRepository->findBy(["Responsible" => $this->getUser()->getGroups()[$i]]);
+            for ($j=0;$j<count($services);$j++){
+                $serequests=($services[$j]->getServiceRequests());
+                for ($k=0;$k<count($serequests);$k++){
+                    $requests->add($serequests[$k]);
+                }
+            }
+        }
+        return $this->json($requests);
+    }
+
+    /**
+     * @Route("/new", name="app_service_request_api_new", methods={"GET", "POST"})
      */
     public function new(Request $request, EntityManagerInterface $entityManager,SerializerInterface $serializer): Response
     {
