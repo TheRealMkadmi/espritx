@@ -30,6 +30,8 @@ class RequestNormalizer implements NormalizerInterface, CacheableSupportsMethodI
     {
         return [
             'id' => $request->getId(),
+            'CreatedAt'=>$request->getCreatedAt(),
+            'UpdatedAt'=>$request->getUpdatedAt(),
             'RespondedAt' => $request->getRespondedAt(),
             'Title' => $request->getTitle(),
             'Description' => $request->getDescription(),
