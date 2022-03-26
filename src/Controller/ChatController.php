@@ -22,14 +22,15 @@ use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
-/**
- * @Route("/chat")
- */
-class ChatController extends AbstractController
+
+class ChatController extends AbstractApiController
 {
   /**
-   * @Route("/", name="chat_index")
+   * @Route("/chat", name="chat_index")
    */
   public function index()
   {
@@ -43,7 +44,7 @@ class ChatController extends AbstractController
   }
 
   /**
-   * @Route("/chat-with-user/{id}", name="chat_with_user")
+   * @Route("/chat/chat-with-user/{id}", name="chat_with_user")
    */
   public function chat_with_user(Request $request, User $user, ChannelRepository $channelRepository, EntityManagerInterface $entityManager): Response
   {
@@ -59,7 +60,7 @@ class ChatController extends AbstractController
   }
 
   /**
-   * @Route("/create-channel", name="create_channel_ajax", methods={"GET", "POST"})
+   * @Route("/chat/create-channel", name="create_channel_ajax", methods={"GET", "POST"})
    */
   public function createChannel(Request $request, EntityManagerInterface $entityManager): Response
   {
@@ -80,7 +81,7 @@ class ChatController extends AbstractController
 
 
   /**
-   * @Route("/channel/{id}", name="chat_show")
+   * @Route("/chat/channel/{id}", name="chat_show")
    * @ParamConverter("channel", class="App\Entity\Channel")
    */
   public function showConversation(Request $request, Channel $channel): Response
@@ -100,7 +101,7 @@ class ChatController extends AbstractController
   }
 
   /**
-   * @Route("/send-message/{channel}", name="send_message", methods={"POST"})
+   * @Route("/chat/send-message/{channel}", name="send_message", methods={"POST"})
    * @ParamConverter("channel", class="App\Entity\Channel")
    */
   public function send_message(Request $request, HubInterface $hub, Channel $channel, EntityManagerInterface $em): Response
@@ -124,7 +125,7 @@ class ChatController extends AbstractController
   }
 
     /**
-     * @Route("/test-pub", name="test_pub")
+     * @Route("/chat/test-pub", name="test_pub")
      */
     public function test_pub(Request $request, HubInterface $hub)
     {
@@ -138,7 +139,7 @@ class ChatController extends AbstractController
     }
 
     /**
-     * @Route ("/Back/", name="chat_back")
+     * @Route ("/chat/Back/", name="chat_back")
      */
     public function backOfficeChat(ChannelRepository $repository, PaginatorInterface $paginator, Request $request)
     {
@@ -156,7 +157,7 @@ class ChatController extends AbstractController
     }
 
     /**
-     * @Route("/back/channel/delete/{id}", name="chat_delete")
+     * @Route("/chat/back/channel/delete/{id}", name="chat_delete")
      * @ParamConverter("channel", class="App\Entity\Channel")
      */
     public function delConversation(EntityManagerInterface $em, Channel $channel): Response
@@ -166,7 +167,7 @@ class ChatController extends AbstractController
         return $this->redirectToRoute('chat_back', [], Response::HTTP_SEE_OTHER);
     }
     /**
-     *@Route ("/Back/messages", name="messages_back")
+     *@Route ("/chat/Back/messages", name="messages_back")
      */
     public function showMessages(MessageRepository $repository,PaginatorInterface $paginator, Request $request)
     {
@@ -182,4 +183,9 @@ class ChatController extends AbstractController
             'pagination' => $paginatedchats,
         ]);
     }
+
+
+
+
+
 }
