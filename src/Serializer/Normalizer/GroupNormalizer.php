@@ -31,7 +31,7 @@ class GroupNormalizer implements NormalizerInterface, CacheableSupportsMethodInt
       'id' => $object->getId(),
       'security_title' => $object->getSecurityTitle(),
       'display_name' => $object->getDisplayName(),
-      'groupType' => $object->getGroupType()->getReadable(),
+      'groupType' => $object->getGroupType()->getValue(),
       'members' => array_map(fn(User $user) => [
         'id' => $user->getId(),
         'first_name' => $user->getFirstName(),

@@ -67,7 +67,7 @@ class GroupApiController extends AbstractApiController
   }
 
   /**
-   * @Route("/{id}", name="user_api_delete", methods={"DELETE"})
+   * @Route("/{id}", name="group_api_delete", methods={"DELETE"})
    * @ParamConverter("id", class="App\Entity\Group")
    */
   public function delete_group(Request $request, EntityManagerInterface $em, Group $user)
