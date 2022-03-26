@@ -406,6 +406,15 @@ class User implements UserInterface, EquatableInterface, \Serializable, Notifiab
   {
     return $this->groups;
   }
+  public function isPartOfGroupType(GroupType $groupType): bool
+  {
+    /** @var Group $group */
+    foreach ($this->groups as $group) {
+      if ($group->getGroupType() === $groupType)
+        return true;
+    }
+    return false;
+  }
 
   public function addGroup(Group $group): self
   {
