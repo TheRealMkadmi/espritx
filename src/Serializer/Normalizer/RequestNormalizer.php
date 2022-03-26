@@ -7,6 +7,7 @@ use App\Entity\ServiceRequest;
 use App\Entity\Service;
 use App\Entity\User;
 use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
@@ -16,6 +17,7 @@ class RequestNormalizer implements NormalizerInterface, CacheableSupportsMethodI
 
   public function __construct(private ObjectNormalizer  $normalizer,
                               private UploaderHelper    $helper,
+                              private GroupNormalizer $groupNormalizer,
                               private UserNormalizer    $userNormalizer)
   {
   }
@@ -29,17 +31,21 @@ class RequestNormalizer implements NormalizerInterface, CacheableSupportsMethodI
    */
   public function normalize($request, $format = null, array $context = []): array
   {
-    return [
+      $service=[
+          'id' => $request->getType()->getId(),
+          'Name' => $request->getType()->getName(),
+          'Responsible' => $this->groupNormalizer->normalize($request->getType()->getResponsible()),
+          'Recipient' => array_map(fn(Group $g) => $this->groupNormalizer->normalize($g), $request->getType()->getRecipient()->toArray()),
+          'serviceRequests' => $request->getType()->getServiceRequests()
+      ];
+      return [
       'id' => $request->getId(),
       'CreatedAt' => $request->getCreatedAt()->format('Y-m-d\TH:m:s.u'),
       'UpdatedAt' => $request->getUpdatedAt()->format('Y-m-d\TH:m:s.u'),
-      'RespondedAt' => $request->getRespondedAt()?->format('Y-m-d\TH:m:s.u'),
+      'RespondedAt' => $request->getRespondedAt()->format('Y-m-d\TH:m:s.u'),
       'Title' => $request->getTitle(),
       'Description' => $request->getDescription(),
-      'Type' => [
-        'id' => $request->getType()->getId(),
-        'Name' => $request->getType()->getName()
-      ],
+      'Type' => $service,
       'Status' => $request->getStatus(),
       'Response' => $request->getRequestResponse(),
       'Picture' => $request->getPicture(),
