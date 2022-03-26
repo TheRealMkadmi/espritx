@@ -184,7 +184,7 @@ class Group
   //</editor-fold>
   //<editor-fold desc="Services Enjoyed By Group">
   /**
-   * @ORM\ManyToMany(targetEntity=Service::class, mappedBy="Recipient", cascade={"persist", "remove"}")
+   * @ORM\ManyToMany(targetEntity=Service::class, mappedBy="Recipient", cascade={"persist", "remove"})
    * @Assert\Count(min="1", minMessage="A group must at least receive one service.")
    */
   private $enjoyable_services;
