@@ -110,7 +110,7 @@ $qb->andWhere('b.groupPost IN (:grps)')
         $queryBuilder = $this->createQueryBuilder('o')
         ->select('o')
             ->orderBy('o.created_at','DESC')
-            ->setMaxResults(4);
+            ->setMaxResults(100);
 
         $query = $queryBuilder->getQuery();
         return $query->getResult();}
