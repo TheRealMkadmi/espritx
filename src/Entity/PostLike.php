@@ -23,11 +23,13 @@ class PostLike
 
     /**
      * @ORM\ManyToOne(targetEntity=Post::class, inversedBy="likes")
+     * @Groups("post:read")
      */
     private $post;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="likes")
+     * @Groups("post:read")
      */
     private $user;
 

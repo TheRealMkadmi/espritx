@@ -63,7 +63,7 @@ class Post
     private $content;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime")
      * @Groups("post:read")
      */
     private $created_at;
@@ -106,7 +106,7 @@ class Post
 
     /**
      * @ORM\OneToMany(targetEntity=PostLike::class, mappedBy="post",cascade={"remove"})
-     *
+     * @Groups("post:read")
      */
     private $likes;
 
@@ -119,11 +119,13 @@ class Post
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups("post:read")
      */
     private $longitude;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups("post:read")
      */
     private $latitude;
 
@@ -133,9 +135,14 @@ class Post
     private $groupPost;
 
     /**
-     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="post",orphanRemoval=true,cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="post",orphanRemoval=true ,cascade={"persist"} )
      */
     private $images;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $image;
 
 
 
@@ -190,12 +197,12 @@ class Post
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
 
@@ -337,14 +344,14 @@ class Post
 
     }
 
-   /* public function getPost($length = null)
-    {
-        if (false === is_null($length) && $length > 0)
-            return substr($this->getPost(), 0, $length);
-        else
-            return $this->getPost();
-    }
-*/
+    /* public function getPost($length = null)
+     {
+         if (false === is_null($length) && $length > 0)
+             return substr($this->getPost(), 0, $length);
+         else
+             return $this->getPost();
+     }
+ */
 
 
     /**
@@ -429,6 +436,18 @@ class Post
                 $image->setPost(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }
