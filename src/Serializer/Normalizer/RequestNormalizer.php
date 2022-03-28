@@ -42,7 +42,7 @@ class RequestNormalizer implements NormalizerInterface, CacheableSupportsMethodI
       'id' => $request->getId(),
       'CreatedAt' => $request->getCreatedAt()->format('Y-m-d\TH:m:s.u'),
       'UpdatedAt' => $request->getUpdatedAt()->format('Y-m-d\TH:m:s.u'),
-      'RespondedAt' => $request->getRespondedAt()->format('Y-m-d\TH:m:s.u'),
+      'RespondedAt' => $request->getRespondedAt()?->format('Y-m-d\TH:m:s.u'),
       'Title' => $request->getTitle(),
       'Description' => $request->getDescription(),
       'Type' => $service,
