@@ -576,14 +576,6 @@ class PostController extends AbstractController
         $rdvs2 = [];
 
 
-
-
-
-
-
-
-
-
         foreach ($posts as $post) {
             $comments= $this->getDoctrine()->getManager()->getRepository(Commentaire::class)->findAll();
             foreach ( $comments as $c ) {
@@ -612,7 +604,10 @@ if($c->getPost()== $post) {
                      'nbPub'=>$totalPubs,
                     'nbrcomments' => $post->getCommentaires()->count(),
                     'totalComments'=> $totalCommets ,
-                    'commentaires'=>$rdvs2
+                    'commentaires'=>$rdvs2,
+                    'nom'=>$post->getUser()->getFirstName(),
+                    'prenom'=>$post->getUser()->getLastName(),
+                    'email'=>$post->getUser()->getEmail(),
 
 
 
@@ -718,9 +713,10 @@ if($c->getPost()== $post) {
        // $post->setCreatedAt($now2);
        // $post->setUpdatedAt($now);
 
-        $post->setUser($this->getUser());
+    //    $post->setUser($this->getUser());
         $post->setTitle($request->get('title'));
         $post->setContent($request->get('content'));
+        $post->setIsValid($request->get('isValid'));
         $em->flush();
         $content = $normalizer->normalize($post, 'json', ['groups' => 'post:read']);
         return new Response("Post bien modifié" . json_encode($content));
@@ -840,8 +836,10 @@ if($c->getPost()== $post) {
       //  $post->setUser($user);
         $post->setTitle($request->get('title'));
         $post->setContent($request->get('content'));
-        $post->setIsValid(true);
-      $post->setIsValid(true);
+
+        $post->setIsValid($request->get('valid'));
+       // $post->setIsValid(true);
+    //  $post->setIsValid(true);
         $em->flush();
         $serialize = new Serializer([new ObjectNormalizer()]);
         $formatted = $serialize->normalize("Post a ete modifié avec success.");
