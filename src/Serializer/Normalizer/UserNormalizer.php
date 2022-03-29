@@ -43,7 +43,8 @@ class UserNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
       'identityType' => $user->getIdentityType(),
       'identityDocumentNumber' => $user->getIdentityDocumentNumber(),
       'phoneNumber' => $user->getPhoneNumber(),
-      'plainPassword' => $user->getPlainPassword()
+      'plainPassword' => $user->getPlainPassword(),
+      'about' => $user->getAbout()
     ];
   }
 

@@ -29,7 +29,7 @@ class UserController extends AbstractController
                       Request                $request,
                       UserRepository         $userRepository): Response
   {
-    $this->denyAccessUnlessGranted(AccessType::READ, User::class);
+    //$this->denyAccessUnlessGranted(AccessType::READ, User::class);
     $dql = <<<DQL
     select u from App\Entity\User u 
     DQL;
@@ -56,7 +56,7 @@ class UserController extends AbstractController
    */
   public function create(Request $request, EntityManagerInterface $entityManager): Response
   {
-    $this->isGranted(AccessType::CREATE, User::class);
+    //$this->isGranted(AccessType::CREATE, User::class);
     $user = new User();
     $form = $this->createForm(UserType::class, $user);
     $form->handleRequest($request);
@@ -83,7 +83,7 @@ class UserController extends AbstractController
    */
   public function show(User $user): Response
   {
-    $this->isGranted(AccessType::READ, User::class);
+    //$this->isGranted(AccessType::READ, User::class);
 
     return $this->render('user/show.html.twig', [
       'user' => $user,
@@ -95,7 +95,7 @@ class UserController extends AbstractController
    */
   public function update(Request $request, User $user, EntityManagerInterface $entityManager): Response
   {
-    $this->isGranted(AccessType::EDIT, User::class);
+    //$this->isGranted(AccessType::EDIT, User::class);
 
     $form = $this->createForm(UserType::class, $user);
     $form->handleRequest($request);
@@ -122,7 +122,7 @@ class UserController extends AbstractController
    */
   public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
   {
-    $this->isGranted(AccessType::DELETE, User::class);
+    //$this->isGranted(AccessType::DELETE, User::class);
     if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->query->get('_token'))) {
       $entityManager->remove($user);
       $entityManager->flush();
