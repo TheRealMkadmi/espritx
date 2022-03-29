@@ -117,6 +117,13 @@ class Service
         return $this;
     }
 
+    public function resetRecipient(): self
+    {
+        $this->Recipient= new ArrayCollection();
+
+        return $this;
+    }
+
     /**
      * @return Collection|ServiceRequest[]
      */

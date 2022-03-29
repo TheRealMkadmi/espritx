@@ -68,4 +68,18 @@ class ServiceRepository extends ServiceEntityRepository
         $this->manager->persist($newService);
         $this->manager->flush();
     }
+
+    public function updateService(Service $ser): Service
+    {
+        $this->manager->persist($ser);
+        $this->manager->flush();
+
+        return $ser;
+    }
+
+    public function removeService(Service $ser)
+    {
+        $this->manager->remove($ser);
+        $this->manager->flush();
+    }
 }
