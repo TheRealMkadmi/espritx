@@ -14,6 +14,7 @@ use FOS\RestBundle\Controller\Annotations\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\UrlHelper;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -52,10 +53,10 @@ class UserApiController extends AbstractApiController
    * @Route("/{id}", name="user_api_edit", methods={"PATCH"})
    * @ParamConverter("id", class="App\Entity\User")
    */
-  public function editUser(Request $request, EntityManagerInterface $em, User $user)
+  public function editUser(Request $request, EntityManagerInterface $em, User $user, UrlHelper $helper)
   {
     $request->request->set("groups", array_map(static fn($g) => $g["id"], $request->request->get("groups")));
-
+    $request->request->set("avatarFile", $helper->getRelativePath($request->get("avatarFile")));
     $editForm = $this->buildForm(UserType::class, $user);
     $editForm->submit($request->request->all(), false);
     if (!$editForm->isSubmitted() || !$editForm->isValid()) {

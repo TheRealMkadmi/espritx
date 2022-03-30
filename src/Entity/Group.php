@@ -137,7 +137,7 @@ class Group
    */
   protected $groupType;
 
-  public function getGroupType(): GroupType
+  public function getGroupType(): ?GroupType
   {
     return $this->groupType;
   }
@@ -185,7 +185,6 @@ class Group
   //<editor-fold desc="Services Enjoyed By Group">
   /**
    * @ORM\ManyToMany(targetEntity=Service::class, mappedBy="Recipient", cascade={"persist", "remove"})
-   * @Assert\Count(min="1", minMessage="A group must at least receive one service.")
    */
   private $enjoyable_services;
 
