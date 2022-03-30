@@ -43,12 +43,11 @@ class ServiceRequestAPIController extends AbstractApiController
     }
 
     /**
-     * @Route("/showService", name="app_service_request_api_service", methods={"GET"})
+     * @Route("/{id}/showService", name="app_service_request_api_service", methods={"GET"})
      */
-    public function getServiceRequests(ServiceRequestRepository $serviceRequestRepository,Request $request,EntityManagerInterface $entityManager)
+    public function getServiceRequests(ServiceRequestRepository $serviceRequestRepository,Request $request,EntityManagerInterface $entityManager,$id)
     {
-        $data = json_decode($request->getContent(), true);
-        $ser=$entityManager->getRepository(Service::class)->find($data['id']);
+        $ser=$entityManager->getRepository(Service::class)->find($id);
         $requests = $serviceRequestRepository->findBy(["Type"=>$ser]);
         return $this->json($requests);
     }
@@ -120,7 +119,7 @@ class ServiceRequestAPIController extends AbstractApiController
 
         $Title=$data['Title'];
         $Description=$data['Description'];
-        $Type=$entityManager->getRepository(Service::class)->find($data['Type']['id']);
+        $Type=$entityManager->getRepository(Service::class)->findOneBy(["Name"=>$data['Type']]);
         $Email=$data['Email'];
         $User=$this->getUser();
 

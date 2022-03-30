@@ -38,11 +38,15 @@ class RequestNormalizer implements NormalizerInterface, CacheableSupportsMethodI
           'Recipient' => array_map(fn(Group $g) => $this->groupNormalizer->normalize($g), $request->getType()->getRecipient()->toArray()),
           'serviceRequests' => $request->getType()->getServiceRequests()
       ];
+      if ($request->getRespondedAt())
+          $responsetime=$request->getCreatedAt()->format('Y-m-d\TH:m:s.u');
+      else $responsetime=null;
+
       return [
       'id' => $request->getId(),
       'CreatedAt' => $request->getCreatedAt()->format('Y-m-d\TH:m:s.u'),
       'UpdatedAt' => $request->getUpdatedAt()->format('Y-m-d\TH:m:s.u'),
-      'RespondedAt' => $request->getRespondedAt()->format('Y-m-d\TH:m:s.u'),
+      'RespondedAt' => $responsetime,
       'Title' => $request->getTitle(),
       'Description' => $request->getDescription(),
       'Type' => $service,
