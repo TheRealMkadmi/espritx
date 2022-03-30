@@ -33,9 +33,7 @@ class ServiceAPIController extends AbstractApiController
         return $this->json($services);
     }
 
-    /**
-     * @Route("/{id}/edit", name="app_service_a_p_i_edit", methods={"GET", "POST"})
-     */
+/*
     public function edit(Request $request, Service $service, EntityManagerInterface $entityManager,SerializerInterface $serializer): Response
     {
         $service1=$request->getContent();
@@ -45,9 +43,7 @@ class ServiceAPIController extends AbstractApiController
         return new Response("Service updated successfully!");
     }
 
-    /**
-     * @Route("/{id}", name="app_service_a_p_i_delete", methods={"POST"})
-     */
+
     public function delete(Request $request, Service $service, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$service->getId(), $request->request->get('_token'))) {
@@ -56,11 +52,11 @@ class ServiceAPIController extends AbstractApiController
         }
         return new Response("Service deleted successfully!");
     }
-
+*/
     /**
      * @Route("/add/", name="add_api_service", methods={"POST"})
      */
-    public function add(Request $request,ServiceRepository $repository, EntityManagerInterface $entityManager): JsonResponse
+    public function addService(Request $request,ServiceRepository $repository, EntityManagerInterface $entityManager): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
@@ -76,4 +72,41 @@ class ServiceAPIController extends AbstractApiController
 
         return new JsonResponse(['status' => 'Service created!'], Response::HTTP_CREATED);
     }
+
+    /**
+     * @Route("/{id}/edit", name="update_api_service", methods={"PATCH"})
+     */
+    public function updateService($id, Request $request,ServiceRepository $serviceRepository, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $S = $serviceRepository->findOneBy(['id' => $id]);
+        $data = json_decode($request->getContent(), true);
+
+        empty($data['Name']) ? true : $S->setName($data['Name']);
+        empty($data['Responsible']) ? true : $S->setResponsible($entityManager->getRepository(Group::class)->findOneBy(['display_name'=>$data['Responsible']]));
+        $Recipients = $data['Recipient'];
+
+        $S->resetRecipient();
+        for ($i=0;$i<count($Recipients);$i++) {
+            $Recipient = $entityManager->getRepository(Group::class)->findOneBy(['display_name'=>$Recipients[$i]]);
+            $S->addRecipient($Recipient);
+        }
+
+        $updatedRequest = $serviceRepository->updateService($S);
+
+        return new JsonResponse(['status' => 'Service updated!'], Response::HTTP_OK);
+    }
+
+    /**
+     * @Route("/{id}/delete", name="delete_api_service", methods={"DELETE"})
+     */
+    public function delete($id,ServiceRepository $serviceRepository): JsonResponse
+    {
+        $S = $serviceRepository->findOneBy(['id' => $id]);
+
+        $serviceRepository->removeService($S);
+
+        return new JsonResponse(['status' => 'Service deleted'], Response::HTTP_NO_CONTENT);
+    }
+
+
 }

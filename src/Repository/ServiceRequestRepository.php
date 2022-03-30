@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\ServiceRequest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -14,9 +15,12 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ServiceRequestRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $manager;
+
+    public function __construct(ManagerRegistry $registry,EntityManagerInterface $manager)
     {
         parent::__construct($registry, ServiceRequest::class);
+        $this->manager = $manager;
     }
 
     // /**
@@ -53,5 +57,34 @@ class ServiceRequestRepository extends ServiceEntityRepository
             ->select('AVG(DATE_DIFF( sr.createdAt,sr.RespondedAt ))AS cnt')
             ->getQuery()
             ->getResult();
+    }
+
+    public function saveRequest($Title, $Description, $Type, $Email,$User)
+    {
+        $newreq = new ServiceRequest();
+
+        $newreq
+            ->setTitle($Title)
+            ->setDescription($Description)
+            ->setType($Type)
+            ->setRequester($User);
+        if ($Email != null)
+            $newreq->setEmail($Email);
+        $this->manager->persist($newreq);
+        $this->manager->flush();
+    }
+
+    public function updateRequest(ServiceRequest $req): ServiceRequest
+    {
+        $this->manager->persist($req);
+        $this->manager->flush();
+
+        return $req;
+    }
+
+    public function removeRequest(ServiceRequest $req)
+    {
+        $this->manager->remove($req);
+        $this->manager->flush();
     }
 }

@@ -32,6 +32,7 @@ class GroupApiController extends AbstractApiController
   public function add_group(Request $request, EntityManagerInterface $entityManager)
   {
     $form = $this->buildForm(GroupType::class);
+    $request->request->set("members", array_map(static fn($u) => $u["id"], $request->get("members")));
     $form->submit($request->request->all(), false);
     if (!$form->isSubmitted() || !$form->isValid()) {
       return $this->respond($form, Response::HTTP_BAD_REQUEST);
@@ -49,20 +50,17 @@ class GroupApiController extends AbstractApiController
    */
   public function edit_group(Request $request, EntityManagerInterface $em, Group $group)
   {
-    try{
-      $editForm = $this->buildForm(GroupType::class, $group);
-      $request->request->set("members", array_map(static fn($u) => $u["id"], $request->get("members")));
-      $editForm->submit($request->request->all(), false);
-      if (!$editForm->isSubmitted() || !$editForm->isValid()) {
-        return $this->respond($editForm, Response::HTTP_BAD_REQUEST);
-      }
-      /** @var Group $group */
-      $group = $editForm->getData();
-      $em->flush();
-      return $this->respond($group);
-    } catch (Exception $e){
-      dd($e);
+
+    $editForm = $this->buildForm(GroupType::class, $group);
+    $request->request->set("members", array_map(static fn($u) => $u["id"], $request->get("members")));
+    $editForm->submit($request->request->all(), false);
+    if (!$editForm->isSubmitted() || !$editForm->isValid()) {
+      return $this->respond($editForm, Response::HTTP_BAD_REQUEST);
     }
+    /** @var Group $group */
+    $group = $editForm->getData();
+    $em->flush();
+    return $this->respond($group);
 
   }
 
