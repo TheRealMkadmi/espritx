@@ -173,7 +173,7 @@ class SerRequestController extends AbstractController
         $form->remove('Type');
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $Notif->notifyUser($serreq->getRequester(),"Rzquest Response","Your service request has a new response",null,true);
+            $Notif->notifyUser($serreq->getRequester(),"Request Response","Your service request has a new response",null,true);
             if ($serreq->getStatus() != "unseen"){
                 $serreq->setRespondedAt(new DateTimeImmutable());
             }
