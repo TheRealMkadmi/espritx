@@ -30,7 +30,7 @@ class ServiceRequest
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
-    private $RespondedAt=null;
+    private $RespondedAt = null;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
@@ -123,32 +123,32 @@ class ServiceRequest
         $this->Picture = new EmbeddedFile();
     }
 
-    public function setAttachementsFile(File|UploadedFile|null $Attachements = null): static
-    {
-        $this->AttachementsFile = $Attachements;
-        if ($Attachements !== null) {
-            $this->updatedAt = new \DateTimeImmutable();
-        }
-        return $this;
-    }
-
     public function getAttachementsFile(): ?File
     {
         return $this->AttachementsFile;
     }
 
-    public function setPictureFile(File|UploadedFile|null $Picture = null): static
+    public function setAttachementsFile(File|UploadedFile|null $Attachements = null): static
     {
-        $this->PictureFile = $Picture;
-        if ($Picture !== null) {
-            $this->updatedAt = new \DateTimeImmutable();
-        }
+        $this->AttachementsFile = $Attachements;
+        //if ($Attachements !== null) {
+        $this->updatedAt = new \DateTimeImmutable();
+        //}
         return $this;
     }
 
     public function getPictureFile(): ?File
     {
         return $this->PictureFile;
+    }
+
+    public function setPictureFile(File|UploadedFile|null $Picture = null): static
+    {
+        $this->PictureFile = $Picture;
+        //if ($Picture !== null) {
+        $this->updatedAt = new \DateTimeImmutable();
+        //}
+        return $this;
     }
 
     public function getId(): ?int

@@ -88,22 +88,20 @@ class ServiceRequestAPIController extends AbstractApiController
      * @Route("/edit/{id}", name="app_service_request_api_edit", methods={"POST"})
      * @ParamConverter("id", class="App\Entity\ServiceRequest")
      */
-    public function updateRequest(ServiceRequest $req, ServiceRepository $serviceRepository, Request $request, EntityManagerInterface $em): JsonResponse
+    public function updateRequest(ServiceRequest $req, ServiceRepository $serviceRepository, Request $request, EntityManagerInterface $em)
     {
         try {
-
-
             $request->setMethod("PATCH");
             $request->request->replace(json_decode($request->request->get("Request"), true));
             $request->request->remove("Requester");
             $service = $serviceRepository->findOneBy(["Name" => $request->get("Type")])?->getId();
             $request->request->set("Type", $service);
-            if ($request->request->has("PictureFile")) {
+            if ($request->files->has("PictureFile")) {
                 $request->files->replace([
-                    "AttachementsFile" => ["file" => $request->files->get("AttachementsFile")]
+                    "PictureFile" => ["file" => $request->files->get("PictureFile")]
                 ]);
             }
-            if ($request->request->has("AttachementsFile")) {
+            if ($request->files->has("AttachementsFile")) {
                 $request->files->replace([
                     "AttachementsFile" => ["file" => $request->files->get("AttachementsFile")]
                 ]);
@@ -113,14 +111,13 @@ class ServiceRequestAPIController extends AbstractApiController
             ]);
             $editForm->handleRequest($request);
             if (!$editForm->isSubmitted() || !$editForm->isValid()) {
-                $req->setRequester($this->getUser());
                 return $this->respond($editForm, Response::HTTP_BAD_REQUEST);
             }
             $req = $editForm->getData();
             $em->flush();
             return $this->json($req);
         } catch (\Exception $e) {
-            ;
+            var_dump($e);
         }
     }
 
@@ -172,6 +169,7 @@ class ServiceRequestAPIController extends AbstractApiController
             var_dump($e);
         }
     }
+
     /**
      * @Route("/respond/{id}", name="app_service_request_api_respond", methods={"PATCH"})
      * @ParamConverter("id", class="App\Entity\ServiceRequest")
