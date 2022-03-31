@@ -68,7 +68,7 @@ class ServiceRequestRepository extends ServiceEntityRepository
             ->setDescription($Description)
             ->setType($Type)
             ->setRequester($User);
-        if ($Email != null)
+        if ($Email !="")
             $newreq->setEmail($Email);
         $this->manager->persist($newreq);
         $this->manager->flush();
