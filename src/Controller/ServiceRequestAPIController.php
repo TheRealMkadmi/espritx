@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Group;
 use App\Entity\Service;
 use App\Entity\ServiceRequest;
+use App\Form\SerRequestType;
 use App\Form\ServiceRequestType;
 use App\Repository\ServiceRepository;
 use App\Repository\ServiceRequestRepository;
@@ -83,9 +84,9 @@ class ServiceRequestAPIController extends AbstractApiController
     /**
      * @Route("/{id}/edit", name="app_service_request_api_edit", methods={"PATCH"})
      */
-    public function updateRequest($id, Request $request,ServiceRequestRepository $serviceRequestRepository): JsonResponse
+    public function updateRequest($id, Request $request,ServiceRequestRepository $serviceRequestRepository,EntityManagerInterface $em): JsonResponse
     {
-        $req = $serviceRequestRepository->findOneBy(['id' => $id]);
+        /*$req = $serviceRequestRepository->findOneBy(['id' => $id]);
         $data = json_decode($request->getContent(), true);
 
         empty($data['Title']) ? true : $req->setTitle($data['Title']);
@@ -95,7 +96,25 @@ class ServiceRequestAPIController extends AbstractApiController
         empty($data['Status']) ? true : $req->setStatus($data['Status']);
         $updatedRequest = $serviceRequestRepository->updateRequest($req);
 
-        return new JsonResponse(['status' => 'Request updated!'], Response::HTTP_OK);
+        return new JsonResponse(['status' => 'Request updated!'], Response::HTTP_OK);*/
+        $request->setMethod("PATCH");
+        $req = $serviceRequestRepository->findOneBy(['id' => $id]);
+        $request->request->replace(json_decode($request->request->get("Request"), true));
+        $request->files->replace([
+            "PictureFile" => ["file" => $request->files->get("PictureFile")]
+        ]);
+        $editForm = $this->get('form.factory')->createNamed('', SerRequestType::class, $req, [
+            "method" => "PATCH",
+        ]);
+        $editForm->remove('AttachementsFile');
+        $editForm->handleRequest($request);
+        if (!$editForm->isSubmitted() || !$editForm->isValid()) {
+            return $this->respond($editForm, Response::HTTP_BAD_REQUEST);
+        }
+        /** @var User $user */
+        $req = $editForm->getData();
+        $em->flush();
+        return $this->respond($user);
     }
 
     /**

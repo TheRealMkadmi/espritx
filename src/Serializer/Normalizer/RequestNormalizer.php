@@ -6,6 +6,7 @@ use App\Entity\Group;
 use App\Entity\ServiceRequest;
 use App\Entity\Service;
 use App\Entity\User;
+use Symfony\Bridge\Twig\Extension\HttpFoundationExtension;
 use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -18,7 +19,8 @@ class RequestNormalizer implements NormalizerInterface, CacheableSupportsMethodI
   public function __construct(private ObjectNormalizer  $normalizer,
                               private UploaderHelper    $helper,
                               private GroupNormalizer $groupNormalizer,
-                              private UserNormalizer    $userNormalizer)
+                              private UserNormalizer    $userNormalizer,
+                              private HttpFoundationExtension $httpFoundationExtension)
   {
   }
 
@@ -48,7 +50,7 @@ class RequestNormalizer implements NormalizerInterface, CacheableSupportsMethodI
       'Type' => $service,
       'Status' => $request->getStatus(),
       'Response' => $request->getRequestResponse(),
-      'Picture' => $request->getPicture(),
+      'Picture' => ($request->getPicture()?->getName() !== null) ? $this->httpFoundationExtension->generateAbsoluteUrl($this->helper->asset($request, "Picture")): null,
       'Attachements' => $request->getAttachements(),
       'Email' => $request->getEmail(),
       'Requester' => $this->userNormalizer->normalize($request->getRequester()),
