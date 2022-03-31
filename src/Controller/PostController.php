@@ -577,7 +577,7 @@ class PostController extends AbstractController
 
 
         foreach ($posts as $post) {
-            $comments= $this->getDoctrine()->getManager()->getRepository(Commentaire::class)->findAll();
+            $comments= $commentaireRepository->getCommentsForPost($post->getId());
             foreach ( $comments as $c ) {
 if($c->getPost()== $post) {
     $rdvs2[] = [
@@ -621,6 +621,52 @@ if($c->getPost()== $post) {
 
     }
 
+
+
+
+
+
+    /**
+     * @Route("api/Commmm/all", name="Commmall_api")
+     * @return Response
+     * @throws Exception
+     */
+    public function api_tous_les_Comm(NormalizerInterface $normalizer,PostRepository $repository,CommentaireRepository $commentaireRepository)
+    {
+
+
+        $posts = $this->getDoctrine()->getManager()->getRepository(Post::class)->findAll();
+
+        $rdvs2 = [];
+     foreach ($posts as $post) {
+            $comments= $commentaireRepository->getCommentsForPost($post->getId());
+            foreach ( $comments as $c ) {
+                if($c->getPost()== $post) {
+                    $rdvs2[] = [
+
+                        'commentaire' => $c->getContent(),
+                        'postId'=>$c->getPost()->getId(),
+                        'nom'=>$c->getUser()->getFirstName(),
+                        'prenom'=>$c->getUser()->getLastName()
+
+
+                    ];
+                }
+            }
+
+
+
+        }
+
+        $data = json_encode($rdvs2);
+
+        return new Response($data);
+
+    }
+
+
+
+
     /**
      * @Route ("api/addPost",name="addpost_api" , methods={"GET", "POST"})
      */
@@ -657,6 +703,61 @@ if($c->getPost()== $post) {
         return new Response('post ajouté');
 
     }
+
+
+
+
+
+    /**
+     * @Route("api/comment/newwApi/{id}", name="comment_newApi")
+     * @param Request $request
+     * @param UserRepository $repository
+     * @return Response
+     * @throws Exception
+     */
+    public function ajouterCommentApi($id, Request $request, UserRepository $repository, PostRepository $postRepository): Response
+    {
+        $commentaire = new Commentaire();
+        $form = $this->createForm(CommentaireType::class, $commentaire);
+
+
+        $post = $postRepository->find($id);
+        $now = new \DateTimeImmutable('now');
+        $donnees = json_decode($request->getContent());
+        $em = $this->getDoctrine()->getManager();
+
+
+
+$commentaire->setCreatedAt($now);
+$commentaire->setPost($post);
+        //  $user = $this->getDoctrine()->getRepository(User::class)->find(76);
+//$idUser= $request->query->get("user");
+        $commentaire->setUser($this->getUser());
+
+        //      $post->setUser($this->getDoctrine()->getManager()->getRepository(User::class)->find($idUser));
+
+        $commentaire->setContent($request->get('content'));
+
+
+
+        $em->persist($commentaire);
+        $em->flush();
+
+
+        return new Response('pcommentaire ajouté');
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     /*
         public function addPost_api(Request $request,SerializerInterface $serializer,EntityManagerInterface $entityManager){
