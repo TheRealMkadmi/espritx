@@ -11,7 +11,12 @@ use App\Repository\UserRepository;
 use App\Serializer\Normalizer\UserNormalizer;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\Annotations\Route;
+use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
+use Lexik\Bundle\JWTAuthenticationBundle\Events;
+use Lexik\Bundle\JWTAuthenticationBundle\Response\JWTAuthenticationSuccessResponse;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\UrlHelper;
@@ -113,5 +118,15 @@ class UserApiController extends AbstractApiController
       throw new NotFoundHttpException("Could not find user with email " . $request->get("email"));
     }
     return $this->json($userNormalizer->normalize($user));
+  }
+
+  /**
+   * @Route("/oauth_mobile_callback", name="oauth_mobile_callback", methods={"GET"})
+   */
+  public function get_jwt_for_google_oauth(Request $request, JWTTokenManagerInterface $jwtManager, EventDispatcherInterface $dispatcher)
+  {
+    $user = $this->getUser();
+    $jwt = $jwtManager->create($user);
+    return $this->json(["token" => $jwt]);
   }
 }
