@@ -67,6 +67,6 @@ security:
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
-    - { path: ^/(login|register|resetpassword|forum|connect|api/login).*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/(login|register|resetpassword|forum|connect|api/login|authenticate_device).*, role: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/.*, role: IS_AUTHENTICATED_REMEMBERED }

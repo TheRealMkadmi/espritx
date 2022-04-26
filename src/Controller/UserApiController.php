@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\DeviceAuthorization;
 use App\Entity\Group;
 use App\Entity\Permission;
 use App\Entity\User;
@@ -17,6 +18,7 @@ use Lexik\Bundle\JWTAuthenticationBundle\Response\JWTAuthenticationSuccessRespon
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\UrlHelper;
@@ -129,4 +131,5 @@ class UserApiController extends AbstractApiController
     $jwt = $jwtManager->create($user);
     return $this->json(["token" => $jwt]);
   }
+
 }

@@ -48,9 +48,9 @@ class Group
   //</editor-fold>
   //<editor-fold desc="Display Name">
   /**
-   * @ORM\Column(type="string", length=32)
+   * @ORM\Column(type="string", length=64)
    * @Assert\NotBlank
-   * @Assert\Length(min=5, max=25)
+   * @Assert\Length(min=5, max=64)
    * @Groups("post")
    * @Groups("Service")
    */
@@ -70,9 +70,9 @@ class Group
   //</editor-fold>
   //<editor-fold desc="Security Title">
   /**
-   * @ORM\Column(type="string", length=32)
+   * @ORM\Column(type="string", length=64)
    * @Assert\NotBlank
-   * @Assert\Length(min=5, max=32)
+   * @Assert\Length(min=5, max=64)
    */
   private ?string $security_title;
 
