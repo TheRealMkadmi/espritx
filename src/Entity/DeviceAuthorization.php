@@ -23,7 +23,7 @@ class DeviceAuthorization
     private $device_code;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne (targetEntity=User::class, cascade={"persist", "remove"})
      */
     private $user;
 
