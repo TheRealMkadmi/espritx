@@ -116,6 +116,21 @@ $qb->andWhere('b.groupPost IN (:grps)')
         $query = $queryBuilder->getQuery();
         return $query->getResult();}
 
+
+
+    public function PostforApi()
+    {
+
+
+        $queryBuilder = $this->createQueryBuilder('o')
+            ->select('o')
+
+            ->orderBy('o.created_at','DESC');
+
+
+        $query = $queryBuilder->getQuery();
+        return $query->getResult();}
+
 }
 
 

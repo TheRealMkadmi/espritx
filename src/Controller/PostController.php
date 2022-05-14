@@ -567,7 +567,7 @@ return $this->render('views/content/posts/User/NewHome.html.twig', ['recentP' =>
             ->getSingleScalarResult();
 
 
-        $posts = $this->getDoctrine()->getManager()->getRepository(Post::class)->PostsMaxQuatre();
+        $posts = $this->getDoctrine()->getManager()->getRepository(Post::class)->findAll();
 
 
 
