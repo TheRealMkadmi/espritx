@@ -214,11 +214,6 @@
       <path value="$PROJECT_DIR$/vendor/stella-maris/clock" />
     </include_path>
   </component>
-  <component name="PhpProjectServersManager">
-    <servers>
-      <server host="127.0.0.1" id="aacf7211-42ab-4f7e-bb53-67674adf457d" name="localhost" port="8000" />
-    </servers>
-  </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0">
     <option name="suggestChangeDefaultLanguageLevel" value="false" />
   </component>

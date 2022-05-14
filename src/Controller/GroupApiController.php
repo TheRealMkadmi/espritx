@@ -10,6 +10,7 @@ use SebastianBergmann\Type\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @Route("/api/group")
@@ -55,7 +56,7 @@ class GroupApiController extends AbstractApiController
     $request->request->set("members", array_map(static fn($u) => $u["id"], $request->get("members")));
     $editForm->submit($request->request->all(), false);
     if (!$editForm->isSubmitted() || !$editForm->isValid()) {
-      return $this->respond($editForm, Response::HTTP_BAD_REQUEST);
+      throw new BadRequestHttpException($editForm->getErrors(true));
     }
     /** @var Group $group */
     $group = $editForm->getData();
