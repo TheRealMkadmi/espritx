@@ -11,26 +11,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/authenticate_device")
+ */
 class DeviceAuthorizationController extends AbstractApiController
 {
   /**
-   * @Route("/authenticate_device/{device_code}", name="device_authenticate", methods={"GET"})
-   */
-  public function authenticate_device($device_code, DeviceAuthorizationRepository $repository, EntityManagerInterface $entityManager)
-  {
-    $code = $repository->findOneBy(['device_code' => $device_code]);
-    if(!$code) {
-      return new NotFoundHttpException();
-    }
-    $code->setUser($this->getUser());
-    $entityManager->persist($code);
-    $entityManager->flush();
-    return new Response("You have successfully authenticated your device. You can close this tab now.", Response::HTTP_OK);
-  }
-
-
-  /**
-   * @Route("/authenticate_device/start", name="start_device_authentication", methods={"POST"})
+   * @Route("/start", name="start_device_authentication", methods={"POST"})
    * @throws \Exception
    */
   public function start_device_authentication(Request $request, EntityManagerInterface $entityManager)
