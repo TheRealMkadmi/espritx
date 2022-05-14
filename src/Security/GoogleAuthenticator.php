@@ -109,11 +109,6 @@ class GoogleAuthenticator extends SocialAuthenticator
 
   public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
   {
-    if (strpos($request->headers->get("user-agent"), "obile") !== false) {
-      $user = $this->security->getUser();
-      $jwt = $this->jwtManager->create($user);
-      return new Response("<body>" . json_encode(["token" => $jwt]) . "</body>");
-    }
     return new RedirectResponse($this->router->generate('app_home'));
   }
 
