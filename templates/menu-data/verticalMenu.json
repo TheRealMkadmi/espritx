@@ -84,11 +84,12 @@
       "navheader": "Groups Management",
       "slug": ""
     },
+
     {
-      "__url__": "#",
-      "name": "Group-users",
-      "icon": "user",
-      "slug": "Groups-Users"
+      "url": "groupall",
+      "name": "Group-posts",
+      "icon": "users",
+      "slug": "Groups"
     },
     {
       "url": "postall",
