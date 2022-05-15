@@ -14,6 +14,9 @@ use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
 use KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use League\OAuth2\Client\Provider\GoogleUser;
+use Lexik\Bundle\JWTAuthenticationBundle\Events;
+use Lexik\Bundle\JWTAuthenticationBundle\Response\JWTAuthenticationSuccessResponse;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,17 +26,20 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Event\AuthenticationSuccessEvent;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class GoogleAuthenticator extends SocialAuthenticator
 {
-  public function __construct(private ClientRegistry               $clientRegistry,
-                              private EntityManagerInterface       $em,
-                              private RouterInterface              $router,
-                              private MailerInterface              $mailer,
-                              private UserPasswordEncoderInterface $userPasswordEncoder,
-                              private GroupRepository $repository)
+  public function __construct(private ClientRegistry           $clientRegistry,
+                              private EntityManagerInterface   $em,
+                              private RouterInterface          $router,
+                              private MailerInterface          $mailer,
+                              private JWTTokenManagerInterface $jwtManager,
+                              private Security                 $security,
+                              private GroupRepository          $repository)
   {
   }
 
@@ -103,12 +109,7 @@ class GoogleAuthenticator extends SocialAuthenticator
 
   public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
   {
-    // change "app_homepage" to some route in your app
-    $targetUrl = $this->router->generate('app_home');
-
-    return new RedirectResponse($targetUrl);
-    // or, on success, let the request continue to be handled by the controller
-    //return null;
+    return new RedirectResponse($this->router->generate('app_home'));
   }
 
   public function onAuthenticationFailure(Request $request, AuthenticationException $exception)

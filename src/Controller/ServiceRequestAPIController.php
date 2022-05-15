@@ -195,11 +195,11 @@ class ServiceRequestAPIController extends AbstractApiController
             $editForm->remove('Type');
             $editForm->handleRequest($request);
             if (!$editForm->isSubmitted() || !$editForm->isValid()) {
-                $req->setRespondedAt(new DateTimeImmutable());
                 return $this->respond($editForm, Response::HTTP_BAD_REQUEST);
             }
             $req = $editForm->getData();
-            $em->flush();
+            $req->setRespondedAt(new DateTimeImmutable());
+          $em->flush();
             return $this->json($req);
         } catch (\Exception $e) {
             ;

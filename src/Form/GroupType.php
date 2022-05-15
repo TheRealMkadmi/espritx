@@ -34,7 +34,8 @@ class GroupType extends AbstractBootstrapType
   {
     $resolver->setDefaults([
       'data_class' => Group::class,
-      'allow_extra_fields' => true
+      'allow_extra_fields' => true,
+      'csrf_protection' => false,
     ]);
   }
 }

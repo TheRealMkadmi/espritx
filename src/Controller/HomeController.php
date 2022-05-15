@@ -13,6 +13,7 @@ use App\Repository\PostRepository;
 use App\Repository\ServiceRequestRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -27,7 +28,6 @@ class HomeController extends AbstractController
   public function show(UserRepository $userRepository,PostRepository $repository, Request $request, CommentaireRepository $commentaireRepository,GroupPostRepository  $groupPostRepository): Response
   {
 
-
       $commentaire = new Commentaire();
       $form = $this->createForm(CommentaireType::class, $commentaire);
       $limit = 10;
@@ -38,7 +38,7 @@ class HomeController extends AbstractController
       //    dd($filters);
 
       $posts = $repository->getLatestPosts($limit, $filters);
-      $recentP = $repository->PostsMaxQuatre($limit2);
+      $recentP = $repository->PostsMaxQuatre();
       $allgroups = $groupPostRepository->findAll();
       $membre = $userRepository->find($this->getUser());
 
@@ -59,8 +59,8 @@ class HomeController extends AbstractController
       }
 
 
-      return $this->render('views/content/posts/User/acceuilallposts.html.twig', [      "user" => $this->getUser(),
-          'recentP' => $recentP, 'mes_groups' => $mesgrps, 'allgroups' => $allgroups, 'comments' => $comments, 'posts' => $posts, 'form' => $form->createView()]);
+      //  return $this->render('views/content/posts/User/acceuilposts.html.twig', ['recentP' => $recentP, 'mes_groups' => $mesgrps, 'allgroups' => $allgroups, 'comments' => $comments, 'posts' => $posts, 'form' => $form->createView()]);
+      return $this->render('views/content/posts/User/NewHome.html.twig', ['recentP' => $recentP, 'mes_groups' => $mesgrps, 'allgroups' => $allgroups, 'comments' => $comments, 'posts' => $posts, 'form' => $form->createView()]);
 
   }
 

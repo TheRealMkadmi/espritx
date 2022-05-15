@@ -297,7 +297,7 @@ class PostController extends AbstractController
         //    dd($filters);
 
         $posts = $repository->getLatestPosts($limit, $filters);
-        $recentP = $repository->PostsMaxQuatre($limit2);
+        $recentP = $repository->PostsMaxQuatre();
         $allgroups = $groupPostRepository->findAll();
         $membre = $userRepository->find($this->getUser());
 
@@ -318,8 +318,8 @@ class PostController extends AbstractController
         }
 
 
-        return $this->render('views/content/posts/User/acceuilposts.html.twig', ['recentP' => $recentP, 'mes_groups' => $mesgrps, 'allgroups' => $allgroups, 'comments' => $comments, 'posts' => $posts, 'form' => $form->createView()]);
-
+      //  return $this->render('views/content/posts/User/acceuilposts.html.twig', ['recentP' => $recentP, 'mes_groups' => $mesgrps, 'allgroups' => $allgroups, 'comments' => $comments, 'posts' => $posts, 'form' => $form->createView()]);
+return $this->render('views/content/posts/User/NewHome.html.twig', ['recentP' => $recentP, 'mes_groups' => $mesgrps, 'allgroups' => $allgroups, 'comments' => $comments, 'posts' => $posts, 'form' => $form->createView()]);
 //     return $this->render('views/content/pages/page-profile.html.twig', ['mes_groups'=>$mesgrps,'allgroups'=>$allgroups,'comments' => $comments, 'posts' => $posts, 'form' => $form->createView()]);
     }
 /////////////////////////////////////////////////////////////////////////////////////////////// Commentaires /////////////////////////////////
@@ -567,7 +567,7 @@ class PostController extends AbstractController
             ->getSingleScalarResult();
 
 
-        $posts = $this->getDoctrine()->getManager()->getRepository(Post::class)->PostsMaxQuatre();
+        $posts = $this->getDoctrine()->getManager()->getRepository(Post::class)->PostforApi();
 
 
 

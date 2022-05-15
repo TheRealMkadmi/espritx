@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\DeviceAuthorization;
 use App\Entity\Group;
 use App\Entity\Permission;
 use App\Entity\User;
@@ -11,10 +12,18 @@ use App\Repository\UserRepository;
 use App\Serializer\Normalizer\UserNormalizer;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\Annotations\Route;
+use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
+use Lexik\Bundle\JWTAuthenticationBundle\Events;
+use Lexik\Bundle\JWTAuthenticationBundle\Response\JWTAuthenticationSuccessResponse;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\UrlHelper;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -53,14 +62,22 @@ class UserApiController extends AbstractApiController
    * @Route("/{id}", name="user_api_edit", methods={"PATCH"})
    * @ParamConverter("id", class="App\Entity\User")
    */
-  public function editUser(Request $request, EntityManagerInterface $em, User $user, UrlHelper $helper)
+  public function editUser(Request $request, EntityManagerInterface $em, User $user, UrlHelper $helper, LoggerInterface $logger)
   {
-    $request->request->set("groups", array_map(static fn($g) => $g["id"], $request->request->get("groups")));
-    $request->request->set("avatarFile", $helper->getRelativePath($request->get("avatarFile")));
+    //$request->request->set("groups", array_map(static fn($g) => $g["id"], $request->request->get("groups")));
+    //$request->request->set("avatarFile", $helper->getRelativePath($request->get("avatarFile")));
     $editForm = $this->buildForm(UserType::class, $user);
+    $editForm->remove("avatarFile");
+    $editForm->remove("groups");
     $editForm->submit($request->request->all(), false);
     if (!$editForm->isSubmitted() || !$editForm->isValid()) {
-      return $this->respond($editForm, Response::HTTP_BAD_REQUEST);
+      $errors = $editForm->getErrors(true, true);
+      $errorString = "";
+      foreach ($errors as $error) {
+        $errorString .= $error->getMessage() . "\n";
+      }
+      $logger->error($errorString);
+      throw new BadRequestHttpException($errorString);
     }
     /** @var User $user */
     $user = $editForm->getData();
@@ -114,4 +131,15 @@ class UserApiController extends AbstractApiController
     }
     return $this->json($userNormalizer->normalize($user));
   }
+
+  /**
+   * @Route("/oauth_mobile_callback", name="oauth_mobile_callback", methods={"GET"})
+   */
+  public function get_jwt_for_google_oauth(Request $request, JWTTokenManagerInterface $jwtManager, EventDispatcherInterface $dispatcher)
+  {
+    $user = $this->getUser();
+    $jwt = $jwtManager->create($user);
+    return $this->json(["token" => $jwt]);
+  }
+
 }

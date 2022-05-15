@@ -109,8 +109,24 @@ $qb->andWhere('b.groupPost IN (:grps)')
 
         $queryBuilder = $this->createQueryBuilder('o')
         ->select('o')
+            ->where('o.isValid = 1')
             ->orderBy('o.created_at','DESC')
-            ->setMaxResults(100);
+            ->setMaxResults(3);
+
+        $query = $queryBuilder->getQuery();
+        return $query->getResult();}
+
+
+
+    public function PostforApi()
+    {
+
+
+        $queryBuilder = $this->createQueryBuilder('o')
+            ->select('o')
+
+            ->orderBy('o.created_at','DESC');
+
 
         $query = $queryBuilder->getQuery();
         return $query->getResult();}
