@@ -38,7 +38,7 @@ class MessageNormalizer implements NormalizerInterface, CacheableSupportsMethodI
                 'email' => $object->getAuthor()->getEmail(),
                 'class' => $object->getAuthor()->getClass(),
                 'userStatus' => $object->getAuthor()->getUserStatus(),
-                'avatarFile' => ($object->getAuthor()->getAvatar()?->getName() !== null) ? $this->httpFoundationExtension->generateAbsoluteUrl($this->helper->asset($user, "avatarFile")) : null,
+                'avatarFile' => ($object->getAuthor()->getAvatar()?->getName() !== null) ? $this->httpFoundationExtension->generateAbsoluteUrl($this->helper->asset($object->getAuthor(), "avatarFile")) : null,
                 'identityType' => $object->getAuthor()->getIdentityType(),
                 'identityDocumentNumber' => $object->getAuthor()->getIdentityDocumentNumber(),
                 'phoneNumber' => $object->getAuthor()->getPhoneNumber(),
