@@ -131,9 +131,9 @@ class ServiceRequest
     public function setAttachementsFile(File|UploadedFile|null $Attachements = null): static
     {
         $this->AttachementsFile = $Attachements;
-        //if ($Attachements !== null) {
+        if ($Attachements !== null) {
         $this->updatedAt = new \DateTimeImmutable();
-        //}
+        }
         return $this;
     }
 
@@ -145,9 +145,9 @@ class ServiceRequest
     public function setPictureFile(File|UploadedFile|null $Picture = null): static
     {
         $this->PictureFile = $Picture;
-        //if ($Picture !== null) {
+        if ($Picture !== null) {
         $this->updatedAt = new \DateTimeImmutable();
-        //}
+        }
         return $this;
     }
 

@@ -48,5 +48,11 @@
 {% block page_script %}
     <script src="{{ asset('js/scripts/pages/app-calendar-events.js') }}"></script>
     <script src="{{ asset('js/scripts/pages/app-calendar.js') }}"></script>
+
+    <script>
+        $("#call_users").selectize({
+            maxItems: 20,
+        });
+    </script>
 {% endblock %}
 

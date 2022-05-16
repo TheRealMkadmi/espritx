@@ -76,7 +76,7 @@ class EventController extends AbstractController
   }
 
   /**
-   * @Route("/{id}/edit", name="update")
+   * @Route("/event/{id}/edit", name="update")
    */
   public function edit($id, Request $request, EventRepository $rep)
   {
@@ -103,7 +103,7 @@ class EventController extends AbstractController
   }
 
   /**
-   * @Route("/{id}/delete", name="deleteEvent")
+   * @Route("/event/{id}/delete", name="deleteEvent")
    */
   public function supprimer($id, UserRepository $userRep)
   {

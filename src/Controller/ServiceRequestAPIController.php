@@ -15,13 +15,17 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 /**
  * @Route("/api/request")
@@ -81,7 +85,7 @@ class ServiceRequestAPIController extends AbstractApiController
     public function getRequest($id, ServiceRequestRepository $serviceRequestRepository)
     {
         $request = $serviceRequestRepository->findOneBy(["id" => $id]);
-        return $this->json($request);
+        return $this->json($request->getAttachements());
     }
 
     /**
@@ -97,13 +101,16 @@ class ServiceRequestAPIController extends AbstractApiController
             $service = $serviceRepository->findOneBy(["Name" => $request->get("Type")])?->getId();
             $request->request->set("Type", $service);
             if ($request->files->has("PictureFile")) {
+                /** @var UploadedFile $var */
+                $var = $request->files->get("PictureFile");
                 $request->files->replace([
-                    "PictureFile" => ["file" => $request->files->get("PictureFile")]
+                    "PictureFile" => ["file" => $var]
                 ]);
             }
             if ($request->files->has("AttachementsFile")) {
+                $var = $request->files->get("AttachementsFile");
                 $request->files->replace([
-                    "AttachementsFile" => ["file" => $request->files->get("AttachementsFile")]
+                    "AttachementsFile" => ["file" => $var]
                 ]);
             }
             $editForm = $this->get('form.factory')->createNamed('', SerRequestType::class, $req, [
@@ -205,33 +212,18 @@ class ServiceRequestAPIController extends AbstractApiController
             ;
         }
     }
-    /*
-    public function new(Request $request, EntityManagerInterface $entityManager,SerializerInterface $serializer): Response
+
+    /**
+     * @Route("/upload", name="app_service_request_api_respond", methods={"POST"})
+     */
+    public function RequestUpload(Request $request, FormBuilderInterface $builder): JsonResponse
     {
-        $SerReq=$request->getContent();
-        $data=$serializer->deserialize($SerReq,ServiceRequest::class,'json');
-        $entityManager->persist($data);
-        $entityManager->flush();
-        return new Response("Service added successfully!");
+        $builder->add('AttachementsFile', FileType::class, [
+            'allow_delete' => true,
+            'delete_label' => "Delete?",
+            'download_uri' => true,
+        ]);
+
     }
 
-
-    public function edit(Request $request, ServiceRequest $serviceRequest, EntityManagerInterface $entityManager, SerializerInterface $serializer): Response
-    {
-        $serviceRequest1=$request->getContent();
-        $serializer->deserialize($serviceRequest1,ServiceRequest::class,'json',['object_to_populate' => $serviceRequest]);
-        $entityManager->persist($serviceRequest);
-        $entityManager->flush();
-        return new Response("Service updated successfully!");
-    }
-
-
-    public function delete(Request $request, ServiceRequest $serviceRequest, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$serviceRequest->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($serviceRequest);
-            $entityManager->flush();
-        }
-        return new Response("Service deleted successfully!");
-    }*/
 }
