@@ -8,6 +8,7 @@ use App\Entity\Permission;
 use App\Entity\User;
 use App\Form\ConversationType;
 use App\Form\UserType;
+use App\Repository\GroupRepository;
 use App\Repository\UserRepository;
 use App\Serializer\Normalizer\UserNormalizer;
 use Doctrine\ORM\EntityManagerInterface;
@@ -43,7 +44,7 @@ class UserApiController extends AbstractApiController
   /**
    * @Route("/", name="user_api_add", methods={"POST"})
    */
-  public function addUser(Request $request, EntityManagerInterface $entityManager)
+  public function addUser(Request $request, EntityManagerInterface $entityManager, GroupRepository $groupRepository)
   {
     $form = $this->buildForm(UserType::class);
     $form->submit($request->request->all(), false);
@@ -53,6 +54,7 @@ class UserApiController extends AbstractApiController
 
     /** @var User $user */
     $user = $form->getData();
+    $user->addGroup($groupRepository->getDefaultGroup());
     $entityManager->persist($user);
     $entityManager->flush();
     return $this->respond($user);

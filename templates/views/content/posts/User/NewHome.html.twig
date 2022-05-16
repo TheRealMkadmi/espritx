@@ -571,6 +571,7 @@
                                                 <p><input type="checkbox" name="allgroups[]" id="group{{ group.id }}"
                                                           value="{{ group.id }}">
                                                     <label for="group{{ group.id }}">{{ group.nomGroupe }}</label>
+
                                                 </p>
                                             {% endif %}
                                         {% endfor %}
@@ -620,9 +621,16 @@
 
                                     <div class="transaction-percentage">
                                         <h6 class="transaction-title">{{  group.nomGroupe }}</h6>
-                                        <small>Starbucks</small>
+
+                                        <small>{{  group.but }}</small>
+
+
                                     </div>
+
                                 </div>
+                                <br/>
+                                <a  style="float: right; margin-bottom: 10px" class="btn btn-outline-danger" href="{{ path('quitter_membre_group', {'id': group.id , 'idU': app.user.id}) }}"  >Quiiter</a>
+<br/>
 
 
                             </div>

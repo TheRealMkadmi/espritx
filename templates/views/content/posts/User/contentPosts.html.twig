@@ -211,7 +211,7 @@
                                                itemprop="contentUrl" data-size="1024x1024">
                                                 <img class="rounded"
                                                      src="{{ asset('/uploads/brochures/'~post.images[0]) }}"
-                                                     style="margin-left: 50px"
+                                                     style="width: 280px;height: 200px;margin-left: 20px"
                                                      itemprop="thumbnail" alt="Image description"/>
                                             </a>
 
@@ -354,8 +354,10 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="card-title"><h6 style="font-size: 12px">Contacter l'annonceur</h6></div>
+
                         <div class="small-text-left">
                             <h6 style="font-size: 12px">   Numéro de telephone: {{ post.user.phonenumber }}</h6> <br>
+
                             <h6 style="font-size: 12px">        Email: {{ post.user.email }}</h6>
                         </div>
                     </div>

@@ -38,7 +38,7 @@ class JitsiController extends AbstractController
         $chat_id = $this->getDoctrine()->getRepository(Channel::class)->findByIds($this->getUser(), $user);
         $url = $this->generateUrl("chat_show", ["id" => $chat_id]);
 
-        $notify->notifyUser($user, "Video Chat", "Voulez vous lancez l'appel video ?", "https://jitsi.espritx.xyz/PiDev", true);
+        $notify->notifyUser($user, "Video Chat", "Voulez vous lancez l'appel video ?", "https://139-162-157-203.ip.linodeusercontent.com/PiDev3A", true);
         $this->mailer->send((new TemplatedEmail())
             ->from(new Address('postmaster@espritx.xyz', 'ESPRITx'))
             ->to($user->getEmail())
@@ -49,6 +49,6 @@ class JitsiController extends AbstractController
                 'user' => $user
             ]));
 
-        return $this->redirect("https://jitsi.espritx.xyz/PiDev");
+        return $this->redirect("https://139-162-157-203.ip.linodeusercontent.com/PiDev3A");
     }
 }
